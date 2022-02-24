@@ -23,7 +23,7 @@ and tools in mathematics in the realm of finance and economics.
 Academically speaking I completed my M.Sc. in Materials Physics form Brock University. I like to learn 
 computer progrmming as it helps me to visuallise, pratically implement concepts in everyday life. 
 Currently I am involved in implementing python for trading purposes. If you'd like to know more about 
-me please view my [Complete CV](/al-folio/assets/pdf/Pratik-Resume.pdf){:target="_blank"}.
+me please view my [Complete CV](/assets/pdf/Pratik-Resume.pdf){:target="_blank"}.
 
 
 I live in Canada and also make videos on life in Canada. You can go and check out my YouTube 
