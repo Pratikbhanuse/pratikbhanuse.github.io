@@ -4,4 +4,5 @@ date: 2015-10-22 15:59:00-0400
 inline: true
 ---
 
-A simple inline announcement.
+तुम शायरी की बात करती हो,<br>
+मैं तो बातें भी कमाल करता हूँ। 
