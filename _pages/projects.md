@@ -1,6 +1,6 @@
 ---
 layout: page
-title: प्रtiक Blogs
+title: प्रtiक blogs
 permalink: /projects/
 description: A growing collection of cool blog. Please leave your comments and feedback on the comment section n each blog.
 nav: true

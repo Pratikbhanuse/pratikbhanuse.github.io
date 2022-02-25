@@ -8,6 +8,7 @@ importance: 1
 category: money
 ---
 
-The stone of Covid 19 virus was first dipped in the ocean of humanity in the December 2019. 
+Coming soon...
+<!-- The stone of Covid 19 virus was first dipped in the ocean of humanity in the December 2019. 
 The ripple effect of this started in the city of Wuhan in the Hubei provice, China. The Covid is a contageous disease
-which is caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) /cite{}.
+which is caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) /cite{}. -->
