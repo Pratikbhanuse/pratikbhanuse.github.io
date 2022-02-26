@@ -33,3 +33,4 @@ my photography on my Intagram handle ["Pratik's Letters intagram"](https://www.i
 Also, explore the blog I have written and feel free comment your views and suggest new ideas on which you'd like 
 me to write a blog or make a video.
 
+<script src="http://www.gmodules.com/ig/ifr?url=http://www.google.com/ig/modules/youtube.xml&up_channel=pratiksletters&synd=open&w=320&h=390&title=&border=%23ffffff%7C3px%2C1px+solid+%23999999&output=js"></script>
