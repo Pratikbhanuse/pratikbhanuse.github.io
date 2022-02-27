@@ -21,7 +21,7 @@ I am a theoretical physicist by education and enthusiastic and curious about the
 and tools in mathematics in the realm of finance and economics.
 
 Academically speaking I completed my M.Sc. in Materials Physics form Brock University. I like to learn 
-computer progrmming as it helps me to visuallise, pratically implement concepts in everyday life. 
+computer progrmming as it helps me to visuallise, pratically implement concepts from physics and mathematics. 
 Currently I am involved in implementing python for trading purposes. If you'd like to know more about 
 me please view my [Complete CV](/assets/pdf/Pratik-Resume.pdf){:target="_blank"}.
 
