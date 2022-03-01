@@ -1,8 +1,7 @@
 ---
 layout: post
-date: 2015-10-22 15:59:00-0400
+date: 2020-02-01 15:59:00-0400
 inline: true
 ---
 
-तुम शायरी की बात करती हो,<br>
-मैं तो बातें भी कमाल करता हूँ। 
+Started a new job at AML RightSource Canada Inc. as an Anti-Money Laundering Risk Analyst. 

@@ -1,10 +1,10 @@
 ---
 layout: page
-title: प्रtiक blogs
+title: projects
 permalink: /projects/
-description: A growing collection of cool blog. Please leave your comments and feedback on the comment section n each blog.
+description: Projects page.
 nav: true
-display_categories: [science, money, random]
+display_categories: [science, money]
 horizontal: false
 ---
 

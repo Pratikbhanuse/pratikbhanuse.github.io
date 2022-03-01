@@ -1,7 +1,7 @@
 ---
 layout: post
 date: 2016-01-15 07:59:00-0400
-title: Jab tum tarrakki ke raah pe chalte ho
+title: Shayari 1 - Jab tum tarrakki ke raah pe chalte ho
 inline: false 
 ---
 
