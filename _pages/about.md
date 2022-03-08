@@ -16,7 +16,7 @@ social: true  # includes social icons at the bottom of the page
 
 Hello World! Welcome to my website...
 
-I am Pratik. Currently working as a risk analyst in the AML compliance team at AML RightSource Canada Inc. 
+Hi, it's Pratik! Currently working as a Quantitative Strategy Analyst at [BCA Research](https://www.bcaresearch.com/).
 I am a theoretical physicist by education and enthusiastic and curious about the implementation of laws in physics 
 and tools in mathematics in the realm of finance and economics.
 
