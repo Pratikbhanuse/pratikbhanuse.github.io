@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: page
 title: Random walk generator
 # date: 2022-01-18 
 description: Python code to generate random walk process
