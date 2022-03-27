@@ -8,6 +8,9 @@ display_categories: [science, money, random]
 horizontal: false
 ---
 
+[1st blog](./1) \\
+[2nd blog](./2)
+
 <!-- pages/blogs.md -->
 <div class="projects">
 {%- if site.enable_project_categories and page.display_categories %}
