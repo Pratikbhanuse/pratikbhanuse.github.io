@@ -7,7 +7,7 @@ description: Python code to generate random walk process
 category: science
 ---
 
-The below python code can be used to generate random walk process as aid to explain various phenomenas with random walk. 
+The below python code can be used to generate random walk process as aid to explain various phenomenas with random walk.
 
 ```
 
