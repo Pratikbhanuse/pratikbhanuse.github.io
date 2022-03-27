@@ -1,6 +1,6 @@
 ---
-layout: page
-permalink: /
+layout: post
+# permalink: /blog/2
 title: Impact of COVID-19 crisis on Canadian Economy
 date: 2022-01-18 
 description: This article gives a time snapshots of the Canadian economy before, during and

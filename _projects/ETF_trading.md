@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: post
 title: ETF trading strategy
 date: 2022-01-18 
 description: Pair trading strategy.
