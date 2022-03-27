@@ -1,5 +1,6 @@
 ---
-layout: post
+layout: page
+permalink: /blog/
 title: Nineteenth and the twentieth
 # date: 2022-01-18 
 description: This is a poem giving tribute to the rock stars of science in the late 19th and the 20th centuries.
