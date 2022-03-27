@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Random walk generator
+title: /projects/1
 # date: 2022-01-18 
 description: Python code to generate random walk process
 # importance: 4 
