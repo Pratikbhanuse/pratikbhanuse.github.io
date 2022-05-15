@@ -1,9 +1,9 @@
 ---
 layout: post
 permalink: /blogs/3
-title: Quantitiative Finance
+title: Who is a Quant?
 date: 2022-05-03
-description: A brief introduction towards the concept of quantitative finance.
+description: A brief introduction towards the concept of quantitative finance and individulas who work in the field.
 importance: 1
 category: money
 ---
