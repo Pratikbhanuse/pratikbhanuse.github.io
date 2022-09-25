@@ -30,11 +30,17 @@ Research articles/ General articles
 
 Videos
 ------
-
 * [How the economic machine works *by Ray Dalio*](https://www.youtube.com/watch?v=PHe0bXAIuk0)
 * [Bloomberg Global Financial News LIVE channel on YouTube *Bloomberg Media*](https://www.youtube.com/watch?v=dp8PhLsUcFE)
 * [Quants: The Alchemists of Wall Street](https://www.youtube.com/watch?v=ed2FWNWwE3I)
 * [Einstein's Big Idea E=mc<sup>2</sup>](https://www.youtube.com/watch?v=k2db9IgBapo)
+
+Podcast
+------
+* [Mission ISRO with Harsha Bhogle](https://open.spotify.com/show/2JXFCMLGVhTBtdz1WYxd4H)
+* [Flirting with Models](https://blog.thinknewfound.com/podcast/)
+* [Odd Lots](https://www.bloomberg.com/oddlots-podcast)
+* [Chai with Pabrai](http://www.chaiwithpabrai.com/podcasts.html)
 
 Miscellaneous links
 ------
