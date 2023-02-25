@@ -20,7 +20,7 @@ Hi, it's Pratik! Currently working as a Quantitative Strategy Analyst at [BCA Re
 I am a theoretical physicist by education and enthusiastic and curious about the implementation of laws in physics 
 and tools in mathematics in the realm of finance and economics.
 
-Academically speaking I completed my M.Sc. in Materials Physics form Brock University. I like to learn 
+Academically speaking I completed my M.Sc. in Materials Physics from Brock University. I like to learn 
 computer programming as it helps me to visuallise, pratically implement concepts from physics and mathematics. 
 Currently I am involved in implementing python for trading purposes. If you'd like to know more about 
 me please view my [Complete CV](/assets/pdf/Pratik-Resume.pdf){:target="_blank"}.
