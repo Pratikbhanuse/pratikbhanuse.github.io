@@ -18,3 +18,5 @@ group :jekyll_plugins do
     gem 'htmlcompressor'
     gem 'htmlbeautifier'
 end
+
+gem "uri", "~> 0.13.0"
