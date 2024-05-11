@@ -6,7 +6,7 @@ subtitle:
 
 profile:
   align: right
-  image: me.jpeg
+  image: profile_image.jpg
   address: false 
 
 news: true  # includes a list of news items
@@ -16,7 +16,7 @@ social: true  # includes social icons at the bottom of the page
 
 Hello World! Welcome to my website...
 
-Hi, it's Pratik! Currently working as a Quantitative Strategy Analyst at [BCA Research](https://www.bcaresearch.com/).
+Hi, it's Pratik! Currently working as a Quantitative Researcher at [BCA Research](https://www.bcaresearch.com/).
 I am a theoretical physicist by education and enthusiastic and curious about the implementation of laws in physics 
 and tools in mathematics in the realm of finance and economics.
 
