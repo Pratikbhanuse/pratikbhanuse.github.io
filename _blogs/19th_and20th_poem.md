@@ -1,0 +1,30 @@
+---
+layout: post
+permalink: /blogs/1
+title: Nineteenth and the twentieth
+# date: 2022-01-18 
+description: This is a poem giving tribute to the rock stars of science in the late 19th and the 20th centuries.
+importance: 4 
+category: random
+---
+
+For years and years have passed the years,  
+But I was born in the twenty-first turn,  
+Indeed was I late to arrive, but I read about it,  
+
+
+The nineteenth and twentieth had a flavour of joy,  
+and the spirit of consciousness and enthusiasm,  
+I wish I could be there to fondle the air,  
+Indeed was I late to arrive, but I read about it,  
+
+
+It woke up with a dream and lived to achieve it,  
+But I was born in the twenty-first turn,  
+Indeed was I late to arrive, but I read about it,  
+Indeed was I late to arrive, but I read about it.  
+
+
+-By Pratik B.
+
+**Note:** This is a poem giving tribute to the rock stars of science in the late 19th and the 20th centuries.
