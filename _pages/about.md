@@ -21,7 +21,7 @@ social: true # includes social icons at the bottom of the page
 
 Hello World! Welcome to my website...
 
-Hi, it's Pratik! Currently working as a Quantitative Researcher at [BCA Research](https://www.bcaresearch.com/).
+Hi, this is Pratik! Currently working as a Quantitative Researcher at [BCA Research](https://www.bcaresearch.com/).
 I am a theoretical physicist by education and enthusiastic and curious about the implementation of laws of physics 
 and tools in mathematics in the realm of finance and economics.
 
