@@ -1,7 +1,7 @@
 ---
 layout: post
 # permalink: /blogs/3
-title: Woh Suhane Sin?
+title: Woh Suhane Din?
 date: 2024-07-16
 description: A brief introduction towards the concept of quantitative finance and individulas who work in the field.
 importance: 1
