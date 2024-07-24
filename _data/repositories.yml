@@ -1,14 +1,30 @@
-github_users:
-  - torvalds
-  - alshedivat
+# github_users:
+#   - torvalds
+#   - alshedivat
 
-repo_description_lines_max: 2
+# repo_description_lines_max: 2
+
+# github_repos:
+#   - alshedivat/al-folio
+#   - jekyll/jekyll
+#   - twbs/bootstrap
+#   - jquery/jquery
+#   - FortAwesome/Font-Awesome
+#   - mathjax/MathJax
+#   - jpswalsh/academicons
+
+github_users:
+  - Pratikbhanuse
+
+repo_description_lines_max: 5
 
 github_repos:
+  - Pratikbhanuse/relative-rotation-graph
+  - Pratikbhanuse/SPY_QQQ-pair-trading
   - alshedivat/al-folio
   - jekyll/jekyll
-  - twbs/bootstrap
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - mathjax/MathJax
-  - jpswalsh/academicons
+  # - twbs/bootstrap
+  # - jquery/jquery
+  # - FortAwesome/Font-Awesome
+  # - mathjax/MathJax
+  # - jpswalsh/academicons
