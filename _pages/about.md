@@ -28,7 +28,7 @@ and tools in mathematics in the realm of finance and economics.
 Academically speaking I completed my M.Sc. in Materials Physics from Brock University. I like to learn 
 computer programming as it helps me to visuallise, pratically implement concepts from physics and mathematics. 
 Currently I am involved in researching strategies and building models for investment and trading based on ideas from mathematics and statistics. If you'd like to know more about 
-me please view my [Complete CV](/assets/pdf/Pratik-Resume.pdf){:target="_blank"}.
+me please view my [Complete CV](/assets/pdf/Pratik-Resume-website.pdf){:target="_blank"}.
 
 
 I live in Canada and also make videos on my life in Canada. You can go and check out my YouTube 
