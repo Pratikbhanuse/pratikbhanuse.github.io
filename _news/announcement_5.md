@@ -4,4 +4,4 @@ date: 2024-09-03
 inline: true
 ---
 
-Started Doctor of Pholosophy (Ph.D.) in Physics at [The University of Western Ontario](https://www.uwo.ca/index.html).
+Started [Doctor of Pholosophy (Ph.D.) in Physics](https://www.physics.uwo.ca/people/graduate_students/index.html) at [The University of Western Ontario](https://www.uwo.ca/index.html).
