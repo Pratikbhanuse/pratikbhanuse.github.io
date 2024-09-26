@@ -42,16 +42,9 @@ computer programming as it helps me to visuallise, pratically implement concepts
 Currently I am involved in researching strategies and building models for investment and trading based on ideas from mathematics and statistics. If you'd like to know more about 
 me please view my [Complete CV](/assets/pdf/Pratik-Resume-website.pdf){:target="_blank"}.
 
-
 I live in Canada and also make videos on my life in Canada. You can go and check out my YouTube 
 channel - ["Pratik's Letters"](https://www.youtube.com/c/PratiksLetters){:target="_blank"}. You can also check out 
 my photography on my Intagram handle ["vadapav_cuttingchai"](https://www.instagram.com/vadapav_cuttingchai/){:target="_blank"}.
 
 Also, explore my blogs and feel free to comment your views and suggest new ideas on which you'd like 
 me to talk about. -->
-
-<!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `profile_image.jpg` and put it in the `img/` folder.
-
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
-
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them. -->
