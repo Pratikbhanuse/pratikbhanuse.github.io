@@ -53,7 +53,7 @@ search_enabled: false
 socials_in_search: true
 
 # Dimensions
-max_width: 930px
+max_width: 1000px
 
 # TODO: add layout settings (single page vs. multi-page)
 
@@ -94,7 +94,7 @@ pinterest_id: # your pinterest id
 publons_id: # your ID on Publons
 quora_username: # your Quora username
 research_gate_profile: Pratik-Bhanuse # your profile on ResearchGate
-scholar_userid: #qc6CJjYAAAAJ # your Google Scholar ID
+scholar_userid: XTfq9tkAAAAJ #qc6CJjYAAAAJ # your Google Scholar ID
 scopus_id: # your profile on Scopus
 semanticscholar_id: # your Semantic Scholar ID
 spotify_id: # your spotify id
