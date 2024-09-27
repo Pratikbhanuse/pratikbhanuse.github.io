@@ -2,7 +2,7 @@
 layout: page
 permalink: /teaching/
 title: public outreach
-description: Materials for courses you taught. Replace this text with your description.
+description: Some selected talks
 nav: true
 nav_order: 5
 ---
