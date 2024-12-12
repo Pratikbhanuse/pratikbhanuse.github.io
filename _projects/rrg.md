@@ -2,6 +2,7 @@
 layout: page
 permalink: /projects/3
 title: Relative Rotation Graph
+img: assets/video/RRG_CYCLE.gif
 date: 2024-07-23
 description: A technical analysis tool to identify the underperforming and out performing securities.
 importance: 1

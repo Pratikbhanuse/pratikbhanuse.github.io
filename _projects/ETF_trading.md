@@ -2,6 +2,7 @@
 layout: page
 permalink: /projects/1
 title: ETF trading strategy
+img: assets/img/etf_pair_trade.png
 date: 2022-01-18 
 description: Pair trading strategy.
 importance: 2

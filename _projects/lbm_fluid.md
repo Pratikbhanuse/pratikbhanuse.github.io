@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Fluid Dynamics Using Lattice Boltzmann Model
+title: Fluid Dynamic Simulation Using Lattice Boltzmann Model
 description: 
 img: assets/video/simulation.gif
 importance: 1
