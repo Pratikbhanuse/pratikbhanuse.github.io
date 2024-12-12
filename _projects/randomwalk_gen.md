@@ -4,7 +4,7 @@ title: Random walk generator
 permalink: /projects/2
 # date: 2022-01-18 
 description: Python code to generate random walk process
-# importance: 4 
+importance: 
 category: science
 ---
 
