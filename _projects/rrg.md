@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /projects/3
+permalink: /projects/rrg
 title: Relative Rotation Graph
 img: assets/video/RRG_CYCLE.gif
 date: 2024-07-23

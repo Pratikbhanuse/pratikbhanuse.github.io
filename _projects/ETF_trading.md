@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /projects/1
+permalink: /projects/etf_trading
 title: ETF trading strategy
 img: assets/img/etf_pair_trade.png
 date: 2022-01-18 

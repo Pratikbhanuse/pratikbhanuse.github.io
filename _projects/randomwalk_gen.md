@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Random walk generator
-permalink: /projects/2
+permalink: /projects/random_walk
 img: assets/video/random_walk.gif
 # date: 2022-01-18 
 description: Python code to generate random walk process

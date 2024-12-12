@@ -1,5 +1,6 @@
 ---
 layout: page
+permalink: /projects/lbm_fluid
 title: Fluid Dynamic Simulation Using Lattice Boltzmann Model
 description: 
 img: assets/video/simulation.gif
