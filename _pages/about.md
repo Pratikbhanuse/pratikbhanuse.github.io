@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: In Sanskrit (प्रतीक), Pratik means “symbol” or “image”. It is derived from the word 'Prateek', which conveys the idea of representation or emblem. #<a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
+subtitle: In Sanskrit (प्रतीक), Pratik means “symbol” or “image”, or also conveys the idea of representation, or emblem. #<a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
 
 profile:
   align: right
@@ -21,14 +21,19 @@ social: true # includes social icons at the bottom of the page
 
 **Hello World! Welcome to my website…**
 
-Hi, I’m Pratik! I’m currently working as a Quantitative Researcher at [BCA Research](https://www.bcaresearch.com/){:target="_blank"} and pursuing a Ph.D. in Theoretical and Computational Physics at [The University of Western Ontario](https://www.physics.uwo.ca/people/graduate_students/index.html){:target="_blank"}. My academic and professional journeys converge in my passion for applying principles of physics and mathematics to the world of finance.
+Welcome! I’m Pratik, a researcher and analyst passionate about the intersection of physics, mathematics, and finance.
+
+I have four years of experience as a Quantitative Researcher, including my time at [BCA Research](https://www.bcaresearch.com/){:target="_blank"}, where I applied advanced mathematical and computational techniques to financial markets. Currently, I am pursuing a Ph.D. in Theoretical and Computational Physics at [The University of Western Ontario](https://www.physics.uwo.ca/people/graduate_students/index.html){:target="_blank"} under the supervision of [Prof. Colin Denniston](https://www.physics.uwo.ca/people/faculty_web_pages/denniston.html){:target="_blank"}, focusing on molecular dynamics and polymer networks. My research applies neural network concepts to build predictive models for polymer properties, enhancing our understanding of complex materials.
+
+My work explores how principles from physics—such as statistical mechanics and computational modeling—can provide deeper insights into financial markets, risk management, and investment strategies. I also have experience in financial modeling, algorithmic trading, and data-driven decision-making.
 
 With an M.Sc. in Materials Physics from Brock University and ongoing doctoral research, I specialize in quantitative finance, building data-driven models and strategies for investment and trading. My toolkit includes Python, C++, SQL, MATLAB, and more, which I use to solve complex financial challenges by blending mathematics, statistics, and programming.
 
-Outside of work and research, I share insights about finance and life in Canada through my YouTube channel, ["Pratik's Letters"](https://www.youtube.com/c/PratiksLetters){:target="_blank"}. I also enjoy photography, and you can explore my visual work on Instagram at ["vadapav_cuttingchai"](https://www.instagram.com/vadapav_cuttingchai/){:target="_blank"}.
+Beyond research, I enjoy sharing insights on financial markets, quantitative methods, and life in Canada through my YouTube channel, ["Pratik's Letters"](https://www.youtube.com/c/PratiksLetters){:target="_blank"}. I’m also passionate about photography—check out my visual work on Instagram at ["vadapav_cuttingchai"](https://www.instagram.com/vadapav_cuttingchai/){:target="_blank"}.
 
-Feel free to browse through my blog, share your thoughts, and connect with me for collaborations or discussions. If you’d like to know more about my professional background, check out my [complete CV](/assets/pdf/Pratik-Resume.pdf){:target="_blank"}. Thanks for visiting!
+Feel free to browse through my blog, share your thoughts, and connect with me for collaborations or discussions. If you’d like to know more about my professional background, check out my [complete CV](/assets/pdf/Pratik-Resume.pdf){:target="_blank"}.
 
+Thanks for visiting!
 
 <!-- 
 Hello World! Welcome to my website...
