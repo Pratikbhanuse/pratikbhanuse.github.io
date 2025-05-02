@@ -5,7 +5,7 @@ permalink: /projects/random_walk
 img: assets/video/random_walk.gif
 # date: 2022-01-18 
 description: Python code to generate random walk process
-importance: 2
+importance: 3
 category: science
 ---
 

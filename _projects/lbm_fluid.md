@@ -5,7 +5,7 @@ title: Fluid Dynamic Simulation Using Lattice Boltzmann Model
 description: 
 img: assets/video/simulation.gif
 date: 2024-12-12
-importance: 1
+importance: 2
 category: science
 related_publications: false
 ---
