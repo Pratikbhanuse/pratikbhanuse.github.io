@@ -7,7 +7,7 @@ subtitle: In Sanskrit (प्रतीक), Pratik means “symbol” or “imag
 profile:
   align: right
   rotation: 90
-  image: profile_image_new.jpg
+  image: dp.jpeg
   image_circular: false # crops the image to make it circular
   more_info: #>
     #<p>555 your office number</p>
