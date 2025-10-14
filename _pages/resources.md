@@ -50,6 +50,7 @@ Miscellaneous links
 * [Database for Indian Economy](https://dbie.rbi.org.in/)
 * [Federal Reserve Economic Data](https://fred.stlouisfed.org/)
 * [Statistics Canada](https://www.statcan.gc.ca/en/start)
+* [Online Board Games Free](https://lefun.fun/en)
 
 <br>
 <br>
