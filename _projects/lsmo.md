@@ -28,16 +28,6 @@ For a deeper dive into the process and results, read the [Medium article](https:
 Here are some visualizations from the project:
 
 <div class="caption">
-    Simulation of Sr-doped La₁₋ₓSrₓMnO₃ with structural relaxation and XRD analysis.
-</div>
-
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/video/simulation.gif" title="Simulation" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-
-<div class="caption">
     Smoothed XRD pattern showing diffraction peaks after atomic relaxation.
 </div>
 
