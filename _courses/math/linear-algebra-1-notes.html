@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Plain-English notes for first-year linear algebra: vectors, dot and cross products, projections, lines and planes, systems of equations, RREF, matrices, inverses, determinants and Cramer's rule.">
+<meta name="description" content="Plain-English notes for first-year linear algebra: vectors, systems, matrices, independence and subspaces, linear transformations, determinants, diagonalization, orthonormal bases, symmetric matrices, least squares and MATLAB.">
 <title>Linear Algebra, Translated</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,9 +55,6 @@ body{
 }
 .wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:220px minmax(0,1fr); gap:48px}
 header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
-.crumbs{display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-bottom:28px; font-family:var(--display); font-size:14px}
-.crumbs a{color:var(--muted); text-decoration:none}
-.crumbs a:hover,.crumbs a:focus-visible{color:var(--u)}
 .kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
 h1{font-family:var(--display); font-weight:800; font-size:clamp(38px,6vw,64px); line-height:1.02; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
 h1 .vec{color:var(--u)}
@@ -119,6 +116,14 @@ td.martian{font-family:var(--mono); font-size:13.5px; white-space:nowrap}
 .cols3{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin:14px 0}
 .cols3 > div{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:15.5px}
 .cols3 b{font-family:var(--display); display:block; margin-bottom:4px}
+nav.toc{max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px; grid-column:1/-1}
+.unit{max-width:72ch; border-top:2px solid var(--ink); padding-top:12px; margin-bottom:-28px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; scroll-margin-top:24px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.checkpoint{max-width:72ch; border:2px dashed var(--line); border-radius:12px; padding:16px 20px; font-family:var(--display)}
+.checkpoint b{display:block; font-size:18px; margin-bottom:2px}
+.checkpoint span{color:var(--muted); font-size:15px}
 footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
 @media (max-width:900px){
   .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
@@ -143,7 +148,6 @@ html{scroll-behavior:smooth}
 
 <div class="wrap">
 <header class="top">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/courses/">← All courses</a></nav>
   <div class="kicker">Study notes · first-year linear algebra</div>
   <h1>Linear algebra, <span class="vec">translated</span></h1>
   <p class="lede">Each topic starts with the plain-English idea and a picture, then a worked example, the most common mistakes, and quick questions to test yourself. Practice answers are hidden until you click, so try each problem first.</p>
@@ -153,24 +157,40 @@ html{scroll-behavior:smooth}
   <ol>
     <li><a href="#howto"><span class="n">→</span>How to study this</a></li>
     <li><a href="#martian"><span class="n">→</span>Martian to English</a></li>
-    <li class="sep" aria-hidden="true"></li>
-    <li><a href="#vectors"><span class="n">1</span>Vectors</a></li>
-    <li><a href="#lincomb"><span class="n">2</span>Linear combinations</a></li>
-    <li><a href="#norm"><span class="n">3</span>Norm (length)</a></li>
-    <li><a href="#dot"><span class="n">4</span>Dot product</a></li>
-    <li><a href="#proj"><span class="n">5</span>Vector projections</a></li>
-    <li><a href="#cross"><span class="n">6</span>Cross product</a></li>
-    <li><a href="#lines"><span class="n">7</span>Lines &amp; planes in ℝⁿ</a></li>
-    <li><a href="#systems"><span class="n">8</span>Systems of equations</a></li>
-    <li><a href="#rref"><span class="n">9</span>Augmented matrices, REF &amp; RREF</a></li>
-    <li><a href="#matrices"><span class="n">10</span>Matrix multiplication</a></li>
-    <li><a href="#inverse"><span class="n">11</span>Matrix inverse</a></li>
-    <li><a href="#det"><span class="n">12</span>Determinants</a></li>
-    <li><a href="#cramer"><span class="n">13</span>Cramer's rule</a></li>
-    <li class="sep" aria-hidden="true"></li>
-    <li><a href="#transform"><span class="n">+</span>Linear transformations</a></li>
-    <li><a href="#span"><span class="n">+</span>Span, independence, basis</a></li>
-    <li><a href="#eigen"><span class="n">+</span>Eigenvalues</a></li>
+    <li class="grp">Unit 1 · Vectors in ℝⁿ</li>
+    <li><a href="#vectors"><span class="n">1.1</span>Vectors</a></li>
+    <li><a href="#lincomb"><span class="n">1.2</span>Linear combinations</a></li>
+    <li><a href="#norm"><span class="n">1.3</span>Norm (length)</a></li>
+    <li><a href="#dot"><span class="n">1.4</span>Dot product</a></li>
+    <li><a href="#proj"><span class="n">1.5</span>Projections</a></li>
+    <li><a href="#cross"><span class="n">1.6</span>Cross product</a></li>
+    <li><a href="#lines"><span class="n">1.7</span>Lines &amp; planes</a></li>
+    <li class="grp">Unit 2 · Systems of Linear Equations</li>
+    <li><a href="#systems"><span class="n">2.1</span>Systems of equations</a></li>
+    <li><a href="#rref"><span class="n">2.2</span>Augmented matrices, REF &amp; RREF</a></li>
+    <li class="grp">Unit 3 · Matrix Algebra</li>
+    <li><a href="#matrices"><span class="n">3.1</span>Matrix multiplication &amp; algebra</a></li>
+    <li><a href="#inverse"><span class="n">3.2</span>Matrix inverse</a></li>
+    <li class="grp">Unit 4 · Independence and Basis</li>
+    <li><a href="#independence"><span class="n">4.1</span>Span, independence, basis</a></li>
+    <li class="grp">Unit 5 · Subspaces of ℝⁿ</li>
+    <li><a href="#subspaces"><span class="n">5.1</span>Subspaces, null &amp; column space</a></li>
+    <li class="grp"><a href="#midterm" style="padding:0">▲ Midterm covers Units 1–5</a></li>
+    <li class="grp">Unit 6 · Linear Transformations on ℝⁿ</li>
+    <li><a href="#transform"><span class="n">6.1</span>Linear transformations</a></li>
+    <li class="grp">Unit 7 · Determinants</li>
+    <li><a href="#det"><span class="n">7.1</span>Determinants</a></li>
+    <li><a href="#cramer"><span class="n">7.2</span>Cramer's rule</a></li>
+    <li class="grp">Unit 8 · Diagonalization</li>
+    <li><a href="#diag"><span class="n">8.1</span>Eigenvalues &amp; diagonalization</a></li>
+    <li class="grp">Unit 9 · Orthonormal Bases</li>
+    <li><a href="#ortho"><span class="n">9.1</span>Orthonormal bases, Gram–Schmidt</a></li>
+    <li class="grp">Unit 10 · Symmetric Matrices</li>
+    <li><a href="#symmetric"><span class="n">10.1</span>Symmetric matrices</a></li>
+    <li class="grp">Unit 11 · Least Squares</li>
+    <li><a href="#lsq"><span class="n">11.1</span>Least squares</a></li>
+    <li class="grp">Tools · MATLAB</li>
+    <li><a href="#matlab"><span class="n">M</span>MATLAB basics</a></li>
     <li class="sep" aria-hidden="true"></li>
     <li><a href="#connect"><span class="n">→</span>How it all connects</a></li>
     <li><a href="#checks"><span class="n">→</span>Self-check habits</a></li>
@@ -190,11 +210,12 @@ html{scroll-behavior:smooth}
     <li><strong>Say it in words.</strong> After any definition, explain it out loud as if to a friend who never took math. If you can't, you've memorised it rather than understood it.</li>
     <li><strong>Predict before computing.</strong> "Will this dot product be positive or negative?" "Will this matrix have an inverse?" Guessing first builds intuition quickly.</li>
     <li><strong>Check what kind of answer is wanted.</strong> A number? A vector? A matrix? Yes or no? Many lost marks come from giving the wrong <em>type</em> of answer.</li>
+    <li><strong>Practise by hand.</strong> Exams in courses like this usually allow only a basic calculator, so get comfortable doing row reduction, determinants and eigenvalues on paper.</li>
     <li><strong>Check your work.</strong> Almost every computation in this course can be checked in under a minute. See <a href="#checks">Self-check habits</a> at the end.</li>
   </ul>
   <div class="box tip">
     <div class="label">How the notes are organised</div>
-    <p>Sections 1–13 are the core course topics, in order. Determinants (12) come just before Cramer's rule because the rule is built from them. The three sections marked <strong>+</strong> at the end are extra topics for going further.</p>
+    <p>The notes follow 11 units in order, from vectors to least squares, with a MATLAB section at the end. A checkpoint after Unit 5 marks the usual midterm material. Every unit has worked examples, common mistakes, test-yourself questions and practice problems.</p>
   </div>
 </section>
 
@@ -235,15 +256,26 @@ html{scroll-behavior:smooth}
       <tr><td class="martian">singular</td><td>Squashes space flat. No undo button.</td></tr>
       <tr><td class="martian">transpose Aᵀ</td><td>Flip the matrix so rows become columns.</td></tr>
       <tr><td class="martian">null space / kernel</td><td>Every vector that the matrix squashes to zero.</td></tr>
+      <tr><td class="martian">column space</td><td>Everything Ax can produce: all combinations of the columns.</td></tr>
+      <tr><td class="martian">rank</td><td>The number of pivots: how many truly independent columns (or rows) there are.</td></tr>
+      <tr><td class="martian">nullity</td><td>The dimension of the null space, which equals the number of free variables.</td></tr>
       <tr><td class="martian">eigenvector</td><td>A direction the matrix only stretches, never turns.</td></tr>
+      <tr><td class="martian">diagonalizable</td><td>Can be rewritten as pure stretching along its eigenvector axes: A = PDP⁻¹.</td></tr>
+      <tr><td class="martian">orthonormal</td><td>All perpendicular to each other, and each of length 1.</td></tr>
+      <tr><td class="martian">Gram–Schmidt</td><td>A recipe for straightening any basis into a perpendicular one.</td></tr>
+      <tr><td class="martian">orthogonal matrix</td><td>A square matrix with orthonormal columns. Its inverse is just its transpose.</td></tr>
+      <tr><td class="martian">symmetric matrix</td><td>Equal to its own transpose: a mirror image across the diagonal.</td></tr>
+      <tr><td class="martian">least squares</td><td>The best approximate answer when an exact one doesn't exist.</td></tr>
     </tbody>
   </table>
   </div>
 </section>
 
-<!-- 1 VECTORS -->
+<div class="unit" id="unit1"><span class="unit-n">Unit 1</span><span class="unit-t">Vectors in ℝⁿ</span></div>
+
+<!-- VECTORS -->
 <section id="vectors">
-  <div class="eyebrow">Topic 1</div>
+  <div class="eyebrow">1.1</div>
   <h2>Vectors</h2>
   <p class="one">An arrow, or a list of numbers. It's the same thing.</p>
 
@@ -311,9 +343,9 @@ u − v = (3−1, 1−2) = (2, −1)
   </details>
 </section>
 
-<!-- LINEAR COMBINATIONS -->
+<!-- LINCOMB -->
 <section id="lincomb">
-  <div class="eyebrow">Topic 2</div>
+  <div class="eyebrow">1.2</div>
   <h2>Linear combinations</h2>
   <p class="one">A recipe: some of this vector, plus some of that one.</p>
 
@@ -353,7 +385,7 @@ Match each slot:
 Subtract: b = 3, then a = 1
 
 Check: 1·(1, 1) + 3·(2, 1) = (1 + 6, 1 + 3) = (7, 4)   <span class="ok">✓</span></pre>
-    <p><strong>The big connection:</strong> finding weights is solving a system, and the vectors become the <em>columns</em> of the augmented matrix <code>[1 2 | 7; 1 1 | 4]</code>. Keep this in mind; it comes back in sections 8–10.</p>
+    <p><strong>The big connection:</strong> finding weights is solving a system, and the vectors become the <em>columns</em> of the augmented matrix <code>[1 2 | 7; 1 1 | 4]</code>. Keep this in mind; it comes back in Units 2 and 3.</p>
   </div>
 
   <div class="box trap">
@@ -384,7 +416,7 @@ Check: 1·(1, 1) + 3·(2, 1) = (1 + 6, 1 + 3) = (7, 4)   <span class="ok">✓</s
 
 <!-- NORM -->
 <section id="norm">
-  <div class="eyebrow">Topic 3</div>
+  <div class="eyebrow">1.3</div>
   <h2>The norm (length)</h2>
   <p class="one">Pythagoras, extended to as many slots as you like.</p>
 
@@ -446,9 +478,9 @@ In ℝ⁴: ‖(1, 1, 1, 1)‖ = √4 = 2</pre>
   </details>
 </section>
 
-<!-- 2 DOT -->
+<!-- DOT -->
 <section id="dot">
-  <div class="eyebrow">Topic 4</div>
+  <div class="eyebrow">1.4</div>
   <h2>The dot product</h2>
   <p class="one">One number that says how much two arrows agree.</p>
 
@@ -518,9 +550,9 @@ Angle between (1, 1) and (1, 0):
   </details>
 </section>
 
-<!-- PROJECTIONS -->
+<!-- PROJ -->
 <section id="proj">
-  <div class="eyebrow">Topic 5</div>
+  <div class="eyebrow">1.5</div>
   <h2>Vector projections</h2>
   <p class="one">The shadow one arrow casts on another.</p>
 
@@ -592,9 +624,9 @@ Check: (4, 2) + (−1, 2) = (3, 4)   <span class="ok">✓ pieces add back to u</
   </details>
 </section>
 
-<!-- 3 CROSS -->
+<!-- CROSS -->
 <section id="cross">
-  <div class="eyebrow">Topic 6</div>
+  <div class="eyebrow">1.6</div>
   <h2>The cross product</h2>
   <p class="one">Give it two arrows in 3D, get back an arrow perpendicular to both.</p>
 
@@ -648,9 +680,9 @@ Check by dotting with both originals:
   </details>
 </section>
 
-<!-- 4 LINES -->
+<!-- LINES -->
 <section id="lines">
-  <div class="eyebrow">Topic 7</div>
+  <div class="eyebrow">1.7</div>
   <h2>Lines and planes in ℝⁿ</h2>
   <p class="one">A line is "start here, walk one way". A plane is "start here, walk two ways".</p>
 
@@ -746,9 +778,11 @@ Check: 4/3 + 1/6 + 3/2 = 8/6 + 1/6 + 9/6 = 3   <span class="ok">✓</span></pre>
   </details>
 </section>
 
-<!-- 5 SYSTEMS -->
+<div class="unit" id="unit2"><span class="unit-n">Unit 2</span><span class="unit-t">Systems of Linear Equations</span></div>
+
+<!-- SYSTEMS -->
 <section id="systems">
-  <div class="eyebrow">Topic 8</div>
+  <div class="eyebrow">2.1</div>
   <h2>Systems of linear equations</h2>
   <p class="one">Several conditions that all have to be true at once.</p>
 
@@ -808,7 +842,7 @@ Check: 5 + 5 = 10 ✓   60 + 40 = 100   <span class="ok">✓</span></pre>
 
 <!-- RREF -->
 <section id="rref">
-  <div class="eyebrow">Topic 9</div>
+  <div class="eyebrow">2.2</div>
   <h2>Augmented matrices, REF and RREF</h2>
   <p class="one">High-school elimination, but with tidy bookkeeping.</p>
 
@@ -884,7 +918,7 @@ Column y has no pivot, so y is free. Let y = t.
 Solution: (x, y, z) = (4, 0, 1) + t(−2, 1, 0)
 
 Check t = 0: 4 + 0 − 1 = 3 ✓   8 + 0 + 1 = 9   <span class="ok">✓</span></pre>
-    <p>Look at the answer's shape: a point plus t times a direction. <strong>The solution set is a line</strong> (section 7). Many topics in this course turn out to be the same idea seen from different angles.</p>
+    <p>Look at the answer's shape: a point plus t times a direction. <strong>The solution set is a line</strong> (section 1.7). Many topics in this course turn out to be the same idea seen from different angles.</p>
   </div>
 
   <h3>Reading the final grid</h3>
@@ -927,9 +961,11 @@ Check t = 0: 4 + 0 − 1 = 3 ✓   8 + 0 + 1 = 9   <span class="ok">✓</span></
   </details>
 </section>
 
-<!-- 6 MATRICES -->
+<div class="unit" id="unit3"><span class="unit-n">Unit 3</span><span class="unit-t">Matrix Algebra</span></div>
+
+<!-- MATRICES -->
 <section id="matrices">
-  <div class="eyebrow">Topic 10</div>
+  <div class="eyebrow">3.1</div>
   <h2>Matrix–vector and matrix–matrix multiplication</h2>
   <p class="one">A matrix is a machine: vector goes in, vector comes out.</p>
 
@@ -958,7 +994,7 @@ Column view (weights × columns):         <span class="c">← gives the meaning<
     <div class="label">Ax = b is just a system in disguise</div>
     <pre class="calc">[ 1  1 ] [ a ]   [ 10  ]          a +  c = 10
 [ 12 8 ] [ c ] = [ 100 ]   means  12a + 8c = 100</pre>
-    <p>That's the cinema problem from section 8. Once you see this, "solve Ax = b" stops being scary.</p>
+    <p>That's the cinema problem from section 2.1. Once you see this, "solve Ax = b" stops being scary.</p>
   </div>
 
   <h3>Matrix × matrix</h3>
@@ -967,6 +1003,27 @@ Column view (weights × columns):         <span class="c">← gives the meaning<
     <li>Entry in row i, column j of AB = (row i of A) · (column j of B).</li>
     <li><strong>Order matters.</strong> <code>AB</code> is usually not <code>BA</code>. Socks-then-shoes is not shoes-then-socks.</li>
   </ul>
+
+  <h3>Matrix algebra basics</h3>
+  <ul>
+    <li><strong>Adding, subtracting:</strong> the matrices must be the same size; work entry by entry.</li>
+    <li><strong>Scalar times matrix:</strong> multiply every entry.</li>
+    <li><strong>Transpose Aᵀ:</strong> rows become columns. <code>[[1, 2, 3], [4, 5, 6]]ᵀ = [[1, 4], [2, 5], [3, 6]]</code>, so a 2×3 becomes a 3×2.</li>
+    <li><strong>Identity I:</strong> 1s on the diagonal, 0s elsewhere. <code>AI = IA = A</code>, like multiplying by 1.</li>
+    <li><strong>Powers:</strong> <code>A² = AA</code>. Only square matrices have powers.</li>
+  </ul>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Works like ordinary numbers</th><th>Does NOT work like ordinary numbers</th></tr></thead>
+    <tbody>
+      <tr><td><code>A + B = B + A</code></td><td><code>AB ≠ BA</code> in general</td></tr>
+      <tr><td><code>A(B + C) = AB + AC</code></td><td><code>AB = 0</code> does not force A = 0 or B = 0</td></tr>
+      <tr><td><code>(AB)C = A(BC)</code></td><td><code>AB = AC</code> does not force B = C</td></tr>
+      <tr><td><code>k(AB) = (kA)B</code></td><td><code>(A + B)² ≠ A² + 2AB + B²</code> (it's <code>A² + AB + BA + B²</code>)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>A surprising example: <code>[[0, 1], [0, 0]]</code> times itself is the zero matrix, even though it isn't zero itself.</p>
 
   <div class="box work">
     <div class="label">Worked example: order matters</div>
@@ -1018,9 +1075,9 @@ Column view (weights × columns):         <span class="c">← gives the meaning<
   </details>
 </section>
 
-<!-- 7 INVERSE -->
+<!-- INVERSE -->
 <section id="inverse">
-  <div class="eyebrow">Topic 11</div>
+  <div class="eyebrow">3.2</div>
   <h2>Matrix inverse</h2>
   <p class="one">The undo button.</p>
 
@@ -1058,7 +1115,7 @@ x = A⁻¹b = [  3  −1 ] [ 4  ]  =  (12 − 11, −20 + 22) = (1, 2)
            [ −5   2 ] [ 11 ]
 
 Check: 2 + 2 = 4 ✓   5 + 6 = 11   <span class="ok">✓</span></pre>
-    <p>Keep this system in mind; Cramer's rule (section 13) solves the same one.</p>
+    <p>Keep this system in mind; Cramer's rule (section 7.2) solves the same one.</p>
   </div>
 
   <div class="box work">
@@ -1105,9 +1162,236 @@ A⁻¹ = [  7  −2 ]
   </details>
 </section>
 
-<!-- 8 DET -->
+<div class="unit" id="unit4"><span class="unit-n">Unit 4</span><span class="unit-t">Independence and Basis</span></div>
+
+<!-- INDEPENDENCE -->
+<section id="independence">
+  <div class="eyebrow">4.1</div>
+  <h2>Span, independence and basis</h2>
+  <p class="one">Where can these vectors take you, and is any of them wasted?</p>
+
+  <h3>Span: where can you get to?</h3>
+  <p>Imagine you can only move along certain arrows, as far as you like, forwards or backwards. The span is every place you can reach: all the <a href="#lincomb">linear combinations</a>.</p>
+  <ul>
+    <li>One non-zero arrow: you can reach a <strong>line</strong> through the origin.</li>
+    <li>Two arrows pointing different ways: you can reach a <strong>plane</strong> through the origin (in 2D, that's everything).</li>
+    <li>Two arrows pointing the same way (one is a multiple of the other): still only a line. The second one added nothing.</li>
+  </ul>
+  <p><strong>Is b in the span?</strong> That's asking "can I find weights that make b?", which is a system. Put the vectors in as columns, b after the bar, and row reduce. Consistent means yes.</p>
+
+  <h3>Independence: is anything redundant?</h3>
+  <p>A set of vectors is <strong>independent</strong> if none of them can be built from the others. Paint analogy: red, blue and yellow are independent. Add purple and the set becomes dependent, because you could already mix purple from red and blue.</p>
+  <p>The textbook version: the only way to get <code>c₁v₁ + c₂v₂ + … + cₖvₖ = 0</code> is with every c = 0. In words: <em>the only way to walk along these arrows and end up back at the start is not to move at all.</em></p>
+  <p><strong>How to test:</strong> put the vectors in as the columns of a matrix and row reduce. A pivot in every column means independent. Any column without a pivot means dependent. For n vectors in ℝⁿ you can also check det ≠ 0.</p>
+  <div class="cols3">
+    <div><b>Two vectors</b>Dependent exactly when one is a multiple of the other. Check by eye.</div>
+    <div><b>Contains 0</b>Always dependent. <code>1·0 = 0</code> is a non-trivial way back to the start.</div>
+    <div><b>Too many</b>More than n vectors in ℝⁿ are always dependent. There's no room for them all.</div>
+  </div>
+
+  <h3>Basis and dimension</h3>
+  <p>A <strong>basis</strong> is a set of vectors that is independent (no waste) and spans the space (reaches everywhere). It's a coordinate system. The usual basis of ℝ² is <code>(1, 0), (0, 1)</code>, but <code>(1, 0), (1, 1)</code> works just as well.</p>
+  <p>Every basis of a space has the same number of vectors. That number is the <strong>dimension</strong>: ℝⁿ has dimension n, a plane has dimension 2, a line has dimension 1.</p>
+  <p>The weights needed to build a vector from a basis are its <strong>coordinates</strong> in that basis. In section 1.2 we found <code>(7, 4) = 1·(1, 1) + 3·(2, 1)</code>, so in the basis {(1, 1), (2, 1)} its coordinates are (1, 3).</p>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">Are (1, 2, 3), (4, 5, 6), (7, 8, 9) independent?
+
+Row reduce with them as columns and you get only 2 pivots. Dependent.
+Specifically: (7, 8, 9) = 2·(4, 5, 6) − (1, 2, 3)
+             = (8 − 1, 10 − 2, 12 − 3)  <span class="ok">✓</span>
+So they span only a plane in 3D.
+
+Is {(1, 0, 1), (0, 1, 1), (1, 1, 0)} a basis of ℝ³?
+3 vectors in ℝ³, so just check the determinant:
+det = 1(1·0 − 1·1) − 0 + 1(0·1 − 1·1) = −1 − 1 = −2 ≠ 0
+<span class="ok">✓ Independent, so yes: 3 independent vectors in ℝ³ automatically span it.</span></pre>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Thinking more vectors always means a bigger span. Not if they're redundant.</li>
+      <li>Believing a basis is unique. A space has infinitely many bases; they just all have the same size.</li>
+      <li>Checking only that vectors aren't multiples of each other <em>in pairs</em>. With three or more, one can be a combination of two others without being a multiple of either.</li>
+      <li>Rule of thumb: more than n vectors in ℝⁿ are always dependent, and fewer than n can never span ℝⁿ.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>Can 2 vectors span ℝ³? Why not, in picture terms? (Two arrows can only sweep out a plane.)</li>
+      <li>Is any set containing the zero vector independent? (No.)</li>
+      <li>If 3 vectors in ℝ³ are independent, do you still need to check that they span? (No. Right number and independent means basis.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Are <code>(1, 2)</code> and <code>(3, 6)</code> independent?</p>
+    <p class="a">No. <code>(3, 6) = 3·(1, 2)</code>.</p>
+    <p class="q">2. Are <code>(1, 1, 0)</code>, <code>(0, 1, 1)</code>, <code>(1, 2, 1)</code> independent?</p>
+    <p class="a">No. The third is the sum of the first two. (No pair is a multiple of another; that's why the pairwise check isn't enough.)</p>
+    <p class="q">3. Is <code>(1, 1, 1)</code> in the span of <code>(1, 0, 1)</code> and <code>(0, 1, 0)</code>?</p>
+    <p class="a">Yes: <code>1·(1, 0, 1) + 1·(0, 1, 0) = (1, 1, 1)</code>.</p>
+  </details>
+</section>
+
+<div class="unit" id="unit5"><span class="unit-n">Unit 5</span><span class="unit-t">Subspaces of ℝⁿ</span></div>
+
+<!-- SUBSPACES -->
+<section id="subspaces">
+  <div class="eyebrow">5.1</div>
+  <h2>Subspaces of ℝⁿ</h2>
+  <p class="one">Flat things through the origin, and the two that every matrix comes with.</p>
+
+  <h3>What counts as a subspace</h3>
+  <p>A subspace is a flat thing through the origin: just {0}, a line through 0, a plane through 0, and so on up to the whole space. Three-part test:</p>
+  <ol class="steps">
+    <li>Does it contain the zero vector? (Fastest way to rule things out.)</li>
+    <li>Add two things in it. Is the result still in it?</li>
+    <li>Scale something in it. Is the result still in it?</li>
+  </ol>
+  <p>Useful shortcut: <strong>the span of any set of vectors is always a subspace.</strong> So if you can write the set as "all combinations of these vectors", you're done.</p>
+
+  <h3>The two subspaces every matrix has</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th></th><th>Null space, null(A)</th><th>Column space, col(A)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Plain English</strong></td><td>Every input A squashes to zero</td><td>Every output A can produce</td></tr>
+      <tr><td><strong>Definition</strong></td><td>All x with Ax = 0</td><td>Span of the columns of A</td></tr>
+      <tr><td><strong>Basis</strong></td><td>Solve Ax = 0 by RREF; one vector per free variable</td><td>The <em>original</em> columns of A that have pivots</td></tr>
+      <tr><td><strong>Dimension</strong></td><td>Number of free variables (nullity)</td><td>Number of pivots (rank)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>The <strong>row space</strong> (span of the rows) has the same dimension as the column space. Its basis is the non-zero rows of the RREF.</p>
+
+  <h3>Rank and the rank–nullity theorem</h3>
+  <pre class="calc">rank A + nullity A = number of columns of A</pre>
+  <p>In words: every column is either a pivot column (a "decided" variable) or a free column (a free variable). Count both and you've counted every column.</p>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">A = [ 1  2  1 ]
+    [ 2  4  3 ]
+
+R2 → R2 − 2R1     [ 1  2  1 ]
+                  [ 0  0  1 ]
+R1 → R1 − R2      [ 1  2  0 ]
+                  [ 0  0  1 ]     <span class="c">← RREF. Pivots in columns 1 and 3.</span>
+
+Rank = 2 (two pivots). Column 2 is free, so nullity = 1.
+rank + nullity = 2 + 1 = 3 columns   <span class="ok">✓</span>
+
+Null space: x₂ = t, x₃ = 0, x₁ = −2t  →  basis {(−2, 1, 0)}
+  check: A(−2, 1, 0) = (−2 + 2 + 0, −4 + 4 + 0) = (0, 0)   <span class="ok">✓</span>
+
+Column space: ORIGINAL columns 1 and 3  →  basis {(1, 2), (1, 3)}
+  Two independent vectors in ℝ², so col(A) is all of ℝ².</pre>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Using the RREF's columns as the column space basis. Use the RREF only to find <em>which</em> columns have pivots, then take those columns from the original A.</li>
+      <li>Calling the line <code>y = x + 1</code> a subspace. It misses the origin.</li>
+      <li>Passing the zero test and stopping. A set can contain 0 and still fail the addition test (see practice problem 1c).</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>What's the null space of an invertible matrix? (Just {0}. Nothing non-zero gets squashed.)</li>
+      <li>A is 3×5. What's the largest possible rank? Can the null space be {0}? (Rank ≤ 3, so nullity ≥ 2. No.)</li>
+      <li>Is the solution set of Ax = b (with b ≠ 0) a subspace? (No. It doesn't contain 0.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Which of these are subspaces of ℝ²? (a) all <code>(x, y)</code> with <code>y = 2x</code> &nbsp; (b) all with <code>y = 2x + 1</code> &nbsp; (c) all with <code>xy ≥ 0</code></p>
+    <p class="a">(a) Yes: a line through the origin. (b) No: <code>(0, 0)</code> isn't on it. (c) No: <code>(1, 0)</code> and <code>(0, −1)</code> are both in it, but their sum <code>(1, −1)</code> isn't.</p>
+    <p class="q">2. Find a basis for the plane <code>x + y + z = 0</code> (the null space of <code>[1 1 1]</code>).</p>
+    <p class="a">y = s and z = t are free, x = −s − t. So <code>(x, y, z) = s(−1, 1, 0) + t(−1, 0, 1)</code>. Basis {(−1, 1, 0), (−1, 0, 1)}, dimension 2.</p>
+    <p class="q">3. A 4×6 matrix has rank 4. What's its nullity?</p>
+    <p class="a">6 − 4 = 2.</p>
+  </details>
+</section>
+
+<div class="checkpoint" id="midterm"><b>Midterm checkpoint</b><span>Units 1–5, everything above this line, are the usual midterm material. A good moment to review before moving on.</span></div>
+
+<div class="unit" id="unit6"><span class="unit-n">Unit 6</span><span class="unit-t">Linear Transformations on ℝⁿ</span></div>
+
+<!-- TRANSFORM -->
+<section id="transform">
+  <div class="eyebrow">6.1</div>
+  <h2>Linear transformations</h2>
+  <p class="one">Moves that keep grid lines straight, parallel and evenly spaced, and keep the origin still.</p>
+
+  <h3>The single most useful trick</h3>
+  <p><strong>The columns of the matrix are where the basic arrows land.</strong> Column 1 is where <code>(1, 0)</code> goes; column 2 is where <code>(0, 1)</code> goes. To build any transformation matrix, just ask "where do those two arrows end up?"</p>
+  <p>Real-world: every rotation, zoom and flip in a video game or photo editor is a matrix doing exactly this.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Move</th><th>(1,0) goes to</th><th>(0,1) goes to</th><th>Matrix</th></tr></thead>
+    <tbody>
+      <tr><td>Rotate 90° anticlockwise</td><td>(0, 1)</td><td>(−1, 0)</td><td><span class="m"><span>0</span><span>−1</span><span>1</span><span>0</span></span></td></tr>
+      <tr><td>Reflect in the x-axis</td><td>(1, 0)</td><td>(0, −1)</td><td><span class="m"><span>1</span><span>0</span><span>0</span><span>−1</span></span></td></tr>
+      <tr><td>Reflect in the line y = x</td><td>(0, 1)</td><td>(1, 0)</td><td><span class="m"><span>0</span><span>1</span><span>1</span><span>0</span></span></td></tr>
+      <tr><td>Stretch x by 3</td><td>(3, 0)</td><td>(0, 1)</td><td><span class="m"><span>3</span><span>0</span><span>0</span><span>1</span></span></td></tr>
+      <tr><td>Horizontal shear</td><td>(1, 0)</td><td>(1, 1)</td><td><span class="m"><span>1</span><span>1</span><span>0</span><span>1</span></span></td></tr>
+      <tr><td>Rotate by θ</td><td>(cos θ, sin θ)</td><td>(−sin θ, cos θ)</td><td class="martian">[[cos θ, −sin θ], [sin θ, cos θ]]</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Is it linear?</h3>
+  <p>Officially: <code>T(u + v) = T(u) + T(v)</code> and <code>T(cu) = cT(u)</code>. Quick screening tests:</p>
+  <ul>
+    <li><strong>Does 0 go to 0?</strong> If not, it's not linear. So "shift everything right by 1" is out.</li>
+    <li><strong>Any squares, products of variables, sin(x), constants added?</strong> Not linear.</li>
+    <li>If each output is just "numbers × variables, added up", it's linear, and you can read off the matrix.</li>
+  </ul>
+
+  <h3>Kernel and image</h3>
+  <ul>
+    <li><strong>Kernel:</strong> every input that T sends to 0. It's the null space of T's matrix (Unit 5).</li>
+    <li><strong>Image:</strong> every output T can produce. It's the column space of T's matrix.</li>
+    <li>T is <strong>one-to-one</strong> (no two inputs share an output) exactly when the kernel is just {0}.</li>
+    <li>T is <strong>onto</strong> (every output can be reached) exactly when the image is the whole target space.</li>
+    <li>Example: projecting 3D onto the floor, <code>T(x, y, z) = (x, y, 0)</code>. The kernel is the z-axis (everything squashed to 0). The image is the floor. It's neither one-to-one nor onto ℝ³.</li>
+  </ul>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Doing "first A, then B" as <code>AB</code>. It's <code>BA</code>: the matrix closest to the vector acts first, so read right to left.</li>
+      <li>Putting the images of (1,0) and (0,1) in as rows instead of columns.</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Is <code>T(x, y) = (x + y, 2y)</code> linear? If yes, what's its matrix?</p>
+    <p class="a">Yes. <code>[[1, 1], [0, 2]]</code>. (Check: (1,0) → (1,0), (0,1) → (1,2), those are the columns.)</p>
+    <p class="q">2. Is <code>T(x, y) = (x², y)</code> linear?</p>
+    <p class="a">No. <code>T(2·(1,0)) = (4, 0)</code> but <code>2·T(1,0) = (2, 0)</code>.</p>
+    <p class="q">3. Find the matrix that rotates 90° anticlockwise and then reflects in the x-axis.</p>
+    <p class="a">Reflect × Rotate = <code>[[1,0],[0,−1]]·[[0,−1],[1,0]] = [[0,−1],[−1,0]]</code>. Check: (1,0) → rotate → (0,1) → reflect → (0,−1). First column ✓.</p>
+  </details>
+</section>
+
+<div class="unit" id="unit7"><span class="unit-n">Unit 7</span><span class="unit-t">Determinants</span></div>
+
+<!-- DET -->
 <section id="det">
-  <div class="eyebrow">Topic 12 · needed for Cramer's rule</div>
+  <div class="eyebrow">7.1</div>
   <h2>Determinants</h2>
   <p class="one">How much the matrix stretches area (or volume).</p>
 
@@ -1185,7 +1469,7 @@ det = 2·(3·1 − 2·1) − 0·(…) + 1·(1·1 − 3·1)
 
 <!-- CRAMER -->
 <section id="cramer">
-  <div class="eyebrow">Topic 13</div>
+  <div class="eyebrow">7.2</div>
   <h2>Cramer's rule</h2>
   <p class="one">Solve for one variable at a time using determinants.</p>
 
@@ -1208,7 +1492,7 @@ x:  swap b into column 1   [ 4   1 ]   det = 12 − 11 = 1   →  x = 1/1 = 1
 y:  swap b into column 2   [ 2   4 ]   det = 22 − 20 = 2   →  y = 2/1 = 2
                            [ 5  11 ]
 
-<span class="ok">✓ Same answer as the inverse method in section 11.</span></pre>
+<span class="ok">✓ Same answer as the inverse method in section 3.2.</span></pre>
   </div>
 
   <div class="box work">
@@ -1223,7 +1507,7 @@ A₁ = [ 6  1  1 ; 1  1 −1 ; 2 −1  1 ]    det = −6    →  x = −6/−6  
 A₂ = [ 1  6  1 ; 2  1 −1 ; 1  2  1 ]    det = −12   →  y = −12/−6 = 2
 A₃ = [ 1  1  6 ; 2  1  1 ; 1 −1  2 ]    det = −18   →  z = −18/−6 = 3
 
-<span class="ok">✓ Same answer as the row reduction in section 9.</span></pre>
+<span class="ok">✓ Same answer as the row reduction in section 2.2.</span></pre>
     <p>Four 3×3 determinants is a lot of arithmetic. Solving one system three ways (row reduction, inverse, Cramer) and getting the same answer is a great confidence builder.</p>
   </div>
 
@@ -1247,7 +1531,7 @@ A₃ = [ 1  1  6 ; 2  1  1 ; 1 −1  2 ]    det = −18   →  z = −18/−6 = 
   <div class="box ask">
     <div class="label">Test yourself</div>
     <ul>
-      <li>Why does Cramer's rule need det A ≠ 0? Connect it to section 12. (det A = 0 means A squashes space flat, so there isn't one unique answer to find.)</li>
+      <li>Why does Cramer's rule need det A ≠ 0? Connect it to section 7.1. (det A = 0 means A squashes space flat, so there isn't one unique answer to find.)</li>
       <li>A test asks only for y in a 3×3 system. How many determinants do you need? (Two: det A and det A₂.)</li>
     </ul>
   </div>
@@ -1257,146 +1541,31 @@ A₃ = [ 1  1  6 ; 2  1  1 ; 1 −1  2 ]    det = −18   →  z = −18/−6 = 
     <p class="q">1. Solve <code>3x − 2y = 1</code>, <code>x + 4y = 5</code> by Cramer's rule.</p>
     <p class="a">det A = 12 + 2 = 14. det A₁ = <code>|1 −2; 5 4|</code> = 4 + 10 = 14, so x = 1. det A₂ = <code>|3 1; 1 5|</code> = 15 − 1 = 14, so y = 1. Check: 3 − 2 = 1 ✓, 1 + 4 = 5 ✓.</p>
     <p class="q">2. Can Cramer's rule solve <code>x + 2y = 4</code>, <code>2x + 4y = 8</code>?</p>
-    <p class="a">No. det A = 4 − 4 = 0. (This system has infinitely many solutions; see section 9.)</p>
+    <p class="a">No. det A = 4 − 4 = 0. (This system has infinitely many solutions; see section 2.2.)</p>
   </details>
 </section>
 
-<!-- 9 TRANSFORM -->
-<section id="transform">
-  <div class="eyebrow">Extra topic</div>
-  <h2>Linear transformations</h2>
-  <p class="one">Moves that keep grid lines straight, parallel and evenly spaced, and keep the origin still.</p>
+<div class="unit" id="unit8"><span class="unit-n">Unit 8</span><span class="unit-t">Diagonalization</span></div>
 
-  <h3>The single most useful trick</h3>
-  <p><strong>The columns of the matrix are where the basic arrows land.</strong> Column 1 is where <code>(1, 0)</code> goes; column 2 is where <code>(0, 1)</code> goes. To build any transformation matrix, just ask "where do those two arrows end up?"</p>
-  <p>Real-world: every rotation, zoom and flip in a video game or photo editor is a matrix doing exactly this.</p>
+<!-- DIAG -->
+<section id="diag">
+  <div class="eyebrow">8.1</div>
+  <h2>Eigenvalues, eigenvectors and diagonalization</h2>
+  <p class="one">Find the directions a matrix only stretches, then use them as your axes.</p>
 
-  <div class="tablewrap">
-  <table>
-    <thead><tr><th>Move</th><th>(1,0) goes to</th><th>(0,1) goes to</th><th>Matrix</th></tr></thead>
-    <tbody>
-      <tr><td>Rotate 90° anticlockwise</td><td>(0, 1)</td><td>(−1, 0)</td><td><span class="m"><span>0</span><span>−1</span><span>1</span><span>0</span></span></td></tr>
-      <tr><td>Reflect in the x-axis</td><td>(1, 0)</td><td>(0, −1)</td><td><span class="m"><span>1</span><span>0</span><span>0</span><span>−1</span></span></td></tr>
-      <tr><td>Reflect in the line y = x</td><td>(0, 1)</td><td>(1, 0)</td><td><span class="m"><span>0</span><span>1</span><span>1</span><span>0</span></span></td></tr>
-      <tr><td>Stretch x by 3</td><td>(3, 0)</td><td>(0, 1)</td><td><span class="m"><span>3</span><span>0</span><span>0</span><span>1</span></span></td></tr>
-      <tr><td>Horizontal shear</td><td>(1, 0)</td><td>(1, 1)</td><td><span class="m"><span>1</span><span>1</span><span>0</span><span>1</span></span></td></tr>
-      <tr><td>Rotate by θ</td><td>(cos θ, sin θ)</td><td>(−sin θ, cos θ)</td><td class="martian">[[cos θ, −sin θ], [sin θ, cos θ]]</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h3>Is it linear?</h3>
-  <p>Officially: <code>T(u + v) = T(u) + T(v)</code> and <code>T(cu) = cT(u)</code>. Quick screening tests:</p>
-  <ul>
-    <li><strong>Does 0 go to 0?</strong> If not, it's not linear. So "shift everything right by 1" is out.</li>
-    <li><strong>Any squares, products of variables, sin(x), constants added?</strong> Not linear.</li>
-    <li>If each output is just "numbers × variables, added up", it's linear, and you can read off the matrix.</li>
-  </ul>
-
-  <div class="box trap">
-    <div class="label">Common mistakes</div>
-    <ul>
-      <li>Doing "first A, then B" as <code>AB</code>. It's <code>BA</code>: the matrix closest to the vector acts first, so read right to left.</li>
-      <li>Putting the images of (1,0) and (0,1) in as rows instead of columns.</li>
-    </ul>
-  </div>
-
-  <details>
-    <summary>Practice problems</summary>
-    <p class="q">1. Is <code>T(x, y) = (x + y, 2y)</code> linear? If yes, what's its matrix?</p>
-    <p class="a">Yes. <code>[[1, 1], [0, 2]]</code>. (Check: (1,0) → (1,0), (0,1) → (1,2), those are the columns.)</p>
-    <p class="q">2. Is <code>T(x, y) = (x², y)</code> linear?</p>
-    <p class="a">No. <code>T(2·(1,0)) = (4, 0)</code> but <code>2·T(1,0) = (2, 0)</code>.</p>
-    <p class="q">3. Find the matrix that rotates 90° anticlockwise and then reflects in the x-axis.</p>
-    <p class="a">Reflect × Rotate = <code>[[1,0],[0,−1]]·[[0,−1],[1,0]] = [[0,−1],[−1,0]]</code>. Check: (1,0) → rotate → (0,1) → reflect → (0,−1). First column ✓.</p>
-  </details>
-</section>
-
-<!-- 10 SPAN -->
-<section id="span">
-  <div class="eyebrow">Extra topic · builds on linear combinations</div>
-  <h2>Span, independence, basis and subspaces</h2>
-  <p class="one">Often the hardest part of the course. Go slowly and picture everything in 2D and 3D.</p>
-
-  <h3>Span: where can you get to?</h3>
-  <p>Imagine you can only move along certain arrows, as far as you like, forwards or backwards. The span is every place you can reach.</p>
-  <ul>
-    <li>One non-zero arrow in 2D: you can reach a <strong>line</strong>.</li>
-    <li>Two arrows pointing different ways in 2D: you can reach <strong>the whole plane</strong>.</li>
-    <li>Two arrows pointing the same way (one is a multiple of the other): still only a line. The second one added nothing.</li>
-  </ul>
-
-  <h3>Independence: is anything redundant?</h3>
-  <p>A set of vectors is <strong>independent</strong> if none of them can be built from the others. Paint analogy: red, blue and yellow are independent. Add purple and it's redundant, because you could already mix it from red and blue.</p>
-  <p><strong>How to test:</strong> put the vectors in as the columns of a matrix and row reduce. Pivot in every column: independent. Any column without a pivot: dependent. For n vectors in ℝⁿ you can also just check det ≠ 0.</p>
-
-  <h3>Basis and dimension</h3>
-  <p>A <strong>basis</strong> is a set of vectors that is independent (no waste) and spans the whole space (reaches everywhere). It's a coordinate system. The number of vectors in any basis is the <strong>dimension</strong>. The usual one for ℝ² is <code>(1, 0), (0, 1)</code>, but <code>(1, 0), (1, 1)</code> works just as well.</p>
-
-  <h3>Subspaces</h3>
-  <p>A subspace is a flat thing through the origin: a line through 0, a plane through 0, just {0}, or the whole space. Three-part test:</p>
-  <ol class="steps">
-    <li>Does it contain the zero vector? (Fastest way to rule things out.)</li>
-    <li>Add two things in it. Is the result still in it?</li>
-    <li>Scale something in it. Is the result still in it?</li>
-  </ol>
-
-  <div class="box work">
-    <div class="label">Worked example</div>
-    <pre class="calc">Are (1, 2, 3), (4, 5, 6), (7, 8, 9) independent?
-
-Row reduce with them as columns and you'll get only 2 pivots. Dependent.
-Specifically: (7, 8, 9) = 2·(4, 5, 6) − (1, 2, 3)
-             = (8 − 1, 10 − 2, 12 − 3)  <span class="ok">✓</span>
-
-So they span only a plane in 3D, not all of 3D space.</pre>
-  </div>
-
-  <div class="box trap">
-    <div class="label">Common mistakes</div>
-    <ul>
-      <li>Thinking more vectors always means a bigger span. Not if they're redundant.</li>
-      <li>Calling the line <code>y = x + 1</code> a subspace. It misses the origin, so it isn't.</li>
-      <li>Believing a basis is unique. A space has infinitely many bases; they just all have the same size.</li>
-      <li>Rule of thumb: more than n vectors in ℝⁿ are always dependent; fewer than n can never span ℝⁿ.</li>
-    </ul>
-  </div>
-
-  <div class="box ask">
-    <div class="label">Test yourself</div>
-    <ul>
-      <li>Can 2 vectors span ℝ³? Why not, in picture terms? (Two arrows can only sweep out a plane.)</li>
-      <li>Is any set containing the zero vector independent? (No. 0 = 0·anything, so it's always redundant.)</li>
-    </ul>
-  </div>
-
-  <details>
-    <summary>Practice problems</summary>
-    <p class="q">Which of these are subspaces of ℝ²?</p>
-    <p class="q">(a) all <code>(x, y)</code> with <code>y = 2x</code> &nbsp; (b) all with <code>y = 2x + 1</code> &nbsp; (c) all with <code>xy ≥ 0</code></p>
-    <p class="a">(a) Yes: a line through the origin. (b) No: <code>(0, 0)</code> isn't on it. (c) No: <code>(1, 0)</code> and <code>(0, −1)</code> are both in it, but their sum <code>(1, −1)</code> isn't. This one's sneaky; it contains 0, but it fails the addition test.</p>
-  </details>
-</section>
-
-<!-- 11 EIGEN -->
-<section id="eigen">
-  <div class="eyebrow">Extra topic</div>
-  <h2>Eigenvalues and eigenvectors</h2>
-  <p class="one">The directions a matrix doesn't turn, only stretches.</p>
-
-  <h3>The idea</h3>
+  <h3>Eigenvectors: the directions that don't turn</h3>
   <p>Most vectors get knocked off their line when a matrix acts on them. A few special ones stay on their own line and just get longer, shorter or flipped. Those are <strong>eigenvectors</strong>, and the stretch factor is the <strong>eigenvalue</strong> λ:</p>
   <pre class="calc">A v = λ v        <span class="c">"A does to v what a plain number would"</span></pre>
-  <p>Picture spinning a globe: every point moves except those on the axis. The axis is an eigenvector with eigenvalue 1. Real uses: Google's original PageRank, vibration modes of bridges, population models.</p>
+  <p>Picture spinning a globe: every point moves except those on the axis. The axis is an eigenvector with eigenvalue 1. Real uses: vibration modes of bridges and buildings, Google's original PageRank, population models.</p>
 
   <h3>Recipe</h3>
   <ol class="steps">
-    <li>Solve <code>det(A − λI) = 0</code> for λ. (Why: we need <code>(A − λI)v = 0</code> to have a non-zero solution, so <code>A − λI</code> must squash something, so its det is 0.)</li>
-    <li>For each λ, solve <code>(A − λI)v = 0</code> by row reduction to find v.</li>
+    <li>Solve <code>det(A − λI) = 0</code> for λ (the "characteristic equation"). Why: we need <code>(A − λI)v = 0</code> to have a non-zero solution, so <code>A − λI</code> must squash something, so its det is 0.</li>
+    <li>For each λ, solve <code>(A − λI)v = 0</code> by row reduction. The null space is the "eigenspace"; its basis vectors are the eigenvectors.</li>
   </ol>
 
   <div class="box work">
-    <div class="label">Worked example</div>
+    <div class="label">Worked example: eigenvalues</div>
     <pre class="calc">A = [ 2  1 ]
     [ 1  2 ]
 
@@ -1407,23 +1576,399 @@ det(A − λI) = (2 − λ)² − 1 = 0
         check: A(1, 1) = (3, 3) = 3·(1, 1)     <span class="ok">✓</span>
 λ = 1:  A − I  = [ 1  1 ; 1  1 ]    →  v = (1, −1)
         check: A(1, −1) = (1, −1) = 1·(1, −1)  <span class="ok">✓</span></pre>
-    <p>Quick sanity check: the eigenvalues add up to the diagonal sum (2 + 2 = 4 = 1 + 3) and multiply to the det (3 = 1 · 3).</p>
+    <p>Quick sanity check: eigenvalues add up to the diagonal sum, or trace (2 + 2 = 4 = 1 + 3), and multiply to the determinant (3 = 1 · 3).</p>
+  </div>
+
+  <h3>Diagonalization: switching to the matrix's favourite axes</h3>
+  <p>Use the eigenvectors as your coordinate axes, and the matrix does nothing but stretch along each axis. In those coordinates it becomes a <strong>diagonal</strong> matrix, the simplest kind there is.</p>
+  <pre class="calc">A = P D P⁻¹
+<span class="c">P = the eigenvectors, as columns
+D = the matching eigenvalues down the diagonal, in the same order</span></pre>
+  <p><strong>Why bother? Powers.</strong> Computing A¹⁰⁰ directly takes 99 matrix multiplications. With diagonalization, <code>A¹⁰⁰ = P D¹⁰⁰ P⁻¹</code>, and powering a diagonal matrix just powers each diagonal entry. Engineers use this to predict where a system ends up after many steps.</p>
+
+  <h3>When can you diagonalize?</h3>
+  <ul>
+    <li>An n×n matrix is diagonalizable exactly when it has <strong>n independent eigenvectors</strong> (enough to fill P).</li>
+    <li>n <em>different</em> eigenvalues: guaranteed yes.</li>
+    <li>A repeated eigenvalue: check. If λ repeats k times, you need k independent eigenvectors for it.</li>
+    <li>The classic "no": the shear <code>[[1, 1], [0, 1]]</code>. λ = 1 twice, but only one eigenvector direction, (1, 0).</li>
+  </ul>
+
+  <div class="box work">
+    <div class="label">Worked example: diagonalize and take a power</div>
+    <pre class="calc">A = [ 4  1 ]      det(A − λI) = λ² − 7λ + 10 = (λ − 5)(λ − 2)
+    [ 2  3 ]
+
+λ = 5:  A − 5I = [ −1  1 ; 2  −2 ]  →  v₁ = (1, 1)
+λ = 2:  A − 2I = [  2  1 ; 2   1 ]  →  v₂ = (1, −2)
+
+P = [ 1   1 ]     D = [ 5  0 ]     P⁻¹ = 1/3 [ 2   1 ]
+    [ 1  −2 ]         [ 0  2 ]               [ 1  −1 ]
+
+Check PDP⁻¹:  PD = [ 5   2 ]  →  PD·P⁻¹ = 1/3 [ 12  3 ] = [ 4  1 ]   <span class="ok">✓</span>
+                   [ 5  −4 ]                  [  6  9 ]   [ 2  3 ]
+
+A² = P D² P⁻¹,  with D² = [ 25  0 ; 0  4 ]
+   = 1/3 [ 54  21 ] = [ 18   7 ]
+         [ 42  33 ]   [ 14  11 ]    <span class="ok">✓ same as multiplying A·A directly</span></pre>
+    <p>For any k: <code>Aᵏ = P [5ᵏ 0; 0 2ᵏ] P⁻¹</code>. That's a formula for every power at once.</p>
   </div>
 
   <div class="box trap">
     <div class="label">Common mistakes</div>
     <ul>
+      <li>Mismatched order: the 1st column of P must go with the 1st diagonal entry of D, and so on.</li>
       <li>Giving <code>v = 0</code> as an eigenvector. Zero never counts.</li>
-      <li>Thinking the eigenvector is unique. Any non-zero multiple of it also works; <code>(2, 2)</code> is just as good as <code>(1, 1)</code>.</li>
+      <li>Thinking the eigenvector is unique. Any non-zero multiple also works; <code>(2, 2)</code> is as good as <code>(1, 1)</code>.</li>
       <li>Getting only the trivial solution when solving for v. That means λ is wrong; recheck step 1.</li>
+      <li>Assuming every matrix is diagonalizable, or that every matrix has real eigenvalues. A 90° rotation turns every direction, so it has no real eigenvectors at all.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>What are the eigenvalues of a diagonal matrix? (The diagonal entries. Nothing to compute.)</li>
+      <li>Projection onto a line: what are its eigenvalues? (1 for vectors on the line, 0 for vectors perpendicular to it.)</li>
+      <li>If 0 is an eigenvalue, is A invertible? (No. Something non-zero gets squashed to 0.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Diagonalize <code>[[1, 2], [2, 1]]</code>.</p>
+    <p class="a"><code>λ² − 2λ − 3 = (λ − 3)(λ + 1)</code>. λ = 3: v = (1, 1). λ = −1: v = (1, −1). So <code>P = [[1, 1], [1, −1]]</code>, <code>D = [[3, 0], [0, −1]]</code>. Check: trace 2 = 3 − 1 ✓, det −3 = 3·(−1) ✓.</p>
+    <p class="q">2. Is <code>[[2, 1], [0, 2]]</code> diagonalizable?</p>
+    <p class="a">No. λ = 2 twice, but <code>A − 2I = [[0, 1], [0, 0]]</code> gives only one eigenvector direction, (1, 0).</p>
+  </details>
+</section>
+
+<div class="unit" id="unit9"><span class="unit-n">Unit 9</span><span class="unit-t">Orthonormal Bases</span></div>
+
+<!-- ORTHO -->
+<section id="ortho">
+  <div class="eyebrow">9.1</div>
+  <h2>Orthogonal and orthonormal bases</h2>
+  <p class="one">Bases where every direction is at right angles to the others, like the lines on graph paper.</p>
+
+  <h3>The idea</h3>
+  <ul>
+    <li><strong>Orthogonal set:</strong> every pair of vectors is perpendicular (dot product 0).</li>
+    <li><strong>Orthonormal set:</strong> orthogonal, and every vector has length 1.</li>
+    <li>An orthogonal set of non-zero vectors is <strong>automatically independent</strong>. Perpendicular directions can't be built from each other.</li>
+  </ul>
+  <p><strong>Why they're so convenient:</strong> in an ordinary basis, finding coordinates means solving a system. In an orthogonal basis, each coordinate is a single <a href="#proj">projection</a>:</p>
+  <pre class="calc">x = c₁v₁ + c₂v₂ + … + cₙvₙ,    with   cᵢ = (x·vᵢ) / (vᵢ·vᵢ)
+<span class="c">If the basis is orthonormal, vᵢ·vᵢ = 1, so simply cᵢ = x·vᵢ.</span></pre>
+
+  <div class="box work">
+    <div class="label">Worked example: coordinates without a system</div>
+    <pre class="calc">v₁ = (1, 1), v₂ = (1, −1)      v₁·v₂ = 1 − 1 = 0  <span class="c">← orthogonal</span>
+Write x = (3, 5) in this basis:
+  c₁ = (3 + 5)/2 = 4
+  c₂ = (3 − 5)/2 = −1
+Check: 4(1, 1) − 1(1, −1) = (3, 5)   <span class="ok">✓</span></pre>
+  </div>
+
+  <h3>Gram–Schmidt: straightening a basis</h3>
+  <p>Given any basis, Gram–Schmidt turns it into an orthogonal one that spans the same space. The idea: <strong>keep the first vector; from each next vector, subtract its shadows on the ones you've already fixed.</strong> What's left is perpendicular to all of them.</p>
+  <pre class="calc">v₁ = x₁
+v₂ = x₂ − proj_v₁(x₂)
+v₃ = x₃ − proj_v₁(x₃) − proj_v₂(x₃)
+…   then divide each vᵢ by its length if you need orthonormal</pre>
+
+  <div class="box work">
+    <div class="label">Worked example: Gram–Schmidt</div>
+    <pre class="calc">x₁ = (1, 1, 0),  x₂ = (1, 0, 1)
+
+v₁ = (1, 1, 0)
+v₂ = (1, 0, 1) − [(x₂·v₁)/(v₁·v₁)] v₁
+   = (1, 0, 1) − (1/2)(1, 1, 0)
+   = (1/2, −1/2, 1)   →  scale by 2 to clear fractions: (1, −1, 2)
+
+Check: v₁·v₂ = 1 − 1 + 0 = 0   <span class="ok">✓</span>
+
+Orthonormal: q₁ = (1, 1, 0)/√2,   q₂ = (1, −1, 2)/√6</pre>
+    <p>Scaling a vector mid-way (like the ×2 here) is allowed. It doesn't change the direction, and it keeps the arithmetic clean.</p>
+  </div>
+
+  <h3>Orthogonal matrices</h3>
+  <p>A square matrix Q with <strong>orthonormal columns</strong> is called orthogonal. Its big perk: <code>QᵀQ = I</code>, so <strong><code>Q⁻¹ = Qᵀ</code>. The inverse comes for free.</strong> Rotations and reflections are orthogonal matrices: they keep every length and angle the same, and their determinant is ±1.</p>
+
+  <h3>Projecting onto a subspace</h3>
+  <p>To project x onto a plane (or any subspace) U, add up its projections onto each vector of an <em>orthogonal</em> basis of U. The leftover <code>x − proj_U(x)</code> is perpendicular to all of U. The set of every vector perpendicular to U is called the <strong>orthogonal complement</strong>, U⊥.</p>
+  <div class="box work">
+    <div class="label">Worked example: projection onto a plane</div>
+    <pre class="calc">U = span{(1, 1, 0), (1, −1, 2)}     <span class="c">← the orthogonal basis from above</span>
+x = (1, 2, 3)
+
+onto v₁:  (3/2)(1, 1, 0)   = (3/2, 3/2, 0)
+onto v₂:  (5/6)(1, −1, 2)  = (5/6, −5/6, 5/3)
+proj_U(x) = (7/3, 2/3, 5/3)
+
+leftover = x − proj = (−4/3, 4/3, 4/3)
+Check: leftover·v₁ = −4/3 + 4/3 = 0   <span class="ok">✓</span>
+       leftover·v₂ = −4/3 − 4/3 + 8/3 = 0   <span class="ok">✓</span></pre>
+    <p>The leftover points along (−1, 1, 1), and so does <code>v₁ × v₂ = (2, −2, −2)</code>: that's the plane's normal. U⊥ is the line in that direction.</p>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>In Gram–Schmidt, projecting onto the original x's instead of the new v's. Always subtract shadows on the vectors you've already <em>fixed</em>.</li>
+      <li>Using the coordinate shortcut <code>cᵢ = (x·vᵢ)/(vᵢ·vᵢ)</code> with a basis that isn't orthogonal. It only works when the basis is orthogonal.</li>
+      <li>Calling a matrix orthogonal when its columns are perpendicular but not length 1.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>Why must an orthogonal set of non-zero vectors be independent? (Dot the equation <code>c₁v₁ + … = 0</code> with v₁: everything else vanishes, leaving <code>c₁‖v₁‖² = 0</code>.)</li>
+      <li>What's the inverse of a rotation matrix, without any computing? (Its transpose. Or: rotate back.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Apply Gram–Schmidt to <code>(3, 4)</code>, <code>(1, 0)</code>, then make the result orthonormal.</p>
+    <p class="a">v₁ = (3, 4). v₂ = (1, 0) − (3/25)(3, 4) = (16/25, −12/25), which points along (4, −3). Check 12 − 12 = 0 ✓. Orthonormal: <code>(3/5, 4/5)</code>, <code>(4/5, −3/5)</code>.</p>
+    <p class="q">2. Is <code>Q = (1/√2)[[1, 1], [1, −1]]</code> orthogonal? What is Q⁻¹?</p>
+    <p class="a">Yes: each column has length 1 and they're perpendicular. Q⁻¹ = Qᵀ, which here is Q itself.</p>
+  </details>
+</section>
+
+<div class="unit" id="unit10"><span class="unit-n">Unit 10</span><span class="unit-t">Symmetric Matrices</span></div>
+
+<!-- SYMMETRIC -->
+<section id="symmetric">
+  <div class="eyebrow">10.1</div>
+  <h2>Symmetric matrices</h2>
+  <p class="one">Matrices that are pure stretching along perpendicular axes.</p>
+
+  <h3>The idea</h3>
+  <p>A matrix is <strong>symmetric</strong> if <code>Aᵀ = A</code>: it's a mirror image of itself across the main diagonal. <code>[[2, 1], [1, 2]]</code> is symmetric; <code>[[1, 2], [3, 4]]</code> isn't.</p>
+  <p>They come up whenever "the effect of i on j equals the effect of j on i": stiffness matrices in structures, stress in materials, covariance in data, distance tables.</p>
+
+  <h3>The big theorem (spectral / principal axes theorem)</h3>
+  <p>For a real symmetric matrix A:</p>
+  <ol class="steps">
+    <li>All its eigenvalues are real numbers.</li>
+    <li>Eigenvectors for different eigenvalues are automatically perpendicular.</li>
+    <li>It can be <strong>orthogonally diagonalized</strong>: <code>A = Q D Qᵀ</code>, with Q orthogonal. Since Q⁻¹ = Qᵀ, there's no inverse to compute.</li>
+  </ol>
+  <p>In plain English: <strong>every symmetric matrix just stretches space along some set of perpendicular axes.</strong> Those axes are its eigenvectors.</p>
+
+  <figure>
+    <svg viewBox="0 0 240 200" width="240" role="img" aria-label="A dashed unit circle and a green ellipse tilted 45 degrees. The ellipse is stretched by 3 along the direction 1,1 and by 1 along the direction 1,-1.">
+      <line x1="50" y1="170" x2="190" y2="30" style="stroke:var(--muted);stroke-dasharray:3 4"/>
+      <line x1="70" y1="50" x2="170" y2="150" style="stroke:var(--muted);stroke-dasharray:3 4"/>
+      <ellipse cx="120" cy="100" rx="84" ry="28" transform="rotate(-45 120 100)" class="para"/>
+      <circle cx="120" cy="100" r="28" class="sq"/>
+      <text x="184" y="52" class="tw">×3</text>
+      <text x="170" y="140" class="tu">×1</text>
+      <text x="8" y="194" class="muted">A = [[2,1],[1,2]] on the unit circle</text>
+    </svg>
+    <figcaption>The circle becomes an ellipse stretched ×3 along (1, 1) and ×1 along (1, −1). The ellipse's axes are the eigenvectors, and they're perpendicular.</figcaption>
+  </figure>
+
+  <h3>Recipe for A = QDQᵀ</h3>
+  <ol class="steps">
+    <li>Find the eigenvalues and eigenvectors as usual.</li>
+    <li>Make the eigenvectors length 1. (If an eigenvalue repeats, run Gram–Schmidt on its eigenvectors first.)</li>
+    <li>Put them in Q as columns. Put the eigenvalues in D in the same order.</li>
+  </ol>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">A = [ 2  1 ]     from section 8.1: λ = 3, v = (1, 1);  λ = 1, v = (1, −1)
+    [ 1  2 ]     (1, 1)·(1, −1) = 0   <span class="c">← perpendicular, as promised</span>
+
+Q = 1/√2 [ 1   1 ]      D = [ 3  0 ]
+         [ 1  −1 ]          [ 0  1 ]
+
+Check QDQᵀ:  1/2 [ 3   1 ] [ 1   1 ]  = 1/2 [ 4  2 ] = [ 2  1 ]   <span class="ok">✓</span>
+                 [ 3  −1 ] [ 1  −1 ]        [ 2  4 ]   [ 1  2 ]</pre>
+  </div>
+
+  <h3>Quadratic forms</h3>
+  <p>An expression like <code>2x² + 2xy + 2y²</code> can be written as <code>xᵀAx</code> with a symmetric A: squares go on the diagonal, and the xy coefficient is <strong>split in half</strong> between the two off-diagonal spots. Here that's <code>A = [[2, 1], [1, 2]]</code>.</p>
+  <p>Switching to the eigenvector axes removes the cross term: the expression becomes <code>3u² + 1v²</code>. If every eigenvalue is positive, the form is <strong>positive definite</strong>: it's positive for every x ≠ 0, and its level curves are ellipses like the one above.</p>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Forgetting to normalize the eigenvectors, so Q isn't orthogonal and Qᵀ isn't its inverse.</li>
+      <li>Putting the whole xy coefficient in both off-diagonal spots instead of half in each.</li>
+      <li>With a repeated eigenvalue, assuming its eigenvectors are already perpendicular. Only eigenvectors from <em>different</em> eigenvalues are guaranteed to be.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>Can a 90° rotation matrix be symmetric? (No. Symmetric matrices have real eigenvalues, and a 90° rotation has none.)</li>
+      <li>Is AᵀA always symmetric? (Yes: <code>(AᵀA)ᵀ = AᵀA</code>. It appears again in least squares.)</li>
     </ul>
   </div>
 
   <details>
     <summary>Practice problem</summary>
-    <p class="q">Find the eigenvalues and eigenvectors of <code>[[4, 1], [2, 3]]</code>.</p>
-    <p class="a"><code>λ² − 7λ + 10 = (λ − 2)(λ − 5)</code>, so λ = 2, 5.<br>λ = 5: <code>v = (1, 1)</code>; check <code>A(1,1) = (5,5)</code> ✓.<br>λ = 2: <code>v = (1, −2)</code>; check <code>A(1,−2) = (2,−4)</code> ✓.<br>Sum 7 = trace, product 10 = det ✓.</p>
+    <p class="q">Orthogonally diagonalize <code>[[5, 2], [2, 2]]</code>.</p>
+    <p class="a">Trace 7, det 6, so <code>λ² − 7λ + 6 = (λ − 6)(λ − 1)</code>. λ = 6: v = (2, 1). λ = 1: v = (1, −2). Perpendicular ✓ (2 − 2 = 0). <code>Q = (1/√5)[[2, 1], [1, −2]]</code>, <code>D = [[6, 0], [0, 1]]</code>. Check: A(2, 1) = (12, 6) = 6(2, 1) ✓.</p>
   </details>
+</section>
+
+<div class="unit" id="unit11"><span class="unit-n">Unit 11</span><span class="unit-t">Least Squares</span></div>
+
+<!-- LSQ -->
+<section id="lsq">
+  <div class="eyebrow">11.1</div>
+  <h2>Least squares</h2>
+  <p class="one">When there's no exact answer, find the closest one.</p>
+
+  <h3>The idea</h3>
+  <p>Real measurements are noisy. Fit a straight line through 4 lab data points and you get 4 equations in 2 unknowns, with no exact solution. Least squares finds the x that makes <code>Ax</code> as close as possible to b, meaning it makes <code>‖Ax − b‖</code> as small as it can be.</p>
+  <p><strong>Geometric picture:</strong> Ax can only land in the column space of A. The closest point in there to b is the <strong>projection</strong> of b onto the column space. The leftover error is perpendicular to every column, and that fact gives the formula:</p>
+  <pre class="calc">AᵀA x̂ = Aᵀb        <span class="c">← the "normal equations". Solve for x̂.</span></pre>
+
+  <figure>
+    <svg viewBox="0 0 260 200" width="260" role="img" aria-label="Four data points at 0,1; 1,2; 2,2; 3,4 with the best-fit line y = 0.9 + 0.9x, and dashed vertical segments showing the error at each point.">
+      <line class="ax" x1="40" y1="170" x2="245" y2="170"/><line class="ax" x1="40" y1="170" x2="40" y2="15"/>
+      <g class="muted">
+        <text x="36" y="186">0</text><text x="96" y="186">1</text><text x="156" y="186">2</text><text x="216" y="186">3</text>
+        <text x="26" y="139">1</text><text x="26" y="104">2</text><text x="26" y="69">3</text><text x="26" y="34">4</text>
+      </g>
+      <line class="w" x1="40" y1="138.5" x2="236" y2="35.6"/>
+      <g style="stroke:var(--v);stroke-width:1.5;stroke-dasharray:3 3">
+        <line x1="40" y1="135" x2="40" y2="138.5"/>
+        <line x1="100" y1="100" x2="100" y2="107"/>
+        <line x1="160" y1="100" x2="160" y2="75.5"/>
+        <line x1="220" y1="30" x2="220" y2="44"/>
+      </g>
+      <g class="hu">
+        <circle cx="40" cy="135" r="4.5"/><circle cx="100" cy="100" r="4.5"/><circle cx="160" cy="100" r="4.5"/><circle cx="220" cy="30" r="4.5"/>
+      </g>
+      <text x="120" y="152" class="tw">y = 0.9 + 0.9x</text>
+    </svg>
+    <figcaption>Blue: the data. Green: the best-fit line. Orange dashes: the errors. Least squares makes the sum of the squared errors as small as possible.</figcaption>
+  </figure>
+
+  <h3>Recipe for a best-fit line y = a + bx</h3>
+  <ol class="steps">
+    <li>Write one equation per data point: <code>a + b·xᵢ = yᵢ</code>.</li>
+    <li>A has a column of 1s (for a) and a column of the x-values (for b). The vector y holds the y-values.</li>
+    <li>Compute AᵀA and Aᵀy, then solve the small 2×2 system.</li>
+  </ol>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">Data: (0, 1), (1, 2), (2, 2), (3, 4)
+
+A = [ 1  0 ]      y = [ 1 ]
+    [ 1  1 ]          [ 2 ]
+    [ 1  2 ]          [ 2 ]
+    [ 1  3 ]          [ 4 ]
+
+AᵀA = [ 4   6 ]      Aᵀy = [  9 ]      <span class="c">← 4 = number of points, 6 = sum of x, 14 = sum of x²</span>
+      [ 6  14 ]            [ 18 ]      <span class="c">← 9 = sum of y, 18 = sum of x·y</span>
+
+4a + 6b = 9
+6a + 14b = 18    →   b = 0.9,  a = 0.9
+
+Best-fit line: y = 0.9 + 0.9x
+
+Check: errors (actual − predicted) = (0.1, 0.2, −0.7, 0.4)
+  Aᵀ·errors = (0.1 + 0.2 − 0.7 + 0.4,  0 + 0.2 − 1.4 + 1.2) = (0, 0)   <span class="ok">✓</span></pre>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Trying to solve Ax = y directly. It's inconsistent; that's the whole point.</li>
+      <li>Computing AAᵀ instead of AᵀA. AAᵀ here would be 4×4 instead of 2×2, a sure sign something is wrong.</li>
+      <li>Forgetting the column of 1s, which forces the line through the origin.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>If all the points lie exactly on a line, what does least squares give? (That exact line, with zero error.)</li>
+      <li>Why "squares"? (We minimize the sum of the squared errors, which is ‖Ax − y‖².)</li>
+      <li>How would you fit a parabola <code>y = a + bx + cx²</code>? (Add a third column holding the x² values.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problem</summary>
+    <p class="q">Fit <code>y = a + bx</code> to <code>(0, 0), (1, 1), (2, 1)</code>.</p>
+    <p class="a"><code>AᵀA = [[3, 3], [3, 5]]</code>, <code>Aᵀy = (2, 3)</code>. So 3a + 3b = 2 and 3a + 5b = 3, giving b = 1/2, a = 1/6. Line: <code>y = 1/6 + x/2</code>. Errors (−1/6, 1/3, −1/6) sum to 0 ✓.</p>
+  </details>
+</section>
+
+<div class="unit" id="tools"><span class="unit-n">Tools</span><span class="unit-t">MATLAB</span></div>
+
+<!-- MATLAB -->
+<section id="matlab">
+  <div class="eyebrow">Units 9–11 · tested</div>
+  <h2>MATLAB basics</h2>
+  <p class="one">Everything in this course, one line at a time.</p>
+  <p>MATLAB is short for "matrix laboratory", so linear algebra is what it does best. Use it to check hand calculations, and learn the commands, because the exam can ask about them.</p>
+
+  <h3>Entering things</h3>
+  <pre class="calc">v = [1 2 3]          <span class="c">% row vector (spaces or commas between entries)</span>
+w = [1; 2; 3]        <span class="c">% column vector (semicolons start new rows)</span>
+A = [1 2; 3 4]       <span class="c">% 2×2 matrix</span>
+I = eye(3)           <span class="c">% 3×3 identity</span>
+Z = zeros(2, 3)      <span class="c">% 2×3 matrix of zeros</span>
+format rat           <span class="c">% show answers as fractions, easier to compare with hand work</span></pre>
+
+  <h3>Command cheat sheet</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Math</th><th>MATLAB</th><th>Unit</th></tr></thead>
+    <tbody>
+      <tr><td>u·v, u × v, ‖v‖</td><td class="martian">dot(u,v)  cross(u,v)  norm(v)</td><td>1</td></tr>
+      <tr><td>RREF of [A | b]</td><td class="martian">rref([A b])</td><td>2</td></tr>
+      <tr><td>Aᵀ, AB, A⁻¹</td><td class="martian">A'  A*B  inv(A)</td><td>3</td></tr>
+      <tr><td>Solve Ax = b</td><td class="martian">A\b</td><td>2–3</td></tr>
+      <tr><td>Rank, null space basis</td><td class="martian">rank(A)  null(A,'r')</td><td>4–5</td></tr>
+      <tr><td>det A</td><td class="martian">det(A)</td><td>7</td></tr>
+      <tr><td>Eigenvalues only</td><td class="martian">eig(A)</td><td>8</td></tr>
+      <tr><td>Eigenvectors (V) and eigenvalues (D)</td><td class="martian">[V, D] = eig(A)</td><td>8, 10</td></tr>
+      <tr><td>Orthonormal basis of col(A)</td><td class="martian">orth(A)  or  [Q, R] = qr(A, 0)</td><td>9</td></tr>
+      <tr><td>Least-squares solution</td><td class="martian">A\b  (when A is tall)</td><td>11</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box work">
+    <div class="label">Worked example: redo the course's examples</div>
+    <pre class="calc"><span class="c">% Unit 8: diagonalization</span>
+A = [4 1; 2 3];
+[V, D] = eig(A)
+<span class="c">% D holds 2 and 5. V's columns point along (1, −2) and (1, 1),
+% but scaled to length 1, e.g. 0.7071 0.7071 instead of 1 1.</span>
+V*D/V            <span class="c">% rebuilds A  (X/V means X times inv(V))</span>
+
+<span class="c">% Unit 11: best-fit line through (0,1), (1,2), (2,2), (3,4)</span>
+x = [0; 1; 2; 3];
+y = [1; 2; 2; 4];
+A = [ones(4,1) x];   <span class="c">% column of 1s, then the x-values</span>
+coef = A\y           <span class="c">% returns 0.9 and 0.9</span></pre>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li><code>A*B</code> is matrix multiplication. <code>A.*B</code> multiplies entry by entry. Mixing them up gives no error, just a wrong answer.</li>
+      <li>Row vs column vectors: <code>[1 2 3]</code> is a row, <code>[1; 2; 3]</code> is a column. <code>A*v</code> needs a column.</li>
+      <li><code>eig</code> returns unit-length eigenvectors, possibly in a different order or with flipped signs. They're still correct; compare directions, not exact numbers.</li>
+      <li>Tiny numbers like <code>1.0e-15</code> are rounding noise. Read them as 0.</li>
+      <li><code>A\b</code> is not <code>b/A</code>. Backslash is the one that solves Ax = b.</li>
+    </ul>
+  </div>
 </section>
 
 <!-- CONNECT -->
@@ -1442,6 +1987,8 @@ det(A − λI) = (2 − λ)² − 1 = 0
       <tr><td>Ax = 0 has only the trivial solution</td><td>Nothing non-zero gets squashed to zero</td></tr>
       <tr><td>The columns are linearly independent</td><td>No column is redundant</td></tr>
       <tr><td>The columns span ℝⁿ</td><td>The outputs reach everywhere</td></tr>
+      <tr><td>The columns form a basis of ℝⁿ</td><td>A complete set of directions with nothing wasted</td></tr>
+      <tr><td>rank A = n</td><td>Every column has a pivot</td></tr>
       <tr><td>RREF of A is I</td><td>Row reduction gives a pivot in every row and column</td></tr>
       <tr><td>Cramer's rule can be used on Ax = b</td><td>There's a unique answer to find, one variable at a time</td></tr>
       <tr><td>0 is not an eigenvalue</td><td>No direction gets crushed to nothing</td></tr>
@@ -1471,6 +2018,12 @@ det(A − λI) = (2 − λ)² − 1 = 0
       <tr><td>A line–plane intersection</td><td>Plugging the point into the plane's equation</td></tr>
       <tr><td>An RREF</td><td>Every pivot is 1 and is the only non-zero in its column</td></tr>
       <tr><td>A Cramer's rule answer</td><td>Plugging into the original equations (or solving another way)</td></tr>
+      <tr><td>A null space basis</td><td>Multiplying A by each basis vector; you should get 0</td></tr>
+      <tr><td>A rank</td><td>rank + number of free variables = number of columns</td></tr>
+      <tr><td>A diagonalization</td><td>Checking AP = PD (quicker than computing P⁻¹)</td></tr>
+      <tr><td>A Gram–Schmidt result</td><td>Every pair of new vectors should dot to 0</td></tr>
+      <tr><td>An orthogonal matrix</td><td>QᵀQ should equal I</td></tr>
+      <tr><td>A least-squares fit</td><td>Aᵀ × (residuals) should be the zero vector</td></tr>
       <tr><td>A plane's equation</td><td>Plugging in the given point(s)</td></tr>
       <tr><td>An inverse</td><td>Multiplying A by it; you should get I</td></tr>
       <tr><td>A determinant</td><td>Asking: does 0 make sense? Are columns obviously dependent?</td></tr>
