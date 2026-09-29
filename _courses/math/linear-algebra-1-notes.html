@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Plain-English notes for first-year linear algebra: vectors, dot and cross products, projections, lines and planes, systems of equations, RREF, matrices, inverses, determinants and Cramer's rule.">
+<title>Linear Algebra, Translated</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:220px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.crumbs{display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-bottom:28px; font-family:var(--display); font-size:14px}
+.crumbs a{color:var(--muted); text-decoration:none}
+.crumbs a:hover,.crumbs a:focus-visible{color:var(--u)}
+.crumbs .ed{display:inline-flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; background:var(--surface)}
+.crumbs .ed a,.crumbs .ed span{padding:3px 12px}
+.crumbs .ed span{background:var(--u); color:var(--surface); font-weight:700}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(38px,6vw,64px); line-height:1.02; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .vec{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+nav.toc{position:sticky; top:calc(env(safe-area-inset-top,0px) + 24px); align-self:start; padding-top:8px; font-family:var(--display); font-size:14px}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px; counter-reset:t}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .sep{height:1px; background:var(--line); margin:8px 8px}
+main{min-width:0; display:grid; gap:56px}
+section{max-width:72ch; scroll-margin-top:24px}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+p{margin:0 0 14px}
+ul,ol.steps{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code,.mono{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px; white-space:nowrap}
+pre.calc{font-family:var(--mono); font-size:14px; line-height:1.55; background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:14px 16px; overflow-x:auto; margin:0 0 14px}
+pre.calc .c{color:var(--muted)}
+pre.calc .ok{color:var(--w); font-weight:600}
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.work{background:var(--surface); border:1px solid var(--line)} .box.work .label{color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2}
+svg .u{stroke:var(--u); stroke-width:3; fill:none}
+svg .v{stroke:var(--v); stroke-width:3; fill:none}
+svg .w{stroke:var(--w); stroke-width:3; fill:none}
+svg .hu{fill:var(--u)} svg .hv{fill:var(--v)} svg .hw{fill:var(--w)}
+svg .tu{fill:var(--u)} svg .tv{fill:var(--v)} svg .tw{fill:var(--w)}
+svg .muted{fill:var(--muted)}
+svg .sq{fill:var(--u); fill-opacity:.12; stroke:var(--u); stroke-dasharray:4 3}
+svg .para{fill:var(--w); fill-opacity:.16; stroke:var(--w); stroke-width:2}
+.m{display:inline-grid; grid-template-columns:repeat(var(--c,2),auto); gap:0 12px; padding:2px 9px; border-left:2px solid currentColor; border-right:2px solid currentColor; border-radius:7px; font-family:var(--mono); font-size:.88em; vertical-align:middle; text-align:right; line-height:1.45}
+.eq{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:6px 0 14px; font-family:var(--mono); font-size:15px}
+details{background:var(--surface); border:1px solid var(--line); border-radius:10px; margin:18px 0; padding:0 18px}
+details summary{cursor:pointer; font-family:var(--display); font-weight:700; padding:12px 0; list-style-position:outside}
+details summary:focus-visible{outline:2px solid var(--u); outline-offset:3px; border-radius:4px}
+details[open] summary{border-bottom:1px solid var(--line); margin-bottom:12px}
+details .q{margin-bottom:4px}
+details .a{color:var(--muted); margin-bottom:14px}
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+td.martian{font-family:var(--mono); font-size:13.5px; white-space:nowrap}
+.cols3{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin:14px 0}
+.cols3 > div{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:15.5px}
+.cols3 b{font-family:var(--display); display:block; margin-bottom:4px}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+  nav.toc .sep{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker>
+    <marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker>
+    <marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker>
+  </defs>
+</svg>
+
+<div class="wrap">
+<header class="top">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/courses/">← All courses</a></nav>
+  <div class="kicker">Study notes · first-year linear algebra</div>
+  <h1>Linear algebra, <span class="vec">translated</span></h1>
+  <p class="lede">Each topic starts with the plain-English idea and a picture, then a worked example, the most common mistakes, and quick questions to test yourself. Practice answers are hidden until you click, so try each problem first.</p>
+</header>
+
+<nav class="toc" aria-label="Topics">
+  <ol>
+    <li><a href="#howto"><span class="n">→</span>How to study this</a></li>
+    <li><a href="#martian"><span class="n">→</span>Martian to English</a></li>
+    <li class="sep" aria-hidden="true"></li>
+    <li><a href="#vectors"><span class="n">1</span>Vectors</a></li>
+    <li><a href="#lincomb"><span class="n">2</span>Linear combinations</a></li>
+    <li><a href="#norm"><span class="n">3</span>Norm (length)</a></li>
+    <li><a href="#dot"><span class="n">4</span>Dot product</a></li>
+    <li><a href="#proj"><span class="n">5</span>Vector projections</a></li>
+    <li><a href="#cross"><span class="n">6</span>Cross product</a></li>
+    <li><a href="#lines"><span class="n">7</span>Lines &amp; planes in ℝⁿ</a></li>
+    <li><a href="#systems"><span class="n">8</span>Systems of equations</a></li>
+    <li><a href="#rref"><span class="n">9</span>Augmented matrices, REF &amp; RREF</a></li>
+    <li><a href="#matrices"><span class="n">10</span>Matrix multiplication</a></li>
+    <li><a href="#inverse"><span class="n">11</span>Matrix inverse</a></li>
+    <li><a href="#det"><span class="n">12</span>Determinants</a></li>
+    <li><a href="#cramer"><span class="n">13</span>Cramer's rule</a></li>
+    <li class="sep" aria-hidden="true"></li>
+    <li><a href="#transform"><span class="n">+</span>Linear transformations</a></li>
+    <li><a href="#span"><span class="n">+</span>Span, independence, basis</a></li>
+    <li><a href="#eigen"><span class="n">+</span>Eigenvalues</a></li>
+    <li class="sep" aria-hidden="true"></li>
+    <li><a href="#connect"><span class="n">→</span>How it all connects</a></li>
+    <li><a href="#checks"><span class="n">→</span>Self-check habits</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- HOW TO -->
+<section id="howto">
+  <div class="eyebrow">Before you start</div>
+  <h2>How to study this</h2>
+  <p class="one">Picture first, numbers second, symbols last.</p>
+  <p>Linear algebra is rarely hard because of the arithmetic. It feels hard because textbooks start with the symbols, and symbols mean nothing until you have a picture to attach them to. These notes give you the picture first.</p>
+  <ul>
+    <li><strong>Start in 2D.</strong> Anything true in ℝ³ or ℝⁿ can first be drawn on paper in ℝ². Once it makes sense with two numbers, three or more is "the same thing, longer list".</li>
+    <li><strong>Say it in words.</strong> After any definition, explain it out loud as if to a friend who never took math. If you can't, you've memorised it rather than understood it.</li>
+    <li><strong>Predict before computing.</strong> "Will this dot product be positive or negative?" "Will this matrix have an inverse?" Guessing first builds intuition quickly.</li>
+    <li><strong>Check what kind of answer is wanted.</strong> A number? A vector? A matrix? Yes or no? Many lost marks come from giving the wrong <em>type</em> of answer.</li>
+    <li><strong>Check your work.</strong> Almost every computation in this course can be checked in under a minute. See <a href="#checks">Self-check habits</a> at the end.</li>
+  </ul>
+  <div class="box tip">
+    <div class="label">How the notes are organised</div>
+    <p>Sections 1–13 are the core course topics, in order. Determinants (12) come just before Cramer's rule because the rule is built from them. The three sections marked <strong>+</strong> at the end are extra topics for going further.</p>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="martian">
+  <div class="eyebrow">Reference</div>
+  <h2>Martian to English</h2>
+  <p class="one">Keep this handy. Most confusion is vocabulary.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Textbook says</th><th>It means</th></tr></thead>
+    <tbody>
+      <tr><td class="martian">scalar</td><td>Just a regular number.</td></tr>
+      <tr><td class="martian">vector in ℝⁿ</td><td>A list of n numbers, or an arrow in n-dimensional space.</td></tr>
+      <tr><td class="martian">linear combination</td><td>A mix: "some amount of this vector plus some amount of that one".</td></tr>
+      <tr><td class="martian">norm ‖v‖</td><td>The length of the arrow.</td></tr>
+      <tr><td class="martian">unit vector</td><td>An arrow of length exactly 1. Pure direction.</td></tr>
+      <tr><td class="martian">projection</td><td>The shadow one arrow casts on another.</td></tr>
+      <tr><td class="martian">parametric form</td><td>"Start here, then move t steps this way." The t is the parameter.</td></tr>
+      <tr><td class="martian">hyperplane</td><td>What one equation describes in ℝⁿ: a line in ℝ², a plane in ℝ³, a 3D "slice" in ℝ⁴.</td></tr>
+      <tr><td class="martian">augmented matrix</td><td>The system with the letters and = signs stripped out. Just the numbers.</td></tr>
+      <tr><td class="martian">REF</td><td>Row echelon form: a staircase of zeros in the bottom-left.</td></tr>
+      <tr><td class="martian">RREF</td><td>Reduced REF: the fully tidied staircase, where you can read the answer straight off.</td></tr>
+      <tr><td class="martian">span</td><td>Everywhere you can reach by mixing the given vectors.</td></tr>
+      <tr><td class="martian">linearly independent</td><td>None of the vectors is redundant; none can be built from the others.</td></tr>
+      <tr><td class="martian">basis</td><td>The smallest set of directions that still reaches everywhere.</td></tr>
+      <tr><td class="martian">dimension</td><td>How many independent directions you have (degrees of freedom).</td></tr>
+      <tr><td class="martian">subspace</td><td>A flat thing through the origin: a line, a plane, and so on.</td></tr>
+      <tr><td class="martian">orthogonal</td><td>Perpendicular (dot product is zero).</td></tr>
+      <tr><td class="martian">normal vector</td><td>An arrow sticking straight out of a plane.</td></tr>
+      <tr><td class="martian">consistent system</td><td>Has at least one solution.</td></tr>
+      <tr><td class="martian">homogeneous system</td><td>Every right-hand side is 0. Always has the "all zeros" answer.</td></tr>
+      <tr><td class="martian">trivial solution</td><td>The all-zeros answer.</td></tr>
+      <tr><td class="martian">pivot</td><td>The first non-zero number in a row after elimination. Its variable is "decided".</td></tr>
+      <tr><td class="martian">free variable</td><td>A variable with no pivot. You get to pick its value.</td></tr>
+      <tr><td class="martian">identity matrix I</td><td>The "do nothing" matrix. Like multiplying by 1.</td></tr>
+      <tr><td class="martian">invertible / non-singular</td><td>Has an undo button.</td></tr>
+      <tr><td class="martian">singular</td><td>Squashes space flat. No undo button.</td></tr>
+      <tr><td class="martian">transpose Aᵀ</td><td>Flip the matrix so rows become columns.</td></tr>
+      <tr><td class="martian">null space / kernel</td><td>Every vector that the matrix squashes to zero.</td></tr>
+      <tr><td class="martian">eigenvector</td><td>A direction the matrix only stretches, never turns.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 1 VECTORS -->
+<section id="vectors">
+  <div class="eyebrow">Topic 1</div>
+  <h2>Vectors</h2>
+  <p class="one">An arrow, or a list of numbers. It's the same thing.</p>
+
+  <h3>The idea</h3>
+  <p>A vector like <code>(3, 1)</code> is a set of directions: "go 3 right and 1 up". It doesn't care where you start, only how far and which way. You can also read it as a list of data: 3 apples, 1 banana. Both readings are correct, and switching between them is half of this course.</p>
+  <ul>
+    <li><strong>Adding</strong> vectors means doing one move, then the other. Put them tip to tail.</li>
+    <li><strong>Scaling</strong> (multiplying by a number) stretches or shrinks the arrow. A negative number flips it around.</li>
+    <li><strong>Length</strong> is just Pythagoras: <code>‖(3, 4)‖ = √(9 + 16) = 5</code>. More in <a href="#norm">Norm</a>.</li>
+    <li><strong>ℝⁿ</strong> just means "lists of n numbers". <code>(2, 0, −1, 5)</code> lives in ℝ⁴. You can't draw it, but every rule works exactly the same: entry by entry.</li>
+  </ul>
+
+  <figure>
+    <svg viewBox="0 0 300 250" width="300" role="img" aria-label="Vector u equals 3,1 in blue, then v equals 1,2 in orange placed at its tip, and the sum 4,3 in green from the origin.">
+      <g class="gl">
+        <line x1="30" y1="10" x2="30" y2="210"/><line x1="80" y1="10" x2="80" y2="210"/><line x1="130" y1="10" x2="130" y2="210"/><line x1="180" y1="10" x2="180" y2="210"/><line x1="230" y1="10" x2="230" y2="210"/><line x1="280" y1="10" x2="280" y2="210"/>
+        <line x1="30" y1="10" x2="280" y2="10"/><line x1="30" y1="60" x2="280" y2="60"/><line x1="30" y1="110" x2="280" y2="110"/><line x1="30" y1="160" x2="280" y2="160"/>
+      </g>
+      <line class="ax" x1="30" y1="210" x2="285" y2="210"/><line class="ax" x1="30" y1="210" x2="30" y2="5"/>
+      <line class="w" x1="30" y1="210" x2="228" y2="62" marker-end="url(#aw)"/>
+      <line class="u" x1="30" y1="210" x2="176" y2="161" marker-end="url(#au)"/>
+      <line class="v" x1="180" y1="160" x2="228" y2="64" marker-end="url(#av)"/>
+      <text x="100" y="200" class="tu">u = (3,1)</text>
+      <text x="212" y="130" class="tv">v = (1,2)</text>
+      <text x="62" y="118" class="tw">u + v = (4,3)</text>
+      <text x="26" y="228" class="muted">0</text><text x="176" y="228" class="muted">3</text><text x="226" y="228" class="muted">4</text>
+    </svg>
+    <figcaption>Walk along u, then along v. You end up where u + v takes you in one step.</figcaption>
+  </figure>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <p>Let <code>u = (3, 1)</code> and <code>v = (1, 2)</code>.</p>
+    <pre class="calc">u + v = (3+1, 1+2) = (4, 3)
+2u    = (6, 2)                <span class="c">same direction, twice as long</span>
+u − v = (3−1, 1−2) = (2, −1)
+‖u‖   = √(3² + 1²) = √10 ≈ 3.16</pre>
+    <p>Draw every one of these on graph paper. Which direction does <code>u − v</code> point, and why? (It's the arrow from the tip of v to the tip of u.)</p>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Trying to add vectors of different sizes, like <code>(1, 2) + (1, 2, 3)</code>. You can't; they live in different spaces.</li>
+      <li>Mixing up a <em>point</em> (a location) with a <em>vector</em> (a movement). The notation is the same, so context decides.</li>
+      <li>Writing <code>‖u + v‖ = ‖u‖ + ‖v‖</code>. False, unless they point the same way. Walking 3 km north then 4 km east doesn't put you 7 km from home.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>If u is walking directions, what does −u mean?</li>
+      <li>What's a vector with length 0? Does it have a direction?</li>
+      <li>Give me a real-life thing that's naturally a list of 4 numbers.</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. With <code>u = (2, −1)</code> and <code>v = (−1, 3)</code>, find <code>3u − v</code>.</p>
+    <p class="a"><code>(6, −3) − (−1, 3) = (7, −6)</code></p>
+    <p class="q">2. Compute <code>(1, 0, 2, −1) + 2(0, 3, 1, 1)</code> in ℝ⁴.</p>
+    <p class="a"><code>(1, 6, 4, 1)</code>. Same rules, just more slots.</p>
+  </details>
+</section>
+
+<!-- LINEAR COMBINATIONS -->
+<section id="lincomb">
+  <div class="eyebrow">Topic 2</div>
+  <h2>Linear combinations</h2>
+  <p class="one">A recipe: some of this vector, plus some of that one.</p>
+
+  <h3>The idea</h3>
+  <p>A linear combination of v₁ and v₂ is anything of the form <code>c₁v₁ + c₂v₂</code>, where c₁ and c₂ are ordinary numbers (the "weights"). You scale each ingredient, then add.</p>
+  <p><strong>Practical hook:</strong> a smoothie. If a banana gives <code>(100 cal, 1 g protein)</code> and a scoop of yogurt gives <code>(60 cal, 5 g protein)</code>, then 2 bananas and 3 scoops give</p>
+  <pre class="calc">2·(100, 1) + 3·(60, 5) = (200 + 180, 2 + 15) = (380 cal, 17 g protein)</pre>
+  <p>The interesting question runs backwards: <em>"I want exactly this nutrition. How much of each ingredient do I need?"</em> That's asking for the weights, and it's where systems of equations come from.</p>
+
+  <figure>
+    <svg viewBox="0 0 270 200" width="270" role="img" aria-label="The vector 7,4 built as 1 times 1,1 in blue followed by 3 copies of 2,1 in orange; the green result goes from the origin to 7,4.">
+      <g class="gl">
+        <line x1="20" y1="20" x2="20" y2="170"/><line x1="50" y1="20" x2="50" y2="170"/><line x1="80" y1="20" x2="80" y2="170"/><line x1="110" y1="20" x2="110" y2="170"/><line x1="140" y1="20" x2="140" y2="170"/><line x1="170" y1="20" x2="170" y2="170"/><line x1="200" y1="20" x2="200" y2="170"/><line x1="230" y1="20" x2="230" y2="170"/><line x1="260" y1="20" x2="260" y2="170"/>
+        <line x1="20" y1="20" x2="260" y2="20"/><line x1="20" y1="50" x2="260" y2="50"/><line x1="20" y1="80" x2="260" y2="80"/><line x1="20" y1="110" x2="260" y2="110"/><line x1="20" y1="140" x2="260" y2="140"/>
+      </g>
+      <line class="ax" x1="20" y1="170" x2="265" y2="170"/><line class="ax" x1="20" y1="170" x2="20" y2="15"/>
+      <line class="w" x1="20" y1="170" x2="227" y2="52" marker-end="url(#aw)"/>
+      <line class="u" x1="20" y1="170" x2="48" y2="142" marker-end="url(#au)"/>
+      <line class="v" x1="50" y1="140" x2="107" y2="111" marker-end="url(#av)"/>
+      <line class="v" x1="110" y1="110" x2="167" y2="81" marker-end="url(#av)"/>
+      <line class="v" x1="170" y1="80" x2="227" y2="51" marker-end="url(#av)"/>
+      <text x="36" y="188" class="tu">1·(1,1)</text>
+      <text x="150" y="122" class="tv">3·(2,1)</text>
+      <text x="200" y="40" class="tw">(7,4)</text>
+    </svg>
+    <figcaption>(7, 4) = 1·(1, 1) + 3·(2, 1): one blue step, then three orange steps.</figcaption>
+  </figure>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <p>Can <code>(7, 4)</code> be written as a combination of <code>(1, 1)</code> and <code>(2, 1)</code>?</p>
+    <pre class="calc">a(1, 1) + b(2, 1) = (7, 4)
+
+Match each slot:
+  a + 2b = 7
+  a +  b = 4
+Subtract: b = 3, then a = 1
+
+Check: 1·(1, 1) + 3·(2, 1) = (1 + 6, 1 + 3) = (7, 4)   <span class="ok">✓</span></pre>
+    <p><strong>The big connection:</strong> finding weights is solving a system, and the vectors become the <em>columns</em> of the augmented matrix <code>[1 2 | 7; 1 1 | 4]</code>. Keep this in mind; it comes back in sections 8–10.</p>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Thinking weights must be positive or whole numbers. Negative and fractional weights are fine.</li>
+      <li>Putting the vectors in as <em>rows</em> when setting up the system. They go in as columns.</li>
+      <li>Assuming every target can be reached. <code>(1, 2)</code> and <code>(2, 4)</code> point the same way, so no combination of them makes <code>(1, 0)</code>.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>Write <code>(5, −2)</code> as a combination of <code>(1, 0)</code> and <code>(0, 1)</code>. (Trivially <code>5·(1,0) − 2·(0,1)</code>. That's what coordinates <em>are</em>.)</li>
+      <li>Is the zero vector a combination of any vectors? (Always: use all weights 0.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Is <code>(1, 2, 3)</code> a linear combination of <code>(1, 0, 1)</code> and <code>(0, 1, 1)</code>?</p>
+    <p class="a"><code>a(1,0,1) + b(0,1,1) = (a, b, a + b)</code>. Need a = 1, b = 2, and then a + b = 3 ✓. <strong>Yes.</strong></p>
+    <p class="q">2. Is <code>(1, 2, 4)</code>?</p>
+    <p class="a">Same a = 1, b = 2, but a + b = 3 ≠ 4. <strong>No.</strong> That target sits off the plane the two vectors sweep out.</p>
+  </details>
+</section>
+
+<!-- NORM -->
+<section id="norm">
+  <div class="eyebrow">Topic 3</div>
+  <h2>The norm (length)</h2>
+  <p class="one">Pythagoras, extended to as many slots as you like.</p>
+
+  <h3>The idea</h3>
+  <pre class="calc">‖v‖ = √(v₁² + v₂² + … + vₙ²)</pre>
+  <ul>
+    <li>In 2D it's the hypotenuse. In 3D it's the diagonal of a box. In ℝⁿ it's the same formula with more terms.</li>
+    <li><strong>Distance between two points</strong> p and q is <code>‖p − q‖</code>. Subtract, then take the length.</li>
+    <li><strong>Unit vector:</strong> <code>v / ‖v‖</code>. It keeps the direction and sets the length to 1. Think "just the compass heading, no distance".</li>
+    <li>Practical hook: comparing two customers' shopping lists, or two songs' features, by the distance between their vectors. Small distance means similar. Recommendation apps do exactly this in ℝ¹⁰⁰⁰.</li>
+  </ul>
+
+  <h3>Rules worth knowing</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Rule</th><th>In words</th></tr></thead>
+    <tbody>
+      <tr><td class="martian">‖v‖ ≥ 0, and = 0 only for v = 0</td><td>Lengths are never negative.</td></tr>
+      <tr><td class="martian">‖cv‖ = |c|·‖v‖</td><td>Tripling an arrow triples its length. Flipping it doesn't change the length.</td></tr>
+      <tr><td class="martian">‖u + v‖ ≤ ‖u‖ + ‖v‖</td><td>Triangle inequality: the direct route is never longer than the detour.</td></tr>
+      <tr><td class="martian">|u·v| ≤ ‖u‖‖v‖</td><td>Cauchy–Schwarz: why cos θ always lands between −1 and 1.</td></tr>
+      <tr><td class="martian">‖v‖² = v·v</td><td>Length squared is a dot product with itself.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">v = (1, 2, 2)
+‖v‖ = √(1 + 4 + 4) = √9 = 3
+unit vector = (1/3, 2/3, 2/3)
+  check: √(1/9 + 4/9 + 4/9) = √1 = 1   <span class="ok">✓</span>
+
+Distance from (1, 2, 3) to (4, 6, 3):
+  difference = (3, 4, 0)
+  ‖(3, 4, 0)‖ = √(9 + 16 + 0) = 5
+
+In ℝ⁴: ‖(1, 1, 1, 1)‖ = √4 = 2</pre>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li><code>‖−3v‖ = 3‖v‖</code>, not −3‖v‖. The absolute value matters.</li>
+      <li>Squaring negatives: <code>(−2)² = 4</code>. Calculators given <code>−2²</code> return −4.</li>
+      <li>Forgetting the square root at the end.</li>
+      <li><code>‖u + v‖ ≠ ‖u‖ + ‖v‖</code> in general.</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Unit vector in the direction of <code>(3, −4)</code>.</p>
+    <p class="a">Length 5, so <code>(3/5, −4/5)</code>.</p>
+    <p class="q">2. <code>‖(2, −1, 0, 2)‖</code></p>
+    <p class="a"><code>√(4 + 1 + 0 + 4) = 3</code></p>
+    <p class="q">3. Find a vector of length 10 pointing the same way as <code>(1, 2, 2)</code>.</p>
+    <p class="a">Unit vector × 10: <code>(10/3, 20/3, 20/3)</code>.</p>
+  </details>
+</section>
+
+<!-- 2 DOT -->
+<section id="dot">
+  <div class="eyebrow">Topic 4</div>
+  <h2>The dot product</h2>
+  <p class="one">One number that says how much two arrows agree.</p>
+
+  <h3>The idea</h3>
+  <p>Multiply matching entries and add them up: <code>(a, b)·(c, d) = ac + bd</code>. The answer is a plain number, not a vector.</p>
+  <p><strong>Practical hook:</strong> you already use dot products at the till. If you buy 2 coffees and 3 muffins at $4 and $3:</p>
+  <pre class="calc">(2, 3)·(4, 3) = 2×4 + 3×3 = 17     <span class="c">your bill is $17</span></pre>
+  <p><strong>Geometric meaning:</strong> <code>u·v = ‖u‖‖v‖ cos θ</code>, where θ is the angle between them. So the sign tells you the direction relationship at a glance:</p>
+
+  <figure>
+    <svg viewBox="0 0 390 125" width="390" role="img" aria-label="Three examples: arrows at an acute angle give a positive dot product, at a right angle give zero, and at an obtuse angle give a negative dot product.">
+      <g transform="translate(0,0)">
+        <line class="u" x1="30" y1="85" x2="106" y2="85" marker-end="url(#au)"/>
+        <line class="v" x1="30" y1="85" x2="78" y2="40" marker-end="url(#av)"/>
+        <text x="30" y="112">u·v &gt; 0</text>
+      </g>
+      <g transform="translate(130,0)">
+        <line class="u" x1="30" y1="85" x2="106" y2="85" marker-end="url(#au)"/>
+        <line class="v" x1="30" y1="85" x2="30" y2="22" marker-end="url(#av)"/>
+        <path d="M30 73 H42 V85" fill="none" stroke="currentColor" style="stroke:var(--muted)"/>
+        <text x="30" y="112">u·v = 0</text>
+      </g>
+      <g transform="translate(260,0)">
+        <line class="u" x1="50" y1="85" x2="116" y2="85" marker-end="url(#au)"/>
+        <line class="v" x1="50" y1="85" x2="10" y2="42" marker-end="url(#av)"/>
+        <text x="40" y="112">u·v &lt; 0</text>
+      </g>
+    </svg>
+    <figcaption>Roughly the same way: positive. Perpendicular: zero. Roughly opposite: negative.</figcaption>
+  </figure>
+
+  <p>Physics example you may know: work = force · displacement. Only the part of your push that goes along the direction of motion counts. That "part along a direction" idea becomes <a href="#proj">projections</a>.</p>
+  <p>It works the same in ℝⁿ: <code>(1, 0, 2, 3)·(2, 5, 1, −1) = 2 + 0 + 2 − 3 = 1</code>.</p>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">(1, 2)·(4, −2) = 4 − 4 = 0          <span class="c">→ perpendicular</span>
+
+Angle between (1, 1) and (1, 0):
+  dot = 1,  ‖(1,1)‖ = √2,  ‖(1,0)‖ = 1
+  cos θ = 1/√2   →   θ = 45°        <span class="ok">✓ matches the picture</span></pre>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Writing the answer as a vector. A dot product is always a single number.</li>
+      <li>Trying to dot vectors of different sizes. Both must have the same number of entries.</li>
+      <li>Calculator in radians when the question wants degrees (or the reverse).</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>Without computing, is <code>(3, 1)·(−2, 5)</code> positive or negative? Sketch it first.</li>
+      <li>What's <code>u·u</code>? (It's the length squared. Good "aha".)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Find k so that <code>(2, k)</code> is perpendicular to <code>(3, −6)</code>.</p>
+    <p class="a"><code>6 − 6k = 0</code>, so <code>k = 1</code>.</p>
+    <p class="q">2. Angle between <code>(1, 2, 2)</code> and <code>(2, 0, 0)</code>.</p>
+    <p class="a">dot = 2, lengths 3 and 2, so <code>cos θ = 2/6 = 1/3</code>, θ ≈ 70.5°.</p>
+  </details>
+</section>
+
+<!-- PROJECTIONS -->
+<section id="proj">
+  <div class="eyebrow">Topic 5</div>
+  <h2>Vector projections</h2>
+  <p class="one">The shadow one arrow casts on another.</p>
+
+  <h3>The idea</h3>
+  <p>Shine a light straight down onto the line of v. The shadow u casts on it is the <strong>projection of u onto v</strong>. It answers: "how much of u points in v's direction?"</p>
+  <p>Every vector splits into two pieces: the part <strong>along</strong> v (the projection) and the part <strong>perpendicular</strong> to v (what's left over).</p>
+  <p><strong>Practical hook:</strong> a box on a ramp. Gravity pulls straight down, but you split it into the part along the ramp (makes the box slide) and the part into the ramp (pressed against the surface). That split is exactly a projection.</p>
+
+  <figure>
+    <svg viewBox="0 0 230 200" width="230" role="img" aria-label="u equals 3,4 in blue, v equals 2,1 in orange, the projection 4,2 in green along v, and a dashed line from the tip of the projection up to the tip of u showing the perpendicular part.">
+      <line class="ax" x1="30" y1="180" x2="220" y2="180"/><line class="ax" x1="30" y1="180" x2="30" y2="10"/>
+      <line class="w" x1="30" y1="180" x2="168" y2="111" marker-end="url(#aw)"/>
+      <line class="v" x1="30" y1="180" x2="98" y2="146" marker-end="url(#av)"/>
+      <line class="u" x1="30" y1="180" x2="134" y2="42" marker-end="url(#au)"/>
+      <line x1="170" y1="110" x2="135" y2="40" style="stroke:var(--muted);stroke-width:2;stroke-dasharray:5 4"/>
+      <path d="M161 114.5 L156.5 105.5 L165.5 101" fill="none" style="stroke:var(--muted)"/>
+      <text x="62" y="80" class="tu">u = (3,4)</text>
+      <text x="62" y="175" class="tv">v = (2,1)</text>
+      <text x="150" y="140" class="tw">proj = (4,2)</text>
+      <text x="160" y="70" class="muted">u − proj</text>
+    </svg>
+    <figcaption>The green shadow lies along v. The dashed leftover meets it at a right angle.</figcaption>
+  </figure>
+
+  <h3>Formulas</h3>
+  <pre class="calc">vector projection:   proj_v(u) = (u·v / v·v) · v      <span class="c">← a vector</span>
+scalar projection:   comp_v(u) = u·v / ‖v‖             <span class="c">← a number: signed shadow length</span>
+perpendicular part:  u − proj_v(u)</pre>
+  <p>Reading the vector formula: <code>u·v / v·v</code> is just a number, "how many v's long is the shadow". Then you multiply v by it.</p>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">u = (3, 4),  v = (2, 1)
+
+u·v = 6 + 4 = 10
+v·v = 4 + 1 = 5
+proj_v(u) = (10/5)·(2, 1) = (4, 2)
+perp part = (3, 4) − (4, 2) = (−1, 2)
+
+Check: perp part · v = −2 + 2 = 0   <span class="ok">✓ it really is perpendicular</span>
+Check: (4, 2) + (−1, 2) = (3, 4)   <span class="ok">✓ pieces add back to u</span></pre>
+    <p>Both checks take seconds. Do them every time.</p>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Projecting the wrong way round. <code>proj_v(u)</code> (u's shadow on v) is not <code>proj_u(v)</code>. The vector you project <em>onto</em> goes on the bottom and outside.</li>
+      <li>Dividing by <code>‖v‖</code> instead of <code>v·v = ‖v‖²</code> in the vector formula.</li>
+      <li>Giving a vector when the question asks for the scalar projection (or "component"), or the reverse.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>What's the projection of u onto v if they're perpendicular? (Zero vector: no shadow.)</li>
+      <li>What if u is already along v? (u itself.)</li>
+      <li>Does projecting onto 2v instead of v change the answer? (No. Only the line's direction matters.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Project <code>(1, 2, 3)</code> onto <code>(1, 1, 1)</code>, and find the perpendicular part.</p>
+    <p class="a">dot = 6, v·v = 3, so proj = <code>2·(1,1,1) = (2, 2, 2)</code>. Perp = <code>(−1, 0, 1)</code>. Check: <code>(−1,0,1)·(1,1,1) = 0</code> ✓.</p>
+    <p class="q">2. Distance from the point <code>(3, 4)</code> to the line through the origin in direction <code>(2, 1)</code>.</p>
+    <p class="a">It's the length of the perpendicular part from the worked example: <code>‖(−1, 2)‖ = √5</code>.</p>
+  </details>
+</section>
+
+<!-- 3 CROSS -->
+<section id="cross">
+  <div class="eyebrow">Topic 6</div>
+  <h2>The cross product</h2>
+  <p class="one">Give it two arrows in 3D, get back an arrow perpendicular to both.</p>
+
+  <h3>The idea</h3>
+  <ul>
+    <li><code>u × v</code> is a <strong>vector</strong> that sticks straight out of the flat surface containing u and v.</li>
+    <li>Its <strong>length</strong> equals the area of the parallelogram u and v make.</li>
+    <li>Its <strong>direction</strong> follows the right-hand rule: fingers along u, curl toward v, thumb points to <code>u × v</code>.</li>
+    <li>Real-world: torque. Push a wrench handle, and the bolt turns along the axis perpendicular to both the handle and your push.</li>
+  </ul>
+  <p>The formula, written so it's memorisable:</p>
+  <pre class="calc">(a₁, a₂, a₃) × (b₁, b₂, b₃) = ( a₂b₃ − a₃b₂ ,  a₃b₁ − a₁b₃ ,  a₁b₂ − a₂b₁ )
+<span class="c">Pattern: for each slot, cover that slot and do a "criss-cross" on the other two.
+The middle one is the one people get backwards.</span></pre>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">(1, 2, 3) × (4, 5, 6)
+  x: 2·6 − 3·5 = −3
+  y: 3·4 − 1·6 =  6
+  z: 1·5 − 2·4 = −3
+  answer: (−3, 6, −3)
+
+Check by dotting with both originals:
+  (−3, 6, −3)·(1, 2, 3) = −3 + 12 − 9  = 0   <span class="ok">✓</span>
+  (−3, 6, −3)·(4, 5, 6) = −12 + 30 − 18 = 0  <span class="ok">✓</span></pre>
+    <p>This check catches nearly every cross product mistake. Make it a habit.</p>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Order matters: <code>v × u = −(u × v)</code>. Swapping flips the arrow.</li>
+      <li>Sign error in the middle component.</li>
+      <li>Trying to take a cross product in 2D. It only exists for 3D vectors.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>What is <code>u × u</code>? Why? (Zero vector: no parallelogram, no area.)</li>
+      <li>If <code>u × v = 0</code>, what does that tell you about u and v? (They're parallel.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problem</summary>
+    <p class="q">Find the area of the triangle with corners (0,0,0), (1,0,0), (0,2,0).</p>
+    <p class="a"><code>(1,0,0) × (0,2,0) = (0, 0, 2)</code>, length 2 is the parallelogram's area, so the triangle is half: <strong>1</strong>. Sanity check: it's a right triangle with legs 1 and 2, so ½·1·2 = 1.</p>
+  </details>
+</section>
+
+<!-- 4 LINES -->
+<section id="lines">
+  <div class="eyebrow">Topic 7</div>
+  <h2>Lines and planes in ℝⁿ</h2>
+  <p class="one">A line is "start here, walk one way". A plane is "start here, walk two ways".</p>
+
+  <h3>Lines</h3>
+  <p>Think GPS: a starting point p, a direction d, and time t. Where are you at time t?</p>
+  <pre class="calc">x = p + t·d
+<span class="c">e.g. start at (1, 0, 2), walk in direction (2, 1, 3):</span>
+(x, y, z) = (1, 0, 2) + t(2, 1, 3)
+<span class="c">t = 0 → (1, 0, 2),  t = 1 → (3, 1, 5),  t = −1 → (−1, −1, −1)</span></pre>
+  <p>This formula doesn't care about dimension. A line in ℝ⁴ is just <code>(1, 0, 2, −1) + t(1, 1, 0, 3)</code>: one starting point, one direction, one parameter.</p>
+
+  <h3>Planes, version 1: parametric (works in any ℝⁿ)</h3>
+  <p>A plane needs a starting point and <strong>two</strong> directions that don't point the same way. Two parameters, because a plane has two degrees of freedom.</p>
+  <pre class="calc">x = p + s·u + t·v
+<span class="c">Every point on the plane is "start at p, go s steps along u and t steps along v".
+That's p plus a linear combination of u and v.</span></pre>
+
+  <h3>Planes, version 2: one equation (ℝ³ only)</h3>
+  <p>In 3D a plane can also be pinned down by one point on it and one <strong>normal vector</strong> n that sticks straight out of it, like a pencil standing upright on a table. Every arrow lying in the table is perpendicular to the pencil, so its dot product with n is zero.</p>
+  <pre class="calc">n · (x − p) = 0      →      ax + by + cz = d
+<span class="c">The coefficients (a, b, c) ARE the normal vector. Read it straight off.</span></pre>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <p>Plane through <code>(1, 2, 3)</code> with normal <code>(2, −1, 1)</code>:</p>
+    <pre class="calc">2(x − 1) − 1(y − 2) + 1(z − 3) = 0
+2x − 2 − y + 2 + z − 3 = 0
+2x − y + z = 3
+
+Check the point: 2(1) − 2 + 3 = 3   <span class="ok">✓</span></pre>
+    <p>Plane through three points? Make two arrows between the points, cross them to get the normal, then do the above.</p>
+  </div>
+
+  <div class="box tip">
+    <div class="label">What one equation describes in ℝⁿ</div>
+    <p>Each equation removes one degree of freedom. In ℝ², <code>ax + by = d</code> is a line. In ℝ³, <code>ax + by + cz = d</code> is a plane. In ℝ⁴, <code>a₁x₁ + a₂x₂ + a₃x₃ + a₄x₄ = d</code> is a 3-dimensional "hyperplane". So a plane in ℝ⁴ needs <em>two</em> equations, which is why the parametric form is the one to use beyond 3D.</p>
+  </div>
+
+  <div class="box work">
+    <div class="label">Worked example: switching forms</div>
+    <p>Plane through <code>(1, 0, 0)</code> with directions <code>u = (1, 1, 0)</code> and <code>v = (0, 1, 1)</code>. Find its equation.</p>
+    <pre class="calc">normal = u × v = (1·1 − 0·1,  0·0 − 1·1,  1·1 − 1·0) = (1, −1, 1)
+1(x − 1) − 1(y − 0) + 1(z − 0) = 0
+x − y + z = 1
+
+Check p:     1 − 0 + 0 = 1   <span class="ok">✓</span>
+Check p + u: (2, 1, 0) → 2 − 1 + 0 = 1   <span class="ok">✓</span></pre>
+  </div>
+
+  <div class="box work">
+    <div class="label">Worked example: where a line hits a plane</div>
+    <p>Line <code>(1, 0, 2) + t(2, 1, 3)</code> and plane <code>2x − y + z = 3</code>. Substitute the line's coordinates into the plane and solve for t.</p>
+    <pre class="calc">x = 1 + 2t,  y = t,  z = 2 + 3t
+2(1 + 2t) − t + (2 + 3t) = 3
+4 + 6t = 3   →   t = −1/6
+
+point = (1 − 1/3, −1/6, 2 − 1/2) = (2/3, −1/6, 3/2)
+Check: 4/3 + 1/6 + 3/2 = 8/6 + 1/6 + 9/6 = 3   <span class="ok">✓</span></pre>
+    <p>If t cancels out and you get something false like 4 = 3, the line is parallel to the plane and never hits it. If you get something always true, the line lies inside the plane.</p>
+  </div>
+
+  <h3>Distance from a point to a plane</h3>
+  <p>This is a projection onto the normal in disguise:</p>
+  <pre class="calc">distance = |a·x₀ + b·y₀ + c·z₀ − d| / ‖(a, b, c)‖
+<span class="c">e.g. origin to 2x − y + z = 3:  |0 − 3| / √6 = 3/√6 ≈ 1.22</span></pre>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Using the plane's normal as if it's a direction <em>in</em> the plane. It's the opposite: it points out of the plane.</li>
+      <li>Thinking a line has one equation in 3D. The <code>ax + by + cz = d</code> form is a plane, not a line.</li>
+      <li>Using the same letter for both parameters in a parametric plane, or when intersecting two lines. Use s for one and t for the other.</li>
+      <li>Picking two directions that are multiples of each other. That gives a line, not a plane.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>What's the normal of the plane <code>z = 0</code> (the floor)? (<code>(0, 0, 1)</code>.)</li>
+      <li>When are two planes parallel? (Normals are multiples of each other.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Line through <code>(1, 0, 2)</code> and <code>(3, 1, 5)</code>.</p>
+    <p class="a">Direction = difference = <code>(2, 1, 3)</code>. So <code>(1, 0, 2) + t(2, 1, 3)</code>.</p>
+    <p class="q">2. Plane through the origin perpendicular to <code>(1, −2, 4)</code>.</p>
+    <p class="a"><code>x − 2y + 4z = 0</code></p>
+    <p class="q">3. Is the point <code>(3, 2, 2, 5)</code> on the line <code>(1, 0, 2, −1) + t(1, 1, 0, 3)</code> in ℝ⁴?</p>
+    <p class="a">First slot needs t = 2. Then the point would be <code>(3, 2, 2, 5)</code> ✓. <strong>Yes.</strong> (Every slot must agree on the same t.)</p>
+  </details>
+</section>
+
+<!-- 5 SYSTEMS -->
+<section id="systems">
+  <div class="eyebrow">Topic 8</div>
+  <h2>Systems of linear equations</h2>
+  <p class="one">Several conditions that all have to be true at once.</p>
+
+  <h3>The idea</h3>
+  <p>Each equation in two unknowns is a line. Solving the system means finding where all the lines meet. In 3 unknowns each equation is a plane. There are only three possibilities, and it's worth being able to draw all three:</p>
+
+  <figure>
+    <svg viewBox="0 0 420 150" width="420" role="img" aria-label="Three panels: two lines crossing at one point, two parallel lines that never meet, and two lines lying on top of each other.">
+      <g>
+        <rect x="5" y="5" width="130" height="110" rx="6" fill="none" class="gl"/>
+        <line class="u" x1="20" y1="100" x2="120" y2="20"/>
+        <line class="v" x1="20" y1="30" x2="120" y2="95"/>
+        <circle cx="70" cy="60" r="5" class="hw"/>
+        <text x="20" y="137">one solution</text>
+      </g>
+      <g transform="translate(142,0)">
+        <rect x="5" y="5" width="130" height="110" rx="6" fill="none" class="gl"/>
+        <line class="u" x1="20" y1="85" x2="120" y2="35"/>
+        <line class="v" x1="20" y1="105" x2="120" y2="55"/>
+        <text x="30" y="137">no solution</text>
+      </g>
+      <g transform="translate(284,0)">
+        <rect x="5" y="5" width="130" height="110" rx="6" fill="none" class="gl"/>
+        <line class="u" x1="20" y1="100" x2="120" y2="20" style="stroke-width:7;stroke-opacity:.45"/>
+        <line class="v" x1="20" y1="100" x2="120" y2="20" style="stroke-dasharray:6 5"/>
+        <text x="4" y="137">infinitely many</text>
+      </g>
+    </svg>
+    <figcaption>Crossing, parallel, or the same line twice. There is never "exactly two" solutions.</figcaption>
+  </figure>
+
+  <p><strong>"Linear"</strong> means each variable appears only multiplied by a number and added: no <code>x²</code>, no <code>xy</code>, no <code>sin x</code>, no <code>1/x</code>. That's what keeps the pictures flat (lines and planes, never curves).</p>
+
+  <div class="box work">
+    <div class="label">Worked example: words into a system</div>
+    <p>A cinema sells adult tickets for $12 and child tickets for $8. A group buys 10 tickets for $100. How many of each?</p>
+    <pre class="calc">a = adults, c = children
+   a +  c = 10      <span class="c">← count of tickets</span>
+ 12a + 8c = 100     <span class="c">← money</span>
+
+From the first: c = 10 − a
+12a + 8(10 − a) = 100  →  4a = 20  →  a = 5, c = 5
+
+Check: 5 + 5 = 10 ✓   60 + 40 = 100   <span class="ok">✓</span></pre>
+    <p>Substitution works for two variables. For three or more it gets messy fast, which is why the course switches to augmented matrices.</p>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>Can a linear system have exactly two solutions? (No. If it has two, the whole line through them works too.)</li>
+      <li>Can 3 planes in 3D have no common point even though no two are parallel? (Yes, like the three sides of a triangular prism. Great picture.)</li>
+      <li>A homogeneous system (all right-hand sides 0) can never have "no solution". Why? (x = 0 always works.)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- RREF -->
+<section id="rref">
+  <div class="eyebrow">Topic 9</div>
+  <h2>Augmented matrices, REF and RREF</h2>
+  <p class="one">High-school elimination, but with tidy bookkeeping.</p>
+
+  <h3>Augmented matrix: the letters stripped out</h3>
+  <p>The variable names never change during elimination, so stop writing them. Keep only the numbers, one row per equation, one column per variable, and a bar where the = sign was:</p>
+  <pre class="calc"> x + 2y −  z = 3          [ 1  2  −1 | 3 ]
+2x + 4y +  z = 9    →     [ 2  4   1 | 9 ]
+<span class="c">A missing variable gets a 0 in its column. Don't skip it.</span></pre>
+
+  <h3>The three legal moves</h3>
+  <p>Only ever do these, because none of them change the answer:</p>
+  <ol class="steps">
+    <li>Swap two rows. <span class="mono">(Listing equations in a different order.)</span></li>
+    <li>Multiply a row by a non-zero number. <span class="mono">(Doubling both sides.)</span></li>
+    <li>Add a multiple of one row to another. <span class="mono">(Classic elimination.)</span></li>
+  </ol>
+  <h3>REF vs RREF, in plain words</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th></th><th>REF (row echelon form)</th><th>RREF (reduced REF)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Looks like</strong></td><td>A staircase: zeros below every pivot</td><td>Staircase, each pivot is 1, zeros above <em>and</em> below it</td></tr>
+      <tr><td><strong>Rules</strong></td><td>Each pivot is to the right of the one above it. All-zero rows at the bottom.</td><td>All REF rules, plus pivots = 1 and each pivot is alone in its column</td></tr>
+      <tr><td><strong>Then you…</strong></td><td>Back-substitute from the bottom up</td><td>Read the answer straight off</td></tr>
+      <tr><td><strong>Unique?</strong></td><td>No, different people get different REFs</td><td>Yes, everyone gets the same RREF</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <pre class="calc"><span class="c">The same system, at both stages:</span>
+REF                      RREF
+[ 1  1  1 | 9 ]          [ 1  0  0 | 4 ]
+[ 0  2  1 | 7 ]          [ 0  1  0 | 2 ]
+[ 0  0  3 | 9 ]          [ 0  0  1 | 3 ]   <span class="c">→ x = 4, y = 2, z = 3</span></pre>
+  <p><strong>Strategy:</strong> go left to right, making zeros <em>below</em> each pivot (that gets REF). Then go right to left, scaling pivots to 1 and making zeros <em>above</em> them (that gets RREF).</p>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc"> x + y + z = 6
+2x + y − z = 1
+ x − y + z = 2
+
+[ 1   1   1 |  6 ]
+[ 2   1  −1 |  1 ]
+[ 1  −1   1 |  2 ]
+
+R2 → R2 − 2R1,  R3 → R3 − R1
+[ 1   1   1 |   6 ]
+[ 0  −1  −3 | −11 ]
+[ 0  −2   0 |  −4 ]
+
+Row 3 says −2y = −4, so y = 2
+Row 2: −2 − 3z = −11, so z = 3
+Row 1: x + 2 + 3 = 6, so x = 1
+
+Check in eq. 2: 2(1) + 2 − 3 = 1   <span class="ok">✓</span></pre>
+  </div>
+
+  <div class="box work">
+    <div class="label">Worked example: RREF with a free variable</div>
+    <pre class="calc">[ 1  2  −1 | 3 ]
+[ 2  4   1 | 9 ]
+
+R2 → R2 − 2R1          [ 1  2  −1 | 3 ]
+                       [ 0  0   3 | 3 ]     <span class="c">← REF. Pivots in columns x and z.</span>
+R2 → R2 / 3            [ 1  2  −1 | 3 ]
+                       [ 0  0   1 | 1 ]
+R1 → R1 + R2           [ 1  2   0 | 4 ]
+                       [ 0  0   1 | 1 ]     <span class="c">← RREF</span>
+
+Column y has no pivot, so y is free. Let y = t.
+  z = 1
+  x = 4 − 2t
+Solution: (x, y, z) = (4, 0, 1) + t(−2, 1, 0)
+
+Check t = 0: 4 + 0 − 1 = 3 ✓   8 + 0 + 1 = 9   <span class="ok">✓</span></pre>
+    <p>Look at the answer's shape: a point plus t times a direction. <strong>The solution set is a line</strong> (section 7). Many topics in this course turn out to be the same idea seen from different angles.</p>
+  </div>
+
+  <h3>Reading the final grid</h3>
+  <div class="cols3">
+    <div><b>A row like [0 0 0 | 5]</b>It says 0 = 5. Impossible, so <strong>no solution</strong>.</div>
+    <div><b>A column with no pivot</b>That variable is <strong>free</strong>. Infinitely many solutions; write the answer using a parameter t.</div>
+    <div><b>A pivot in every variable column</b>Exactly <strong>one solution</strong>.</div>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Arithmetic slips with negatives. By far the most common error. Plug the final answer back into the <em>original</em> equations, every time.</li>
+      <li>Doing two row operations at once where one uses a row that's already been changed in the same step.</li>
+      <li>Seeing a row of all zeros <code>[0 0 0 | 0]</code> and deciding there's no solution. That row is harmless (0 = 0); it just means one equation was redundant.</li>
+      <li>Stopping at REF when the question says RREF, or calling something RREF when a pivot isn't 1 or has a non-zero above it.</li>
+      <li>Forgetting to write the free variable as a parameter in the final answer.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>Why is it OK to add one equation to another? (If both are true, their sum is true.)</li>
+      <li>Why are we allowed to multiply a row by 5 but not by 0? (Multiplying by 0 wipes out an equation and loses information.)</li>
+      <li>3 equations, 4 unknowns: can there be exactly one solution? (No. At most 3 pivots, so at least one free variable.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. <code>x + 2y = 4</code>, <code>2x + 4y = 8</code></p>
+    <p class="a">Second is just 2× the first. Infinitely many: <code>y = t</code>, <code>x = 4 − 2t</code>.</p>
+    <p class="q">2. <code>x + 2y = 4</code>, <code>2x + 4y = 9</code></p>
+    <p class="a">R2 − 2R1 gives <code>0 = 1</code>. No solution (parallel lines).</p>
+    <p class="q">3. Put <code>[1 3 | 5; 0 1 | 2]</code> into RREF.</p>
+    <p class="a">It's already REF. R1 → R1 − 3R2 gives <code>[1 0 | −1; 0 1 | 2]</code>, so x = −1, y = 2.</p>
+    <p class="q">4. Is <code>[1 0 2 | 3; 0 1 0 | 1; 0 0 0 | 0]</code> in RREF? What's the solution?</p>
+    <p class="a">Yes. z is free: <code>z = t, y = 1, x = 3 − 2t</code>.</p>
+  </details>
+</section>
+
+<!-- 6 MATRICES -->
+<section id="matrices">
+  <div class="eyebrow">Topic 10</div>
+  <h2>Matrix–vector and matrix–matrix multiplication</h2>
+  <p class="one">A matrix is a machine: vector goes in, vector comes out.</p>
+
+  <h3>The most useful idea: the column view</h3>
+  <p>Multiplying a matrix by a vector means "take this much of column 1, plus this much of column 2". A bakery example makes it concrete:</p>
+  <pre class="calc">              cake  cookie
+eggs        [  3      1   ]   [ 2 ]  ← 2 cakes
+flour (cups)[  2      3   ] × [ 5 ]  ← 5 batches of cookies
+
+= 2 × (3, 2) + 5 × (1, 3) = (6 + 5, 4 + 15) = (11 eggs, 19 cups)</pre>
+  <p>Each column is a recipe. The vector is how many of each you're making. The answer is your shopping list. That's a <a href="#lincomb">linear combination</a> of the columns.</p>
+
+  <h3>Two ways to compute Ax, same answer</h3>
+  <pre class="calc">A = [  1  0  2 ]     x = (2, 1, 1)
+    [ −1  3  1 ]
+
+Row view (dot each row with x):          <span class="c">← fastest by hand</span>
+  row 1: 1·2 + 0·1 + 2·1 = 4
+  row 2: −1·2 + 3·1 + 1·1 = 2
+
+Column view (weights × columns):         <span class="c">← gives the meaning</span>
+  2·(1, −1) + 1·(0, 3) + 1·(2, 1) = (4, 2)   <span class="ok">✓ same</span></pre>
+  <p>Size check: A is 2×3, x has 3 entries, the answer has 2 entries. The number of columns of A must equal the length of x.</p>
+
+  <div class="box tip">
+    <div class="label">Ax = b is just a system in disguise</div>
+    <pre class="calc">[ 1  1 ] [ a ]   [ 10  ]          a +  c = 10
+[ 12 8 ] [ c ] = [ 100 ]   means  12a + 8c = 100</pre>
+    <p>That's the cinema problem from section 8. Once you see this, "solve Ax = b" stops being scary.</p>
+  </div>
+
+  <h3>Matrix × matrix</h3>
+  <ul>
+    <li><strong>Size rule:</strong> <code>(m×n)(n×p) = (m×p)</code>. The inner numbers must match; the outer numbers give the answer's size.</li>
+    <li>Entry in row i, column j of AB = (row i of A) · (column j of B).</li>
+    <li><strong>Order matters.</strong> <code>AB</code> is usually not <code>BA</code>. Socks-then-shoes is not shoes-then-socks.</li>
+  </ul>
+
+  <div class="box work">
+    <div class="label">Worked example: order matters</div>
+    <div class="eq">
+      <span class="m"><span>1</span><span>2</span><span>3</span><span>4</span></span>
+      <span>×</span>
+      <span class="m"><span>0</span><span>1</span><span>1</span><span>0</span></span>
+      <span>=</span>
+      <span class="m"><span>2</span><span>1</span><span>4</span><span>3</span></span>
+      <span class="mono" style="background:none">swapped the columns</span>
+    </div>
+    <div class="eq">
+      <span class="m"><span>0</span><span>1</span><span>1</span><span>0</span></span>
+      <span>×</span>
+      <span class="m"><span>1</span><span>2</span><span>3</span><span>4</span></span>
+      <span>=</span>
+      <span class="m"><span>3</span><span>4</span><span>1</span><span>2</span></span>
+      <span class="mono" style="background:none">swapped the rows</span>
+    </div>
+    <p>Same two matrices, different order, different answer. This one example is worth more than the rule.</p>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Multiplying entry by entry. That isn't matrix multiplication.</li>
+      <li>Cancelling: <code>AB = AC</code> does <strong>not</strong> mean <code>B = C</code> in general.</li>
+      <li>Transpose of a product reverses order: <code>(AB)ᵀ = BᵀAᵀ</code>.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>A is 2×3, B is 3×4. Which of AB and BA exist, and what size? (AB is 2×4; BA doesn't exist.)</li>
+      <li>What does multiplying by <code>(1, 0)</code> pull out of a 2×2 matrix? (The first column.)</li>
+      <li>What does <code>I</code> times any vector give? (The same vector. It's the "do nothing" machine.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. <code>[[1, 2], [3, 4]]</code> times <code>(5, 6)</code>.</p>
+    <p class="a">Rows: <code>5 + 12 = 17</code>, <code>15 + 24 = 39</code>, so <code>(17, 39)</code>.</p>
+    <p class="q">2. <code>[[1, 2], [3, 4]]</code> times <code>[[2, 0], [1, 1]]</code>.</p>
+    <p class="a"><code>[[1·2 + 2·1, 0 + 2], [3·2 + 4·1, 0 + 4]] = [[4, 2], [10, 4]]</code></p>
+    <p class="q">3. Write <code>x − y + 2z = 1, 3y + z = 0</code> as <code>Ax = b</code>.</p>
+    <p class="a"><code>A = [[1, −1, 2], [0, 3, 1]]</code>, <code>x = (x, y, z)</code>, <code>b = (1, 0)</code>. Note the 0 for the missing x in row 2.</p>
+  </details>
+</section>
+
+<!-- 7 INVERSE -->
+<section id="inverse">
+  <div class="eyebrow">Topic 11</div>
+  <h2>Matrix inverse</h2>
+  <p class="one">The undo button.</p>
+
+  <h3>The idea</h3>
+  <p>If A is a machine, <code>A⁻¹</code> is the machine that reverses it: <code>A⁻¹A = I</code>. You can't divide by a matrix, so to solve <code>Ax = b</code> you multiply both sides by the undo button: <code>x = A⁻¹b</code>.</p>
+  <p>Some matrices have no inverse. If A squashes the whole plane onto a line, lots of different inputs land on the same output, and there's no way to know which one you started from. You can't unscramble an egg.</p>
+
+  <h3>The 2×2 shortcut</h3>
+  <pre class="calc">[ a  b ]⁻¹      1     [  d  −b ]
+[ c  d ]    = ─────── [ −c   a ]
+               ad − bc
+<span class="c">Swap a and d, flip the signs of b and c, divide by ad − bc.
+If ad − bc = 0, there is no inverse.</span></pre>
+  <p>For bigger matrices: write <code>[ A | I ]</code>, row reduce until the left side is I, and the right side becomes <code>A⁻¹</code>.</p>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">A = [ 2  1 ]      ad − bc = 6 − 5 = 1
+    [ 5  3 ]
+
+A⁻¹ = [  3  −1 ]
+      [ −5   2 ]
+
+Check A·A⁻¹:
+  row 1: 2·3 + 1·(−5) = 1,   2·(−1) + 1·2 = 0
+  row 2: 5·3 + 3·(−5) = 0,   5·(−1) + 3·2 = 1   <span class="ok">✓ identity</span></pre>
+  </div>
+
+  <div class="box work">
+    <div class="label">Worked example: using it to solve a system</div>
+    <pre class="calc">2x + y = 4          A = [ 2  1 ],  b = (4, 11)
+5x + 3y = 11            [ 5  3 ]
+
+x = A⁻¹b = [  3  −1 ] [ 4  ]  =  (12 − 11, −20 + 22) = (1, 2)
+           [ −5   2 ] [ 11 ]
+
+Check: 2 + 2 = 4 ✓   5 + 6 = 11   <span class="ok">✓</span></pre>
+    <p>Keep this system in mind; Cramer's rule (section 13) solves the same one.</p>
+  </div>
+
+  <div class="box work">
+    <div class="label">Worked example: the [ A | I ] method</div>
+    <pre class="calc">A = [ 1  2 ]
+    [ 3  7 ]
+
+[ 1  2 | 1  0 ]
+[ 3  7 | 0  1 ]
+
+R2 → R2 − 3R1     [ 1  2 |  1  0 ]
+                  [ 0  1 | −3  1 ]
+R1 → R1 − 2R2     [ 1  0 |  7 −2 ]
+                  [ 0  1 | −3  1 ]
+
+A⁻¹ = [  7  −2 ]
+      [ −3   1 ]      <span class="ok">✓ matches the 2×2 shortcut (det = 7 − 6 = 1)</span></pre>
+    <p>Same method for 3×3. If a row of zeros appears on the left side, A has no inverse, so stop there.</p>
+  </div>
+
+  <h3>Rules worth knowing</h3>
+  <ul>
+    <li><code>(A⁻¹)⁻¹ = A</code>. Undoing the undo gets you back where you started.</li>
+    <li><code>(AB)⁻¹ = B⁻¹A⁻¹</code>. Order reverses.</li>
+    <li><code>(Aᵀ)⁻¹ = (A⁻¹)ᵀ</code>.</li>
+    <li>Only square matrices can have inverses.</li>
+  </ul>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li><code>(AB)⁻¹ = B⁻¹A⁻¹</code>, reversed order. To undo "socks then shoes", you take off shoes first.</li>
+      <li>Forgetting the <code>1/(ad − bc)</code> in front.</li>
+      <li>Writing <code>b/A</code>. Matrix division doesn't exist; it's always multiplication by <code>A⁻¹</code>, and on the correct side.</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Invert <code>[[4, 7], [2, 6]]</code>.</p>
+    <p class="a"><code>ad − bc = 24 − 14 = 10</code>, so <code>A⁻¹ = (1/10)[[6, −7], [−2, 4]]</code>.</p>
+    <p class="q">2. Does <code>[[2, 4], [1, 2]]</code> have an inverse?</p>
+    <p class="a">No. <code>4 − 4 = 0</code>. Notice the first column is twice the second, so it squashes everything onto one line.</p>
+  </details>
+</section>
+
+<!-- 8 DET -->
+<section id="det">
+  <div class="eyebrow">Topic 12 · needed for Cramer's rule</div>
+  <h2>Determinants</h2>
+  <p class="one">How much the matrix stretches area (or volume).</p>
+
+  <h3>The idea</h3>
+  <p>Take the 1×1 unit square and push it through the matrix. It becomes a parallelogram. The determinant is that parallelogram's area.</p>
+  <ul>
+    <li><strong>det = 6:</strong> areas get 6 times bigger.</li>
+    <li><strong>det negative:</strong> space got flipped over, like a mirror image.</li>
+    <li><strong>det = 0:</strong> everything got squashed flat. That's exactly why there's no inverse.</li>
+  </ul>
+
+  <figure>
+    <svg viewBox="0 0 250 190" width="250" role="img" aria-label="The unit square, dashed, is mapped by the matrix with columns 2,0 and 1,1 to a green parallelogram with corners 0,0; 2,0; 3,1; 1,1 which has area 2.">
+      <g class="gl">
+        <line x1="30" y1="10" x2="30" y2="160"/><line x1="80" y1="10" x2="80" y2="160"/><line x1="130" y1="10" x2="130" y2="160"/><line x1="180" y1="10" x2="180" y2="160"/><line x1="230" y1="10" x2="230" y2="160"/>
+        <line x1="30" y1="10" x2="230" y2="10"/><line x1="30" y1="60" x2="230" y2="60"/><line x1="30" y1="110" x2="230" y2="110"/>
+      </g>
+      <line class="ax" x1="30" y1="160" x2="235" y2="160"/><line class="ax" x1="30" y1="160" x2="30" y2="5"/>
+      <polygon class="para" points="30,160 130,160 180,110 80,110"/>
+      <polygon class="sq" points="30,160 80,160 80,110 30,110"/>
+      <text x="37" y="140" class="tu">1</text>
+      <text x="115" y="140" class="tw">area 2</text>
+      <text x="30" y="182" class="muted">[[2,1],[0,1]] → det = 2·1 − 1·0 = 2</text>
+    </svg>
+    <figcaption>The dashed unit square (area 1) becomes the green parallelogram (area 2).</figcaption>
+  </figure>
+
+  <h3>How to compute</h3>
+  <ul>
+    <li>2×2: <code>ad − bc</code>.</li>
+    <li>3×3: cofactor expansion. Tip: expand along whichever row or column has the most zeros; it saves work.</li>
+    <li>Or row reduce to a triangle and multiply the diagonal, tracking what the row moves did:</li>
+  </ul>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Row move</th><th>Effect on det</th></tr></thead>
+    <tbody>
+      <tr><td>Swap two rows</td><td>Sign flips</td></tr>
+      <tr><td>Multiply a row by k</td><td>det multiplied by k</td></tr>
+      <tr><td>Add a multiple of one row to another</td><td>No change</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">A = [ 2  0  1 ]
+    [ 1  3  2 ]
+    [ 1  1  1 ]
+
+Expand along row 1 (it has a zero):
+det = 2·(3·1 − 2·1) − 0·(…) + 1·(1·1 − 3·1)
+    = 2·1 + 1·(−2)
+    = 0</pre>
+    <p>det = 0, so the columns must be dependent. Sure enough: column 3 = ½·column 1 + ½·column 2. Try to find that combination yourself.</p>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li><code>det(A + B) ≠ det A + det B</code>. But <code>det(AB) = det A · det B</code> does hold.</li>
+      <li><code>det(kA) = kⁿ det A</code> for an n×n matrix, not <code>k det A</code>. Every row gets scaled.</li>
+      <li>Forgetting the alternating <code>+ − +</code> signs in cofactor expansion.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>A rotation matrix: what's its determinant, without computing? (1. Rotating doesn't change area.)</li>
+      <li>If two rows are identical, what's the det? (0. The shape is flat.)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CRAMER -->
+<section id="cramer">
+  <div class="eyebrow">Topic 13</div>
+  <h2>Cramer's rule</h2>
+  <p class="one">Solve for one variable at a time using determinants.</p>
+
+  <h3>The recipe</h3>
+  <p>For a square system <code>Ax = b</code> with <code>det A ≠ 0</code>:</p>
+  <pre class="calc">            det(Aᵢ)
+  xᵢ  =  ───────────
+            det(A)
+
+<span class="c">Aᵢ = A with column i replaced by b.</span></pre>
+  <p>In words: <strong>to get a variable, swap the answer column into that variable's slot, take the determinant, divide by the original determinant.</strong></p>
+
+  <div class="box work">
+    <div class="label">Worked example: 2×2</div>
+    <pre class="calc">2x + y = 4          A = [ 2  1 ],  b = (4, 11)
+5x + 3y = 11            [ 5  3 ]          det A = 6 − 5 = 1
+
+x:  swap b into column 1   [ 4   1 ]   det = 12 − 11 = 1   →  x = 1/1 = 1
+                           [ 11  3 ]
+y:  swap b into column 2   [ 2   4 ]   det = 22 − 20 = 2   →  y = 2/1 = 2
+                           [ 5  11 ]
+
+<span class="ok">✓ Same answer as the inverse method in section 11.</span></pre>
+  </div>
+
+  <div class="box work">
+    <div class="label">Worked example: 3×3</div>
+    <pre class="calc"> x + y + z = 6        A = [ 1   1   1 ]    b = (6, 1, 2)
+2x + y − z = 1            [ 2   1  −1 ]
+ x − y + z = 2            [ 1  −1   1 ]
+
+det A  = 1(1 − 1) − 1(2 + 1) + 1(−2 − 1) = 0 − 3 − 3 = −6
+
+A₁ = [ 6  1  1 ; 1  1 −1 ; 2 −1  1 ]    det = −6    →  x = −6/−6  = 1
+A₂ = [ 1  6  1 ; 2  1 −1 ; 1  2  1 ]    det = −12   →  y = −12/−6 = 2
+A₃ = [ 1  1  6 ; 2  1  1 ; 1 −1  2 ]    det = −18   →  z = −18/−6 = 3
+
+<span class="ok">✓ Same answer as the row reduction in section 9.</span></pre>
+    <p>Four 3×3 determinants is a lot of arithmetic. Solving one system three ways (row reduction, inverse, Cramer) and getting the same answer is a great confidence builder.</p>
+  </div>
+
+  <h3>When to use it</h3>
+  <div class="cols3">
+    <div><b>Good for</b>2×2 systems, and when a question asks for only <em>one</em> variable (one extra determinant instead of solving everything).</div>
+    <div><b>Slow for</b>3×3 and up. Row reduction is usually quicker and less error-prone.</div>
+    <div><b>Useless when</b>det A = 0. Then there's no solution or infinitely many; row reduce to find out which.</div>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Replacing a <strong>row</strong> with b instead of a <strong>column</strong>.</li>
+      <li>Dividing upside down: it's <code>det(Aᵢ) / det(A)</code>, with the original on the bottom.</li>
+      <li>Using it when <code>det A = 0</code> (division by zero).</li>
+      <li>Sign slips in the 3×3 determinants. Check the final answer in the original equations.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>Why does Cramer's rule need det A ≠ 0? Connect it to section 12. (det A = 0 means A squashes space flat, so there isn't one unique answer to find.)</li>
+      <li>A test asks only for y in a 3×3 system. How many determinants do you need? (Two: det A and det A₂.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Solve <code>3x − 2y = 1</code>, <code>x + 4y = 5</code> by Cramer's rule.</p>
+    <p class="a">det A = 12 + 2 = 14. det A₁ = <code>|1 −2; 5 4|</code> = 4 + 10 = 14, so x = 1. det A₂ = <code>|3 1; 1 5|</code> = 15 − 1 = 14, so y = 1. Check: 3 − 2 = 1 ✓, 1 + 4 = 5 ✓.</p>
+    <p class="q">2. Can Cramer's rule solve <code>x + 2y = 4</code>, <code>2x + 4y = 8</code>?</p>
+    <p class="a">No. det A = 4 − 4 = 0. (This system has infinitely many solutions; see section 9.)</p>
+  </details>
+</section>
+
+<!-- 9 TRANSFORM -->
+<section id="transform">
+  <div class="eyebrow">Extra topic</div>
+  <h2>Linear transformations</h2>
+  <p class="one">Moves that keep grid lines straight, parallel and evenly spaced, and keep the origin still.</p>
+
+  <h3>The single most useful trick</h3>
+  <p><strong>The columns of the matrix are where the basic arrows land.</strong> Column 1 is where <code>(1, 0)</code> goes; column 2 is where <code>(0, 1)</code> goes. To build any transformation matrix, just ask "where do those two arrows end up?"</p>
+  <p>Real-world: every rotation, zoom and flip in a video game or photo editor is a matrix doing exactly this.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Move</th><th>(1,0) goes to</th><th>(0,1) goes to</th><th>Matrix</th></tr></thead>
+    <tbody>
+      <tr><td>Rotate 90° anticlockwise</td><td>(0, 1)</td><td>(−1, 0)</td><td><span class="m"><span>0</span><span>−1</span><span>1</span><span>0</span></span></td></tr>
+      <tr><td>Reflect in the x-axis</td><td>(1, 0)</td><td>(0, −1)</td><td><span class="m"><span>1</span><span>0</span><span>0</span><span>−1</span></span></td></tr>
+      <tr><td>Reflect in the line y = x</td><td>(0, 1)</td><td>(1, 0)</td><td><span class="m"><span>0</span><span>1</span><span>1</span><span>0</span></span></td></tr>
+      <tr><td>Stretch x by 3</td><td>(3, 0)</td><td>(0, 1)</td><td><span class="m"><span>3</span><span>0</span><span>0</span><span>1</span></span></td></tr>
+      <tr><td>Horizontal shear</td><td>(1, 0)</td><td>(1, 1)</td><td><span class="m"><span>1</span><span>1</span><span>0</span><span>1</span></span></td></tr>
+      <tr><td>Rotate by θ</td><td>(cos θ, sin θ)</td><td>(−sin θ, cos θ)</td><td class="martian">[[cos θ, −sin θ], [sin θ, cos θ]]</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Is it linear?</h3>
+  <p>Officially: <code>T(u + v) = T(u) + T(v)</code> and <code>T(cu) = cT(u)</code>. Quick screening tests:</p>
+  <ul>
+    <li><strong>Does 0 go to 0?</strong> If not, it's not linear. So "shift everything right by 1" is out.</li>
+    <li><strong>Any squares, products of variables, sin(x), constants added?</strong> Not linear.</li>
+    <li>If each output is just "numbers × variables, added up", it's linear, and you can read off the matrix.</li>
+  </ul>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Doing "first A, then B" as <code>AB</code>. It's <code>BA</code>: the matrix closest to the vector acts first, so read right to left.</li>
+      <li>Putting the images of (1,0) and (0,1) in as rows instead of columns.</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">1. Is <code>T(x, y) = (x + y, 2y)</code> linear? If yes, what's its matrix?</p>
+    <p class="a">Yes. <code>[[1, 1], [0, 2]]</code>. (Check: (1,0) → (1,0), (0,1) → (1,2), those are the columns.)</p>
+    <p class="q">2. Is <code>T(x, y) = (x², y)</code> linear?</p>
+    <p class="a">No. <code>T(2·(1,0)) = (4, 0)</code> but <code>2·T(1,0) = (2, 0)</code>.</p>
+    <p class="q">3. Find the matrix that rotates 90° anticlockwise and then reflects in the x-axis.</p>
+    <p class="a">Reflect × Rotate = <code>[[1,0],[0,−1]]·[[0,−1],[1,0]] = [[0,−1],[−1,0]]</code>. Check: (1,0) → rotate → (0,1) → reflect → (0,−1). First column ✓.</p>
+  </details>
+</section>
+
+<!-- 10 SPAN -->
+<section id="span">
+  <div class="eyebrow">Extra topic · builds on linear combinations</div>
+  <h2>Span, independence, basis and subspaces</h2>
+  <p class="one">Often the hardest part of the course. Go slowly and picture everything in 2D and 3D.</p>
+
+  <h3>Span: where can you get to?</h3>
+  <p>Imagine you can only move along certain arrows, as far as you like, forwards or backwards. The span is every place you can reach.</p>
+  <ul>
+    <li>One non-zero arrow in 2D: you can reach a <strong>line</strong>.</li>
+    <li>Two arrows pointing different ways in 2D: you can reach <strong>the whole plane</strong>.</li>
+    <li>Two arrows pointing the same way (one is a multiple of the other): still only a line. The second one added nothing.</li>
+  </ul>
+
+  <h3>Independence: is anything redundant?</h3>
+  <p>A set of vectors is <strong>independent</strong> if none of them can be built from the others. Paint analogy: red, blue and yellow are independent. Add purple and it's redundant, because you could already mix it from red and blue.</p>
+  <p><strong>How to test:</strong> put the vectors in as the columns of a matrix and row reduce. Pivot in every column: independent. Any column without a pivot: dependent. For n vectors in ℝⁿ you can also just check det ≠ 0.</p>
+
+  <h3>Basis and dimension</h3>
+  <p>A <strong>basis</strong> is a set of vectors that is independent (no waste) and spans the whole space (reaches everywhere). It's a coordinate system. The number of vectors in any basis is the <strong>dimension</strong>. The usual one for ℝ² is <code>(1, 0), (0, 1)</code>, but <code>(1, 0), (1, 1)</code> works just as well.</p>
+
+  <h3>Subspaces</h3>
+  <p>A subspace is a flat thing through the origin: a line through 0, a plane through 0, just {0}, or the whole space. Three-part test:</p>
+  <ol class="steps">
+    <li>Does it contain the zero vector? (Fastest way to rule things out.)</li>
+    <li>Add two things in it. Is the result still in it?</li>
+    <li>Scale something in it. Is the result still in it?</li>
+  </ol>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">Are (1, 2, 3), (4, 5, 6), (7, 8, 9) independent?
+
+Row reduce with them as columns and you'll get only 2 pivots. Dependent.
+Specifically: (7, 8, 9) = 2·(4, 5, 6) − (1, 2, 3)
+             = (8 − 1, 10 − 2, 12 − 3)  <span class="ok">✓</span>
+
+So they span only a plane in 3D, not all of 3D space.</pre>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Thinking more vectors always means a bigger span. Not if they're redundant.</li>
+      <li>Calling the line <code>y = x + 1</code> a subspace. It misses the origin, so it isn't.</li>
+      <li>Believing a basis is unique. A space has infinitely many bases; they just all have the same size.</li>
+      <li>Rule of thumb: more than n vectors in ℝⁿ are always dependent; fewer than n can never span ℝⁿ.</li>
+    </ul>
+  </div>
+
+  <div class="box ask">
+    <div class="label">Test yourself</div>
+    <ul>
+      <li>Can 2 vectors span ℝ³? Why not, in picture terms? (Two arrows can only sweep out a plane.)</li>
+      <li>Is any set containing the zero vector independent? (No. 0 = 0·anything, so it's always redundant.)</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problems</summary>
+    <p class="q">Which of these are subspaces of ℝ²?</p>
+    <p class="q">(a) all <code>(x, y)</code> with <code>y = 2x</code> &nbsp; (b) all with <code>y = 2x + 1</code> &nbsp; (c) all with <code>xy ≥ 0</code></p>
+    <p class="a">(a) Yes: a line through the origin. (b) No: <code>(0, 0)</code> isn't on it. (c) No: <code>(1, 0)</code> and <code>(0, −1)</code> are both in it, but their sum <code>(1, −1)</code> isn't. This one's sneaky; it contains 0, but it fails the addition test.</p>
+  </details>
+</section>
+
+<!-- 11 EIGEN -->
+<section id="eigen">
+  <div class="eyebrow">Extra topic</div>
+  <h2>Eigenvalues and eigenvectors</h2>
+  <p class="one">The directions a matrix doesn't turn, only stretches.</p>
+
+  <h3>The idea</h3>
+  <p>Most vectors get knocked off their line when a matrix acts on them. A few special ones stay on their own line and just get longer, shorter or flipped. Those are <strong>eigenvectors</strong>, and the stretch factor is the <strong>eigenvalue</strong> λ:</p>
+  <pre class="calc">A v = λ v        <span class="c">"A does to v what a plain number would"</span></pre>
+  <p>Picture spinning a globe: every point moves except those on the axis. The axis is an eigenvector with eigenvalue 1. Real uses: Google's original PageRank, vibration modes of bridges, population models.</p>
+
+  <h3>Recipe</h3>
+  <ol class="steps">
+    <li>Solve <code>det(A − λI) = 0</code> for λ. (Why: we need <code>(A − λI)v = 0</code> to have a non-zero solution, so <code>A − λI</code> must squash something, so its det is 0.)</li>
+    <li>For each λ, solve <code>(A − λI)v = 0</code> by row reduction to find v.</li>
+  </ol>
+
+  <div class="box work">
+    <div class="label">Worked example</div>
+    <pre class="calc">A = [ 2  1 ]
+    [ 1  2 ]
+
+det(A − λI) = (2 − λ)² − 1 = 0
+2 − λ = ±1   →   λ = 1 or λ = 3
+
+λ = 3:  A − 3I = [ −1  1 ; 1  −1 ]  →  v = (1, 1)
+        check: A(1, 1) = (3, 3) = 3·(1, 1)     <span class="ok">✓</span>
+λ = 1:  A − I  = [ 1  1 ; 1  1 ]    →  v = (1, −1)
+        check: A(1, −1) = (1, −1) = 1·(1, −1)  <span class="ok">✓</span></pre>
+    <p>Quick sanity check: the eigenvalues add up to the diagonal sum (2 + 2 = 4 = 1 + 3) and multiply to the det (3 = 1 · 3).</p>
+  </div>
+
+  <div class="box trap">
+    <div class="label">Common mistakes</div>
+    <ul>
+      <li>Giving <code>v = 0</code> as an eigenvector. Zero never counts.</li>
+      <li>Thinking the eigenvector is unique. Any non-zero multiple of it also works; <code>(2, 2)</code> is just as good as <code>(1, 1)</code>.</li>
+      <li>Getting only the trivial solution when solving for v. That means λ is wrong; recheck step 1.</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Practice problem</summary>
+    <p class="q">Find the eigenvalues and eigenvectors of <code>[[4, 1], [2, 3]]</code>.</p>
+    <p class="a"><code>λ² − 7λ + 10 = (λ − 2)(λ − 5)</code>, so λ = 2, 5.<br>λ = 5: <code>v = (1, 1)</code>; check <code>A(1,1) = (5,5)</code> ✓.<br>λ = 2: <code>v = (1, −2)</code>; check <code>A(1,−2) = (2,−4)</code> ✓.<br>Sum 7 = trace, product 10 = det ✓.</p>
+  </details>
+</section>
+
+<!-- CONNECT -->
+<section id="connect">
+  <div class="eyebrow">Big picture</div>
+  <h2>How it all connects</h2>
+  <p class="one">Most of the course is one question asked in different ways.</p>
+  <p>For a <strong>square</strong> matrix A, every statement below is true together, or they are all false together. Try picking one example matrix and checking a few of them to see they agree.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Textbook version</th><th>Plain English</th></tr></thead>
+    <tbody>
+      <tr><td>A is invertible</td><td>A has an undo button</td></tr>
+      <tr><td>det A ≠ 0</td><td>A doesn't squash space flat</td></tr>
+      <tr><td>Ax = b has exactly one solution for every b</td><td>Every output comes from exactly one input</td></tr>
+      <tr><td>Ax = 0 has only the trivial solution</td><td>Nothing non-zero gets squashed to zero</td></tr>
+      <tr><td>The columns are linearly independent</td><td>No column is redundant</td></tr>
+      <tr><td>The columns span ℝⁿ</td><td>The outputs reach everywhere</td></tr>
+      <tr><td>RREF of A is I</td><td>Row reduction gives a pivot in every row and column</td></tr>
+      <tr><td>Cramer's rule can be used on Ax = b</td><td>There's a unique answer to find, one variable at a time</td></tr>
+      <tr><td>0 is not an eigenvalue</td><td>No direction gets crushed to nothing</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box tip">
+    <div class="label">Why this matters for exams</div>
+    <p>True/false questions love this list. "If det A = 0, can Ax = b have a unique solution?" becomes easy once you see these are all the same fact.</p>
+  </div>
+</section>
+
+<!-- CHECKS -->
+<section id="checks">
+  <div class="eyebrow">Habits</div>
+  <h2>Self-check habits</h2>
+  <p class="one">Thirty seconds of checking is worth more marks than any trick.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>After finding…</th><th>Check by…</th></tr></thead>
+    <tbody>
+      <tr><td>A solution to a system</td><td>Plugging it into the <em>original</em> equations</td></tr>
+      <tr><td>A linear combination's weights</td><td>Rebuilding the target vector from them</td></tr>
+      <tr><td>A unit vector</td><td>Its length should come out as exactly 1</td></tr>
+      <tr><td>A projection</td><td>Leftover part · v = 0, and the two pieces add back to u</td></tr>
+      <tr><td>A cross product</td><td>Dotting it with both original vectors; both should be 0</td></tr>
+      <tr><td>A line–plane intersection</td><td>Plugging the point into the plane's equation</td></tr>
+      <tr><td>An RREF</td><td>Every pivot is 1 and is the only non-zero in its column</td></tr>
+      <tr><td>A Cramer's rule answer</td><td>Plugging into the original equations (or solving another way)</td></tr>
+      <tr><td>A plane's equation</td><td>Plugging in the given point(s)</td></tr>
+      <tr><td>An inverse</td><td>Multiplying A by it; you should get I</td></tr>
+      <tr><td>A determinant</td><td>Asking: does 0 make sense? Are columns obviously dependent?</td></tr>
+      <tr><td>An eigenvector</td><td>Computing Av and checking it equals λv</td></tr>
+      <tr><td>Eigenvalues</td><td>Sum = trace (diagonal sum), product = det</td></tr>
+      <tr><td>A transformation matrix</td><td>Feeding in (1, 0) and (0, 1) and seeing where they go</td></tr>
+      <tr><td>Any answer at all</td><td>Is it the right type and size? Number, vector, matrix?</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Free extra help: 3Blue1Brown's "Essence of Linear Algebra" video series on YouTube (short, animated, excellent for intuition), and Khan Academy's linear algebra unit for extra practice.
+</footer>
+</div>
+</body>
+</html>

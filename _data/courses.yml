@@ -1,0 +1,28 @@
+# Subjects and courses shown on /courses/.
+# To add a course: drop its HTML file(s) in _courses/<subject>/ and add an entry below.
+# A subject with no courses yet is shown as "coming soon".
+
+- id: math
+  name: Mathematics
+  icon: fa-solid fa-square-root-variable
+  blurb: Plain-English notes that start with the picture and then bring in the symbols.
+  courses:
+    - title: Linear Algebra I
+      level: First year
+      description: >
+        Vectors, dot and cross products, projections, lines and planes, systems of
+        equations, RREF, matrices, inverses, determinants and Cramer's rule, with
+        extra sections on transformations, span and bases, and eigenvalues.
+      topics: [Vectors, Dot product, Cross product, Projections, Lines & planes, RREF, Matrices, Inverses, Determinants, Eigenvalues]
+      sections: 16
+      editions:
+        - label: Study notes
+          note: For students working on their own
+          url: /courses/math/linear-algebra-1-notes.html
+          icon: fa-solid fa-book-open
+
+- id: physics
+  name: Physics
+  icon: fa-solid fa-atom
+  blurb: Physics course notes are on the way.
+  courses: []
