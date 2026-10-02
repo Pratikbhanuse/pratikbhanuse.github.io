@@ -5,6 +5,7 @@ permalink: /courses/
 description: Course notes written to make hard subjects easier to follow, grouped by subject.
 nav: true
 nav_order: 6
+nav_dropdown_data: courses
 ---
 
 <!-- _pages/courses.md -->
@@ -38,13 +39,13 @@ nav_order: 6
             {% endif %}
             <div class="course-editions">
               {% for edition in course.editions %}
-                <a class="course-edition" href="{{ edition.url | relative_url }}">
+                <a class="course-edition" href="{{ edition.url | relative_url }}"{% if edition.download %} download{% endif %}>
                   <i class="{{ edition.icon }}"></i>
                   <span>
                     <strong>{{ edition.label }}</strong>
                     {% if edition.note %}<small>{{ edition.note }}</small>{% endif %}
                   </span>
-                  <i class="fa-solid fa-arrow-right course-edition-arrow"></i>
+                  <i class="fa-solid {% if edition.download %}fa-download{% else %}fa-arrow-right{% endif %} course-edition-arrow"></i>
                 </a>
               {% endfor %}
             </div>

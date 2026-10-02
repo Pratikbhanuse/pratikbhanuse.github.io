@@ -10,16 +10,27 @@
     - title: Linear Algebra I
       level: First year
       description: >
-        Vectors, dot and cross products, projections, lines and planes, systems of
-        equations, RREF, matrices, inverses, determinants and Cramer's rule, with
-        extra sections on transformations, span and bases, and eigenvalues.
-      topics: [Vectors, Dot product, Cross product, Projections, Lines & planes, RREF, Matrices, Inverses, Determinants, Eigenvalues]
+        Sixteen lectures covering the whole course: vectors and the dot product, projections,
+        lines and planes, row reduction and RREF, matrix algebra and inverses, span, bases and
+        subspaces, linear transformations, determinants, eigenvalues and diagonalization,
+        Gram–Schmidt, symmetric matrices and least squares, with midterm and final reviews.
+      topics: [Vectors, Dot & cross product, Lines & planes, RREF, Matrices & inverses, Span & bases, Subspaces & rank, Transformations, Determinants, Eigenvalues, Diagonalization, Gram–Schmidt, Least squares]
       sections: 16
       editions:
         - label: Study notes
-          note: For students working on their own
-          url: /courses/math/linear-algebra-1-notes.html
+          note: Read online
+          url: /courses/math/lin-algebra-1/linear-algebra-notes.html
           icon: fa-solid fa-book-open
+        - label: Notes (PDF)
+          note: Download for offline or print
+          url: /courses/math/lin-algebra-1/linear-algebra-notes.pdf
+          icon: fa-solid fa-file-pdf
+          download: true
+        - label: Practice solutions (PDF)
+          note: Worked answers to every practice problem
+          url: /courses/math/lin-algebra-1/practice-solutions.pdf
+          icon: fa-solid fa-file-circle-check
+          download: true
 
 - id: physics
   name: Physics

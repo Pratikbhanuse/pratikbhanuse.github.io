@@ -157,3 +157,90 @@
     }
   }
 }
+
+// Navbar "courses" menu: subjects, each with a flyout panel of its courses.
+.navbar .nav-flyout {
+  .nav-flyout-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i:first-child {
+      color: var(--global-theme-color);
+    }
+  }
+
+  .nav-flyout-caret {
+    margin-left: auto;
+    padding-left: 1rem;
+    font-size: 0.7rem;
+    color: var(--global-text-color-light);
+  }
+
+  .nav-flyout-panel {
+    min-width: 14rem;
+
+    .dropdown-item small {
+      display: block;
+      color: var(--global-text-color-light);
+    }
+  }
+
+  // Desktop with a mouse: open on hover (or keyboard focus).
+  @media (min-width: 576px) and (hover: hover) {
+    &:hover > .dropdown-menu,
+    &:focus-within > .dropdown-menu {
+      display: block;
+      margin-top: 0;
+    }
+
+    .nav-flyout-subject {
+      position: relative;
+
+      &:hover,
+      &:focus-within {
+        > .nav-flyout-trigger {
+          color: var(--global-hover-color);
+
+          .nav-flyout-caret {
+            color: var(--global-hover-color);
+          }
+        }
+
+        > .nav-flyout-panel {
+          display: block;
+        }
+      }
+    }
+
+    // The menu sits near the right edge, so panels open to the left.
+    .nav-flyout-panel {
+      position: absolute;
+      top: -0.5rem;
+      right: 100%;
+      left: auto;
+      margin: 0;
+    }
+  }
+
+  // Phones and touch screens: show each subject's courses as a nested list.
+  @media (max-width: 575.98px), (hover: none) {
+    .nav-flyout-caret {
+      display: none;
+    }
+
+    .nav-flyout-panel {
+      display: block;
+      position: static;
+      float: none;
+      border: 0;
+      padding: 0 0 0 1rem;
+      margin: 0;
+      box-shadow: none;
+
+      .dropdown-header {
+        display: none;
+      }
+    }
+  }
+}
