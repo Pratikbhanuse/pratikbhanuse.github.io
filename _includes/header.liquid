@@ -64,10 +64,9 @@
                 {% assign dropdown_subjects = site.data[p.nav_dropdown_data] %}
                 <li class="nav-item dropdown nav-flyout {% if page.url contains p.url %}active{% endif %}">
                   <a
-                    class="nav-link dropdown-toggle"
+                    class="nav-link nav-flyout-link"
                     href="{{ p.url | relative_url }}"
                     id="navbarDropdown-{{ p.nav_dropdown_data }}"
-                    role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
@@ -172,6 +171,17 @@
       </div>
     </div>
   </nav>
+  <script>
+    // With a mouse, the courses menu opens on hover, so a click goes straight to the page.
+    // Touch screens can't hover, so a tap still opens the menu.
+    document.querySelectorAll('.nav-flyout-link').forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        if (window.matchMedia('(min-width: 576px) and (hover: hover)').matches) {
+          event.stopPropagation();
+        }
+      });
+    });
+  </script>
   {% if site.enable_progressbar %}
     <!-- Scrolling Progress Bar -->
     <progress id="progress" value="0">
