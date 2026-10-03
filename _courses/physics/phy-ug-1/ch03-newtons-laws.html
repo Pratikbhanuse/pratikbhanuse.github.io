@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Why things move the way they do: forces, mass, and the three laws that connect them.">
+<title>3. Newton&#x27;s Laws of Motion · Physics, step by step</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* House style shared with "Linear algebra, translated" */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D; --p:#7C3AED;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --def-bg:#F3EEFF; --def-ink:#5B21B6;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --def-bg:#1E1733; --def-ink:#C4B5FD;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --def-bg:#1E1733; --def-ink:#C4B5FD;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+a{color:var(--u)}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5.6vw,60px); line-height:1.04; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .hl{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+.byline{font-family:var(--display); font-size:15px; color:var(--muted); margin:14px 0 0}
+.byline strong{color:var(--ink)} .byline a, .copyright a{color:inherit}
+.copyright{font-family:var(--display); font-size:13px; color:var(--muted); margin:10px 0 0}
+
+/* side navigation */
+nav.toc{position:sticky; top:24px; align-self:start; padding-top:8px; font-family:var(--display); font-size:14px; max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc a[aria-current="page"]{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); font-weight:700}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px}
+nav.toc .sub{padding-left:28px; font-size:13px; color:var(--muted)}
+nav.toc .sub a{color:var(--muted); padding:3px 8px}
+
+main{min-width:0}
+.chapter{max-width:72ch}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+h4{font-family:var(--display); font-weight:700; font-size:18px; margin:24px 0 6px}
+h5{font-family:var(--display); font-weight:700; font-size:16px; margin:18px 0 4px}
+.topic-num{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--u); border-top:1px solid var(--line); padding-top:18px; margin-top:34px; scroll-margin-top:24px}
+h3.topic-title{font-size:24px; margin:4px 0 8px}
+h3.part-title{font-size:24px; margin:40px 0 4px; border-top:2px solid var(--ink); padding-top:16px}
+h4.level{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--v); margin:26px 0 10px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px}
+.note{color:var(--muted); font-size:15px}
+
+/* boxes */
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.def{background:var(--def-bg)} .box.def .label{color:var(--def-ink)}
+.box.work,.box.goals,.box.sum{background:var(--surface); border:1px solid var(--line)}
+.box.work .label,.box.goals .label,.box.sum .label{color:var(--muted)}
+.box.sum{border-top:3px solid var(--ink)}
+.box.work .label{color:var(--v)}
+.box .ex-title{margin:0 0 8px; font-size:18px}
+.sol-inline{margin:10px 0 12px; border-left:3px solid var(--w); padding-left:14px}
+.sol-label{display:block; font-family:var(--display); font-weight:700; font-size:13px; color:var(--w); margin-bottom:4px}
+details.ans{margin:4px 0 12px} details.ans summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:14px; color:var(--w)}
+details.ans > div{padding-top:6px}
+
+/* practice problems */
+.prob{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px 2px; margin:0 0 12px; min-width:0}
+.prob .pnum{font-family:var(--mono); font-weight:600; font-size:12px; color:var(--v); display:block; margin-bottom:2px}
+.prob p{margin:0 0 10px}
+
+/* solutions pages */
+h3.sol-head{margin:30px 0 8px; border-top:1px solid var(--line); padding-top:16px}
+h3.sol-head .pnum{font-family:var(--mono); font-size:14px; letter-spacing:.06em; color:var(--v)}
+.solutions .chapter > p:first-of-type{margin-top:0}
+
+/* tables, figures, math */
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2; fill:none}
+svg .obj{fill:var(--surface); stroke:var(--ink); stroke-width:1.6}
+svg .solid{fill:var(--code-bg); stroke:var(--ink); stroke-width:1.4}
+svg .ground{stroke:var(--ink); stroke-width:1.6}
+svg .hatch{stroke:var(--muted); stroke-width:1}
+svg .dash{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:5 4; fill:none}
+svg .u{stroke:var(--u); stroke-width:2.6; fill:none}
+svg .v{stroke:var(--v); stroke-width:2.6; fill:none}
+svg .w{stroke:var(--w); stroke-width:2.6; fill:none}
+svg .p{stroke:var(--p); stroke-width:2.6; fill:none}
+svg .curve{stroke:var(--u); stroke-width:2.4; fill:none}
+svg .hu,svg .tu{fill:var(--u)} svg .hv,svg .tv{fill:var(--v)} svg .hw,svg .tw{fill:var(--w)} svg .hp,svg .tp{fill:var(--p)}
+svg .muted{fill:var(--muted)} svg .ink{fill:var(--ink)}
+svg .dot{fill:var(--ink)}
+svg .fillu{fill:var(--u); fill-opacity:.12; stroke:none}
+mjx-container{color:inherit}
+mjx-container[display="true"]{display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; margin:.7em 0 !important; padding-block:2px}
+.box mjx-container[display="true"]{margin:.5em 0 !important}
+
+/* pager + footer */
+.pager{display:flex; justify-content:space-between; gap:12px; margin:56px 0 0; padding-top:16px; border-top:1px solid var(--line); font-family:var(--display); font-size:15px; max-width:72ch}
+.pager a{text-decoration:none; color:var(--u)}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+
+/* index page */
+.unit{border-top:2px solid var(--ink); padding-top:12px; margin:36px 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.chlist{list-style:none; padding:0; margin:0}
+.chlist li{display:grid; grid-template-columns:2.4em minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); margin:0}
+.chlist .n{font-family:var(--mono); font-size:13px; color:var(--muted)}
+.chlist .t{font-family:var(--display); font-weight:600; font-size:17px; text-decoration:none; color:var(--ink)}
+.chlist .t:hover{color:var(--u)}
+.chlist .s{font-family:var(--mono); font-size:12px; text-decoration:none}
+.downloads{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+.downloads a{font-family:var(--display); font-weight:600; font-size:15px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 14px}
+.downloads a:hover{border-color:var(--u); color:var(--u)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static; max-height:none}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  nav.toc .grp{grid-column:1/-1}
+  nav.toc .sub{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ---------- print (PDF) ---------- */
+@page{
+  size:Letter; margin:17mm 15mm 18mm;
+  @top-right{content:"Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-left{content:"© 2026 Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-right{content:counter(page) " / " counter(pages); font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+}
+@page :first{ @top-right{content:none} }
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff; padding:0; font-size:11.5pt}
+  .wrap{display:block; max-width:none}
+  nav.toc,.pager,.noprint{display:none !important}
+  header.top{padding-block:0 8px}
+  .chapter{max-width:none; break-before:page}
+  .book-toc{break-before:page}
+  .box,.prob,figure{break-inside:avoid}
+  .box.work{break-inside:auto}
+  .topic-num,h3,h4{break-after:avoid}
+  a{color:inherit; text-decoration:none}
+  details.ans > summary{display:none}
+}
+/* printed table of contents */
+.book-toc ol{list-style:none; padding:0}
+.book-toc li{display:flex; gap:12px; padding:5px 0; border-bottom:1px dotted var(--line); font-family:var(--display); margin:0}
+.book-toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:2em; padding-top:2px}
+h3.page-h{border-top:1px solid var(--line); padding-top:18px; margin-top:34px}
+svg .hk{fill:var(--ink)} svg .k{stroke:var(--ink); stroke-width:2.2; fill:none}
+:root{ --apply-bg:#F1EEFB; --apply-ink:#4C2A9E; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --apply-bg:#1D1830; --apply-ink:#C9B8FF; } }
+:root[data-theme="dark"]{ --apply-bg:#1D1830; --apply-ink:#C9B8FF; }
+.box.apply{background:var(--apply-bg); border-left:4px solid var(--apply-ink)} .box.apply .label{color:var(--apply-ink)}
+svg path.ground,svg polyline.ground{fill:none}
+
+.chlist .s a{text-decoration:none}
+.single{max-width:none}
+
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+         macros: { vect: ['\\vec{\\boldsymbol{#1}}', 1], uvec: ['\\hat{\\boldsymbol{#1}}', 1],
+                   ihat: '\\hat{\\boldsymbol{\\imath}}', jhat: '\\hat{\\boldsymbol{\\jmath}}',
+                   khat: '\\hat{\\boldsymbol{k}}', unit: ['\\,\\mathrm{#1}', 1] } },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker><marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker><marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hp"/></marker><marker id="ak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hk"/></marker></defs></svg>
+<div class="wrap">
+<header class="top"><div class="kicker">Chapter 3 · Semester 1 · Mechanics, Waves and Thermal Physics</div><h1>Newton&#x27;s Laws of Motion</h1><p class="lede">Why things move the way they do: forces, mass, and the three laws that connect them.</p><p class="byline">By <strong>Pratik Bhanuse</strong>, PhD Physics candidate, Western University · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p><div class="downloads noprint"><a href="ch03-newtons-laws_notes.pdf" download>Download notes (PDF)</a><a href="ch03-newtons-laws_solutions.pdf" download>Download solutions (PDF)</a></div></header>
+<aside class="side"><nav class="toc" aria-label="Contents"><ol>
+<li><a href="index.html"><span class="n">⌂</span>Contents</a></li>
+<li><a href="syllabus.html"><span class="n">→</span>Syllabus and how to study</a></li>
+<li class="grp">Semester 1 · Mechanics, Waves and Thermal Physics</li>
+<li><a href="ch01-units-vectors.html"><span class="n">1</span>Measurement, Units, Dimensions and Vectors</a></li>
+<li><a href="ch02-kinematics.html"><span class="n">2</span>Kinematics in One and Two Dimensions</a></li>
+<li><a href="ch03-newtons-laws.html" aria-current="page"><span class="n">3</span>Newton&#x27;s Laws of Motion</a></li>
+<li class="sub"><a href="#forces-and-interactions">§3.1 Forces and interactions</a></li>
+<li class="sub"><a href="#newtons-first-law-and-inertial-frames">§3.2 Newton’s first law and inertial frames</a></li>
+<li class="sub"><a href="#newtons-second-law">§3.3 Newton’s second law</a></li>
+<li class="sub"><a href="#newtons-third-law">§3.4 Newton’s third law</a></li>
+<li class="sub"><a href="#free-body-diagrams-and-a-problem-solving-strategy">§3.5 Free-body diagrams and a problem-solving strategy</a></li>
+<li class="sub"><a href="#weight-normal-force-and-apparent-weight">§3.6 Weight, normal force and apparent weight</a></li>
+<li class="sub"><a href="#strings-pulleys-and-connected-bodies">§3.7 Strings, pulleys and connected bodies</a></li>
+<li class="sub"><a href="#non-inertial-frames-and-pseudo-forces">§3.8 Non-inertial frames and pseudo-forces</a></li>
+<li class="sub"><a href="#practice">Practice problems</a></li>
+<li><a href="ch04-friction-circular.html"><span class="n">4</span>Friction and Circular Motion</a></li>
+<li><a href="ch05-work-energy.html"><span class="n">5</span>Work, Energy and Power</a></li>
+<li><a href="ch06-momentum.html"><span class="n">6</span>Centre of Mass, Linear Momentum and Collisions</a></li>
+<li><a href="ch07-rotation.html"><span class="n">7</span>Rotational Motion</a></li>
+<li><a href="ch08-gravitation.html"><span class="n">8</span>Gravitation</a></li>
+<li><a href="ch09-oscillations.html"><span class="n">9</span>Simple Harmonic Motion</a></li>
+<li><a href="ch10-fluids-elasticity.html"><span class="n">10</span>Elasticity and Fluid Mechanics</a></li>
+<li><a href="ch11-waves-sound.html"><span class="n">11</span>Mechanical Waves and Sound</a></li>
+<li><a href="ch12-thermal.html"><span class="n">12</span>Heat, Kinetic Theory and Thermodynamics</a></li>
+<li class="grp">Semester 2 · Electricity, Magnetism, Optics and Modern Physics</li>
+<li><a href="ch13-electric-field.html"><span class="n">13</span>Electric Charge and Electric Field</a></li>
+<li><a href="ch14-gauss.html"><span class="n">14</span>Gauss&#x27;s Law</a></li>
+<li><a href="ch15-potential.html"><span class="n">15</span>Electric Potential</a></li>
+<li><a href="ch16-capacitance.html"><span class="n">16</span>Capacitance and Dielectrics</a></li>
+<li><a href="ch17-dc-circuits.html"><span class="n">17</span>Electric Current and DC Circuits</a></li>
+<li><a href="ch18-magnetic-force.html"><span class="n">18</span>Magnetic Field and Magnetic Forces</a></li>
+<li><a href="ch19-magnetic-sources.html"><span class="n">19</span>Sources of the Magnetic Field</a></li>
+<li><a href="ch20-induction.html"><span class="n">20</span>Electromagnetic Induction</a></li>
+<li><a href="ch21-ac-emwaves.html"><span class="n">21</span>Alternating Current and Electromagnetic Waves</a></li>
+<li><a href="ch22-geometric-optics.html"><span class="n">22</span>Geometrical Optics</a></li>
+<li><a href="ch23-wave-optics.html"><span class="n">23</span>Wave Optics</a></li>
+<li><a href="ch24-modern.html"><span class="n">24</span>Photons, Atoms and Nuclei</a></li>
+<li class="grp">Appendix</li>
+<li><a href="references.html"><span class="n">R</span>References and further practice</a></li>
+</ol></nav></aside>
+<main><article class="chapter notes">
+<p>Kinematics tells us <em>how</em> things move. <strong>Dynamics</strong> tells us <em>why</em>. In 1687 Isaac Newton stated three laws that, together with a list of the forces that act, predict the motion of everything from a falling apple to a planet. They remain the working tools of every mechanical, civil, aerospace and biomedical engineer, accurate whenever speeds are well below the speed of light and objects are much larger than atoms. This chapter states the laws carefully, builds the most important skill in mechanics (drawing free-body diagrams), and applies it to connected bodies, pulleys, inclines and accelerating frames.</p>
+<div class="box goals"><div class="label">You will be able to</div>
+<ul>
+<li>Identify the forces acting on a body and classify them (gravity, normal, tension, spring, friction).</li>
+<li>State Newton’s three laws precisely, including the role of inertial frames.</li>
+<li>Draw correct free-body diagrams and apply <span class="math inline">\(\sum\vect{F} = m\vect{a}\)</span> component by component.</li>
+<li>Correctly identify third-law action–reaction pairs.</li>
+<li>Solve problems with connected bodies, pulleys and inclines, using constraint relations.</li>
+<li>Calculate apparent weight in accelerating lifts.</li>
+<li>Analyse motion in accelerating (non-inertial) frames using pseudo-forces.</li>
+</ul>
+</div>
+<div class="box ask"><div class="label">Think first</div>
+<p>A book rests on a table. The Earth pulls the book down with a force <span class="math inline">\(W\)</span>, and the table pushes it up with a force <span class="math inline">\(N = W\)</span>. Is <span class="math inline">\(N\)</span> the “reaction” to <span class="math inline">\(W\)</span> in the sense of Newton’s third law?</p>
+<details class="ans"><summary>Show answer</summary><div>
+<p><strong>No.</strong> Both forces act on the <em>same</em> object, the book, and third-law pairs always act on <em>different</em> objects. The reaction to the Earth’s gravitational pull on the book is the book’s gravitational pull on the <strong>Earth</strong>. The reaction to the table’s push on the book is the book’s push on the <strong>table</strong>. <span class="math inline">\(N\)</span> equals <span class="math inline">\(W\)</span> here only because the book is not accelerating (the second law). In a lift accelerating upward, <span class="math inline">\(N &gt; W\)</span>, while third-law pairs are always exactly equal.</p>
+</div></details>
+</div>
+<div class="topic-num" id="forces-and-interactions">§3.1</div><h3 class="topic-title">Forces and interactions</h3>
+<p>A <strong>force</strong> is a push or a pull, an interaction between two objects. It is a vector, measured in <strong>newtons</strong> (<span class="math inline">\(1\ \mathrm{N} = 1\ \mathrm{kg\,m/s^2}\)</span>). Every force has an <em>agent</em>: something exerts it. If you cannot name the agent, the force does not exist.</p>
+<p>At the deepest level there are only four fundamental interactions: gravitational, electromagnetic, and the strong and weak nuclear forces. In mechanics we meet just two of them, in many disguises:</p>
+<div class="tablewrap">
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Force</th>
+<th>Symbol</th>
+<th>Origin</th>
+<th>Key facts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Weight</strong> (gravity)</td>
+<td><span class="math inline">\(\vect{W} = m\vect{g}\)</span></td>
+<td>Gravitational pull of the Earth</td>
+<td>Acts at the centre of gravity, vertically down, magnitude <span class="math inline">\(mg\)</span></td>
+</tr>
+<tr>
+<td><strong>Normal force</strong></td>
+<td><span class="math inline">\(\vect{N}\)</span></td>
+<td>Electromagnetic repulsion between surfaces in contact</td>
+<td>Perpendicular to the surface; adjusts itself to prevent interpenetration; can only push</td>
+</tr>
+<tr>
+<td><strong>Tension</strong></td>
+<td><span class="math inline">\(\vect{T}\)</span></td>
+<td>Electromagnetic forces between molecules of a string, rope or cable</td>
+<td>Along the string, pulling away from the body; can only pull</td>
+</tr>
+<tr>
+<td><strong>Spring force</strong></td>
+<td><span class="math inline">\(\vect{F}_s = -k\,\Delta\vect{x}\)</span></td>
+<td>Molecular forces in a deformed spring</td>
+<td>Proportional to extension or compression (Hooke’s law), opposite to the deformation</td>
+</tr>
+<tr>
+<td><strong>Friction</strong></td>
+<td><span class="math inline">\(\vect{f}\)</span></td>
+<td>Surface interactions</td>
+<td>Parallel to the surface, opposing relative sliding (Chapter 4)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Contact forces</strong> (normal, tension, friction, spring) need touching. <strong>Field forces</strong> (gravity, electric, magnetic) act at a distance.</p>
+<div class="box def"><div class="label">Definition</div>
+<p><strong>Ideal string:</strong> massless and inextensible. The tension is the same everywhere along it, and two bodies joined by a taut ideal string have equal speeds and equal accelerations along the string. <strong>Ideal pulley:</strong> massless and frictionless. It changes the direction of a tension without changing its magnitude.</p>
+</div>
+<div class="topic-num" id="newtons-first-law-and-inertial-frames">§3.2</div><h3 class="topic-title">Newton’s first law and inertial frames</h3>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>First law (law of inertia).</strong> A body stays at rest, or moves with constant velocity in a straight line, unless a net external force acts on it.</p>
+</div>
+<p>The tendency to keep the same velocity is called <strong>inertia</strong>, and <strong>mass</strong> is its quantitative measure. A loaded lorry is harder to start and harder to stop than a bicycle because it has more inertia.</p>
+<p>The first law is not a special case of the second. Its real content is to <strong>define the frames of reference</strong> in which Newton’s laws hold. An <strong>inertial frame</strong> is one in which a body with no net force acting on it moves with constant velocity. The ground is very nearly an inertial frame for most engineering purposes, and so is any frame moving at constant velocity relative to it. An accelerating car, a lift that is speeding up, and a rotating merry-go-round are <strong>non-inertial</strong>: in them, objects appear to accelerate with no force acting. We return to these in the last section.</p>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Seat belts and head restraints exist because of the first law.</strong> In a frontal crash the car stops in about 0.1 s, but an unrestrained occupant continues at the original speed until something (the steering wheel, the windscreen) exerts a force. In a rear-end collision the seat pushes the torso forward while the head, by inertia, lags behind. This is the mechanism of <em>whiplash</em>, which head restraints are designed to limit. Loose objects inside a car become projectiles for the same reason.</p>
+</div>
+<div class="topic-num" id="newtons-second-law">§3.3</div><h3 class="topic-title">Newton’s second law</h3>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Second law.</strong> The net force on a body equals the rate of change of its momentum: <span class="math display">\[\sum\vect{F} = \frac{d\vect{p}}{dt},\qquad \vect{p} = m\vect{v}.\]</span> For a body of constant mass this becomes <span class="math display">\[\sum\vect{F} = m\vect{a}.\]</span></p>
+</div>
+<p>Points to understand about the second law:</p>
+<ul>
+<li>It is a <strong>vector</strong> equation. It means three independent equations: <span class="math inline">\(\sum F_x = ma_x\)</span>, <span class="math inline">\(\sum F_y = ma_y\)</span> and <span class="math inline">\(\sum F_z = ma_z\)</span>.</li>
+<li><span class="math inline">\(\sum\vect{F}\)</span> is the <strong>net</strong> external force: the vector sum of <em>all</em> forces acting <em>on</em> the body. Forces the body exerts on other things do not appear.</li>
+<li>The acceleration is in the direction of the <strong>net force</strong>, not necessarily the direction of motion. A ball thrown upward moves up while its acceleration points down.</li>
+<li>The law is <strong>instantaneous</strong>: the acceleration at a given moment is set by the forces at that moment. When a force is removed, the acceleration vanishes at once, but the velocity does not.</li>
+<li>If <span class="math inline">\(\sum\vect{F} = \vect{0}\)</span>, then <span class="math inline">\(\vect{a} = \vect{0}\)</span>. The body is in <strong>equilibrium</strong>, either at rest or moving at constant velocity.</li>
+</ul>
+<p>The form <span class="math inline">\(\vect{F} = d\vect{p}/dt\)</span> is more general, and we use it for rockets and other variable-mass systems in Chapter 6.</p>
+<div class="topic-num" id="newtons-third-law">§3.4</div><h3 class="topic-title">Newton’s third law</h3>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Third law.</strong> If body A exerts a force on body B, then B exerts a force on A that is equal in magnitude and opposite in direction: <span class="math display">\[\vect{F}_{\text{A on B}} = -\vect{F}_{\text{B on A}}.\]</span></p>
+</div>
+<p>Third-law pairs always:</p>
+<ol>
+<li>act on <strong>different</strong> bodies, so they never cancel each other in a free-body diagram;</li>
+<li>are of the <strong>same type</strong> (gravitational with gravitational, contact with contact);</li>
+<li>act <strong>simultaneously</strong>. Neither is “first”.</li>
+</ol>
+<div class="box trap"><div class="label">Common mistake</div>
+<p>A common confusion: “If the horse pulls the cart and the cart pulls the horse back equally, how can they move?” The answer is that the two forces act on <strong>different</strong> bodies. Whether the cart accelerates depends only on the forces <em>on the cart</em>: the horse’s forward pull minus friction on its wheels. The horse moves forward because the <strong>ground</strong> pushes it forward, through friction on its hooves, harder than the cart pulls it back.</p>
+</div>
+<div class="topic-num" id="free-body-diagrams-and-a-problem-solving-strategy">§3.5</div><h3 class="topic-title">Free-body diagrams and a problem-solving strategy</h3>
+<p>The free-body diagram (FBD) is the single most important tool in mechanics. It isolates one body and shows <strong>every force acting on it, and only those forces</strong>.</p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Strategy for Newton’s-law problems.</strong></p>
+<ol>
+<li><strong>Choose the system.</strong> Pick the body (or group of bodies) to analyse.</li>
+<li><strong>Draw the FBD.</strong> Draw the body as a dot or simple shape. For each force, name the agent and draw an arrow from the body. Check for gravity, then everything <em>touching</em> the body: surfaces (normal and friction), strings (tension), springs.</li>
+<li><strong>Choose axes.</strong> Align one axis with the acceleration if you know its direction. On an incline, use axes along and perpendicular to the surface.</li>
+<li><strong>Write <span class="math inline">\(\sum F = ma\)</span> for each axis</strong>, and for each body if there are several.</li>
+<li><strong>Add constraint relations</strong> linking the accelerations of connected bodies (strings, pulleys, surfaces).</li>
+<li><strong>Solve algebraically</strong>, then substitute numbers. Check units, signs and limiting cases.</li>
+</ol>
+</div>
+<div class="box trap"><div class="label">Common mistake</div>
+<p>Never put “<span class="math inline">\(ma\)</span>” on a free-body diagram as if it were a force. It is the <em>result</em> of the forces, not one of them. Never include forces the body exerts on other things. And “the force of motion” does not exist: a moving body needs no force to keep moving.</p>
+</div>
+<div class="box work example"><div class="label">Worked example 3.1</div><h4 class="ex-title">Pulling a box at an angle</h4>
+<p>A 4.0 kg box on a frictionless floor is pulled by a rope with a force of 20 N at <span class="math inline">\(30^\circ\)</span> above the horizontal. Find the acceleration of the box and the normal force from the floor.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>FBD.</strong> Four forces act on the box: its weight <span class="math inline">\(mg = 39.2\)</span> N (down), the normal force <span class="math inline">\(N\)</span> (up), the tension <span class="math inline">\(T = 20\)</span> N at <span class="math inline">\(30^\circ\)</span> above horizontal, and no friction. Take <span class="math inline">\(x\)</span> horizontal (the direction of motion) and <span class="math inline">\(y\)</span> vertical.</p>
+<p><strong><span class="math inline">\(x\)</span>-direction:</strong> <span class="math display">\[T\cos30^\circ = ma \;\Rightarrow\; a = \frac{20(0.866)}{4.0} = 4.33\ \mathrm{m/s^2}.\]</span></p>
+<p><strong><span class="math inline">\(y\)</span>-direction.</strong> There is no vertical acceleration: <span class="math display">\[N + T\sin30^\circ - mg = 0 \;\Rightarrow\; N = 39.2 - 20(0.5) = 29.2\ \mathrm{N}.\]</span></p>
+<p><strong>Evaluate.</strong> The normal force is <strong>less</strong> than the weight, because the rope supports part of the box. “Normal force equals weight” is true only in special cases. If the pull were increased until <span class="math inline">\(T\sin30^\circ = mg\)</span> (that is, <span class="math inline">\(T = 78.4\)</span> N), the box would lift off and <span class="math inline">\(N\)</span> would be zero.</p>
+</div>
+</div>
+<div class="topic-num" id="weight-normal-force-and-apparent-weight">§3.6</div><h3 class="topic-title">Weight, normal force and apparent weight</h3>
+<p>A bathroom scale does not measure your weight. It measures the <strong>normal force</strong> it exerts on you. When the scale accelerates, the two are different. That reading is your <strong>apparent weight</strong>.</p>
+<p>For a person of mass <span class="math inline">\(m\)</span> in a lift with upward acceleration <span class="math inline">\(a\)</span>, Newton’s second law (up positive) gives <span class="math display">\[N - mg = ma \;\Rightarrow\; N = m(g + a).\]</span></p>
+<ul>
+<li>Lift accelerating upward, or decelerating while moving down: <span class="math inline">\(a &gt; 0\)</span>, so you feel heavier.</li>
+<li>Lift accelerating downward, or decelerating while moving up: <span class="math inline">\(a &lt; 0\)</span>, so you feel lighter.</li>
+<li>Free fall (<span class="math inline">\(a = -g\)</span>): <span class="math inline">\(N = 0\)</span>. This is “weightlessness”. Gravity is still acting, but nothing pushes back.</li>
+</ul>
+<div class="box work example"><div class="label">Worked example 3.2</div><h4 class="ex-title">Apparent weight in a lift</h4>
+<p>A 60 kg student stands on a scale in a lift. What does the scale read (in newtons) when the lift (a) accelerates upward at <span class="math inline">\(2.0\ \mathrm{m/s^2}\)</span>, (b) moves upward at constant speed, (c) accelerates downward at <span class="math inline">\(2.0\ \mathrm{m/s^2}\)</span>, and (d) falls freely after the cable breaks?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>The forces on the student are the weight <span class="math inline">\(mg\)</span> (down) and the normal force <span class="math inline">\(N\)</span> from the scale (up). With up positive, <span class="math inline">\(N = m(g + a)\)</span>.</p>
+<p>(a) <span class="math inline">\(N = 60(9.8 + 2.0) = 708\)</span> N.</p>
+<p>(b) <span class="math inline">\(a = 0\)</span>, so <span class="math inline">\(N = 60(9.8) = 588\)</span> N, equal to the true weight.</p>
+<p>(c) <span class="math inline">\(N = 60(9.8 - 2.0) = 468\)</span> N.</p>
+<p>(d) <span class="math inline">\(a = -9.8\ \mathrm{m/s^2}\)</span>, so <span class="math inline">\(N = 0\)</span>.</p>
+<p><strong>Evaluate.</strong> The scale reading depends only on the <strong>acceleration</strong>, not on the velocity. Moving up at constant speed feels exactly like standing still.</p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Your inner ear is an accelerometer.</strong> The <em>otolith organs</em> of the vestibular system contain tiny calcium carbonate crystals resting on a gel layer above sensory hair cells. When your head accelerates, the crystals lag behind by inertia, bending the hair cells, and the brain reads the bending as acceleration. This is why you feel a lift start and stop but not its steady motion. It is also why astronauts in free fall, and patients with vestibular disorders, can lose their sense of “down”. Pilots are trained to trust their instruments over their inner ear, because a sustained, banked, accelerating turn can feel exactly like level flight.</p>
+</div>
+<div class="topic-num" id="strings-pulleys-and-connected-bodies">§3.7</div><h3 class="topic-title">Strings, pulleys and connected bodies</h3>
+<p>When bodies are connected, apply <span class="math inline">\(\sum\vect{F} = m\vect{a}\)</span> to <strong>each body separately</strong>, then link the equations with <strong>constraint relations</strong>, which come from the fixed lengths of strings.</p>
+<figure>
+<svg viewBox="0 0 360 240" width="340" role="img" aria-label="Atwood machine: a fixed pulley hangs from the ceiling with a string over it. A larger mass m1 hangs on the left and a smaller mass m2 on the right. Tension T acts upward on each mass, weights m1 g and m2 g act downward, and m1 accelerates down while m2 accelerates up.">
+<line class="ground" x1="100" y1="18" x2="240" y2="18"/>
+<line class="hatch" x1="110" y1="18" x2="100" y2="8"/><line class="hatch" x1="130" y1="18" x2="120" y2="8"/><line class="hatch" x1="150" y1="18" x2="140" y2="8"/><line class="hatch" x1="170" y1="18" x2="160" y2="8"/><line class="hatch" x1="190" y1="18" x2="180" y2="8"/><line class="hatch" x1="210" y1="18" x2="200" y2="8"/><line class="hatch" x1="230" y1="18" x2="220" y2="8"/>
+<line class="ground" x1="170" y1="18" x2="170" y2="36"/>
+<circle class="obj" cx="170" cy="60" r="24"/>
+<circle class="dot" cx="170" cy="60" r="3"/>
+<line class="ground" x1="146" y1="60" x2="146" y2="150"/>
+<line class="ground" x1="194" y1="60" x2="194" y2="110"/>
+<rect class="solid" x="122" y="150" width="48" height="48" rx="3"/>
+<text x="137" y="179" class="ink">m₁</text>
+<rect class="solid" x="178" y="110" width="32" height="32" rx="3"/>
+<text x="185" y="131" class="ink">m₂</text>
+<line class="u" x1="134" y1="150" x2="134" y2="110" marker-end="url(#au)"/>
+<text x="112" y="122" class="tu">T</text>
+<line class="v" x1="146" y1="198" x2="146" y2="232" marker-end="url(#av)"/>
+<text x="152" y="228" class="tv">m₁g</text>
+<line class="u" x1="216" y1="110" x2="216" y2="74" marker-end="url(#au)"/>
+<text x="222" y="86" class="tu">T</text>
+<line class="v" x1="194" y1="142" x2="194" y2="176" marker-end="url(#av)"/>
+<text x="200" y="172" class="tv">m₂g</text>
+<line class="w" x1="96" y1="160" x2="96" y2="196" marker-end="url(#aw)"/>
+<text x="74" y="214" class="tw">a</text>
+<line class="w" x1="250" y1="140" x2="250" y2="104" marker-end="url(#aw)"/>
+<text x="256" y="124" class="tw">a</text>
+</svg>
+<figcaption>Atwood machine. The same tension T pulls up on both masses. The heavier mass accelerates down and the lighter one up, with the same magnitude of acceleration.</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 3.3</div><h4 class="ex-title">The Atwood machine</h4>
+<p>Masses <span class="math inline">\(m_1 = 5.0\)</span> kg and <span class="math inline">\(m_2 = 3.0\)</span> kg hang from an ideal string over an ideal pulley, as in the figure. Find the acceleration of the masses and the tension in the string.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Constraint.</strong> The string has fixed length, so if <span class="math inline">\(m_1\)</span> moves down with acceleration <span class="math inline">\(a\)</span>, then <span class="math inline">\(m_2\)</span> moves up with the same <span class="math inline">\(a\)</span>.</p>
+<p><strong>Second law for each mass</strong>, taking each one’s direction of motion as positive: <span class="math display">\[m_1:\quad m_1g - T = m_1a,\qquad\qquad m_2:\quad T - m_2g = m_2a.\]</span></p>
+<p><strong>Solve.</strong> Adding the equations eliminates <span class="math inline">\(T\)</span>: <span class="math display">\[a = \frac{(m_1 - m_2)\,g}{m_1 + m_2} = \frac{2.0(9.8)}{8.0} = 2.45\ \mathrm{m/s^2}.\]</span> Substituting back: <span class="math display">\[T = m_2(g + a) = \frac{2m_1m_2\,g}{m_1 + m_2} = \frac{2(5.0)(3.0)(9.8)}{8.0} = 36.8\ \mathrm{N}.\]</span></p>
+<p><strong>Evaluate.</strong></p>
+<ul>
+<li><strong>Limits.</strong> If <span class="math inline">\(m_1 = m_2\)</span>, then <span class="math inline">\(a = 0\)</span> (balanced). If <span class="math inline">\(m_2 \to 0\)</span>, then <span class="math inline">\(a \to g\)</span> and <span class="math inline">\(T \to 0\)</span> (<span class="math inline">\(m_1\)</span> falls freely).</li>
+<li><strong>Size of <span class="math inline">\(T\)</span>.</strong> The tension lies between the two weights, <span class="math inline">\(m_2g = 29.4\)</span> N and <span class="math inline">\(m_1g = 49\)</span> N, as it must for <span class="math inline">\(m_1\)</span> to accelerate down and <span class="math inline">\(m_2\)</span> up.</li>
+</ul>
+<p>Historically, Atwood used this device in 1784 to “dilute” gravity and measure <span class="math inline">\(g\)</span> with slow, timeable motion.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 3.4</div><h4 class="ex-title">Block on an incline pulled by a hanging mass</h4>
+<p>A 4.0 kg block rests on a frictionless incline at <span class="math inline">\(30^\circ\)</span>. A string parallel to the incline runs from the block over a pulley at the top to a hanging 3.0 kg mass. Find the acceleration and the tension.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Which way does it move?</strong> Compare the driving forces along the string: the hanging weight <span class="math inline">\(m_2g = 29.4\)</span> N against the component of the block’s weight down the slope, <span class="math inline">\(m_1g\sin30^\circ = 19.6\)</span> N. The hanging mass wins, so it descends and the block moves up the slope.</p>
+<p><strong>Equations.</strong> For the block, use axes along the incline (up-slope positive). For the hanging mass, take down as positive. <span class="math display">\[m_1:\quad T - m_1g\sin30^\circ = m_1a,\qquad\qquad m_2:\quad m_2g - T = m_2a.\]</span></p>
+<p><strong>Solve.</strong> Add the equations: <span class="math display">\[a = \frac{m_2g - m_1g\sin30^\circ}{m_1 + m_2} = \frac{29.4 - 19.6}{7.0} = 1.4\ \mathrm{m/s^2}.\]</span> <span class="math display">\[T = m_2(g - a) = 3.0(9.8 - 1.4) = 25.2\ \mathrm{N}.\]</span></p>
+<p><strong>Evaluate.</strong> For the block, the normal force is <span class="math inline">\(N = m_1g\cos30^\circ = 33.9\)</span> N. It plays no part in the motion along the slope, because the incline is frictionless. If the slope were steeper, the block could win: setting <span class="math inline">\(m_1\sin\theta = m_2\)</span> gives <span class="math inline">\(\theta = 48.6^\circ\)</span> for balance.</p>
+</div>
+</div>
+<h4>Bodies in contact</h4>
+<div class="box work example"><div class="label">Worked example 3.5</div><h4 class="ex-title">Pushing three blocks</h4>
+<p>Three blocks of masses 1.0 kg, 2.0 kg and 3.0 kg sit in a row on a frictionless floor, touching each other. A horizontal force of 12 N pushes on the 1.0 kg block. Find the acceleration and the contact forces between the blocks.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Whole system.</strong> All three blocks move together: <span class="math display">\[a = \frac{F}{m_1 + m_2 + m_3} = \frac{12}{6.0} = 2.0\ \mathrm{m/s^2}.\]</span></p>
+<p><strong>Contact force between blocks 2 and 3.</strong> Draw the FBD of block 3 alone. Only <span class="math inline">\(F_{23}\)</span> acts horizontally: <span class="math display">\[F_{23} = m_3a = 3.0(2.0) = 6.0\ \mathrm{N}.\]</span></p>
+<p><strong>Contact force between blocks 1 and 2.</strong> It must accelerate blocks 2 and 3 together: <span class="math display">\[F_{12} = (m_2 + m_3)a = 5.0(2.0) = 10\ \mathrm{N}.\]</span></p>
+<p><strong>Check with block 1:</strong> <span class="math inline">\(12 - 10 = 1.0(2.0)\)</span>. ✓</p>
+<p><strong>Evaluate.</strong> The force transmitted <em>decreases</em> along the chain, because each contact force has to accelerate only the blocks beyond it. Pushing from the other end, on the 3.0 kg block, would give contact forces of 10 N and 4.0 N instead. The arrangement matters.</p>
+</div>
+</div>
+<h4>Constraint relations with movable pulleys</h4>
+<p>When a pulley can move, the accelerations of the connected bodies are no longer equal. Find the relation from the <strong>fixed length of the string</strong>: write the string’s length in terms of the positions of the bodies, then differentiate twice.</p>
+<div class="box work example"><div class="label">Worked example 3.6</div><h4 class="ex-title">A movable pulley</h4>
+<p>Block A (<span class="math inline">\(m_A = 2.0\)</span> kg) rests on a frictionless table. A string tied to A runs horizontally to a fixed pulley at the table’s edge, down to a <em>movable</em> pulley, and back up to a hook on the underside of the table. Block B (<span class="math inline">\(m_B = 2.0\)</span> kg) hangs from the movable pulley. Both pulleys and the string are ideal. Find the accelerations of A and B and the tension.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Constraint.</strong> Let <span class="math inline">\(x\)</span> be A’s distance from the fixed pulley and <span class="math inline">\(y\)</span> the depth of the movable pulley below the table. Two string segments of length about <span class="math inline">\(y\)</span> hang below the table, so the string length is <span class="math display">\[L = x + 2y + \text{constant}.\]</span> Differentiating twice gives <span class="math inline">\(\ddot{x} + 2\ddot{y} = 0\)</span>. In magnitudes, when A moves towards the pulley with acceleration <span class="math inline">\(a_A\)</span>, B descends with <span class="math display">\[a_B = \frac{a_A}{2}.\]</span></p>
+<p><strong>Forces.</strong> The same tension <span class="math inline">\(T\)</span> acts along the whole string.</p>
+<ul>
+<li>Block A (horizontal): <span class="math inline">\(T = m_Aa_A\)</span>.</li>
+<li>Block B plus the movable pulley (down positive): two strands pull up, so <span class="math inline">\(m_Bg - 2T = m_Ba_B\)</span>.</li>
+</ul>
+<p><strong>Solve.</strong> Substitute <span class="math inline">\(T = m_Aa_A\)</span> and <span class="math inline">\(a_B = a_A/2\)</span>: <span class="math display">\[m_Bg - 2m_Aa_A = \frac{m_Ba_A}{2} \;\Rightarrow\; a_A = \frac{2m_B\,g}{4m_A + m_B} = \frac{2(2.0)(9.8)}{8.0 + 2.0} = 3.92\ \mathrm{m/s^2}.\]</span> So <span class="math inline">\(a_B = 1.96\ \mathrm{m/s^2}\)</span> and <span class="math inline">\(T = m_Aa_A = 7.84\)</span> N.</p>
+<p><strong>Check B:</strong> <span class="math inline">\(m_Bg - 2T = 19.6 - 15.7 = 3.92\ \mathrm{N} = m_Ba_B\)</span>. ✓</p>
+<p><strong>Evaluate.</strong> The movable pulley gives a 2:1 <em>mechanical advantage</em>: B is supported by <span class="math inline">\(2T\)</span>, but moves only half as far as A. This trade of force for distance is the principle behind block-and-tackle hoists, and behind the pulley systems used for orthopaedic traction (Problem P3.8).</p>
+</div>
+</div>
+<div class="topic-num" id="non-inertial-frames-and-pseudo-forces">§3.8</div><h3 class="topic-title">Non-inertial frames and pseudo-forces</h3>
+<p>Newton’s laws hold in inertial frames. Sometimes it is easier to work in an accelerating frame, for example the frame of a car, a lift or a centrifuge. In a frame with acceleration <span class="math inline">\(\vect{a}_0\)</span> relative to an inertial frame, Newton’s second law still works <em>if</em> we add a <strong>pseudo-force</strong> (fictitious or inertial force) to every body: <span class="math display">\[\vect{F}_{\text{pseudo}} = -m\,\vect{a}_0.\]</span> Then <span class="math inline">\(\sum\vect{F}_{\text{real}} + \vect{F}_{\text{pseudo}} = m\,\vect{a}_{\text{rel}}\)</span>, where <span class="math inline">\(\vect{a}_{\text{rel}}\)</span> is the acceleration measured in the accelerating frame.</p>
+<p>A pseudo-force has no agent and no third-law partner. It is a bookkeeping device that accounts for the acceleration of the frame. The “push back into your seat” as a plane accelerates for take-off is the pseudo-force, felt in the plane’s frame.</p>
+<div class="box work example"><div class="label">Worked example 3.7</div><h4 class="ex-title">A pendulum as an accelerometer</h4>
+<p>A 0.50 kg bob hangs from the roof of a car that accelerates forward at <span class="math inline">\(3.0\ \mathrm{m/s^2}\)</span> along a level road. Find the angle the string makes with the vertical and the tension in the string. Solve it (a) in the ground frame and (b) in the car’s frame.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) <strong>Ground frame (inertial).</strong> The bob accelerates forward at <span class="math inline">\(a = 3.0\ \mathrm{m/s^2}\)</span>. Only two real forces act: the tension <span class="math inline">\(T\)</span>, at angle <span class="math inline">\(\theta\)</span> to the vertical, and the weight <span class="math inline">\(mg\)</span>. <span class="math display">\[\text{Horizontal: } T\sin\theta = ma,\qquad \text{Vertical: } T\cos\theta = mg.\]</span> Divide the equations: <span class="math inline">\(\tan\theta = a/g = 3.0/9.8 = 0.306\)</span>, so <span class="math inline">\(\theta = 17.0^\circ\)</span>, with the bob hanging <strong>backwards</strong>. Square and add: <span class="math display">\[T = m\sqrt{g^2 + a^2} = 0.50\sqrt{9.8^2 + 3.0^2} = 5.12\ \mathrm{N}.\]</span></p>
+<p>(b) <strong>Car frame (non-inertial).</strong> The bob is at rest. Add a pseudo-force <span class="math inline">\(ma\)</span> pointing <strong>backward</strong>. Then <span class="math inline">\(T\)</span>, <span class="math inline">\(mg\)</span> and <span class="math inline">\(ma\)</span> balance, giving the same <span class="math inline">\(\tan\theta = a/g\)</span> and <span class="math inline">\(T = m\sqrt{g^2 + a^2}\)</span>.</p>
+<p><strong>Evaluate.</strong> In the car, the bob behaves as if gravity were <span class="math inline">\(g_{\text{eff}} = \sqrt{g^2 + a^2} = 10.2\ \mathrm{m/s^2}\)</span>, tilted backwards. Measuring <span class="math inline">\(\theta\)</span> measures the car’s acceleration. That is exactly how a simple accelerometer works.</p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Accelerometers and centrifuges.</strong> The MEMS accelerometer in your phone is a microscopic proof mass on silicon springs. When the phone accelerates, the springs must supply the force <span class="math inline">\(m\vect{a}\)</span>, so they flex, and the change in capacitance between tiny comb-shaped electrodes is measured. Seen from the phone’s frame, the mass is pushed by a pseudo-force <span class="math inline">\(-m\vect{a}\)</span>. The same idea, with gravity included, is how the phone knows which way is down. A laboratory <strong>centrifuge</strong> spins samples so that, in the rotating frame, they feel a pseudo-force thousands of times larger than gravity. This separates blood cells from plasma in minutes rather than hours.</p>
+</div>
+<div class="box sum"><div class="label">Chapter summary</div>
+<ul>
+<li>Forces are interactions with an agent. In mechanics: weight <span class="math inline">\(mg\)</span>, normal force, tension, spring force <span class="math inline">\(-kx\)</span>, friction.</li>
+<li><strong>First law:</strong> no net force means constant velocity. It defines inertial frames.</li>
+<li><strong>Second law:</strong> <span class="math inline">\(\sum\vect{F} = d\vect{p}/dt = m\vect{a}\)</span> (constant mass). It is a vector law, and the acceleration points along the <em>net</em> force.</li>
+<li><strong>Third law:</strong> <span class="math inline">\(\vect{F}_{AB} = -\vect{F}_{BA}\)</span>. The pair acts on different bodies and is never drawn on the same FBD.</li>
+<li><strong>Method:</strong> isolate each body, draw its FBD, choose axes along the acceleration, write <span class="math inline">\(\sum F = ma\)</span> for each axis and body, and add constraint relations from string lengths.</li>
+<li>Apparent weight <span class="math inline">\(N = m(g + a)\)</span>. Free fall means <span class="math inline">\(N = 0\)</span>.</li>
+<li>Atwood machine: <span class="math inline">\(a = (m_1 - m_2)g/(m_1 + m_2)\)</span> and <span class="math inline">\(T = 2m_1m_2g/(m_1 + m_2)\)</span>.</li>
+<li>In a frame with acceleration <span class="math inline">\(\vect{a}_0\)</span>, add the pseudo-force <span class="math inline">\(-m\vect{a}_0\)</span> to every body.</li>
+</ul>
+</div>
+<h3 class="part-title" id="practice">Practice problems</h3><p class="note">Full step-by-step solutions are in the separate solutions PDF.</p>
+<h4 class="level">Level A — Concept check</h4>
+<div class="prob" id="p3-1"><span class="pnum">P3.1</span>
+<p>A horse pulls a cart along a level road. By Newton’s third law, the cart pulls back on the horse with an equal and opposite force. Explain clearly how the horse and cart can accelerate forward.</p>
+</div>
+<div class="prob" id="p3-2"><span class="pnum">P3.2</span>
+<p>A book rests on a table. List every force acting on the book, and give the third-law partner of each one, stating which body that partner acts on.</p>
+</div>
+<div class="prob" id="p3-3"><span class="pnum">P3.3</span>
+<p>An astronaut aboard the International Space Station, about 400 km up, is said to be “weightless”. Yet gravity there is still about 89% as strong as at the Earth’s surface. Explain what “weightless” really means, using the idea of apparent weight.</p>
+</div>
+<div class="prob" id="p3-4"><span class="pnum">P3.4</span>
+<p>A light string passes over an ideal pulley and connects two unequal masses. Is the tension equal on both sides? Is it equal to the weight of either mass? Would your answers change if the pulley had significant mass and the string did not slip?</p>
+</div>
+<h4 class="level">Level B — Standard problems</h4>
+<div class="prob" id="p3-5"><span class="pnum">P3.5</span>
+<p>A 10 kg crate is pulled up a frictionless <span class="math inline">\(30^\circ\)</span> ramp by a rope parallel to the ramp, with an acceleration of <span class="math inline">\(1.5\ \mathrm{m/s^2}\)</span>. Find the tension in the rope and the normal force on the crate.</p>
+</div>
+<div class="prob" id="p3-6"><span class="pnum">P3.6</span>
+<p>A lift car has mass 800 kg. Its steel cable can safely carry a maximum tension of 12 000 N. What is the greatest upward acceleration the lift can have? What is the greatest downward acceleration if the cable must never go slack?</p>
+</div>
+<div class="prob" id="p3-7"><span class="pnum">P3.7</span>
+<p>Two blocks on a frictionless table are joined by a light string: a 4.0 kg block behind and a 2.0 kg block in front. A horizontal force of 30 N pulls the front block. (a) Find the acceleration and the tension in the connecting string. (b) If the string breaks at 15 N, what is the largest force that can be applied to the front block? (c) What would the largest force be if it were applied to the 4.0 kg block instead?</p>
+</div>
+<div class="prob" id="p3-8"><span class="pnum">P3.8</span>
+<p><em>Orthopaedic traction.</em> In a simple leg-traction set-up, a rope supports a 5.0 kg mass, then passes round a pulley attached to the patient’s foot. The two rope segments leave the foot pulley symmetrically, at <span class="math inline">\(25^\circ\)</span> above and <span class="math inline">\(25^\circ\)</span> below the horizontal. Find the net force the rope exerts on the foot. How would the traction force change if the angle were reduced to <span class="math inline">\(10^\circ\)</span>?</p>
+</div>
+<div class="prob" id="p3-9"><span class="pnum">P3.9</span>
+<p>A 60 kg person stands on a bathroom scale in a lift. During the first few seconds of a trip, the scale reads 660 N. Near the end of the trip it reads 520 N. Find the acceleration (magnitude and direction) in each case. Is the lift going up or down? Can you tell?</p>
+</div>
+<div class="prob" id="p3-10"><span class="pnum">P3.10</span>
+<p>A small weight hangs from a thread inside a train carriage. While the train is accelerating, the thread hangs at a steady <span class="math inline">\(8.0^\circ\)</span> from the vertical, displaced towards the rear of the train. Find the train’s acceleration. What would the thread do if the train were braking?</p>
+</div>
+<div class="prob" id="p3-11"><span class="pnum">P3.11</span>
+<p>Two blocks sit on the two faces of a fixed, frictionless double incline, joined by a light string over a pulley at the apex: <span class="math inline">\(m_1 = 5.0\)</span> kg on a <span class="math inline">\(30^\circ\)</span> face and <span class="math inline">\(m_2 = 3.0\)</span> kg on a <span class="math inline">\(60^\circ\)</span> face. Find the acceleration of the system, its direction, and the tension.</p>
+</div>
+<div class="prob" id="p3-12"><span class="pnum">P3.12</span>
+<p>For the Atwood machine of Example 3.3, find the force exerted on the pulley by the rod that holds it to the ceiling. Explain why this force is less than the total weight of the two hanging masses.</p>
+</div>
+<div class="prob" id="p3-13"><span class="pnum">P3.13</span>
+<p><em>Crane rigging.</em> A 1000 kg load hangs in equilibrium from two cables. One makes <span class="math inline">\(30^\circ\)</span> with the vertical and the other <span class="math inline">\(45^\circ\)</span> with the vertical, on opposite sides. Find the tension in each cable. Which cable must be rated for the larger load, and why?</p>
+</div>
+<h4 class="level">Level C — Challenge problems</h4>
+<div class="prob" id="p3-14"><span class="pnum">P3.14</span>
+<p>A block of mass <span class="math inline">\(m\)</span> rests on the frictionless inclined face (angle <span class="math inline">\(\theta\)</span>) of a wedge of mass <span class="math inline">\(M\)</span>. The wedge sits on a frictionless floor. A horizontal force <span class="math inline">\(F\)</span> is applied to the wedge so that the block stays at rest relative to the wedge. Find (a) the acceleration of the system, (b) the normal force between block and wedge, and (c) <span class="math inline">\(F\)</span>. Solve the problem in both the ground frame and the wedge’s frame.</p>
+</div>
+<div class="prob" id="p3-15"><span class="pnum">P3.15</span>
+<p>A mass <span class="math inline">\(M = 4.0\)</span> kg hangs from a movable pulley. One end of a string is fixed to the ceiling. The string passes down and under the movable pulley, up over a fixed pulley, and down to a hanging mass <span class="math inline">\(m = 3.0\)</span> kg. All pulleys and strings are ideal. Find the acceleration of each mass (with directions) and the tension in the string.</p>
+</div>
+<div class="prob" id="p3-16"><span class="pnum">P3.16</span>
+<p>A body of mass <span class="math inline">\(m\)</span>, initially at rest, is acted on by a force that decays with time as <span class="math inline">\(F = F_0e^{-t/\tau}\)</span>. Find (a) its velocity as a function of time, (b) its limiting velocity, and (c) the distance it covers in the first time interval <span class="math inline">\(\tau\)</span>.</p>
+</div>
+<div class="prob" id="p3-17"><span class="pnum">P3.17</span>
+<p>A uniform rope of mass <span class="math inline">\(M\)</span> and length <span class="math inline">\(L\)</span> lies on a frictionless floor and is pulled at one end by a horizontal force <span class="math inline">\(F\)</span>. (a) Find the tension in the rope at a distance <span class="math inline">\(x\)</span> from the pulled end. (b) Now the same rope hangs vertically from a ceiling. Find the tension at a distance <span class="math inline">\(y\)</span> below the ceiling. Why is the “same tension everywhere” rule for ideal strings violated in both cases?</p>
+</div>
+<div class="prob" id="p3-18"><span class="pnum">P3.18</span>
+<p>The Atwood machine of Example 3.3 (<span class="math inline">\(m_1 = 5.0\)</span> kg, <span class="math inline">\(m_2 = 3.0\)</span> kg) is mounted inside a lift that accelerates upward at <span class="math inline">\(2.2\ \mathrm{m/s^2}\)</span>. Find the acceleration of each mass relative to the lift, and the string tension. Then find the acceleration of <span class="math inline">\(m_1\)</span> relative to the ground.</p>
+</div>
+
+<div class="downloads noprint"><a href="ch03-newtons-laws_notes.pdf" download>Download notes (PDF)</a><a href="ch03-newtons-laws_solutions.pdf" download>Download solutions (PDF)</a></div>
+</article>
+<nav class="pager"><a href="ch02-kinematics.html">← 2. Kinematics in One and Two Dimensions</a><a href="ch04-friction-circular.html">4. Friction and Circular Motion →</a></nav></main>
+<footer>All worked examples and practice problems in these notes are original. Textbooks for further reading and practice, with a chapter-by-chapter map, are listed in the References.<p class="copyright">© 2026 Pratik Bhanuse. All rights reserved. · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p></footer>
+</div>
+</body>
+</html>

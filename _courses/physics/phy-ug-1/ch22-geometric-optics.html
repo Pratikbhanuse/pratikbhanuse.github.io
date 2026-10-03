@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Light as rays: reflection, refraction, fibre optics, mirrors, lenses, and the optics of the human eye.">
+<title>22. Geometrical Optics · Physics, step by step</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* House style shared with "Linear algebra, translated" */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D; --p:#7C3AED;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --def-bg:#F3EEFF; --def-ink:#5B21B6;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --def-bg:#1E1733; --def-ink:#C4B5FD;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --def-bg:#1E1733; --def-ink:#C4B5FD;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+a{color:var(--u)}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5.6vw,60px); line-height:1.04; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .hl{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+.byline{font-family:var(--display); font-size:15px; color:var(--muted); margin:14px 0 0}
+.byline strong{color:var(--ink)} .byline a, .copyright a{color:inherit}
+.copyright{font-family:var(--display); font-size:13px; color:var(--muted); margin:10px 0 0}
+
+/* side navigation */
+nav.toc{position:sticky; top:24px; align-self:start; padding-top:8px; font-family:var(--display); font-size:14px; max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc a[aria-current="page"]{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); font-weight:700}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px}
+nav.toc .sub{padding-left:28px; font-size:13px; color:var(--muted)}
+nav.toc .sub a{color:var(--muted); padding:3px 8px}
+
+main{min-width:0}
+.chapter{max-width:72ch}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+h4{font-family:var(--display); font-weight:700; font-size:18px; margin:24px 0 6px}
+h5{font-family:var(--display); font-weight:700; font-size:16px; margin:18px 0 4px}
+.topic-num{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--u); border-top:1px solid var(--line); padding-top:18px; margin-top:34px; scroll-margin-top:24px}
+h3.topic-title{font-size:24px; margin:4px 0 8px}
+h3.part-title{font-size:24px; margin:40px 0 4px; border-top:2px solid var(--ink); padding-top:16px}
+h4.level{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--v); margin:26px 0 10px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px}
+.note{color:var(--muted); font-size:15px}
+
+/* boxes */
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.def{background:var(--def-bg)} .box.def .label{color:var(--def-ink)}
+.box.work,.box.goals,.box.sum{background:var(--surface); border:1px solid var(--line)}
+.box.work .label,.box.goals .label,.box.sum .label{color:var(--muted)}
+.box.sum{border-top:3px solid var(--ink)}
+.box.work .label{color:var(--v)}
+.box .ex-title{margin:0 0 8px; font-size:18px}
+.sol-inline{margin:10px 0 12px; border-left:3px solid var(--w); padding-left:14px}
+.sol-label{display:block; font-family:var(--display); font-weight:700; font-size:13px; color:var(--w); margin-bottom:4px}
+details.ans{margin:4px 0 12px} details.ans summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:14px; color:var(--w)}
+details.ans > div{padding-top:6px}
+
+/* practice problems */
+.prob{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px 2px; margin:0 0 12px; min-width:0}
+.prob .pnum{font-family:var(--mono); font-weight:600; font-size:12px; color:var(--v); display:block; margin-bottom:2px}
+.prob p{margin:0 0 10px}
+
+/* solutions pages */
+h3.sol-head{margin:30px 0 8px; border-top:1px solid var(--line); padding-top:16px}
+h3.sol-head .pnum{font-family:var(--mono); font-size:14px; letter-spacing:.06em; color:var(--v)}
+.solutions .chapter > p:first-of-type{margin-top:0}
+
+/* tables, figures, math */
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2; fill:none}
+svg .obj{fill:var(--surface); stroke:var(--ink); stroke-width:1.6}
+svg .solid{fill:var(--code-bg); stroke:var(--ink); stroke-width:1.4}
+svg .ground{stroke:var(--ink); stroke-width:1.6}
+svg .hatch{stroke:var(--muted); stroke-width:1}
+svg .dash{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:5 4; fill:none}
+svg .u{stroke:var(--u); stroke-width:2.6; fill:none}
+svg .v{stroke:var(--v); stroke-width:2.6; fill:none}
+svg .w{stroke:var(--w); stroke-width:2.6; fill:none}
+svg .p{stroke:var(--p); stroke-width:2.6; fill:none}
+svg .curve{stroke:var(--u); stroke-width:2.4; fill:none}
+svg .hu,svg .tu{fill:var(--u)} svg .hv,svg .tv{fill:var(--v)} svg .hw,svg .tw{fill:var(--w)} svg .hp,svg .tp{fill:var(--p)}
+svg .muted{fill:var(--muted)} svg .ink{fill:var(--ink)}
+svg .dot{fill:var(--ink)}
+svg .fillu{fill:var(--u); fill-opacity:.12; stroke:none}
+mjx-container{color:inherit}
+mjx-container[display="true"]{display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; margin:.7em 0 !important; padding-block:2px}
+.box mjx-container[display="true"]{margin:.5em 0 !important}
+
+/* pager + footer */
+.pager{display:flex; justify-content:space-between; gap:12px; margin:56px 0 0; padding-top:16px; border-top:1px solid var(--line); font-family:var(--display); font-size:15px; max-width:72ch}
+.pager a{text-decoration:none; color:var(--u)}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+
+/* index page */
+.unit{border-top:2px solid var(--ink); padding-top:12px; margin:36px 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.chlist{list-style:none; padding:0; margin:0}
+.chlist li{display:grid; grid-template-columns:2.4em minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); margin:0}
+.chlist .n{font-family:var(--mono); font-size:13px; color:var(--muted)}
+.chlist .t{font-family:var(--display); font-weight:600; font-size:17px; text-decoration:none; color:var(--ink)}
+.chlist .t:hover{color:var(--u)}
+.chlist .s{font-family:var(--mono); font-size:12px; text-decoration:none}
+.downloads{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+.downloads a{font-family:var(--display); font-weight:600; font-size:15px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 14px}
+.downloads a:hover{border-color:var(--u); color:var(--u)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static; max-height:none}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  nav.toc .grp{grid-column:1/-1}
+  nav.toc .sub{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ---------- print (PDF) ---------- */
+@page{
+  size:Letter; margin:17mm 15mm 18mm;
+  @top-right{content:"Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-left{content:"© 2026 Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-right{content:counter(page) " / " counter(pages); font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+}
+@page :first{ @top-right{content:none} }
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff; padding:0; font-size:11.5pt}
+  .wrap{display:block; max-width:none}
+  nav.toc,.pager,.noprint{display:none !important}
+  header.top{padding-block:0 8px}
+  .chapter{max-width:none; break-before:page}
+  .book-toc{break-before:page}
+  .box,.prob,figure{break-inside:avoid}
+  .box.work{break-inside:auto}
+  .topic-num,h3,h4{break-after:avoid}
+  a{color:inherit; text-decoration:none}
+  details.ans > summary{display:none}
+}
+/* printed table of contents */
+.book-toc ol{list-style:none; padding:0}
+.book-toc li{display:flex; gap:12px; padding:5px 0; border-bottom:1px dotted var(--line); font-family:var(--display); margin:0}
+.book-toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:2em; padding-top:2px}
+h3.page-h{border-top:1px solid var(--line); padding-top:18px; margin-top:34px}
+svg .hk{fill:var(--ink)} svg .k{stroke:var(--ink); stroke-width:2.2; fill:none}
+:root{ --apply-bg:#F1EEFB; --apply-ink:#4C2A9E; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --apply-bg:#1D1830; --apply-ink:#C9B8FF; } }
+:root[data-theme="dark"]{ --apply-bg:#1D1830; --apply-ink:#C9B8FF; }
+.box.apply{background:var(--apply-bg); border-left:4px solid var(--apply-ink)} .box.apply .label{color:var(--apply-ink)}
+svg path.ground,svg polyline.ground{fill:none}
+
+.chlist .s a{text-decoration:none}
+.single{max-width:none}
+
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+         macros: { vect: ['\\vec{\\boldsymbol{#1}}', 1], uvec: ['\\hat{\\boldsymbol{#1}}', 1],
+                   ihat: '\\hat{\\boldsymbol{\\imath}}', jhat: '\\hat{\\boldsymbol{\\jmath}}',
+                   khat: '\\hat{\\boldsymbol{k}}', unit: ['\\,\\mathrm{#1}', 1] } },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker><marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker><marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hp"/></marker><marker id="ak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hk"/></marker></defs></svg>
+<div class="wrap">
+<header class="top"><div class="kicker">Chapter 22 · Semester 2 · Electricity, Magnetism, Optics and Modern Physics</div><h1>Geometrical Optics</h1><p class="lede">Light as rays: reflection, refraction, fibre optics, mirrors, lenses, and the optics of the human eye.</p><p class="byline">By <strong>Pratik Bhanuse</strong>, PhD Physics candidate, Western University · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p><div class="downloads noprint"><a href="ch22-geometric-optics_notes.pdf" download>Download notes (PDF)</a><a href="ch22-geometric-optics_solutions.pdf" download>Download solutions (PDF)</a></div></header>
+<aside class="side"><nav class="toc" aria-label="Contents"><ol>
+<li><a href="index.html"><span class="n">⌂</span>Contents</a></li>
+<li><a href="syllabus.html"><span class="n">→</span>Syllabus and how to study</a></li>
+<li class="grp">Semester 1 · Mechanics, Waves and Thermal Physics</li>
+<li><a href="ch01-units-vectors.html"><span class="n">1</span>Measurement, Units, Dimensions and Vectors</a></li>
+<li><a href="ch02-kinematics.html"><span class="n">2</span>Kinematics in One and Two Dimensions</a></li>
+<li><a href="ch03-newtons-laws.html"><span class="n">3</span>Newton&#x27;s Laws of Motion</a></li>
+<li><a href="ch04-friction-circular.html"><span class="n">4</span>Friction and Circular Motion</a></li>
+<li><a href="ch05-work-energy.html"><span class="n">5</span>Work, Energy and Power</a></li>
+<li><a href="ch06-momentum.html"><span class="n">6</span>Centre of Mass, Linear Momentum and Collisions</a></li>
+<li><a href="ch07-rotation.html"><span class="n">7</span>Rotational Motion</a></li>
+<li><a href="ch08-gravitation.html"><span class="n">8</span>Gravitation</a></li>
+<li><a href="ch09-oscillations.html"><span class="n">9</span>Simple Harmonic Motion</a></li>
+<li><a href="ch10-fluids-elasticity.html"><span class="n">10</span>Elasticity and Fluid Mechanics</a></li>
+<li><a href="ch11-waves-sound.html"><span class="n">11</span>Mechanical Waves and Sound</a></li>
+<li><a href="ch12-thermal.html"><span class="n">12</span>Heat, Kinetic Theory and Thermodynamics</a></li>
+<li class="grp">Semester 2 · Electricity, Magnetism, Optics and Modern Physics</li>
+<li><a href="ch13-electric-field.html"><span class="n">13</span>Electric Charge and Electric Field</a></li>
+<li><a href="ch14-gauss.html"><span class="n">14</span>Gauss&#x27;s Law</a></li>
+<li><a href="ch15-potential.html"><span class="n">15</span>Electric Potential</a></li>
+<li><a href="ch16-capacitance.html"><span class="n">16</span>Capacitance and Dielectrics</a></li>
+<li><a href="ch17-dc-circuits.html"><span class="n">17</span>Electric Current and DC Circuits</a></li>
+<li><a href="ch18-magnetic-force.html"><span class="n">18</span>Magnetic Field and Magnetic Forces</a></li>
+<li><a href="ch19-magnetic-sources.html"><span class="n">19</span>Sources of the Magnetic Field</a></li>
+<li><a href="ch20-induction.html"><span class="n">20</span>Electromagnetic Induction</a></li>
+<li><a href="ch21-ac-emwaves.html"><span class="n">21</span>Alternating Current and Electromagnetic Waves</a></li>
+<li><a href="ch22-geometric-optics.html" aria-current="page"><span class="n">22</span>Geometrical Optics</a></li>
+<li class="sub"><a href="#the-nature-of-light-and-the-refractive-index">§22.1 The nature of light and the refractive index</a></li>
+<li class="sub"><a href="#reflection-and-refraction">§22.2 Reflection and refraction</a></li>
+<li class="sub"><a href="#total-internal-reflection">§22.3 Total internal reflection</a></li>
+<li class="sub"><a href="#plane-and-spherical-mirrors">§22.4 Plane and spherical mirrors</a></li>
+<li class="sub"><a href="#refraction-at-a-spherical-surface-and-thin-lenses">§22.5 Refraction at a spherical surface and thin lenses</a></li>
+<li class="sub"><a href="#the-eye">§22.6 The eye</a></li>
+<li class="sub"><a href="#optical-instruments">§22.7 Optical instruments</a></li>
+<li class="sub"><a href="#practice">Practice problems</a></li>
+<li><a href="ch23-wave-optics.html"><span class="n">23</span>Wave Optics</a></li>
+<li><a href="ch24-modern.html"><span class="n">24</span>Photons, Atoms and Nuclei</a></li>
+<li class="grp">Appendix</li>
+<li><a href="references.html"><span class="n">R</span>References and further practice</a></li>
+</ol></nav></aside>
+<main><article class="chapter notes">
+<p>When light meets objects much larger than its wavelength (about half a micrometre), we can ignore its wave nature and treat it as <strong>rays</strong>: straight lines along which energy travels. This “geometrical optics” explains mirrors, lenses, prisms and optical fibres, and it is the working language of optometrists, ophthalmologists, camera designers and microscope builders. This chapter develops the laws of reflection and refraction, total internal reflection and fibre optics, image formation by mirrors and lenses, and the optics of the eye and of optical instruments.</p>
+<div class="box goals"><div class="label">You will be able to</div>
+<ul>
+<li>Use the refractive index and Snell’s law, and explain dispersion.</li>
+<li>Apply total internal reflection to fibre optics, endoscopes and prisms.</li>
+<li>Locate images formed by plane and spherical mirrors, using equations and ray diagrams.</li>
+<li>Use the lensmaker’s equation, the thin-lens equation, magnification and lens power in dioptres.</li>
+<li>Analyse combinations of lenses and the main optical instruments (magnifier, microscope, telescope).</li>
+<li>Explain the optics of the eye, common refractive errors, and how they are corrected.</li>
+</ul>
+</div>
+<div class="box ask"><div class="label">Think first</div>
+<p>Open your eyes underwater in a swimming pool and everything is badly blurred. Put on a pair of goggles and you see sharply again, even though the goggles’ flat plastic windows have no focusing power at all. Why?</p>
+<details class="ans"><summary>Show answer</summary><div>
+<p>Most of your eye’s focusing power, about two-thirds of it, comes from refraction at the curved front surface of the <strong>cornea</strong>, where light passes from air (<span class="math inline">\(n = 1.00\)</span>) into the cornea (<span class="math inline">\(n \approx 1.38\)</span>). Underwater, the outside medium has <span class="math inline">\(n = 1.33\)</span>, almost the same as the cornea, so that surface barely bends light, and the eye loses roughly 40 dioptres of focusing power (Problem P22.14). Goggles trap a layer of <strong>air</strong> in front of the cornea, which restores the air–cornea interface and with it the eye’s normal focusing.</p>
+</div></details>
+</div>
+<div class="topic-num" id="the-nature-of-light-and-the-refractive-index">§22.1</div><h3 class="topic-title">The nature of light and the refractive index</h3>
+<p>Light is an electromagnetic wave (Chapter 21). In vacuum it travels at <span class="math inline">\(c = 3.00\times10^8\)</span> m/s. In a transparent material it travels more slowly, at <span class="math inline">\(v = c/n\)</span>, where <span class="math display">\[n = \frac{c}{v}\]</span> is the <strong>refractive index</strong>. When light passes into a different medium its frequency stays the same, so its wavelength changes: <span class="math inline">\(\lambda_n = \lambda_0/n\)</span>.</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Material</th>
+<th><span class="math inline">\(n\)</span> (at 589 nm)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vacuum</td>
+<td>1 (exactly)</td>
+</tr>
+<tr>
+<td>Air</td>
+<td>1.0003</td>
+</tr>
+<tr>
+<td>Water</td>
+<td>1.333</td>
+</tr>
+<tr>
+<td>Aqueous and vitreous humour</td>
+<td>1.336</td>
+</tr>
+<tr>
+<td>Cornea</td>
+<td>1.376</td>
+</tr>
+<tr>
+<td>Crystalline lens of the eye</td>
+<td>1.39–1.41</td>
+</tr>
+<tr>
+<td>Crown glass</td>
+<td>1.52</td>
+</tr>
+<tr>
+<td>Flint glass</td>
+<td>1.6–1.7</td>
+</tr>
+<tr>
+<td>Diamond</td>
+<td>2.42</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="topic-num" id="reflection-and-refraction">§22.2</div><h3 class="topic-title">Reflection and refraction</h3>
+<p>When a ray strikes a smooth boundary, part of it is reflected and part transmitted (refracted). All angles are measured from the <strong>normal</strong> to the surface.</p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Law of reflection:</strong> <span class="math inline">\(\theta_r = \theta_i\)</span>. The incident ray, the reflected ray and the normal all lie in the same plane.</p>
+<p><strong>Snell’s law of refraction:</strong> <span class="math display">\[n_1\sin\theta_1 = n_2\sin\theta_2.\]</span> Light bends <strong>towards</strong> the normal when it enters a medium of higher index, where it travels more slowly, and <strong>away</strong> from the normal when it enters a medium of lower index.</p>
+</div>
+<p>Both laws follow from <strong>Fermat’s principle</strong>: light travels between two points along the path that takes the least time. A lifeguard running along the beach and then swimming to a drowning swimmer faces the same problem. The quickest route bends at the water’s edge according to Snell’s law.</p>
+<p><strong>Dispersion.</strong> The refractive index depends slightly on wavelength. In glass, violet light has a higher index than red, so it bends more. Prisms therefore split white light into a spectrum, and raindrops produce rainbows. In lenses, the same effect causes <strong>chromatic aberration</strong>: coloured fringes, because different colours focus at slightly different points.</p>
+<div class="box work example"><div class="label">Worked example 22.1</div><h4 class="ex-title">Light entering water</h4>
+<p>A ray in air strikes a water surface at <span class="math inline">\(45^\circ\)</span> to the normal. Find the angle of refraction, and the speed and wavelength in the water of light with a vacuum wavelength of 589 nm.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[\sin\theta_2 = \frac{1.00\sin45^\circ}{1.333} = 0.530 \;\Rightarrow\; \theta_2 = 32.0^\circ.\]</span> <span class="math display">\[v = \frac{c}{n} = 2.25\times10^8\ \mathrm{m/s},\qquad \lambda = \frac{589}{1.333} = 442\ \mathrm{nm}.\]</span> The light does not change colour as it enters the water. Colour is set by the frequency, which is unchanged.</p>
+</div>
+</div>
+<p><strong>Apparent depth.</strong> Looking straight down into water of depth <span class="math inline">\(d\)</span>, the bottom appears to be at a depth <span class="math inline">\(d/n\)</span>. Rays from the bottom bend away from the normal as they leave the water, so they seem to come from a shallower point. A 2.0 m deep pool looks only 1.5 m deep, a real hazard for people diving in. The same effect makes a straw standing in a glass of water look bent.</p>
+<div class="topic-num" id="total-internal-reflection">§22.3</div><h3 class="topic-title">Total internal reflection</h3>
+<p>When light goes from a denser medium to a less dense one (<span class="math inline">\(n_1 &gt; n_2\)</span>), the refracted ray bends away from the normal. At the <strong>critical angle</strong> <span class="math inline">\(\theta_c\)</span>, the refracted ray just skims along the surface (<span class="math inline">\(\theta_2 = 90^\circ\)</span>): <span class="math display">\[\sin\theta_c = \frac{n_2}{n_1}.\]</span> For any angle of incidence larger than <span class="math inline">\(\theta_c\)</span>, there is no refracted ray at all, and <strong>all</strong> the light is reflected. This is <strong>total internal reflection</strong> (TIR). It is more efficient than any mirror coating, reflecting essentially 100% of the light.</p>
+<ul>
+<li>Glass to air (<span class="math inline">\(n = 1.50\)</span>): <span class="math inline">\(\theta_c = 41.8^\circ\)</span>. Right-angle prisms in binoculars and periscopes use TIR in place of mirrors.</li>
+<li>Diamond to air (<span class="math inline">\(n = 2.42\)</span>): <span class="math inline">\(\theta_c = 24.4^\circ\)</span>. Light entering a well-cut diamond is trapped by repeated TIR, which is why diamonds sparkle.</li>
+</ul>
+<h4>Optical fibres</h4>
+<p>An <strong>optical fibre</strong> has a core of glass with a higher refractive index <span class="math inline">\(n_1\)</span>, surrounded by a cladding of lower index <span class="math inline">\(n_2\)</span>. Light entering the core at a shallow enough angle strikes the core–cladding boundary beyond the critical angle, and is guided along the fibre by repeated total internal reflection, even around bends.</p>
+<figure>
+<svg viewBox="0 0 380 150" width="370" role="img" aria-label="An optical fibre: a core of higher refractive index inside a cladding of lower index. A light ray enters the end of the fibre at an angle and zigzags along the core, totally internally reflecting each time it meets the core-cladding boundary.">
+<rect x="20" y="30" width="345" height="90" rx="6" class="solid" style="fill-opacity:.35"/>
+<rect x="20" y="55" width="345" height="40" class="fillu" style="fill-opacity:.2;stroke:var(--u);stroke-width:1"/>
+<text x="300" y="46" class="muted">cladding n₂</text><text x="300" y="80" class="tu">core n₁</text>
+<line class="v" x1="0" y1="110" x2="20" y2="83" />
+<polyline class="v" points="20,83 60,57 110,93 160,57 210,93 260,57 310,93 362,59" style="stroke-width:2.2"/>
+<line class="dash" x1="60" y1="40" x2="60" y2="75"/>
+<path class="dash" d="M 60 70 A 13 13 0 0 0 51 63"/>
+<text x="64" y="50" class="muted">θ > θc</text>
+<text x="10" y="140" class="muted">light trapped by repeated total internal reflection</text>
+</svg>
+<figcaption>An optical fibre. Light striking the core–cladding boundary at more than the critical angle is totally reflected, so it stays trapped in the core as it travels along the fibre.</figcaption>
+</figure>
+<p>The largest angle of acceptance at the entrance face (measured in air) is given by the <strong>numerical aperture</strong>: <span class="math display">\[\mathrm{NA} = \sin\theta_{\max} = \sqrt{n_1^2 - n_2^2}.\]</span></p>
+<div class="box work example"><div class="label">Worked example 22.2</div><h4 class="ex-title">A fibre for an endoscope</h4>
+<p>A fibre has a core of index 1.62 and a cladding of index 1.52. Find the critical angle at the core–cladding boundary, the numerical aperture, and the maximum acceptance angle in air.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[\theta_c = \sin^{-1}\frac{1.52}{1.62} = 69.8^\circ,\qquad \mathrm{NA} = \sqrt{1.62^2 - 1.52^2} = \sqrt{0.314} = 0.56,\qquad \theta_{\max} = \sin^{-1}0.56 = 34^\circ.\]</span></p>
+<p><strong>Evaluate.</strong> A wide acceptance angle helps a fibre collect light efficiently, which suits medical endoscopes. Communication fibres use cores and claddings with very similar indices, so they have a small NA. This keeps the many possible ray paths nearly equal in length, so short pulses do not smear out.</p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Fibre optics in medicine.</strong> An <strong>endoscope</strong> (a gastroscope, colonoscope, bronchoscope or arthroscope) carries light into the body along a bundle of illumination fibres. A <em>coherent</em> bundle of tens of thousands of fibres, arranged identically at both ends, or a tiny camera chip at the tip, brings the image back. This lets doctors inspect and operate inside the body through natural openings or keyhole incisions. Fibres also deliver laser energy for surgery, for example to break up kidney stones or seal blood vessels, and they carry light to and from sensors such as pulse oximeters and blood-oxygen probes. Optical-fibre networks carry almost all the world’s internet traffic.</p>
+</div>
+<div class="topic-num" id="plane-and-spherical-mirrors">§22.4</div><h3 class="topic-title">Plane and spherical mirrors</h3>
+<h4>Plane mirrors</h4>
+<p>A plane mirror forms a <strong>virtual</strong> image as far behind the mirror as the object is in front of it. The image is upright and the same size, but reversed front-to-back, which is why your mirror image appears to swap left and right.</p>
+<h4>Spherical mirrors</h4>
+<p>A <strong>concave</strong> mirror (curving towards the object) brings parallel rays to a real focal point. A <strong>convex</strong> mirror makes them diverge, as if from a virtual focal point behind it. For rays close to the axis (<em>paraxial</em> rays), the focal length is half the radius of curvature: <span class="math display">\[f = \frac{R}{2}.\]</span></p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Mirror and lens equation, with magnification:</strong> <span class="math display">\[\frac{1}{s} + \frac{1}{s&#39;} = \frac{1}{f},\qquad m = \frac{h&#39;}{h} = -\frac{s&#39;}{s}.\]</span></p>
+<p><strong>Sign convention (“real is positive”):</strong></p>
+<ul>
+<li><span class="math inline">\(s\)</span> is positive for a real object, which is the usual case.</li>
+<li><span class="math inline">\(s&#39;\)</span> is positive for a <strong>real</strong> image (in front of a mirror, or behind a lens) and negative for a <strong>virtual</strong> image.</li>
+<li><span class="math inline">\(f\)</span> is positive for converging elements (concave mirrors and convex lenses) and negative for diverging ones.</li>
+<li><span class="math inline">\(m &gt; 0\)</span> means the image is upright, and <span class="math inline">\(m &lt; 0\)</span> means it is inverted.</li>
+</ul>
+</div>
+<div class="box tip"><div class="label">Note</div>
+<p>H. C. Verma and many school texts use the <strong>Cartesian</strong> sign convention. There, all distances are measured from the mirror or lens, positive in the direction the incident light travels, and the lens equation is written <span class="math inline">\(\dfrac{1}{v} - \dfrac{1}{u} = \dfrac{1}{f}\)</span>. The two conventions give the same physical answers. Pick one and use it consistently.</p>
+</div>
+<p><strong>Principal rays for drawing ray diagrams</strong>, for a mirror or a lens:</p>
+<ol>
+<li>A ray parallel to the axis passes (or appears to pass) through the focal point.</li>
+<li>A ray through the focal point emerges parallel to the axis.</li>
+<li>For a mirror, a ray through the centre of curvature returns along itself. For a lens, a ray through the centre of the lens passes straight through, undeviated.</li>
+</ol>
+<div class="box work example"><div class="label">Worked example 22.3</div><h4 class="ex-title">A concave make-up mirror</h4>
+<p>A concave mirror has a focal length of 10 cm. Find the image position, the magnification and the nature of the image for an object at (a) 30 cm and (b) 5.0 cm.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) Object at 30 cm: <span class="math display">\[\frac{1}{s&#39;} = \frac{1}{10} - \frac{1}{30} = \frac{2}{30} \;\Rightarrow\; s&#39; = 15\ \mathrm{cm},\qquad m = -\frac{15}{30} = -0.50.\]</span> The image is real, inverted and half-size, 15 cm in front of the mirror.</p>
+<p>(b) Object at 5.0 cm: <span class="math display">\[\frac{1}{s&#39;} = \frac{1}{10} - \frac{1}{5.0} = -\frac{1}{10} \;\Rightarrow\; s&#39; = -10\ \mathrm{cm},\qquad m = -\frac{-10}{5.0} = +2.0.\]</span> The image is virtual, upright and twice the size, 10 cm <em>behind</em> the mirror.</p>
+<p><strong>Evaluate.</strong> Make-up and shaving mirrors, and the small mirrors dentists use, are concave mirrors used with the face <em>inside</em> the focal length, to give a magnified, upright image.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 22.4</div><h4 class="ex-title">A convex security mirror</h4>
+<p>A convex mirror with <span class="math inline">\(f = -20\)</span> cm shows a person standing 2.0 m away. Find the image position and magnification.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[\frac{1}{s&#39;} = -\frac{1}{20} - \frac{1}{200} = -\frac{11}{200} \;\Rightarrow\; s&#39; = -18\ \mathrm{cm},\qquad m = -\frac{-18.2}{200} = +0.091.\]</span> The image is virtual, upright and small. Convex mirrors give a wide field of view, which is why they are used in shops and on car wing mirrors. The small image makes objects seem farther away than they are, hence the warning printed on the mirror: “objects in mirror are closer than they appear”.</p>
+</div>
+</div>
+<div class="topic-num" id="refraction-at-a-spherical-surface-and-thin-lenses">§22.5</div><h3 class="topic-title">Refraction at a spherical surface and thin lenses</h3>
+<p>At a single spherical surface of radius <span class="math inline">\(R\)</span> separating media of index <span class="math inline">\(n_1\)</span> (where the light starts) and <span class="math inline">\(n_2\)</span>: <span class="math display">\[\frac{n_1}{s} + \frac{n_2}{s&#39;} = \frac{n_2 - n_1}{R}.\]</span> Here <span class="math inline">\(R\)</span> is positive if the centre of curvature is on the outgoing side of the surface. The quantity <span class="math inline">\((n_2 - n_1)/R\)</span> is the <strong>power</strong> of the surface. Apparent depth is the special case of a flat surface, <span class="math inline">\(R \to \infty\)</span>.</p>
+<p>A <strong>thin lens</strong> has two such surfaces close together. Applying the surface equation twice gives the <strong>lensmaker’s equation</strong>: <span class="math display">\[\frac{1}{f} = (n - 1)\left(\frac{1}{R_1} - \frac{1}{R_2}\right),\]</span> for a lens of index <span class="math inline">\(n\)</span> in air, with the same sign rule for each radius. Images then obey the same equation as mirrors: <span class="math display">\[\frac{1}{s} + \frac{1}{s&#39;} = \frac{1}{f},\qquad m = -\frac{s&#39;}{s}.\]</span></p>
+<ul>
+<li>A <strong>converging</strong> lens, thicker in the middle, has <span class="math inline">\(f &gt; 0\)</span>.</li>
+<li>A <strong>diverging</strong> lens, thinner in the middle, has <span class="math inline">\(f &lt; 0\)</span>.</li>
+</ul>
+<p><strong>Lens power</strong> is <span class="math inline">\(P = 1/f\)</span>, measured in <strong>dioptres</strong> (D, which is m⁻¹). Opticians prescribe in dioptres because, for thin lenses in contact, powers simply <strong>add</strong>: <span class="math inline">\(P = P_1 + P_2\)</span>.</p>
+<figure>
+<svg viewBox="0 0 380 210" width="370" role="img" aria-label="Ray diagram for a converging lens with the object at twice the focal length. Three principal rays from the tip of the upright object meet at the tip of a real, inverted, same-size image at twice the focal length on the other side.">
+<line class="ax" x1="20" y1="120" x2="370" y2="120"/>
+<ellipse cx="190" cy="120" rx="8" ry="70" class="fillu" style="fill-opacity:.25;stroke:var(--u);stroke-width:1.5"/>
+<circle class="dot" cx="130" cy="120" r="3"/><text x="124" y="138" class="muted">F</text>
+<circle class="dot" cx="250" cy="120" r="3"/><text x="246" y="138" class="muted">F′</text>
+<text x="64" y="138" class="muted">2F</text><text x="306" y="110" class="muted">2F′</text>
+<line class="k" x1="70" y1="120" x2="70" y2="72" marker-end="url(#ak)"/>
+<text x="54" y="66" class="ink">object</text>
+<line class="v" x1="310" y1="120" x2="310" y2="168" marker-end="url(#av)"/>
+<text x="296" y="190" class="tv">image</text>
+<polyline class="u" points="70,70 190,70 310,170" style="stroke-width:1.6"/>
+<line class="w" x1="70" y1="70" x2="310" y2="170" style="stroke-width:1.6"/>
+<polyline class="p" points="70,70 190,170 310,170" style="stroke-width:1.6"/>
+<text x="196" y="60" class="tu">1: parallel → through F′</text>
+<text x="200" y="200" class="tp">3: through F → parallel</text>
+<text x="90" y="104" class="tw">2: centre</text>
+</svg>
+<figcaption>Ray diagram for a converging lens with the object at 2F. The three principal rays meet at a real, inverted, same-size image at 2F′.</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 22.5</div><h4 class="ex-title">Designing and using a lens</h4>
+<p>(a) A symmetric biconvex lens with <span class="math inline">\(n = 1.50\)</span> has surfaces of radius 20 cm. Find its focal length and power. (b) An object is placed 30 cm in front of it. Find the image position and magnification. (c) Two thin lenses, with <span class="math inline">\(f_1 = +20\)</span> cm and <span class="math inline">\(f_2 = -30\)</span> cm, are placed in contact. Find the combined focal length.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) Here <span class="math inline">\(R_1 = +20\)</span> cm and <span class="math inline">\(R_2 = -20\)</span> cm: <span class="math display">\[\frac{1}{f} = 0.50\left(\frac{1}{20} + \frac{1}{20}\right) = \frac{1}{20} \;\Rightarrow\; f = 20\ \mathrm{cm},\qquad P = 5.0\ \mathrm{D}.\]</span></p>
+<p>(b) Object at 30 cm: <span class="math display">\[\frac{1}{s&#39;} = \frac{1}{20} - \frac{1}{30} = \frac{1}{60} \;\Rightarrow\; s&#39; = 60\ \mathrm{cm},\qquad m = -2.0.\]</span> The image is real, inverted and twice the size. A slide projector works this way, with the slide just outside the focal length.</p>
+<p>(c) Lenses in contact: <span class="math display">\[P = \frac{1}{0.20} + \frac{1}{-0.30} = 5.0 - 3.3 = 1.7\ \mathrm{D} \;\Rightarrow\; f = 60\ \mathrm{cm}.\]</span> Combining a converging lens with a weaker diverging lens of a different glass is how <em>achromatic doublets</em> cancel chromatic aberration.</p>
+</div>
+</div>
+<div class="topic-num" id="the-eye">§22.6</div><h3 class="topic-title">The eye</h3>
+<p>The eye is a remarkable optical instrument. Light is refracted mainly at the <strong>cornea</strong>, which provides about 43 D of power, and then by the <strong>crystalline lens</strong>, which provides about 15–20 D, and is focused onto the <strong>retina</strong>, about 17 mm behind the lens. The total power of a relaxed eye is about 60 D. The iris adjusts the size of the pupil, from about 2 mm to 8 mm. The lens is flexible. To focus on near objects, the ciliary muscle contracts, the lens bulges, and its power increases. This is <strong>accommodation</strong>.</p>
+<ul>
+<li><strong>Far point:</strong> the farthest distance the eye can focus on. For a normal eye it is infinity.</li>
+<li><strong>Near point:</strong> the closest distance the eye can focus on. Conventionally it is taken as <strong>25 cm</strong> for a young adult. It recedes with age, because the lens stiffens (presbyopia).</li>
+</ul>
+<h4>Refractive errors and their correction</h4>
+<div class="tablewrap">
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Problem</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Myopia</strong> (short sight)</td>
+<td>The eye is too powerful or too long, so distant objects focus in front of the retina. The far point is closer than infinity.</td>
+<td>A <strong>diverging</strong> lens that makes distant objects appear to lie at the far point: <span class="math inline">\(P = -1/d_{\text{far}}\)</span>.</td>
+</tr>
+<tr>
+<td><strong>Hyperopia</strong> (long sight)</td>
+<td>The eye is too weak or too short. The near point is farther than 25 cm.</td>
+<td>A <strong>converging</strong> lens that makes an object at 25 cm appear to lie at the near point.</td>
+</tr>
+<tr>
+<td><strong>Presbyopia</strong></td>
+<td>Loss of accommodation with age.</td>
+<td>Reading glasses or bifocals (converging).</td>
+</tr>
+<tr>
+<td><strong>Astigmatism</strong></td>
+<td>The cornea is curved differently in different directions.</td>
+<td>A cylindrical lens.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="box work example"><div class="label">Worked example 22.6</div><h4 class="ex-title">Prescribing glasses</h4>
+<p>(a) A myopic patient’s far point is 50 cm. What lens power corrects their distance vision? (Ignore the small gap between the lens and the eye.) (b) A hyperopic patient’s near point is 1.0 m. What reading lens lets them read at 25 cm?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) The lens must form a virtual image of a distant object (<span class="math inline">\(s = \infty\)</span>) at the far point, so <span class="math inline">\(s&#39; = -0.50\)</span> m: <span class="math display">\[P = \frac{1}{s} + \frac{1}{s&#39;} = 0 - \frac{1}{0.50} = -2.0\ \mathrm{D}.\]</span></p>
+<p>(b) An object at <span class="math inline">\(s = 0.25\)</span> m must give a virtual image at the near point, <span class="math inline">\(s&#39; = -1.0\)</span> m: <span class="math display">\[P = \frac{1}{0.25} + \frac{1}{-1.0} = 4.0 - 1.0 = +3.0\ \mathrm{D}.\]</span></p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Refractive surgery and lens implants.</strong> <strong>LASIK</strong> reshapes the cornea with an excimer laser. For myopia, flattening the central cornea reduces its power, and a change in radius of only about 0.4 mm corrects <span class="math inline">\(-2.5\)</span> D (Problem P22.18). In <strong>cataract surgery</strong>, the clouded natural lens is replaced by an artificial <em>intraocular lens</em>, whose power is calculated from the length of the eye and the curvature of the cornea. This is the most common surgical operation in the world. <strong>Ophthalmoscopes</strong> and <strong>retinal cameras</strong> use the eye’s own optics, in reverse, to image the retina.</p>
+</div>
+<div class="topic-num" id="optical-instruments">§22.7</div><h3 class="topic-title">Optical instruments</h3>
+<p><strong>The simple magnifier.</strong> We judge size by the angle an object subtends at the eye. Bringing an object closer increases that angle, but only down to the near point, <span class="math inline">\(N = 25\)</span> cm. A converging lens of focal length <span class="math inline">\(f\)</span> lets the object come closer while the eye still sees a clear (virtual) image. The angular magnification is <span class="math display">\[M = \frac{N}{f}\ \ \text{(image at infinity, relaxed eye)},\qquad M = 1 + \frac{N}{f}\ \ \text{(image at the near point)}.\]</span></p>
+<p><strong>The compound microscope.</strong> An objective lens of short focal length <span class="math inline">\(f_o\)</span> forms a magnified real image, and an eyepiece of focal length <span class="math inline">\(f_e\)</span> acts as a magnifier for that image. With a tube length <span class="math inline">\(L\)</span> (the distance between the focal points of the two lenses), the total magnification is <span class="math display">\[M \approx -\frac{L}{f_o}\cdot\frac{N}{f_e}.\]</span></p>
+<p><strong>The refracting telescope.</strong> The objective forms an image of a distant object at its focal point, and the eyepiece magnifies it: <span class="math display">\[M = -\frac{f_o}{f_e}.\]</span> The large objective (or mirror, in a reflecting telescope) also collects more light, and it gives better resolution, which is limited by diffraction (Chapter 23).</p>
+<div class="box work example"><div class="label">Worked example 22.7</div><h4 class="ex-title">A laboratory microscope</h4>
+<p>A microscope has an objective with <span class="math inline">\(f_o = 4.0\)</span> mm, an eyepiece with <span class="math inline">\(f_e = 25\)</span> mm, and a tube length of 160 mm. Find its magnification.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[M = -\frac{160}{4.0}\times\frac{250}{25} = -40\times10 = -400.\]</span> The objective magnifies 40× and the eyepiece 10×, giving a total of 400×. The image is inverted. As Chapter 23 shows, diffraction limits useful light-microscope magnification to about 1000–1500×, however the lenses are combined.</p>
+</div>
+</div>
+<div class="box sum"><div class="label">Chapter summary</div>
+<ul>
+<li><span class="math inline">\(n = c/v\)</span>, and <span class="math inline">\(\lambda_n = \lambda_0/n\)</span>, with the frequency unchanged. Reflection: <span class="math inline">\(\theta_r = \theta_i\)</span>. Snell: <span class="math inline">\(n_1\sin\theta_1 = n_2\sin\theta_2\)</span>.</li>
+<li>Total internal reflection happens when <span class="math inline">\(n_1 &gt; n_2\)</span> and <span class="math inline">\(\theta &gt; \theta_c\)</span>, with <span class="math inline">\(\sin\theta_c = n_2/n_1\)</span>. Fibres: <span class="math inline">\(\mathrm{NA} = \sqrt{n_1^2 - n_2^2}\)</span>.</li>
+<li>Mirrors: <span class="math inline">\(f = R/2\)</span>. Mirrors and thin lenses: <span class="math inline">\(1/s + 1/s&#39; = 1/f\)</span> and <span class="math inline">\(m = -s&#39;/s\)</span>, in the real-is-positive convention.</li>
+<li>Spherical surface: <span class="math inline">\(n_1/s + n_2/s&#39; = (n_2 - n_1)/R\)</span>. Lensmaker: <span class="math inline">\(1/f = (n - 1)(1/R_1 - 1/R_2)\)</span>. Power <span class="math inline">\(P = 1/f\)</span> in dioptres, and powers add for lenses in contact.</li>
+<li>Eye: about 60 D in total, two-thirds of it from the cornea. Myopia: <span class="math inline">\(P = -1/d_{\text{far}}\)</span>. Hyperopia: <span class="math inline">\(P = 4 - 1/d_{\text{near}}\)</span> (distances in metres).</li>
+<li>Magnifier: <span class="math inline">\(M = N/f\)</span>. Microscope: <span class="math inline">\(M \approx -(L/f_o)(N/f_e)\)</span>. Telescope: <span class="math inline">\(M = -f_o/f_e\)</span>.</li>
+</ul>
+</div>
+<h3 class="part-title" id="practice">Practice problems</h3><p class="note">Full step-by-step solutions are in the separate solutions PDF.</p>
+<h4 class="level">Level A — Concept check</h4>
+<div class="prob" id="p22-1"><span class="pnum">P22.1</span>
+<p>Why does a straw standing in a glass of water appear bent at the water surface? Draw a ray diagram to explain.</p>
+</div>
+<div class="prob" id="p22-2"><span class="pnum">P22.2</span>
+<p>Explain why a well-cut diamond sparkles much more than a glass imitation of the same shape.</p>
+</div>
+<div class="prob" id="p22-3"><span class="pnum">P22.3</span>
+<p>Can a convex mirror ever form a real image of a real object? Explain using the mirror equation.</p>
+</div>
+<div class="prob" id="p22-4"><span class="pnum">P22.4</span>
+<p>Explain why your vision is badly blurred underwater, but clear again when you wear swimming goggles.</p>
+</div>
+<h4 class="level">Level B — Standard problems</h4>
+<div class="prob" id="p22-5"><span class="pnum">P22.5</span>
+<p>A ray strikes a 5.0 cm thick glass slab (<span class="math inline">\(n = 1.50\)</span>) at <span class="math inline">\(60^\circ\)</span> to the normal. Find the angle of refraction inside the slab, the direction of the ray when it emerges, and the sideways displacement of the emerging ray.</p>
+</div>
+<div class="prob" id="p22-6"><span class="pnum">P22.6</span>
+<p>An optical fibre has a core of index 1.62 and a cladding of index 1.52 (as in Example 22.2). If the fibre were used without its cladding, in air, what would its numerical aperture be? Why is the cladding nevertheless essential?</p>
+</div>
+<div class="prob" id="p22-7"><span class="pnum">P22.7</span>
+<p>A man wants a shaving mirror that gives him an upright image of his face magnified twice when his face is 15 cm from the mirror. What kind of mirror, and what radius of curvature, does he need?</p>
+</div>
+<div class="prob" id="p22-8"><span class="pnum">P22.8</span>
+<p>A car’s convex wing mirror has a radius of curvature of 1.0 m. A following car is 10 m behind it. Find the image position and magnification.</p>
+</div>
+<div class="prob" id="p22-9"><span class="pnum">P22.9</span>
+<p>A converging lens has a focal length of 10 cm. Find the image position, magnification and nature of the image for an object at (a) 15 cm and (b) 5.0 cm. Sketch a ray diagram for each.</p>
+</div>
+<div class="prob" id="p22-10"><span class="pnum">P22.10</span>
+<p>A thin converging lens with <span class="math inline">\(f = 20\)</span> cm and a thin diverging lens with <span class="math inline">\(f = -30\)</span> cm are placed in contact. Find the focal length and power of the combination. Is it converging or diverging?</p>
+</div>
+<div class="prob" id="p22-11"><span class="pnum">P22.11</span>
+<p>A 50-year-old’s near point has receded to 75 cm. What reading glasses (power in dioptres) will let them read comfortably at 25 cm?</p>
+</div>
+<div class="prob" id="p22-12"><span class="pnum">P22.12</span>
+<p>A magnifying glass has a focal length of 5.0 cm. Find its angular magnification when the image is (a) at infinity and (b) at the near point (25 cm).</p>
+</div>
+<h4 class="level">Level C — Challenge problems</h4>
+<div class="prob" id="p22-13"><span class="pnum">P22.13</span>
+<p><em>The fish in the bowl.</em> A goldfish swims 10 cm from the front of a spherical bowl of radius 15 cm, filled with water (<span class="math inline">\(n = 1.33\)</span>). Ignore the thin glass. Using the equation for refraction at a spherical surface, find where the fish appears to be to an observer looking in from the front, and the magnification of its image.</p>
+</div>
+<div class="prob" id="p22-14"><span class="pnum">P22.14</span>
+<p><em>The cornea underwater.</em> The front surface of the cornea has a radius of curvature of 7.8 mm, and the cornea has an index of 1.376. (a) Find the power of this surface in air. (b) Find its power when the eye is underwater (<span class="math inline">\(n = 1.333\)</span>). (c) How many dioptres of focusing power are lost? Explain why goggles restore clear vision.</p>
+</div>
+<div class="prob" id="p22-15"><span class="pnum">P22.15</span>
+<p>A microscope has an objective with <span class="math inline">\(f_o = 1.6\)</span> cm and an eyepiece with <span class="math inline">\(f_e = 2.5\)</span> cm, separated by 22.1 cm. The final image is at infinity. (a) Where is the intermediate image? (b) Where must the object be placed? (c) Find the overall magnification, taking the near point as 25 cm.</p>
+</div>
+<div class="prob" id="p22-16"><span class="pnum">P22.16</span>
+<p><em>Prisms and dispersion.</em> A glass prism has an apex angle of <span class="math inline">\(60^\circ\)</span>. (a) At minimum deviation, the ray passes symmetrically through the prism, and <span class="math inline">\(n = \dfrac{\sin\tfrac12(A + \delta_{\min})}{\sin\tfrac12A}\)</span>. Find <span class="math inline">\(n\)</span> if <span class="math inline">\(\delta_{\min} = 37.2^\circ\)</span>. (b) For this glass, <span class="math inline">\(n_{\text{red}} = 1.513\)</span> and <span class="math inline">\(n_{\text{violet}} = 1.532\)</span>. Find the minimum-deviation angles for red and violet light, and the angular spread between them.</p>
+</div>
+<div class="prob" id="p22-17"><span class="pnum">P22.17</span>
+<p>An object is placed 30 cm in front of a converging lens with <span class="math inline">\(f_1 = 10\)</span> cm. A second converging lens, with <span class="math inline">\(f_2 = 15\)</span> cm, is 25 cm beyond the first. Find the position, magnification and nature of the final image.</p>
+</div>
+<div class="prob" id="p22-18"><span class="pnum">P22.18</span>
+<p><em>LASIK.</em> Model the eye’s front corneal surface as a single refracting surface from air (<span class="math inline">\(n = 1\)</span>) into the cornea (<span class="math inline">\(n = 1.376\)</span>), with a radius of 7.80 mm. (a) Find its power. (b) A patient’s eye has 2.5 D too much power (myopia with a far point of 40 cm). To what radius must the central cornea be reshaped to correct this? (c) By how many micrometres must the radius change? Comment on why the surgery needs such precise laser control.</p>
+</div>
+
+<div class="downloads noprint"><a href="ch22-geometric-optics_notes.pdf" download>Download notes (PDF)</a><a href="ch22-geometric-optics_solutions.pdf" download>Download solutions (PDF)</a></div>
+</article>
+<nav class="pager"><a href="ch21-ac-emwaves.html">← 21. Alternating Current and Electromagnetic Waves</a><a href="ch23-wave-optics.html">23. Wave Optics →</a></nav></main>
+<footer>All worked examples and practice problems in these notes are original. Textbooks for further reading and practice, with a chapter-by-chapter map, are listed in the References.<p class="copyright">© 2026 Pratik Bhanuse. All rights reserved. · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p></footer>
+</div>
+</body>
+</html>

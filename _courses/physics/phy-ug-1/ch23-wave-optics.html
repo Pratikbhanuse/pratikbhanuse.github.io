@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="When light behaves as a wave: interference, thin films, diffraction, the limits of resolution, and polarisation.">
+<title>23. Wave Optics · Physics, step by step</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* House style shared with "Linear algebra, translated" */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D; --p:#7C3AED;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --def-bg:#F3EEFF; --def-ink:#5B21B6;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --def-bg:#1E1733; --def-ink:#C4B5FD;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --def-bg:#1E1733; --def-ink:#C4B5FD;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+a{color:var(--u)}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5.6vw,60px); line-height:1.04; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .hl{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+.byline{font-family:var(--display); font-size:15px; color:var(--muted); margin:14px 0 0}
+.byline strong{color:var(--ink)} .byline a, .copyright a{color:inherit}
+.copyright{font-family:var(--display); font-size:13px; color:var(--muted); margin:10px 0 0}
+
+/* side navigation */
+nav.toc{position:sticky; top:24px; align-self:start; padding-top:8px; font-family:var(--display); font-size:14px; max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc a[aria-current="page"]{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); font-weight:700}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px}
+nav.toc .sub{padding-left:28px; font-size:13px; color:var(--muted)}
+nav.toc .sub a{color:var(--muted); padding:3px 8px}
+
+main{min-width:0}
+.chapter{max-width:72ch}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+h4{font-family:var(--display); font-weight:700; font-size:18px; margin:24px 0 6px}
+h5{font-family:var(--display); font-weight:700; font-size:16px; margin:18px 0 4px}
+.topic-num{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--u); border-top:1px solid var(--line); padding-top:18px; margin-top:34px; scroll-margin-top:24px}
+h3.topic-title{font-size:24px; margin:4px 0 8px}
+h3.part-title{font-size:24px; margin:40px 0 4px; border-top:2px solid var(--ink); padding-top:16px}
+h4.level{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--v); margin:26px 0 10px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px}
+.note{color:var(--muted); font-size:15px}
+
+/* boxes */
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.def{background:var(--def-bg)} .box.def .label{color:var(--def-ink)}
+.box.work,.box.goals,.box.sum{background:var(--surface); border:1px solid var(--line)}
+.box.work .label,.box.goals .label,.box.sum .label{color:var(--muted)}
+.box.sum{border-top:3px solid var(--ink)}
+.box.work .label{color:var(--v)}
+.box .ex-title{margin:0 0 8px; font-size:18px}
+.sol-inline{margin:10px 0 12px; border-left:3px solid var(--w); padding-left:14px}
+.sol-label{display:block; font-family:var(--display); font-weight:700; font-size:13px; color:var(--w); margin-bottom:4px}
+details.ans{margin:4px 0 12px} details.ans summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:14px; color:var(--w)}
+details.ans > div{padding-top:6px}
+
+/* practice problems */
+.prob{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px 2px; margin:0 0 12px; min-width:0}
+.prob .pnum{font-family:var(--mono); font-weight:600; font-size:12px; color:var(--v); display:block; margin-bottom:2px}
+.prob p{margin:0 0 10px}
+
+/* solutions pages */
+h3.sol-head{margin:30px 0 8px; border-top:1px solid var(--line); padding-top:16px}
+h3.sol-head .pnum{font-family:var(--mono); font-size:14px; letter-spacing:.06em; color:var(--v)}
+.solutions .chapter > p:first-of-type{margin-top:0}
+
+/* tables, figures, math */
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2; fill:none}
+svg .obj{fill:var(--surface); stroke:var(--ink); stroke-width:1.6}
+svg .solid{fill:var(--code-bg); stroke:var(--ink); stroke-width:1.4}
+svg .ground{stroke:var(--ink); stroke-width:1.6}
+svg .hatch{stroke:var(--muted); stroke-width:1}
+svg .dash{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:5 4; fill:none}
+svg .u{stroke:var(--u); stroke-width:2.6; fill:none}
+svg .v{stroke:var(--v); stroke-width:2.6; fill:none}
+svg .w{stroke:var(--w); stroke-width:2.6; fill:none}
+svg .p{stroke:var(--p); stroke-width:2.6; fill:none}
+svg .curve{stroke:var(--u); stroke-width:2.4; fill:none}
+svg .hu,svg .tu{fill:var(--u)} svg .hv,svg .tv{fill:var(--v)} svg .hw,svg .tw{fill:var(--w)} svg .hp,svg .tp{fill:var(--p)}
+svg .muted{fill:var(--muted)} svg .ink{fill:var(--ink)}
+svg .dot{fill:var(--ink)}
+svg .fillu{fill:var(--u); fill-opacity:.12; stroke:none}
+mjx-container{color:inherit}
+mjx-container[display="true"]{display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; margin:.7em 0 !important; padding-block:2px}
+.box mjx-container[display="true"]{margin:.5em 0 !important}
+
+/* pager + footer */
+.pager{display:flex; justify-content:space-between; gap:12px; margin:56px 0 0; padding-top:16px; border-top:1px solid var(--line); font-family:var(--display); font-size:15px; max-width:72ch}
+.pager a{text-decoration:none; color:var(--u)}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+
+/* index page */
+.unit{border-top:2px solid var(--ink); padding-top:12px; margin:36px 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.chlist{list-style:none; padding:0; margin:0}
+.chlist li{display:grid; grid-template-columns:2.4em minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); margin:0}
+.chlist .n{font-family:var(--mono); font-size:13px; color:var(--muted)}
+.chlist .t{font-family:var(--display); font-weight:600; font-size:17px; text-decoration:none; color:var(--ink)}
+.chlist .t:hover{color:var(--u)}
+.chlist .s{font-family:var(--mono); font-size:12px; text-decoration:none}
+.downloads{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+.downloads a{font-family:var(--display); font-weight:600; font-size:15px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 14px}
+.downloads a:hover{border-color:var(--u); color:var(--u)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static; max-height:none}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  nav.toc .grp{grid-column:1/-1}
+  nav.toc .sub{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ---------- print (PDF) ---------- */
+@page{
+  size:Letter; margin:17mm 15mm 18mm;
+  @top-right{content:"Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-left{content:"© 2026 Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-right{content:counter(page) " / " counter(pages); font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+}
+@page :first{ @top-right{content:none} }
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff; padding:0; font-size:11.5pt}
+  .wrap{display:block; max-width:none}
+  nav.toc,.pager,.noprint{display:none !important}
+  header.top{padding-block:0 8px}
+  .chapter{max-width:none; break-before:page}
+  .book-toc{break-before:page}
+  .box,.prob,figure{break-inside:avoid}
+  .box.work{break-inside:auto}
+  .topic-num,h3,h4{break-after:avoid}
+  a{color:inherit; text-decoration:none}
+  details.ans > summary{display:none}
+}
+/* printed table of contents */
+.book-toc ol{list-style:none; padding:0}
+.book-toc li{display:flex; gap:12px; padding:5px 0; border-bottom:1px dotted var(--line); font-family:var(--display); margin:0}
+.book-toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:2em; padding-top:2px}
+h3.page-h{border-top:1px solid var(--line); padding-top:18px; margin-top:34px}
+svg .hk{fill:var(--ink)} svg .k{stroke:var(--ink); stroke-width:2.2; fill:none}
+:root{ --apply-bg:#F1EEFB; --apply-ink:#4C2A9E; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --apply-bg:#1D1830; --apply-ink:#C9B8FF; } }
+:root[data-theme="dark"]{ --apply-bg:#1D1830; --apply-ink:#C9B8FF; }
+.box.apply{background:var(--apply-bg); border-left:4px solid var(--apply-ink)} .box.apply .label{color:var(--apply-ink)}
+svg path.ground,svg polyline.ground{fill:none}
+
+.chlist .s a{text-decoration:none}
+.single{max-width:none}
+
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+         macros: { vect: ['\\vec{\\boldsymbol{#1}}', 1], uvec: ['\\hat{\\boldsymbol{#1}}', 1],
+                   ihat: '\\hat{\\boldsymbol{\\imath}}', jhat: '\\hat{\\boldsymbol{\\jmath}}',
+                   khat: '\\hat{\\boldsymbol{k}}', unit: ['\\,\\mathrm{#1}', 1] } },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker><marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker><marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hp"/></marker><marker id="ak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hk"/></marker></defs></svg>
+<div class="wrap">
+<header class="top"><div class="kicker">Chapter 23 · Semester 2 · Electricity, Magnetism, Optics and Modern Physics</div><h1>Wave Optics</h1><p class="lede">When light behaves as a wave: interference, thin films, diffraction, the limits of resolution, and polarisation.</p><p class="byline">By <strong>Pratik Bhanuse</strong>, PhD Physics candidate, Western University · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p><div class="downloads noprint"><a href="ch23-wave-optics_notes.pdf" download>Download notes (PDF)</a><a href="ch23-wave-optics_solutions.pdf" download>Download solutions (PDF)</a></div></header>
+<aside class="side"><nav class="toc" aria-label="Contents"><ol>
+<li><a href="index.html"><span class="n">⌂</span>Contents</a></li>
+<li><a href="syllabus.html"><span class="n">→</span>Syllabus and how to study</a></li>
+<li class="grp">Semester 1 · Mechanics, Waves and Thermal Physics</li>
+<li><a href="ch01-units-vectors.html"><span class="n">1</span>Measurement, Units, Dimensions and Vectors</a></li>
+<li><a href="ch02-kinematics.html"><span class="n">2</span>Kinematics in One and Two Dimensions</a></li>
+<li><a href="ch03-newtons-laws.html"><span class="n">3</span>Newton&#x27;s Laws of Motion</a></li>
+<li><a href="ch04-friction-circular.html"><span class="n">4</span>Friction and Circular Motion</a></li>
+<li><a href="ch05-work-energy.html"><span class="n">5</span>Work, Energy and Power</a></li>
+<li><a href="ch06-momentum.html"><span class="n">6</span>Centre of Mass, Linear Momentum and Collisions</a></li>
+<li><a href="ch07-rotation.html"><span class="n">7</span>Rotational Motion</a></li>
+<li><a href="ch08-gravitation.html"><span class="n">8</span>Gravitation</a></li>
+<li><a href="ch09-oscillations.html"><span class="n">9</span>Simple Harmonic Motion</a></li>
+<li><a href="ch10-fluids-elasticity.html"><span class="n">10</span>Elasticity and Fluid Mechanics</a></li>
+<li><a href="ch11-waves-sound.html"><span class="n">11</span>Mechanical Waves and Sound</a></li>
+<li><a href="ch12-thermal.html"><span class="n">12</span>Heat, Kinetic Theory and Thermodynamics</a></li>
+<li class="grp">Semester 2 · Electricity, Magnetism, Optics and Modern Physics</li>
+<li><a href="ch13-electric-field.html"><span class="n">13</span>Electric Charge and Electric Field</a></li>
+<li><a href="ch14-gauss.html"><span class="n">14</span>Gauss&#x27;s Law</a></li>
+<li><a href="ch15-potential.html"><span class="n">15</span>Electric Potential</a></li>
+<li><a href="ch16-capacitance.html"><span class="n">16</span>Capacitance and Dielectrics</a></li>
+<li><a href="ch17-dc-circuits.html"><span class="n">17</span>Electric Current and DC Circuits</a></li>
+<li><a href="ch18-magnetic-force.html"><span class="n">18</span>Magnetic Field and Magnetic Forces</a></li>
+<li><a href="ch19-magnetic-sources.html"><span class="n">19</span>Sources of the Magnetic Field</a></li>
+<li><a href="ch20-induction.html"><span class="n">20</span>Electromagnetic Induction</a></li>
+<li><a href="ch21-ac-emwaves.html"><span class="n">21</span>Alternating Current and Electromagnetic Waves</a></li>
+<li><a href="ch22-geometric-optics.html"><span class="n">22</span>Geometrical Optics</a></li>
+<li><a href="ch23-wave-optics.html" aria-current="page"><span class="n">23</span>Wave Optics</a></li>
+<li class="sub"><a href="#huygens-principle">§23.1 Huygens’ principle</a></li>
+<li class="sub"><a href="#interference-and-coherence">§23.2 Interference and coherence</a></li>
+<li class="sub"><a href="#youngs-double-slit-experiment">§23.3 Young’s double-slit experiment</a></li>
+<li class="sub"><a href="#thin-film-interference">§23.4 Thin-film interference</a></li>
+<li class="sub"><a href="#the-michelson-interferometer-and-oct">§23.5 The Michelson interferometer and OCT</a></li>
+<li class="sub"><a href="#diffraction">§23.6 Diffraction</a></li>
+<li class="sub"><a href="#polarisation">§23.7 Polarisation</a></li>
+<li class="sub"><a href="#practice">Practice problems</a></li>
+<li><a href="ch24-modern.html"><span class="n">24</span>Photons, Atoms and Nuclei</a></li>
+<li class="grp">Appendix</li>
+<li><a href="references.html"><span class="n">R</span>References and further practice</a></li>
+</ol></nav></aside>
+<main><article class="chapter notes">
+<p>Geometrical optics treats light as rays. That works well when every opening and obstacle is much larger than the wavelength. When light passes through openings comparable to its wavelength, or when two light waves overlap, its <strong>wave nature</strong> shows. Light bends around edges (<strong>diffraction</strong>), adds and cancels (<strong>interference</strong>), and vibrates in a particular direction (<strong>polarisation</strong>). These effects explain the colours of soap bubbles and butterfly wings. They also set the ultimate limit on how fine a detail any microscope, telescope or eye can resolve. They underpin some of the most precise measuring tools ever built, from X-ray crystallography (which revealed the structure of DNA) to optical coherence tomography, which images the layers of the retina with micrometre detail.</p>
+<div class="box goals"><div class="label">You will be able to</div>
+<ul>
+<li>Use Huygens’ principle, and explain the conditions for observing interference (coherence).</li>
+<li>Analyse Young’s double-slit experiment: fringe positions and the intensity pattern.</li>
+<li>Explain thin-film interference, including phase changes on reflection and anti-reflection coatings.</li>
+<li>Describe the Michelson interferometer and optical coherence tomography.</li>
+<li>Analyse single-slit diffraction and the Rayleigh criterion for resolution, including the resolution limits of the eye and the microscope.</li>
+<li>Use diffraction gratings and Bragg’s law for X-ray diffraction.</li>
+<li>Describe polarisation: Malus’s law, Brewster’s angle, and applications.</li>
+</ul>
+</div>
+<div class="box ask"><div class="label">Think first</div>
+<p>Why can’t even the best light microscope show you a virus, however many lenses you stack together?</p>
+<details class="ans"><summary>Show answer</summary><div>
+<p>Because of <strong>diffraction</strong>. Light passing through a lens of finite size spreads out, so every point of the object is imaged as a small blur rather than a perfect point. The smallest separation a microscope can resolve is about <span class="math inline">\(\lambda/(2\,\mathrm{NA})\)</span>, roughly 200 nm for visible light even with the best oil-immersion lenses (Example 23.5). Most viruses are 20–200 nm across, so they lie at or below this limit. To see them we need shorter wavelengths, such as the electron wavelengths of an electron microscope (Chapter 24), or ingenious “super-resolution” fluorescence techniques that won the 2014 Nobel Prize in Chemistry.</p>
+</div></details>
+</div>
+<div class="topic-num" id="huygens-principle">§23.1</div><h3 class="topic-title">Huygens’ principle</h3>
+<p><strong>Huygens’ principle</strong> (1678) says that every point on a wavefront acts as a source of secondary spherical wavelets, and the new wavefront is the surface tangent to these wavelets a short time later. It explains rectilinear propagation, reflection and refraction, including Snell’s law, with <span class="math inline">\(n = c/v\)</span>. It also explains why waves <em>spread out</em> after passing through an opening, which is diffraction. The spreading is significant when the opening is comparable to the wavelength. That is why sound, with wavelengths of about a metre, bends readily around doors, while light, with wavelengths of about 500 nm, casts sharp shadows.</p>
+<div class="topic-num" id="interference-and-coherence">§23.2</div><h3 class="topic-title">Interference and coherence</h3>
+<p>When two waves overlap, their displacements add (superposition, Chapter 11). For light, the observable quantity is the intensity, <span class="math inline">\(I \propto E^2\)</span>. Two waves of equal amplitude produce:</p>
+<ul>
+<li><strong>constructive interference</strong> where they arrive <strong>in phase</strong>, with path difference <span class="math inline">\(\Delta = m\lambda\)</span>, giving four times the intensity of one wave alone;</li>
+<li><strong>destructive interference</strong> where they arrive <strong>half a cycle out of phase</strong>, with <span class="math inline">\(\Delta = (m + \tfrac12)\lambda\)</span>, giving zero intensity.</li>
+</ul>
+<p>A stable interference pattern needs <strong>coherent</strong> sources, which keep a fixed phase relationship. Light from ordinary sources is emitted as random bursts by atoms, with phases changing every nanosecond or so. Two separate bulbs therefore never produce visible fringes. The usual trick is to split light from a <em>single</em> source into two parts and then recombine them. Lasers are highly coherent, which makes interference easy to see.</p>
+<div class="topic-num" id="youngs-double-slit-experiment">§23.3</div><h3 class="topic-title">Young’s double-slit experiment</h3>
+<p>In 1801 Thomas Young passed light from one source through two narrow, closely spaced slits, separated by <span class="math inline">\(d\)</span>. On a distant screen he saw bright and dark bands, the decisive evidence that light is a wave. For a screen at a distance <span class="math inline">\(L \gg d\)</span>, the path difference to a point at angle <span class="math inline">\(\theta\)</span> is <span class="math inline">\(d\sin\theta\)</span>: <span class="math display">\[\text{bright fringes: } d\sin\theta = m\lambda,\qquad \text{dark fringes: } d\sin\theta = \left(m + \tfrac12\right)\lambda,\qquad m = 0, \pm1, \pm2, \ldots\]</span> For small angles, the position on the screen is <span class="math inline">\(y = L\tan\theta \approx L\sin\theta\)</span>, so the bright fringes are at <span class="math inline">\(y_m = m\lambda L/d\)</span>, with spacing <span class="math display">\[\Delta y = \frac{\lambda L}{d}.\]</span></p>
+<p><strong>The intensity pattern.</strong> With a phase difference <span class="math inline">\(\phi = (2\pi/\lambda)\,d\sin\theta\)</span> between the two waves: <span class="math display">\[I = I_{\max}\cos^2\left(\frac{\pi d\sin\theta}{\lambda}\right).\]</span></p>
+<figure>
+<svg viewBox="0 0 380 220" width="370" role="img" aria-label="Young's double-slit experiment. Light passes through two slits separated by d. Rays travel to a point P on a distant screen at angle theta. The path difference d sin theta is shown near the slits. The screen shows the cos-squared intensity pattern of evenly spaced bright fringes.">
+<line class="ground" x1="80" y1="20" x2="80" y2="92" style="stroke-width:3"/><line class="ground" x1="80" y1="102" x2="80" y2="118" style="stroke-width:3"/><line class="ground" x1="80" y1="128" x2="80" y2="200" style="stroke-width:3"/>
+<line class="u" x1="10" y1="97" x2="74" y2="97" marker-end="url(#au)"/><line class="u" x1="10" y1="123" x2="74" y2="123" marker-end="url(#au)"/>
+<text x="10" y="88" class="tu">coherent light</text>
+<line class="dash" x1="80" y1="97" x2="290" y2="52"/><line class="dash" x1="80" y1="123" x2="290" y2="52"/>
+<line class="dash" x1="80" y1="110" x2="290" y2="110"/>
+<line class="w" x1="80" y1="97" x2="86" y2="123" style="stroke-width:2"/>
+<text x="88" y="140" class="tw">Δ = d sin θ</text>
+<text x="62" y="114" class="muted">d</text>
+<path class="dash" d="M 130 110 A 50 50 0 0 0 129 99"/><text x="134" y="106" class="muted">θ</text>
+<line class="ground" x1="290" y1="15" x2="290" y2="205"/>
+<circle class="dot" cx="290" cy="52" r="3"/><text x="270" y="46" class="ink">P</text>
+<polyline class="curve" points="335.0,20 331.7,23 322.9,26 312.1,29 303.3,32 300.0,35 303.3,38 312.1,41 322.9,44 331.7,47 335.0,50 331.7,53 322.9,56 312.1,59 303.3,62 300.0,65 303.3,68 312.1,71 322.9,74 331.7,77 335.0,80 331.7,83 322.9,86 312.1,89 303.3,92 300.0,95 303.3,98 312.1,101 322.9,104 331.7,107 335.0,110 331.7,113 322.9,116 312.1,119 303.3,122 300.0,125 303.3,128 312.1,131 322.9,134 331.7,137 335.0,140 331.7,143 322.9,146 312.1,149 303.3,152 300.0,155 303.3,158 312.1,161 322.9,164 331.7,167 335.0,170 331.7,173 322.9,176 312.1,179 303.3,182 300.0,185 303.3,188 312.1,191 322.9,194 331.7,197 335.0,200 331.7,203"/>
+<text x="330" y="114" class="tu">I(y)</text>
+<text x="180" y="210" class="muted">L (≫ d)</text>
+</svg>
+<figcaption>Young's double slit. The path difference d sin θ decides whether the waves meet in phase (a bright fringe) or out of phase (a dark fringe) at the point P on the screen.</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 23.1</div><h4 class="ex-title">Measuring a wavelength</h4>
+<p>Two slits 0.20 mm apart are lit by a laser. On a screen 1.0 m away, the bright fringes are 3.0 mm apart. Find the wavelength. How far from the central bright fringe is the third bright fringe?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[\lambda = \frac{d\,\Delta y}{L} = \frac{(2.0\times10^{-4})(3.0\times10^{-3})}{1.0} = 6.0\times10^{-7}\ \mathrm{m} = 600\ \mathrm{nm}\ \text{(orange)}.\]</span> The third bright fringe is at <span class="math inline">\(y_3 = 3\Delta y = 9.0\)</span> mm.</p>
+<p><strong>Evaluate.</strong> A wavelength of less than a micrometre is turned into a spacing of millimetres that you can measure with a ruler. Interference converts tiny lengths into big ones.</p>
+</div>
+</div>
+<div class="topic-num" id="thin-film-interference">§23.4</div><h3 class="topic-title">Thin-film interference</h3>
+<p>Light reflected from the top and bottom surfaces of a thin film (a soap bubble, an oil slick, a lens coating) can interfere. Two factors decide the result.</p>
+<ol>
+<li><strong>Extra path.</strong> At near-normal incidence, the wave reflected from the bottom surface travels an extra distance <span class="math inline">\(2t\)</span> inside the film, where it has wavelength <span class="math inline">\(\lambda/n\)</span>. This is equivalent to an extra path of <span class="math inline">\(2nt\)</span> in vacuum.</li>
+<li><strong>Phase change on reflection.</strong> A wave reflecting from a medium of <em>higher</em> index undergoes a phase change of <span class="math inline">\(\pi\)</span>, equivalent to half a wavelength, just like a pulse reflecting from a fixed end of a string. Reflection from a <em>lower</em>-index medium gives no phase change.</li>
+</ol>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Thin films, near-normal incidence.</strong></p>
+<ul>
+<li>If exactly <strong>one</strong> of the two reflections has a phase change:
+<ul>
+<li>constructive when <span class="math inline">\(2nt = \left(m + \tfrac12\right)\lambda\)</span>;</li>
+<li>destructive when <span class="math inline">\(2nt = m\lambda\)</span>.</li>
+</ul></li>
+<li>If <strong>both or neither</strong> reflection has a phase change:
+<ul>
+<li>constructive when <span class="math inline">\(2nt = m\lambda\)</span>;</li>
+<li>destructive when <span class="math inline">\(2nt = \left(m + \tfrac12\right)\lambda\)</span>.</li>
+</ul></li>
+</ul>
+</div>
+<div class="box work example"><div class="label">Worked example 23.2</div><h4 class="ex-title">Soap films and anti-reflection coatings</h4>
+<p>(a) A soap film (<span class="math inline">\(n = 1.33\)</span>) in air is 120 nm thick. Which visible wavelength is reflected most strongly? (b) A glass lens (<span class="math inline">\(n = 1.52\)</span>) is coated with magnesium fluoride (<span class="math inline">\(n = 1.38\)</span>) to minimise reflection at 550 nm. Find the minimum thickness of the coating.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) <strong>Soap film.</strong> There is a phase change at the top surface (air to soap) but not at the bottom (soap to air), so exactly one reflection has a phase change. Constructive interference needs <span class="math display">\[2nt = \left(m + \tfrac12\right)\lambda \;\Rightarrow\; \lambda = \frac{2(1.33)(120)}{m + \tfrac12} = \frac{319}{m + \tfrac12}\ \mathrm{nm}.\]</span> With <span class="math inline">\(m = 0\)</span>, <span class="math inline">\(\lambda = 638\)</span> nm. The film looks orange-red.</p>
+<p>(b) <strong>Coating.</strong> Both reflections have a phase change (air to MgF₂, and MgF₂ to glass), so destructive interference needs <span class="math inline">\(2nt = \tfrac12\lambda\)</span>: <span class="math display">\[t = \frac{\lambda}{4n} = \frac{550}{4(1.38)} = 99.6\ \mathrm{nm}.\]</span> This is a “quarter-wave” coating.</p>
+<p><strong>Evaluate.</strong> As a soap film thins and drains, the colours shift. When it is much thinner than <span class="math inline">\(\lambda\)</span>, the two reflected waves differ only by the <span class="math inline">\(\pi\)</span> phase change, so they cancel for every colour, and the film looks <em>black</em> just before it bursts. Anti-reflection coatings on spectacles, camera lenses and solar cells cut the reflection from about 4% per surface to under 1%. Because they work best in the middle of the spectrum, they reflect a faint purple tint.</p>
+</div>
+</div>
+<div class="topic-num" id="the-michelson-interferometer-and-oct">§23.5</div><h3 class="topic-title">The Michelson interferometer and OCT</h3>
+<p>A <strong>Michelson interferometer</strong> splits a beam in two with a half-silvered mirror, sends the two halves along perpendicular arms to mirrors, and recombines them. Moving one mirror by <span class="math inline">\(\lambda/2\)</span> changes that arm’s path by <span class="math inline">\(\lambda\)</span>, which shifts the fringe pattern by one whole fringe. This makes possible measurements of length to a small fraction of a wavelength. The LIGO detectors, Michelson interferometers with 4 km arms, detect gravitational waves that change the arm lengths by less than <span class="math inline">\(10^{-18}\)</span> m.</p>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Optical coherence tomography (OCT).</strong> OCT is a Michelson interferometer built for medicine. It uses a <em>broadband</em> near-infrared source, whose light is coherent only over a short <strong>coherence length</strong>, about <span class="math inline">\(l_c \approx 0.44\lambda_0^2/\Delta\lambda\)</span>. One arm goes to a reference mirror, and the other into the patient’s eye or skin. Interference appears <strong>only</strong> for light scattered back from the tissue layer whose path length matches the reference arm to within <span class="math inline">\(l_c\)</span>. Scanning the reference (or analysing the spectrum) therefore maps reflectivity against depth. This builds micrometre-resolution cross-sections of the retina without touching it (Problem P23.15). OCT is now routine for diagnosing macular degeneration, diabetic eye disease and glaucoma, and catheter-based OCT images the walls of coronary arteries from the inside.</p>
+</div>
+<div class="topic-num" id="diffraction">§23.6</div><h3 class="topic-title">Diffraction</h3>
+<h4>Single-slit diffraction</h4>
+<p>Light passing through a single slit of width <span class="math inline">\(a\)</span> spreads out into a central bright band flanked by weaker fringes. To find the dark fringes, divide the slit into two halves. At an angle where each wavelet in the top half is paired with one in the bottom half exactly <span class="math inline">\(\lambda/2\)</span> out of phase, every pair cancels. In general: <span class="math display">\[\text{dark fringes: } a\sin\theta = m\lambda,\qquad m = \pm1, \pm2, \ldots\]</span> Note that <span class="math inline">\(m = 0\)</span> is excluded: it is the bright centre.</p>
+<p>The <strong>central maximum</strong> is twice as wide as the others, with angular half-width <span class="math inline">\(\lambda/a\)</span>. On a screen at distance <span class="math inline">\(L\)</span>, its full width is <span class="math inline">\(2\lambda L/a\)</span>. The intensity is <span class="math display">\[I = I_0\left(\frac{\sin\beta}{\beta}\right)^2,\qquad \beta = \frac{\pi a\sin\theta}{\lambda}.\]</span> <strong>The narrower the slit, the wider the spread.</strong> This is the wave version of the uncertainty principle (Chapter 24).</p>
+<div class="box work example"><div class="label">Worked example 23.3</div><h4 class="ex-title">A single slit</h4>
+<p>A He–Ne laser beam (633 nm) passes through a slit 0.10 mm wide onto a screen 2.0 m away. Find the width of the central bright band.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[w = \frac{2\lambda L}{a} = \frac{2(633\times10^{-9})(2.0)}{1.0\times10^{-4}} = 2.5\times10^{-2}\ \mathrm{m} = 2.5\ \mathrm{cm}.\]</span> A real double-slit pattern is the double-slit fringes multiplied by this single-slit envelope, because each slit has a finite width.</p>
+</div>
+</div>
+<h4>Circular apertures and the limit of resolution</h4>
+<p>A circular aperture of diameter <span class="math inline">\(D\)</span>, such as a lens, a telescope mirror or the pupil of the eye, images a point source as a central bright disc (the <strong>Airy disc</strong>) surrounded by faint rings. The first dark ring is at <span class="math display">\[\sin\theta = 1.22\frac{\lambda}{D}.\]</span> Two point sources are just <strong>resolved</strong> when the centre of one image falls on the first dark ring of the other. This is the <strong>Rayleigh criterion</strong>: <span class="math display">\[\theta_{\min} = 1.22\frac{\lambda}{D}.\]</span></p>
+<p>For a <strong>microscope</strong>, Ernst Abbe showed that the smallest resolvable separation is <span class="math display">\[d_{\min} \approx \frac{\lambda}{2\,\mathrm{NA}},\]</span> where <span class="math inline">\(\mathrm{NA} = n\sin\alpha\)</span> is the objective’s numerical aperture. Oil-immersion objectives reach NA ≈ 1.4.</p>
+<div class="box work example"><div class="label">Worked example 23.4</div><h4 class="ex-title">How sharp is your eye?</h4>
+<p>Taking a pupil diameter of 3.0 mm and a wavelength of 550 nm, find the eye’s diffraction-limited angular resolution. How far apart must two points 25 cm away be to be resolved? From how far away could you still see a car’s two headlights (1.5 m apart) as separate?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[\theta_{\min} = 1.22\frac{550\times10^{-9}}{3.0\times10^{-3}} = 2.2\times10^{-4}\ \mathrm{rad}\ \ (\approx0.8\ \text{arcmin}).\]</span> - At 25 cm: <span class="math inline">\(s = (0.25)(2.2\times10^{-4}) = 56\ \mu\)</span>m. - Headlights: <span class="math inline">\(L = 1.5/(2.2\times10^{-4}) \approx 6.7\)</span> km.</p>
+<p><strong>Evaluate.</strong> A healthy eye actually resolves about 1 arcminute. That is close to the diffraction limit, and it also matches the spacing of the cone cells in the fovea. Evolution has matched the “pixel size” to the optics. This is the basis of the “20/20” vision standard.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 23.5</div><h4 class="ex-title">The resolution limit of the light microscope</h4>
+<p>Find the smallest separation resolvable with an oil-immersion objective of NA 1.40, using green light at 500 nm. Can it resolve a bacterium (1 μm), a large virus (200 nm) and a small virus (30 nm)?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[d_{\min} = \frac{500}{2(1.40)} = 180\ \mathrm{nm}.\]</span> - The bacterium (1 μm) is clearly resolved. - The large virus (200 nm) is barely at the limit. - The small virus (30 nm) cannot be resolved.</p>
+<p>Imaging viruses needs electron microscopy or super-resolution fluorescence methods.</p>
+</div>
+</div>
+<h4>Diffraction gratings</h4>
+<p>A <strong>diffraction grating</strong> has a very large number <span class="math inline">\(N\)</span> of equally spaced slits or lines, a distance <span class="math inline">\(d\)</span> apart. Bright maxima occur in the same directions as for two slits, <span class="math display">\[d\sin\theta = m\lambda,\]</span> but with many slits contributing, they become <strong>extremely sharp</strong>. A grating separates wavelengths far more precisely than a prism. Its <strong>resolving power</strong> is <span class="math display">\[R = \frac{\lambda}{\Delta\lambda} = Nm.\]</span> Gratings are the heart of spectrometers used in chemistry, in astronomy, and in clinical laboratory analysers.</p>
+<div class="box work example"><div class="label">Worked example 23.6</div><h4 class="ex-title">A grating spectrometer</h4>
+<p>A grating has 600 lines per mm. (a) At what angles does the sodium line at 589 nm appear? (b) How many lines must be illuminated to resolve the sodium doublet (589.0 nm and 589.6 nm) in first order?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) <span class="math inline">\(d = 1/600\)</span> mm <span class="math inline">\(= 1.667\ \mu\)</span>m.</p>
+<ul>
+<li>First order: <span class="math inline">\(\sin\theta = 0.589/1.667 = 0.353\)</span>, so <span class="math inline">\(\theta = 20.7^\circ\)</span>.</li>
+<li>Second order: <span class="math inline">\(\sin\theta = 0.707\)</span>, so <span class="math inline">\(\theta = 45.0^\circ\)</span>.</li>
+<li>Third order: <span class="math inline">\(\sin\theta = 1.06 &gt; 1\)</span>, which is impossible, so there is no third order.</li>
+</ul>
+<p>(b) Resolving power: <span class="math display">\[R = \frac{589}{0.6} = 980 \;\Rightarrow\; N = \frac{R}{m} = 980\ \text{lines}.\]</span> So 980 lines, just 1.6 mm of this grating, are enough to resolve the doublet.</p>
+</div>
+</div>
+<h4>X-ray diffraction and Bragg’s law</h4>
+<p>X-ray wavelengths (about 0.1 nm) are comparable to the spacing of atoms in crystals, so a crystal acts as a three-dimensional grating. X-rays reflect from planes of atoms a distance <span class="math inline">\(d\)</span> apart, and the reflections reinforce only when <span class="math display">\[2d\sin\theta = m\lambda\qquad\text{(Bragg&#39;s law)},\]</span> where <span class="math inline">\(\theta\)</span> is measured from the planes, not from the normal.</p>
+<p><strong>X-ray crystallography</strong> has determined the structures of salt, of drugs and enzymes, and, famously, of DNA. Rosalind Franklin’s diffraction photograph 51 (1952) revealed its helical structure. Today it is central to structure-based drug design.</p>
+<div class="box work example"><div class="label">Worked example 23.7</div><h4 class="ex-title">Bragg reflection from salt</h4>
+<p>X-rays of wavelength 0.154 nm (copper Kα) reflect from planes in rock salt that are 0.282 nm apart. Find the first-order Bragg angle.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[\sin\theta = \frac{\lambda}{2d} = \frac{0.154}{0.564} = 0.273 \;\Rightarrow\; \theta = 15.8^\circ.\]</span></p>
+</div>
+</div>
+<div class="topic-num" id="polarisation">§23.7</div><h3 class="topic-title">Polarisation</h3>
+<p>Light is a transverse wave, so its electric field can oscillate in any direction perpendicular to the direction of travel. In <strong>unpolarised</strong> light, such as sunlight or the light from bulbs, the direction changes randomly. In <strong>linearly polarised</strong> light, <span class="math inline">\(\vect{E}\)</span> always oscillates along one direction.</p>
+<p><strong>Polarisers.</strong> A polarising filter transmits only the component of <span class="math inline">\(\vect{E}\)</span> along its transmission axis. Unpolarised light emerges with half its intensity. Polarised light of intensity <span class="math inline">\(I_0\)</span> passing through a polariser whose axis makes an angle <span class="math inline">\(\theta\)</span> with the light’s polarisation obeys <strong>Malus’s law</strong>: <span class="math display">\[I = I_0\cos^2\theta.\]</span> “Crossed” polarisers, at <span class="math inline">\(90^\circ\)</span>, transmit nothing.</p>
+<p><strong>Polarisation by reflection.</strong> Light reflected from a surface is partly polarised parallel to the surface. At <strong>Brewster’s angle</strong>, <span class="math display">\[\tan\theta_B = \frac{n_2}{n_1},\]</span> the reflected light is <em>completely</em> polarised. At this angle the reflected and refracted rays are perpendicular (Problem P23.18). For water, <span class="math inline">\(\theta_B = 53^\circ\)</span>. Glare from roads, water and snow is therefore mostly horizontally polarised, and polarised sunglasses, whose transmission axis is vertical, block it.</p>
+<p><strong>Optical activity and birefringence.</strong> Some molecules, including sugars and many drugs, rotate the plane of polarisation by an amount proportional to their concentration and the path length. <strong>Polarimeters</strong> use this to measure sugar concentrations, and to distinguish mirror-image drug molecules, which can have very different biological effects. Stressed plastics become <em>birefringent</em>: their refractive index depends on the polarisation direction. Viewed between crossed polarisers they show coloured stress patterns, which engineers use to analyse stresses in models of structures and in orthopaedic implants.</p>
+<div class="box work example"><div class="label">Worked example 23.8</div><h4 class="ex-title">Polarisers and Brewster’s angle</h4>
+<p>(a) Unpolarised light of intensity <span class="math inline">\(I_0\)</span> passes through two polarisers whose axes are <span class="math inline">\(60^\circ\)</span> apart. What intensity emerges? (b) Find Brewster’s angle for light reflected from water.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) The first polariser halves the intensity, and the second applies Malus’s law: <span class="math display">\[I = \frac{I_0}{2}\cos^260^\circ = \frac{I_0}{2}\cdot\frac14 = \frac{I_0}{8}.\]</span></p>
+<p>(b) <span class="math inline">\(\theta_B = \tan^{-1}1.33 = 53^\circ\)</span> from the normal.</p>
+</div>
+</div>
+<div class="box sum"><div class="label">Chapter summary</div>
+<ul>
+<li>Huygens’ principle: every point on a wavefront is a source of wavelets. Diffraction is significant when an aperture is comparable to <span class="math inline">\(\lambda\)</span>.</li>
+<li>Interference needs coherent sources. Double slit: bright fringes at <span class="math inline">\(d\sin\theta = m\lambda\)</span>, spacing <span class="math inline">\(\lambda L/d\)</span>, and <span class="math inline">\(I \propto \cos^2(\pi d\sin\theta/\lambda)\)</span>.</li>
+<li>Thin films: path <span class="math inline">\(2nt\)</span>, plus a <span class="math inline">\(\pi\)</span> phase change on reflection from a higher-index medium. Quarter-wave anti-reflection coating: <span class="math inline">\(t = \lambda/4n\)</span>.</li>
+<li>Single slit: dark fringes at <span class="math inline">\(a\sin\theta = m\lambda\)</span>, with the central maximum of width <span class="math inline">\(2\lambda L/a\)</span>.</li>
+<li>Resolution: <span class="math inline">\(\theta_{\min} = 1.22\lambda/D\)</span> (Rayleigh). Microscope: <span class="math inline">\(d_{\min} \approx \lambda/(2\,\mathrm{NA})\)</span>.</li>
+<li>Grating: <span class="math inline">\(d\sin\theta = m\lambda\)</span>, with resolving power <span class="math inline">\(R = Nm\)</span>. Bragg: <span class="math inline">\(2d\sin\theta = m\lambda\)</span>.</li>
+<li>Polarisation: unpolarised light is halved by a polariser. Malus: <span class="math inline">\(I = I_0\cos^2\theta\)</span>. Brewster: <span class="math inline">\(\tan\theta_B = n_2/n_1\)</span>.</li>
+</ul>
+</div>
+<h3 class="part-title" id="practice">Practice problems</h3><p class="note">Full step-by-step solutions are in the separate solutions PDF.</p>
+<h4 class="level">Level A — Concept check</h4>
+<div class="prob" id="p23-1"><span class="pnum">P23.1</span>
+<p>Why don’t two separate light bulbs shining on the same wall produce interference fringes, while two slits illuminated by the same laser do?</p>
+</div>
+<div class="prob" id="p23-2"><span class="pnum">P23.2</span>
+<p>A vertical soap film shows coloured bands, but its top appears black just before it bursts. Explain.</p>
+</div>
+<div class="prob" id="p23-3"><span class="pnum">P23.3</span>
+<p>Radio waves bend around buildings and hills, but light casts sharp shadows. Explain using the idea of diffraction.</p>
+</div>
+<div class="prob" id="p23-4"><span class="pnum">P23.4</span>
+<p>How do polarised sunglasses reduce glare from a wet road? In which direction should their transmission axis point? What would you see if you tilted your head by <span class="math inline">\(90^\circ\)</span>?</p>
+</div>
+<h4 class="level">Level B — Standard problems</h4>
+<div class="prob" id="p23-5"><span class="pnum">P23.5</span>
+<p>In a double-slit experiment, the slits are 0.40 mm apart and the screen is 1.5 m away. The bright fringes are 2.5 mm apart. (a) Find the wavelength. (b) What would the spacing be if the whole apparatus were immersed in water (<span class="math inline">\(n = 1.33\)</span>)?</p>
+</div>
+<div class="prob" id="p23-6"><span class="pnum">P23.6</span>
+<p>An oil film (<span class="math inline">\(n = 1.45\)</span>) 300 nm thick floats on water (<span class="math inline">\(n = 1.33\)</span>). Viewed from directly above in white light, what colour does it appear? (Find all wavelengths between 380 nm and 750 nm that are strongly reflected.)</p>
+</div>
+<div class="prob" id="p23-7"><span class="pnum">P23.7</span>
+<p>A camera lens (<span class="math inline">\(n = 1.52\)</span>) is coated with a layer of MgF₂ (<span class="math inline">\(n = 1.38\)</span>). (a) What is the minimum thickness that minimises reflection at 550 nm? (b) What is the next thickness that would also work? (c) Why does a coated lens look purplish?</p>
+</div>
+<div class="prob" id="p23-8"><span class="pnum">P23.8</span>
+<p>In single-slit diffraction with sodium light (589 nm), the first dark fringe appears at <span class="math inline">\(1.50^\circ\)</span> from the centre. Find the width of the slit.</p>
+</div>
+<div class="prob" id="p23-9"><span class="pnum">P23.9</span>
+<p>The Hubble Space Telescope has a 2.4 m mirror. (a) Find its angular resolution at 500 nm. (b) Could it resolve a feature 10 m across on the Moon, which is <span class="math inline">\(3.84\times10^8\)</span> m away? What is the smallest lunar feature it can resolve?</p>
+</div>
+<div class="prob" id="p23-10"><span class="pnum">P23.10</span>
+<p>White light (400–700 nm) falls on a grating with 500 lines per mm. (a) Find the angular range of the first-order and second-order spectra. (b) Do the second and third orders overlap? Explain.</p>
+</div>
+<div class="prob" id="p23-11"><span class="pnum">P23.11</span>
+<p>Unpolarised light of intensity <span class="math inline">\(I_0\)</span> falls on two crossed polarisers, so that no light gets through. A third polariser is then inserted between them, at <span class="math inline">\(45^\circ\)</span> to each. Find the transmitted intensity, and explain why adding a filter lets <em>more</em> light through.</p>
+</div>
+<div class="prob" id="p23-12"><span class="pnum">P23.12</span>
+<p><em>Polarimetry.</em> Glucose rotates the plane of polarisation by <span class="math inline">\(52.7^\circ\)</span> per decimetre of path per (g/mL) of concentration. A urine sample in a 1.0 dm tube rotates polarised light by <span class="math inline">\(1.05^\circ\)</span>. Find the glucose concentration in g per 100 mL. Is it clinically significant? (Normal urine contains essentially no glucose.)</p>
+</div>
+<h4 class="level">Level C — Challenge problems</h4>
+<div class="prob" id="p23-13"><span class="pnum">P23.13</span>
+<p>(a) Derive the double-slit intensity <span class="math inline">\(I = I_{\max}\cos^2(\pi d\sin\theta/\lambda)\)</span> by adding two waves of equal amplitude with a phase difference <span class="math inline">\(\phi\)</span>. (b) When the finite width <span class="math inline">\(a\)</span> of each slit is included, the pattern is multiplied by the single-slit envelope <span class="math inline">\((\sin\beta/\beta)^2\)</span>. Show that if <span class="math inline">\(d = 4a\)</span>, the 4th, 8th, … bright fringes are missing. How many bright fringes then appear inside the central diffraction maximum?</p>
+</div>
+<div class="prob" id="p23-14"><span class="pnum">P23.14</span>
+<p><em>Air wedge.</em> Two flat glass plates touch along one edge, and are separated at the other edge, 10 cm away, by a thin hair. Viewed from above in 600 nm light, 20 dark fringes are seen across the wedge, counting the one at the line of contact. (a) Explain why the line of contact is dark. (b) Find the thickness of the hair. (c) What is the fringe spacing?</p>
+</div>
+<div class="prob" id="p23-15"><span class="pnum">P23.15</span>
+<p><em>OCT resolution.</em> An OCT system uses a source centred at <span class="math inline">\(\lambda_0 = 840\)</span> nm with a bandwidth <span class="math inline">\(\Delta\lambda = 50\)</span> nm. (a) Estimate its coherence length, <span class="math inline">\(l_c \approx 0.44\lambda_0^2/\Delta\lambda\)</span>, which sets the axial (depth) resolution in air. (b) What is the resolution inside retinal tissue (<span class="math inline">\(n \approx 1.38\)</span>)? (c) Why does a broader bandwidth give better depth resolution? (d) A Michelson mirror is moved by 0.25 μm while it is lit with 500 nm light. How many fringes pass a fixed point?</p>
+</div>
+<div class="prob" id="p23-16"><span class="pnum">P23.16</span>
+<p><em>Pixel density.</em> A typical eye resolves about 1 arcminute (<span class="math inline">\(2.9\times10^{-4}\)</span> rad). (a) What is the smallest pixel size that is just invisible on a phone held 30 cm away? Express it as a number of pixels per inch (1 inch = 25.4 mm). (b) Repeat for a television viewed from 3.0 m. Comment on “retina display” marketing claims.</p>
+</div>
+<div class="prob" id="p23-17"><span class="pnum">P23.17</span>
+<p><em>X-rays and DNA.</em> (a) In B-form DNA, the stacked base pairs are 0.34 nm apart. Find the first- and second-order Bragg angles for copper Kα X-rays (0.154 nm) reflecting from these planes. (b) Explain why visible light could never reveal this spacing, and why X-ray wavelengths are ideal.</p>
+</div>
+<div class="prob" id="p23-18"><span class="pnum">P23.18</span>
+<p><em>Brewster’s angle.</em> (a) Show that at Brewster’s angle the reflected and refracted rays are perpendicular, given that Brewster’s angle satisfies <span class="math inline">\(\tan\theta_B = n_2/n_1\)</span>. (b) Find Brewster’s angle and the corresponding angle of refraction for light going from air into glass (<span class="math inline">\(n = 1.50\)</span>). (c) Lasers often have “Brewster windows”, glass plates at Brewster’s angle at each end of the gas tube. Explain why this makes the laser’s output polarised.</p>
+</div>
+
+<div class="downloads noprint"><a href="ch23-wave-optics_notes.pdf" download>Download notes (PDF)</a><a href="ch23-wave-optics_solutions.pdf" download>Download solutions (PDF)</a></div>
+</article>
+<nav class="pager"><a href="ch22-geometric-optics.html">← 22. Geometrical Optics</a><a href="ch24-modern.html">24. Photons, Atoms and Nuclei →</a></nav></main>
+<footer>All worked examples and practice problems in these notes are original. Textbooks for further reading and practice, with a chapter-by-chapter map, are listed in the References.<p class="copyright">© 2026 Pratik Bhanuse. All rights reserved. · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p></footer>
+</div>
+</body>
+</html>

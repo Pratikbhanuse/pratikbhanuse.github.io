@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Systems of particles: the point that moves as if all the mass were there, and the quantity that no internal force can change.">
+<title>6. Centre of Mass, Linear Momentum and Collisions · Physics, step by step</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* House style shared with "Linear algebra, translated" */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D; --p:#7C3AED;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --def-bg:#F3EEFF; --def-ink:#5B21B6;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --def-bg:#1E1733; --def-ink:#C4B5FD;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --def-bg:#1E1733; --def-ink:#C4B5FD;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+a{color:var(--u)}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5.6vw,60px); line-height:1.04; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .hl{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+.byline{font-family:var(--display); font-size:15px; color:var(--muted); margin:14px 0 0}
+.byline strong{color:var(--ink)} .byline a, .copyright a{color:inherit}
+.copyright{font-family:var(--display); font-size:13px; color:var(--muted); margin:10px 0 0}
+
+/* side navigation */
+nav.toc{position:sticky; top:24px; align-self:start; padding-top:8px; font-family:var(--display); font-size:14px; max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc a[aria-current="page"]{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); font-weight:700}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px}
+nav.toc .sub{padding-left:28px; font-size:13px; color:var(--muted)}
+nav.toc .sub a{color:var(--muted); padding:3px 8px}
+
+main{min-width:0}
+.chapter{max-width:72ch}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+h4{font-family:var(--display); font-weight:700; font-size:18px; margin:24px 0 6px}
+h5{font-family:var(--display); font-weight:700; font-size:16px; margin:18px 0 4px}
+.topic-num{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--u); border-top:1px solid var(--line); padding-top:18px; margin-top:34px; scroll-margin-top:24px}
+h3.topic-title{font-size:24px; margin:4px 0 8px}
+h3.part-title{font-size:24px; margin:40px 0 4px; border-top:2px solid var(--ink); padding-top:16px}
+h4.level{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--v); margin:26px 0 10px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px}
+.note{color:var(--muted); font-size:15px}
+
+/* boxes */
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.def{background:var(--def-bg)} .box.def .label{color:var(--def-ink)}
+.box.work,.box.goals,.box.sum{background:var(--surface); border:1px solid var(--line)}
+.box.work .label,.box.goals .label,.box.sum .label{color:var(--muted)}
+.box.sum{border-top:3px solid var(--ink)}
+.box.work .label{color:var(--v)}
+.box .ex-title{margin:0 0 8px; font-size:18px}
+.sol-inline{margin:10px 0 12px; border-left:3px solid var(--w); padding-left:14px}
+.sol-label{display:block; font-family:var(--display); font-weight:700; font-size:13px; color:var(--w); margin-bottom:4px}
+details.ans{margin:4px 0 12px} details.ans summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:14px; color:var(--w)}
+details.ans > div{padding-top:6px}
+
+/* practice problems */
+.prob{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px 2px; margin:0 0 12px; min-width:0}
+.prob .pnum{font-family:var(--mono); font-weight:600; font-size:12px; color:var(--v); display:block; margin-bottom:2px}
+.prob p{margin:0 0 10px}
+
+/* solutions pages */
+h3.sol-head{margin:30px 0 8px; border-top:1px solid var(--line); padding-top:16px}
+h3.sol-head .pnum{font-family:var(--mono); font-size:14px; letter-spacing:.06em; color:var(--v)}
+.solutions .chapter > p:first-of-type{margin-top:0}
+
+/* tables, figures, math */
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2; fill:none}
+svg .obj{fill:var(--surface); stroke:var(--ink); stroke-width:1.6}
+svg .solid{fill:var(--code-bg); stroke:var(--ink); stroke-width:1.4}
+svg .ground{stroke:var(--ink); stroke-width:1.6}
+svg .hatch{stroke:var(--muted); stroke-width:1}
+svg .dash{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:5 4; fill:none}
+svg .u{stroke:var(--u); stroke-width:2.6; fill:none}
+svg .v{stroke:var(--v); stroke-width:2.6; fill:none}
+svg .w{stroke:var(--w); stroke-width:2.6; fill:none}
+svg .p{stroke:var(--p); stroke-width:2.6; fill:none}
+svg .curve{stroke:var(--u); stroke-width:2.4; fill:none}
+svg .hu,svg .tu{fill:var(--u)} svg .hv,svg .tv{fill:var(--v)} svg .hw,svg .tw{fill:var(--w)} svg .hp,svg .tp{fill:var(--p)}
+svg .muted{fill:var(--muted)} svg .ink{fill:var(--ink)}
+svg .dot{fill:var(--ink)}
+svg .fillu{fill:var(--u); fill-opacity:.12; stroke:none}
+mjx-container{color:inherit}
+mjx-container[display="true"]{display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; margin:.7em 0 !important; padding-block:2px}
+.box mjx-container[display="true"]{margin:.5em 0 !important}
+
+/* pager + footer */
+.pager{display:flex; justify-content:space-between; gap:12px; margin:56px 0 0; padding-top:16px; border-top:1px solid var(--line); font-family:var(--display); font-size:15px; max-width:72ch}
+.pager a{text-decoration:none; color:var(--u)}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+
+/* index page */
+.unit{border-top:2px solid var(--ink); padding-top:12px; margin:36px 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.chlist{list-style:none; padding:0; margin:0}
+.chlist li{display:grid; grid-template-columns:2.4em minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); margin:0}
+.chlist .n{font-family:var(--mono); font-size:13px; color:var(--muted)}
+.chlist .t{font-family:var(--display); font-weight:600; font-size:17px; text-decoration:none; color:var(--ink)}
+.chlist .t:hover{color:var(--u)}
+.chlist .s{font-family:var(--mono); font-size:12px; text-decoration:none}
+.downloads{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+.downloads a{font-family:var(--display); font-weight:600; font-size:15px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 14px}
+.downloads a:hover{border-color:var(--u); color:var(--u)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static; max-height:none}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  nav.toc .grp{grid-column:1/-1}
+  nav.toc .sub{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ---------- print (PDF) ---------- */
+@page{
+  size:Letter; margin:17mm 15mm 18mm;
+  @top-right{content:"Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-left{content:"© 2026 Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-right{content:counter(page) " / " counter(pages); font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+}
+@page :first{ @top-right{content:none} }
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff; padding:0; font-size:11.5pt}
+  .wrap{display:block; max-width:none}
+  nav.toc,.pager,.noprint{display:none !important}
+  header.top{padding-block:0 8px}
+  .chapter{max-width:none; break-before:page}
+  .book-toc{break-before:page}
+  .box,.prob,figure{break-inside:avoid}
+  .box.work{break-inside:auto}
+  .topic-num,h3,h4{break-after:avoid}
+  a{color:inherit; text-decoration:none}
+  details.ans > summary{display:none}
+}
+/* printed table of contents */
+.book-toc ol{list-style:none; padding:0}
+.book-toc li{display:flex; gap:12px; padding:5px 0; border-bottom:1px dotted var(--line); font-family:var(--display); margin:0}
+.book-toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:2em; padding-top:2px}
+h3.page-h{border-top:1px solid var(--line); padding-top:18px; margin-top:34px}
+svg .hk{fill:var(--ink)} svg .k{stroke:var(--ink); stroke-width:2.2; fill:none}
+:root{ --apply-bg:#F1EEFB; --apply-ink:#4C2A9E; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --apply-bg:#1D1830; --apply-ink:#C9B8FF; } }
+:root[data-theme="dark"]{ --apply-bg:#1D1830; --apply-ink:#C9B8FF; }
+.box.apply{background:var(--apply-bg); border-left:4px solid var(--apply-ink)} .box.apply .label{color:var(--apply-ink)}
+svg path.ground,svg polyline.ground{fill:none}
+
+.chlist .s a{text-decoration:none}
+.single{max-width:none}
+
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+         macros: { vect: ['\\vec{\\boldsymbol{#1}}', 1], uvec: ['\\hat{\\boldsymbol{#1}}', 1],
+                   ihat: '\\hat{\\boldsymbol{\\imath}}', jhat: '\\hat{\\boldsymbol{\\jmath}}',
+                   khat: '\\hat{\\boldsymbol{k}}', unit: ['\\,\\mathrm{#1}', 1] } },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker><marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker><marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hp"/></marker><marker id="ak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hk"/></marker></defs></svg>
+<div class="wrap">
+<header class="top"><div class="kicker">Chapter 6 · Semester 1 · Mechanics, Waves and Thermal Physics</div><h1>Centre of Mass, Linear Momentum and Collisions</h1><p class="lede">Systems of particles: the point that moves as if all the mass were there, and the quantity that no internal force can change.</p><p class="byline">By <strong>Pratik Bhanuse</strong>, PhD Physics candidate, Western University · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p><div class="downloads noprint"><a href="ch06-momentum_notes.pdf" download>Download notes (PDF)</a><a href="ch06-momentum_solutions.pdf" download>Download solutions (PDF)</a></div></header>
+<aside class="side"><nav class="toc" aria-label="Contents"><ol>
+<li><a href="index.html"><span class="n">⌂</span>Contents</a></li>
+<li><a href="syllabus.html"><span class="n">→</span>Syllabus and how to study</a></li>
+<li class="grp">Semester 1 · Mechanics, Waves and Thermal Physics</li>
+<li><a href="ch01-units-vectors.html"><span class="n">1</span>Measurement, Units, Dimensions and Vectors</a></li>
+<li><a href="ch02-kinematics.html"><span class="n">2</span>Kinematics in One and Two Dimensions</a></li>
+<li><a href="ch03-newtons-laws.html"><span class="n">3</span>Newton&#x27;s Laws of Motion</a></li>
+<li><a href="ch04-friction-circular.html"><span class="n">4</span>Friction and Circular Motion</a></li>
+<li><a href="ch05-work-energy.html"><span class="n">5</span>Work, Energy and Power</a></li>
+<li><a href="ch06-momentum.html" aria-current="page"><span class="n">6</span>Centre of Mass, Linear Momentum and Collisions</a></li>
+<li class="sub"><a href="#the-centre-of-mass">§6.1 The centre of mass</a></li>
+<li class="sub"><a href="#motion-of-the-centre-of-mass">§6.2 Motion of the centre of mass</a></li>
+<li class="sub"><a href="#linear-momentum-and-impulse">§6.3 Linear momentum and impulse</a></li>
+<li class="sub"><a href="#conservation-of-linear-momentum">§6.4 Conservation of linear momentum</a></li>
+<li class="sub"><a href="#collisions">§6.5 Collisions</a></li>
+<li class="sub"><a href="#systems-of-variable-mass-rockets">§6.6 Systems of variable mass: rockets</a></li>
+<li class="sub"><a href="#practice">Practice problems</a></li>
+<li><a href="ch07-rotation.html"><span class="n">7</span>Rotational Motion</a></li>
+<li><a href="ch08-gravitation.html"><span class="n">8</span>Gravitation</a></li>
+<li><a href="ch09-oscillations.html"><span class="n">9</span>Simple Harmonic Motion</a></li>
+<li><a href="ch10-fluids-elasticity.html"><span class="n">10</span>Elasticity and Fluid Mechanics</a></li>
+<li><a href="ch11-waves-sound.html"><span class="n">11</span>Mechanical Waves and Sound</a></li>
+<li><a href="ch12-thermal.html"><span class="n">12</span>Heat, Kinetic Theory and Thermodynamics</a></li>
+<li class="grp">Semester 2 · Electricity, Magnetism, Optics and Modern Physics</li>
+<li><a href="ch13-electric-field.html"><span class="n">13</span>Electric Charge and Electric Field</a></li>
+<li><a href="ch14-gauss.html"><span class="n">14</span>Gauss&#x27;s Law</a></li>
+<li><a href="ch15-potential.html"><span class="n">15</span>Electric Potential</a></li>
+<li><a href="ch16-capacitance.html"><span class="n">16</span>Capacitance and Dielectrics</a></li>
+<li><a href="ch17-dc-circuits.html"><span class="n">17</span>Electric Current and DC Circuits</a></li>
+<li><a href="ch18-magnetic-force.html"><span class="n">18</span>Magnetic Field and Magnetic Forces</a></li>
+<li><a href="ch19-magnetic-sources.html"><span class="n">19</span>Sources of the Magnetic Field</a></li>
+<li><a href="ch20-induction.html"><span class="n">20</span>Electromagnetic Induction</a></li>
+<li><a href="ch21-ac-emwaves.html"><span class="n">21</span>Alternating Current and Electromagnetic Waves</a></li>
+<li><a href="ch22-geometric-optics.html"><span class="n">22</span>Geometrical Optics</a></li>
+<li><a href="ch23-wave-optics.html"><span class="n">23</span>Wave Optics</a></li>
+<li><a href="ch24-modern.html"><span class="n">24</span>Photons, Atoms and Nuclei</a></li>
+<li class="grp">Appendix</li>
+<li><a href="references.html"><span class="n">R</span>References and further practice</a></li>
+</ol></nav></aside>
+<main><article class="chapter notes">
+<p>So far we have treated every body as a single particle. Real systems contain many interacting parts: a spinning wrench, an exploding firework, two colliding cars, a rocket throwing out exhaust. Two ideas make such systems manageable. The <strong>centre of mass</strong> moves as if all the mass were concentrated there and all the external forces acted on it. <strong>Linear momentum</strong> is conserved whenever the external forces add to zero, however violent the internal forces. Together they let us analyse collisions without knowing anything about the messy forces during impact. That is exactly the situation in crash testing, sports science, particle physics and rocketry.</p>
+<div class="box goals"><div class="label">You will be able to</div>
+<ul>
+<li>Locate the centre of mass of discrete and continuous systems, including bodies with holes.</li>
+<li>Show that the centre of mass moves as a particle acted on by the net external force.</li>
+<li>Use impulse and the impulse–momentum theorem to relate forces, contact times and changes of velocity.</li>
+<li>Apply conservation of momentum to recoil, explosions and collisions in one and two dimensions.</li>
+<li>Classify collisions as elastic, inelastic or perfectly inelastic, and use the coefficient of restitution.</li>
+<li>Derive and apply the rocket equation for variable-mass systems.</li>
+</ul>
+</div>
+<div class="box ask"><div class="label">Think first</div>
+<p>You are floating at rest in the middle of a frictionless ice rink, holding a heavy textbook. How can you get to the edge?</p>
+<details class="ans"><summary>Show answer</summary><div>
+<p><strong>Throw the book.</strong> You and the book start with zero total momentum, and the ice exerts no horizontal force, so the total momentum must stay zero. If you throw the book one way, you must move the other way, with <span class="math inline">\(m_{\text{you}}v_{\text{you}} = m_{\text{book}}v_{\text{book}}\)</span>. Waving your arms or wriggling does not help: internal forces cannot move the centre of mass. This is exactly how rockets work. They throw mass (exhaust) backwards in order to move forwards, with no need for anything to “push against”.</p>
+</div></details>
+</div>
+<div class="topic-num" id="the-centre-of-mass">§6.1</div><h3 class="topic-title">The centre of mass</h3>
+<p>For a system of particles with masses <span class="math inline">\(m_i\)</span> at positions <span class="math inline">\(\vect{r}_i\)</span>, the <strong>centre of mass</strong> (CM) is the mass-weighted average position: <span class="math display">\[\vect{r}_{\text{cm}} = \frac{\sum m_i\vect{r}_i}{M},\qquad M = \sum m_i.\]</span> In components, <span class="math inline">\(x_{\text{cm}} = \sum m_ix_i/M\)</span>, and similarly for <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>.</p>
+<p>For a continuous body, the sum becomes an integral over mass elements <span class="math inline">\(dm\)</span>: <span class="math display">\[\vect{r}_{\text{cm}} = \frac{1}{M}\int\vect{r}\,dm.\]</span> For a rod, <span class="math inline">\(dm = \lambda\,dx\)</span>, where <span class="math inline">\(\lambda\)</span> is the mass per unit length. For a plate, <span class="math inline">\(dm = \sigma\,dA\)</span>. For a solid, <span class="math inline">\(dm = \rho\,dV\)</span>.</p>
+<p><strong>Useful facts:</strong></p>
+<ul>
+<li>If a body has a line or plane of symmetry and uniform density, the CM lies on it.</li>
+<li>The CM need not lie inside the material: think of a ring, a horseshoe or a boomerang.</li>
+<li>To find the CM of a composite body, treat each part as a particle at its own CM. A <strong>hole</strong> can be treated as a part with <em>negative</em> mass.</li>
+<li>In a uniform gravitational field, the CM coincides with the <strong>centre of gravity</strong>, the point where the total weight effectively acts.</li>
+</ul>
+<div class="box work example"><div class="label">Worked example 6.1</div><h4 class="ex-title">Three particles</h4>
+<p>Masses of 1.0 kg, 2.0 kg and 3.0 kg sit at <span class="math inline">\((0, 0)\)</span>, <span class="math inline">\((2.0, 0)\)</span> and <span class="math inline">\((0, 4.0)\)</span> m. Find the centre of mass.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[x_{\text{cm}} = \frac{1(0) + 2(2.0) + 3(0)}{6.0} = \frac{4.0}{6.0} = 0.67\ \mathrm{m},\qquad y_{\text{cm}} = \frac{1(0) + 2(0) + 3(4.0)}{6.0} = 2.0\ \mathrm{m}.\]</span> The CM is at <span class="math inline">\((0.67, 2.0)\)</span> m, pulled towards the heaviest mass.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 6.2</div><h4 class="ex-title">Non-uniform rod and semicircular wire</h4>
+<p>(a) A rod of length <span class="math inline">\(L\)</span> lies along the <span class="math inline">\(x\)</span>-axis from <span class="math inline">\(0\)</span> to <span class="math inline">\(L\)</span>. Its density increases linearly from one end to the other: <span class="math inline">\(\lambda(x) = \lambda_0(1 + x/L)\)</span>. Find its centre of mass. (b) Find the CM of a thin uniform wire bent into a semicircle of radius <span class="math inline">\(R\)</span>.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) Find the total mass and the first moment: <span class="math display">\[M = \int_0^L\lambda_0\left(1 + \frac{x}{L}\right)dx = \lambda_0\left(L + \frac{L}{2}\right) = \tfrac32\lambda_0L.\]</span> <span class="math display">\[\int_0^Lx\,\lambda\,dx = \lambda_0\int_0^L\left(x + \frac{x^2}{L}\right)dx = \lambda_0\left(\frac{L^2}{2} + \frac{L^2}{3}\right) = \tfrac56\lambda_0L^2.\]</span> <span class="math display">\[x_{\text{cm}} = \frac{\tfrac56\lambda_0L^2}{\tfrac32\lambda_0L} = \frac59L \approx 0.556\,L.\]</span> This is beyond the midpoint, towards the denser end, as expected.</p>
+<p>(b) Put the centre of the semicircle at the origin, with the wire in the upper half-plane. By symmetry <span class="math inline">\(x_{\text{cm}} = 0\)</span>. Parametrise by the angle <span class="math inline">\(\theta\)</span> from <span class="math inline">\(0\)</span> to <span class="math inline">\(\pi\)</span>: a short piece of arc has length <span class="math inline">\(R\,d\theta\)</span> and mass <span class="math inline">\(dm = \lambda R\,d\theta\)</span>, at height <span class="math inline">\(y = R\sin\theta\)</span>. <span class="math display">\[y_{\text{cm}} = \frac{1}{\lambda\pi R}\int_0^\pi(R\sin\theta)\,\lambda R\,d\theta = \frac{R}{\pi}\Big[-\cos\theta\Big]_0^\pi = \frac{2R}{\pi} \approx 0.64\,R.\]</span> The CM lies in empty space, inside the arc but not on the wire. By a similar calculation, a uniform semicircular <em>plate</em> (half-disc) has <span class="math inline">\(y_{\text{cm}} = 4R/3\pi \approx 0.42\,R\)</span>. It is lower, because more of the plate’s mass lies near the flat edge.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 6.3</div><h4 class="ex-title">A disc with a hole</h4>
+<p>A circular hole of radius <span class="math inline">\(R/2\)</span> is cut from a uniform disc of radius <span class="math inline">\(R\)</span>. The hole touches the edge of the disc, so its centre is at distance <span class="math inline">\(R/2\)</span> from the disc’s centre. Where is the CM of the remaining plate?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>Put the origin at the disc’s centre, with the hole centred at <span class="math inline">\(x = +R/2\)</span>. Mass is proportional to area, so if the full disc has mass <span class="math inline">\(M\)</span>, the removed piece has mass <span class="math inline">\(M/4\)</span> (a quarter of the area).</p>
+<p>Treat the plate as “full disc” plus “hole of negative mass”: <span class="math display">\[x_{\text{cm}} = \frac{M(0) + \left(-\tfrac{M}{4}\right)\left(\tfrac{R}{2}\right)}{M - \tfrac{M}{4}} = \frac{-MR/8}{3M/4} = -\frac{R}{6}.\]</span> The CM shifts by <span class="math inline">\(R/6\)</span> <strong>away from</strong> the hole, as it must.</p>
+</div>
+</div>
+<div class="topic-num" id="motion-of-the-centre-of-mass">§6.2</div><h3 class="topic-title">Motion of the centre of mass</h3>
+<p>Differentiate <span class="math inline">\(M\vect{r}_{\text{cm}} = \sum m_i\vect{r}_i\)</span> twice with respect to time: <span class="math display">\[M\vect{a}_{\text{cm}} = \sum m_i\vect{a}_i = \sum\vect{F}_i.\]</span> The force on each particle is partly external and partly internal, exerted by the other particles of the system. By Newton’s third law, internal forces come in equal and opposite pairs, so they cancel in the sum. What remains is:</p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><span class="math display">\[\sum\vect{F}_{\text{ext}} = M\vect{a}_{\text{cm}}.\]</span> The centre of mass of any system moves like a single particle of mass <span class="math inline">\(M\)</span> acted on by the net <strong>external</strong> force. Internal forces, however large, cannot change the motion of the CM.</p>
+</div>
+<p>This is why we could treat cars, people and planets as particles in earlier chapters. Their CM really does obey <span class="math inline">\(\vect{F} = m\vect{a}\)</span>, whatever their parts are doing.</p>
+<div class="box work example"><div class="label">Worked example 6.4</div><h4 class="ex-title">An exploding shell</h4>
+<p>A shell is fired from level ground and would land 400 m away. At the top of its flight it explodes into two fragments of equal mass. One fragment comes momentarily to rest and falls straight down. Where does the other land? Ignore air resistance.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Key idea.</strong> The explosion’s forces are internal, so the CM continues along the original parabola and lands 400 m away. (This holds as long as both fragments land at the same time, which they do here: both start the fall from the same height with zero vertical velocity.)</p>
+<p>The top of the flight is at <span class="math inline">\(x = 200\)</span> m, so fragment 1 lands at <span class="math inline">\(x_1 = 200\)</span> m. For equal masses: <span class="math display">\[x_{\text{cm}} = \frac{x_1 + x_2}{2} = 400\ \mathrm{m} \;\Rightarrow\; x_2 = 800 - 200 = 600\ \mathrm{m}.\]</span></p>
+<p><strong>Check with momentum.</strong> Just before the explosion, the shell moves horizontally at <span class="math inline">\(v_x\)</span>. Just after, fragment 1 has zero velocity, so fragment 2 must have <span class="math inline">\(2v_x\)</span> to conserve momentum: <span class="math inline">\(Mv_x = \tfrac{M}{2}(2v_x)\)</span>. Moving at twice the speed for the same falling time, it covers 400 m from the top instead of 200 m, landing at <span class="math inline">\(200 + 400 = 600\)</span> m. ✓</p>
+</div>
+</div>
+<div class="topic-num" id="linear-momentum-and-impulse">§6.3</div><h3 class="topic-title">Linear momentum and impulse</h3>
+<p>The <strong>linear momentum</strong> of a particle is <span class="math inline">\(\vect{p} = m\vect{v}\)</span>, a vector measured in kg m/s. Newton’s second law in its general form is <span class="math display">\[\vect{F}_{\text{net}} = \frac{d\vect{p}}{dt}.\]</span></p>
+<p>Integrate this over the time a force acts. The <strong>impulse</strong> of the force is <span class="math display">\[\vect{J} = \int_{t_i}^{t_f}\vect{F}\,dt,\]</span> which is the area under the <span class="math inline">\(F\)</span>–<span class="math inline">\(t\)</span> graph.</p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Impulse–momentum theorem.</strong> <span class="math display">\[\vect{J}_{\text{net}} = \Delta\vect{p} = \vect{p}_f - \vect{p}_i.\]</span> For a collision lasting <span class="math inline">\(\Delta t\)</span>, the average force is <span class="math inline">\(\vect{F}_{\text{avg}} = \Delta\vect{p}/\Delta t\)</span>. For a given change in momentum, <strong>a longer stopping time means a smaller force.</strong></p>
+</div>
+<figure>
+<svg viewBox="0 0 360 220" width="340" role="img" aria-label="Force against time for two impacts that deliver the same impulse. A stiff impact gives a tall narrow spike; a cushioned impact gives a low wide hump. The areas under the two curves are equal.">
+<line class="ax" x1="40" y1="190" x2="345" y2="190" marker-end="url(#ak)"/>
+<line class="ax" x1="50" y1="200" x2="50" y2="20" marker-end="url(#ak)"/>
+<text x="330" y="208" class="muted">t</text>
+<text x="56" y="24" class="muted">F</text>
+<path class="v" d="M60,190 Q90,-110 120,190"/>
+<path class="u" d="M60,190 Q180,115 300,190"/>
+<text x="100" y="52" class="tv">stiff landing:</text>
+<text x="100" y="66" class="tv">short Δt, huge F</text>
+<text x="190" y="140" class="tu">bent knees / airbag:</text>
+<text x="190" y="154" class="tu">long Δt, small F</text>
+<text x="150" y="210" class="muted">equal areas = equal impulse</text>
+</svg>
+<figcaption>The same impulse (the same change in momentum) delivered over different times. Cushioning spreads the impulse out and cuts the peak force.</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 6.5</div><h4 class="ex-title">Hitting a baseball</h4>
+<p>A 0.15 kg baseball arrives at 40 m/s and leaves the bat at 50 m/s in the opposite direction. The contact lasts 1.5 ms. Find the impulse and the average force on the ball.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>Take the outgoing direction as positive, so <span class="math inline">\(v_i = -40\)</span> m/s and <span class="math inline">\(v_f = +50\)</span> m/s. <span class="math display">\[J = m(v_f - v_i) = 0.15(50 - (-40)) = 0.15(90) = 13.5\ \mathrm{N\,s}.\]</span> <span class="math display">\[F_{\text{avg}} = \frac{J}{\Delta t} = \frac{13.5}{1.5\times10^{-3}} = 9.0\times10^3\ \mathrm{N}.\]</span></p>
+<p><strong>Evaluate.</strong> The average force is about 6000 times the ball’s weight. The peak force is roughly twice the average. Reversing the direction makes <span class="math inline">\(|\Delta v| = 90\)</span> m/s, not 10 m/s: a very common sign error.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 6.6</div><h4 class="ex-title">Landing from a jump</h4>
+<p>A 70 kg person jumps down from a wall 1.0 m high. Estimate the average force on their legs if they land (a) stiff-legged, stopping in about 1.0 cm, and (b) bending their knees, stopping in about 50 cm.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Impact speed:</strong> <span class="math inline">\(v = \sqrt{2gh} = \sqrt{19.6} = 4.43\)</span> m/s. The change in momentum is the same in both cases: <span class="math inline">\(\Delta p = 70(4.43) = 310\)</span> N s.</p>
+<p>Assume a constant deceleration over the stopping distance <span class="math inline">\(d\)</span>. Then <span class="math inline">\(a = v^2/2d\)</span>, and the ground must supply <span class="math inline">\(N = m(g + a)\)</span>.</p>
+<p>(a) <span class="math inline">\(d = 0.010\)</span> m: <span class="math inline">\(a = 19.6/0.020 = 980\ \mathrm{m/s^2}\)</span> (100 g), so <span class="math inline">\(N = 70(990) \approx 6.9\times10^4\)</span> N, about <strong>100 body weights</strong>. The stop takes <span class="math inline">\(\Delta t = 2d/v = 4.5\)</span> ms.</p>
+<p>(b) <span class="math inline">\(d = 0.50\)</span> m: <span class="math inline">\(a = 19.6\ \mathrm{m/s^2}\)</span>, so <span class="math inline">\(N = 70(29.4) = 2.1\times10^3\)</span> N, about <strong>3 body weights</strong>. The stop takes 0.23 s.</p>
+<p><strong>Evaluate.</strong> The impulse is identical in both cases, but bending the knees stretches the stopping time about 50-fold and cuts the force by the same factor. Forces of tens of kilonewtons can fracture the tibia or calcaneus (heel bone), which is why falls from modest heights onto stiff legs cause serious injuries. The same physics explains crumple zones, airbags, helmets, running shoes, and gymnasts’ landing mats.</p>
+</div>
+</div>
+<div class="topic-num" id="conservation-of-linear-momentum">§6.4</div><h3 class="topic-title">Conservation of linear momentum</h3>
+<p>For a system of particles, the total momentum is <span class="math inline">\(\vect{P} = \sum\vect{p}_i = M\vect{v}_{\text{cm}}\)</span>, and <span class="math display">\[\frac{d\vect{P}}{dt} = \sum\vect{F}_{\text{ext}}.\]</span></p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Conservation of momentum.</strong> If the net external force on a system is zero, its total momentum is constant: <span class="math display">\[\sum\vect{p}_{\text{before}} = \sum\vect{p}_{\text{after}}.\]</span> Each component is conserved separately. If only the horizontal external force is zero, horizontal momentum is conserved even when vertical momentum is not.</p>
+</div>
+<p>In a short collision or explosion, external forces such as gravity and friction are usually tiny compared with the internal impact forces, and they act only for a very short time. Momentum is then <em>very nearly</em> conserved during the event, even if it is not over longer times.</p>
+<div class="box work example"><div class="label">Worked example 6.7</div><h4 class="ex-title">Recoil, and walking on a boat</h4>
+<p>(a) A 4.0 kg rifle fires a 10 g bullet at 800 m/s. Find the rifle’s recoil speed. (b) A 70 kg person stands at one end of a 140 kg boat, 4.0 m long, floating at rest in still water. The person walks to the other end. How far does the boat move? Ignore water resistance.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) The initial momentum is zero: <span class="math display">\[0 = m_bv_b + m_rv_r \;\Rightarrow\; v_r = -\frac{0.010(800)}{4.0} = -2.0\ \mathrm{m/s}.\]</span> The rifle recoils at 2.0 m/s.</p>
+<p>(b) No horizontal external force acts, and the system starts at rest, so the <strong>CM cannot move</strong>. Let the boat move a distance <span class="math inline">\(d\)</span> backward. The person then moves <span class="math inline">\(4.0 - d\)</span> forward relative to the water. Keeping the CM fixed: <span class="math display">\[m_p(4.0 - d) = m_bd \;\Rightarrow\; d = \frac{m_p(4.0)}{m_p + m_b} = \frac{70(4.0)}{210} = 1.33\ \mathrm{m}.\]</span></p>
+<p><strong>Evaluate.</strong> The person moves 2.67 m relative to the water and the boat 1.33 m the other way. The ratio of distances is the inverse ratio of the masses. Anyone stepping off a small boat onto a dock has felt this, as the boat slides away.</p>
+</div>
+</div>
+<div class="topic-num" id="collisions">§6.5</div><h3 class="topic-title">Collisions</h3>
+<p>In every collision between isolated bodies, <strong>momentum is conserved</strong>. Kinetic energy may or may not be conserved:</p>
+<div class="tablewrap">
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Type</th>
+<th>Kinetic energy</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Elastic</strong></td>
+<td>Conserved</td>
+<td>Billiard balls (nearly), atoms and molecules, neutron scattering</td>
+</tr>
+<tr>
+<td><strong>Inelastic</strong></td>
+<td>Some lost, to heat, sound and deformation</td>
+<td>Most real collisions</td>
+</tr>
+<tr>
+<td><strong>Perfectly inelastic</strong></td>
+<td>Maximum possible loss: the bodies stick together</td>
+<td>Clay, car crashes where vehicles lock, ballistic pendulum</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The <strong>coefficient of restitution</strong> measures how “bouncy” a head-on collision is: <span class="math display">\[e = \frac{\text{speed of separation}}{\text{speed of approach}} = \frac{v_2&#39; - v_1&#39;}{v_1 - v_2}.\]</span> It ranges from <span class="math inline">\(e = 1\)</span> (elastic) to <span class="math inline">\(e = 0\)</span> (perfectly inelastic).</p>
+<h4>Elastic collisions in one dimension</h4>
+<p>Let <span class="math inline">\(m_1\)</span> moving at <span class="math inline">\(v_1\)</span> hit <span class="math inline">\(m_2\)</span> at rest, head-on and elastically. Two conservation laws apply: <span class="math display">\[m_1v_1 = m_1v_1&#39; + m_2v_2&#39;,\qquad \tfrac12m_1v_1^2 = \tfrac12m_1v_1&#39;^2 + \tfrac12m_2v_2&#39;^2.\]</span> Rewrite them as <span class="math inline">\(m_1(v_1 - v_1&#39;) = m_2v_2&#39;\)</span> and <span class="math inline">\(m_1(v_1^2 - v_1&#39;^2) = m_2v_2&#39;^2\)</span>. Divide the second by the first: <span class="math inline">\(v_1 + v_1&#39; = v_2&#39;\)</span>. This says the relative velocity simply reverses (<span class="math inline">\(e = 1\)</span>). Solving: <span class="math display">\[v_1&#39; = \frac{m_1 - m_2}{m_1 + m_2}\,v_1,\qquad v_2&#39; = \frac{2m_1}{m_1 + m_2}\,v_1.\]</span></p>
+<p><strong>Special cases:</strong></p>
+<ul>
+<li><strong>Equal masses:</strong> <span class="math inline">\(v_1&#39; = 0\)</span> and <span class="math inline">\(v_2&#39; = v_1\)</span>. The bodies swap velocities (Newton’s cradle, a billiard ball’s “stop shot”).</li>
+<li><strong>Light hits very heavy</strong> (<span class="math inline">\(m_1 \ll m_2\)</span>): <span class="math inline">\(v_1&#39; \approx -v_1\)</span>, and the light body bounces straight back. A ball bouncing off a wall is the familiar example.</li>
+<li><strong>Heavy hits very light</strong> (<span class="math inline">\(m_1 \gg m_2\)</span>): <span class="math inline">\(v_2&#39; \approx 2v_1\)</span>. A golf club drives the ball off at nearly twice the club-head speed.</li>
+</ul>
+<div class="box work example"><div class="label">Worked example 6.8</div><h4 class="ex-title">Slowing neutrons in a nuclear reactor</h4>
+<p>Fission produces fast neutrons, but they cause further fission efficiently only after being slowed down. This is done by elastic collisions with the nuclei of a <em>moderator</em>. What fraction of its kinetic energy does a neutron lose in a head-on elastic collision with (a) a carbon-12 nucleus (graphite) and (b) a hydrogen nucleus (a proton, in water)?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>The neutron’s kinetic energy after the collision is a fraction <span class="math inline">\((v_1&#39;/v_1)^2\)</span> of its initial value, so it keeps <span class="math display">\[\frac{K_1&#39;}{K_1} = \left(\frac{m_1 - m_2}{m_1 + m_2}\right)^2.\]</span></p>
+<p>(a) Carbon, with <span class="math inline">\(m_2 = 12m_1\)</span>: <span class="math inline">\(K_1&#39;/K_1 = (11/13)^2 = 0.716\)</span>. The neutron loses <strong>28%</strong> of its energy per head-on collision.</p>
+<p>(b) Hydrogen, with <span class="math inline">\(m_2 \approx m_1\)</span>: <span class="math inline">\(K_1&#39;/K_1 = 0\)</span>. The neutron can lose <strong>all</strong> its energy in a single head-on collision.</p>
+<p><strong>Evaluate.</strong> The best moderators are made of light nuclei. Water is an excellent moderator, but hydrogen also absorbs some neutrons. Heavy water and graphite absorb fewer, which is why they were used in early reactors. The same physics explains why hydrogen-rich materials (water, polyethylene, concrete) are used for neutron shielding around radiotherapy and research facilities.</p>
+</div>
+</div>
+<h4>Perfectly inelastic collisions</h4>
+<p>When the bodies stick together: <span class="math display">\[m_1v_1 + m_2v_2 = (m_1 + m_2)V.\]</span> The kinetic energy lost is as large as momentum conservation allows. All of the kinetic energy measured in the centre-of-mass frame is lost. The kinetic energy of the CM motion, <span class="math inline">\(\tfrac12(m_1 + m_2)V^2\)</span>, must remain, because momentum must be conserved.</p>
+<div class="box work example"><div class="label">Worked example 6.9</div><h4 class="ex-title">The ballistic pendulum</h4>
+<p>A 10 g bullet is fired into a 2.0 kg wooden block hanging from light cords. The block, with the bullet embedded, swings up until it is 10 cm higher than its starting position. Find the bullet’s speed, and the fraction of its kinetic energy that was lost in the impact.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Two stages, two principles.</strong></p>
+<p><strong>Stage 1, the collision</strong> (momentum is conserved, energy is not): <span class="math display">\[mv = (m + M)V.\]</span></p>
+<p><strong>Stage 2, the swing</strong> (mechanical energy is conserved, momentum is not, because the cords exert an external force): <span class="math display">\[\tfrac12(m + M)V^2 = (m + M)gh \;\Rightarrow\; V = \sqrt{2gh} = \sqrt{2(9.8)(0.10)} = 1.40\ \mathrm{m/s}.\]</span></p>
+<p>Combining the two stages: <span class="math display">\[v = \frac{m + M}{m}V = \frac{2.01}{0.010}(1.40) = 281\ \mathrm{m/s}.\]</span></p>
+<p><strong>Fraction of KE lost</strong> in the collision: <span class="math display">\[\frac{K_{\text{after}}}{K_{\text{before}}} = \frac{\tfrac12(m + M)V^2}{\tfrac12mv^2} = \frac{m}{m + M} = \frac{0.010}{2.01} = 0.005.\]</span> So <strong>99.5%</strong> of the bullet’s kinetic energy becomes heat and deformation.</p>
+<p><strong>Evaluate.</strong> It would be wrong to set <span class="math inline">\(\tfrac12mv^2 = (m + M)gh\)</span>. Energy is not conserved in the collision. Always identify which law applies to which stage.</p>
+</div>
+</div>
+<h4>Collisions in two dimensions</h4>
+<p>In two dimensions, conserve <strong>each component</strong> of momentum separately. For an elastic collision, also conserve kinetic energy. A useful result: when two <strong>equal masses</strong> collide elastically and one was initially at rest, they move off at <strong>right angles</strong> to each other (unless the collision is head-on). To prove it, square the momentum equation <span class="math inline">\(\vect{v}_1 = \vect{v}_1&#39; + \vect{v}_2&#39;\)</span> and compare it with energy conservation, <span class="math inline">\(v_1^2 = v_1&#39;^2 + v_2&#39;^2\)</span>. The cross term must vanish, so <span class="math inline">\(\vect{v}_1&#39;\cdot\vect{v}_2&#39; = 0\)</span>.</p>
+<figure>
+<svg viewBox="0 0 330 200" width="320" role="img" aria-label="Two-dimensional elastic collision of equal pucks. Puck 1 arrives from the left at 5 metres per second and strikes puck 2 at rest. Afterwards puck 1 moves off at 30 degrees above its original line at 4.33 metres per second, and puck 2 moves off at 60 degrees below the line at 2.5 metres per second; the two final directions are perpendicular.">
+<line class="dash" x1="30" y1="100" x2="310" y2="100"/>
+<line class="u" x1="40" y1="100" x2="146" y2="100" marker-end="url(#au)"/>
+<text x="62" y="92" class="tu">v₁ = 5.0 m/s</text>
+<circle class="obj" cx="170" cy="100" r="12"/>
+<text x="166" y="104" class="ink">2</text>
+<line class="u" x1="170" y1="100" x2="262" y2="47" marker-end="url(#au)"/>
+<text x="214" y="46" class="tu">v₁′ = 4.33 m/s</text>
+<line class="v" x1="170" y1="100" x2="200" y2="152" marker-end="url(#av)"/>
+<text x="206" y="160" class="tv">v₂′ = 2.5 m/s</text>
+<path class="dash" d="M 210 100 A 40 40 0 0 0 205 80"/>
+<text x="214" y="90" class="muted">30°</text>
+<path class="dash" d="M 196 100 A 26 26 0 0 1 183 122"/>
+<text x="196" y="124" class="muted">60°</text>
+</svg>
+<figcaption>An elastic glancing collision between equal masses. The two final velocities are perpendicular (Example 6.10).</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 6.10</div><h4 class="ex-title">A glancing collision of two pucks</h4>
+<p>A hockey puck moving at 5.0 m/s strikes an identical puck at rest. The collision is elastic, and the first puck is deflected <span class="math inline">\(30^\circ\)</span> from its original direction. Find both final velocities.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Set up.</strong> Take <span class="math inline">\(x\)</span> along the original motion. By the right-angle rule, puck 2 must move off at <span class="math inline">\(60^\circ\)</span> on the other side of the <span class="math inline">\(x\)</span>-axis.</p>
+<p><strong>Conserve momentum</strong> (the masses cancel): <span class="math display">\[x:\ 5.0 = v_1&#39;\cos30^\circ + v_2&#39;\cos60^\circ,\qquad y:\ 0 = v_1&#39;\sin30^\circ - v_2&#39;\sin60^\circ.\]</span> From the <span class="math inline">\(y\)</span> equation: <span class="math inline">\(v_2&#39; = v_1&#39;\sin30^\circ/\sin60^\circ = 0.577\,v_1&#39;\)</span>. Substitute into the <span class="math inline">\(x\)</span> equation: <span class="math display">\[5.0 = v_1&#39;(0.866 + 0.577\times0.5) = 1.155\,v_1&#39; \;\Rightarrow\; v_1&#39; = 4.33\ \mathrm{m/s},\qquad v_2&#39; = 2.50\ \mathrm{m/s}.\]</span></p>
+<p><strong>Check kinetic energy</strong> (per unit mass, doubled): <span class="math inline">\(4.33^2 + 2.50^2 = 18.75 + 6.25 = 25.0 = 5.0^2\)</span>. ✓</p>
+<p>These are just <span class="math inline">\(v_1&#39; = v_1\cos30^\circ\)</span> and <span class="math inline">\(v_2&#39; = v_1\sin30^\circ\)</span>, as the right-angle geometry predicts.</p>
+</div>
+</div>
+<div class="topic-num" id="systems-of-variable-mass-rockets">§6.6</div><h3 class="topic-title">Systems of variable mass: rockets</h3>
+<p>A rocket gains speed by expelling exhaust backwards at speed <span class="math inline">\(u\)</span> relative to itself. At time <span class="math inline">\(t\)</span>, let the rocket have mass <span class="math inline">\(m\)</span> and velocity <span class="math inline">\(v\)</span>. In a short time <span class="math inline">\(dt\)</span> it expels a mass <span class="math inline">\(dm_e\)</span> of exhaust. The rocket’s mass becomes <span class="math inline">\(m - dm_e\)</span> and its velocity <span class="math inline">\(v + dv\)</span>, while the exhaust moves at <span class="math inline">\(v - u\)</span>. With no external force, momentum is conserved: <span class="math display">\[mv = (m - dm_e)(v + dv) + dm_e(v - u).\]</span> Expanding and dropping the tiny product <span class="math inline">\(dm_e\,dv\)</span> gives <span class="math inline">\(m\,dv = u\,dm_e\)</span>. Since the rocket’s mass decreases, <span class="math inline">\(dm = -dm_e\)</span>, so <span class="math display">\[m\,dv = -u\,dm.\]</span> Integrate from the initial mass <span class="math inline">\(m_0\)</span> (at speed <span class="math inline">\(v_0\)</span>) to the final mass <span class="math inline">\(m_f\)</span>: <span class="math display">\[\Delta v = v_f - v_0 = u\ln\frac{m_0}{m_f}.\]</span></p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>The rocket equation (Tsiolkovsky).</strong> <span class="math inline">\(\Delta v = u\ln(m_0/m_f)\)</span>. The <strong>thrust</strong> is <span class="math inline">\(F = u\,|dm/dt|\)</span>. The final speed depends on the exhaust speed and the <em>mass ratio</em>, not on how quickly the fuel is burnt (apart from the time gravity acts during a vertical launch).</p>
+</div>
+<div class="box work example"><div class="label">Worked example 6.11</div><h4 class="ex-title">Why rockets have stages</h4>
+<p>A chemical rocket has an exhaust speed of 3.0 km/s. What mass ratio would a single-stage rocket need to reach 9.4 km/s, the <span class="math inline">\(\Delta v\)</span> needed for low Earth orbit once gravity and drag losses are included?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[\frac{m_0}{m_f} = e^{\Delta v/u} = e^{9.4/3.0} = e^{3.13} = 23.\]</span> The rocket would have to be about 96% fuel at launch, with only 4% left for the tanks, engines, structure <em>and</em> payload.</p>
+<p><strong>Evaluate.</strong> That is barely possible to build. <strong>Staging</strong> solves the problem: drop empty tanks and engines along the way, so that later stages do not waste fuel accelerating dead weight. A two-stage rocket in which each stage has a mass ratio of 5 gives <span class="math inline">\(\Delta v = 2u\ln5 = 9.7\)</span> km/s. Because of the logarithm, raising the exhaust speed (better fuels, ion engines) is worth far more than adding fuel.</p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Momentum in medicine and engineering.</strong></p>
+<ul>
+<li><strong>Ballistocardiography.</strong> Each heartbeat ejects about 70 g of blood towards the head. By momentum conservation, the body recoils very slightly the other way. Sensitive beds and wearable sensors detect this recoil to monitor cardiac output without electrodes (Problem P6.11).</li>
+<li><strong>Gait analysis.</strong> Force plates in biomechanics labs record <span class="math inline">\(F(t)\)</span> under the foot. The impulse gives the change in the body’s momentum, which is used to assess athletes, prosthetic limbs and patients recovering from injury.</li>
+<li><strong>Crash testing.</strong> Engineers design structures to stretch out <span class="math inline">\(\Delta t\)</span> and lower the peak force. They also design the momentum transfer between vehicles of different masses, which is why a small car fares worse in a collision with a heavy one.</li>
+<li><strong>Jet propulsion in nature.</strong> Squid and jellyfish swim by expelling water, a living rocket.</li>
+</ul>
+</div>
+<div class="box sum"><div class="label">Chapter summary</div>
+<ul>
+<li>Centre of mass: <span class="math inline">\(\vect{r}_{\text{cm}} = \sum m_i\vect{r}_i/M\)</span>, or <span class="math inline">\(\int\vect{r}\,dm/M\)</span>. Use symmetry, and treat holes as negative masses.</li>
+<li><span class="math inline">\(\sum\vect{F}_{\text{ext}} = M\vect{a}_{\text{cm}}\)</span>. Internal forces cannot move the CM.</li>
+<li>Momentum <span class="math inline">\(\vect{p} = m\vect{v}\)</span>. Impulse <span class="math inline">\(\vect{J} = \int\vect{F}\,dt = \Delta\vect{p}\)</span>. A longer contact time means a smaller force.</li>
+<li>If <span class="math inline">\(\sum\vect{F}_{\text{ext}} = 0\)</span>, the total momentum is conserved, component by component.</li>
+<li>Elastic collisions conserve kinetic energy. Head-on with <span class="math inline">\(m_2\)</span> at rest: <span class="math inline">\(v_1&#39; = \dfrac{m_1 - m_2}{m_1 + m_2}v_1\)</span> and <span class="math inline">\(v_2&#39; = \dfrac{2m_1}{m_1 + m_2}v_1\)</span>.</li>
+<li>Perfectly inelastic: the bodies stick, <span class="math inline">\(V = \sum m_iv_i/\sum m_i\)</span>. Coefficient of restitution: <span class="math inline">\(e\)</span> = separation speed ÷ approach speed.</li>
+<li>Rocket equation: <span class="math inline">\(\Delta v = u\ln(m_0/m_f)\)</span>. Thrust <span class="math inline">\(= u\,|dm/dt|\)</span>.</li>
+</ul>
+</div>
+<h3 class="part-title" id="practice">Practice problems</h3><p class="note">Full step-by-step solutions are in the separate solutions PDF.</p>
+<h4 class="level">Level A — Concept check</h4>
+<div class="prob" id="p6-1"><span class="pnum">P6.1</span>
+<p>Can the centre of mass of a body lie outside the body? Give two examples. Explain how a high jumper using the “Fosbury flop” can clear the bar while their centre of mass passes <em>under</em> it.</p>
+</div>
+<div class="prob" id="p6-2"><span class="pnum">P6.2</span>
+<p>Explain, using the impulse–momentum theorem, why you bend your knees when landing from a jump, and why an egg dropped onto a pillow does not break while one dropped onto a floor does.</p>
+</div>
+<div class="prob" id="p6-3"><span class="pnum">P6.3</span>
+<p>In a perfectly inelastic collision, is all the kinetic energy lost? Explain, referring to the motion of the centre of mass.</p>
+</div>
+<div class="prob" id="p6-4"><span class="pnum">P6.4</span>
+<p>An astronaut drifts at rest 10 m from her spacecraft, her safety line broken. She is holding a heavy wrench. How can she get back? Can she get back by “swimming” motions alone?</p>
+</div>
+<h4 class="level">Level B — Standard problems</h4>
+<div class="prob" id="p6-5"><span class="pnum">P6.5</span>
+<p>A uniform thin plate is made of three identical squares of side 10 cm, arranged in an L shape. Taking the corner of the L as the origin, the squares occupy <span class="math inline">\(0 \le x, y \le 10\)</span>, then <span class="math inline">\(10 \le x \le 20\)</span> with <span class="math inline">\(0 \le y \le 10\)</span>, then <span class="math inline">\(0 \le x \le 10\)</span> with <span class="math inline">\(10 \le y \le 20\)</span> (all in cm). Find the centre of mass. Does it lie on the plate?</p>
+</div>
+<div class="prob" id="p6-6"><span class="pnum">P6.6</span>
+<p>The masses of the Earth and Moon are <span class="math inline">\(5.97\times10^{24}\)</span> kg and <span class="math inline">\(7.35\times10^{22}\)</span> kg, and their centres are <span class="math inline">\(3.84\times10^8\)</span> m apart. Locate the centre of mass of the Earth–Moon system. Is it inside the Earth (radius <span class="math inline">\(6.37\times10^6\)</span> m)? What does this mean for the Earth’s motion?</p>
+</div>
+<div class="prob" id="p6-7"><span class="pnum">P6.7</span>
+<p>A 0.40 kg ball strikes a wall perpendicularly at 12 m/s and rebounds at 10 m/s. Contact lasts 20 ms. Find the impulse on the ball and the average force the wall exerts. What fraction of the ball’s kinetic energy is lost?</p>
+</div>
+<div class="prob" id="p6-8"><span class="pnum">P6.8</span>
+<p>A 58 g tennis ball, initially at rest, is struck by a racket. The force rises linearly from zero to a peak of 600 N in 5.0 ms, then falls linearly back to zero in another 5.0 ms. Find the impulse and the ball’s speed as it leaves the racket.</p>
+</div>
+<div class="prob" id="p6-9"><span class="pnum">P6.9</span>
+<p>A 2.0 kg cart moving right at 3.0 m/s collides with a 1.0 kg cart moving left at 2.0 m/s, and they stick together. Find their common velocity and the kinetic energy lost.</p>
+</div>
+<div class="prob" id="p6-10"><span class="pnum">P6.10</span>
+<p>A 1.0 kg ball moving at 6.0 m/s collides head-on and elastically with a 2.0 kg ball at rest. Find both velocities after the collision, and verify that kinetic energy is conserved.</p>
+</div>
+<div class="prob" id="p6-11"><span class="pnum">P6.11</span>
+<p><em>Ballistocardiography.</em> During ventricular ejection, about 70 g of blood is accelerated from rest to about 1.0 m/s, towards the head, in roughly 0.10 s. A 70 kg patient lies on a nearly frictionless air-bearing table. (a) Find the patient’s recoil velocity and its direction. (b) Find the average recoil force on the body. (c) Why is a ballistocardiograph signal so small, and why must the bed be nearly frictionless to measure it?</p>
+</div>
+<div class="prob" id="p6-12"><span class="pnum">P6.12</span>
+<p>A 4.0 kg rifle fires a 10 g bullet at 800 m/s. (a) Find the recoil speed and the recoil kinetic energy, and compare it with the bullet’s kinetic energy. (b) If the shooter’s shoulder stops the rifle over 5.0 cm, find the average force on the shoulder. (c) Why should the rifle be held firmly against the shoulder rather than a few centimetres away from it?</p>
+</div>
+<h4 class="level">Level C — Challenge problems</h4>
+<div class="prob" id="p6-13"><span class="pnum">P6.13</span>
+<p><em>Neutron moderation.</em> A fission neutron starts with a kinetic energy of 2.0 MeV and must be slowed to a thermal energy of about 0.025 eV. (a) Assuming every collision with carbon-12 is head-on and elastic, how many collisions are needed? (b) In reality the collisions are at random angles, and on average a neutron keeps a fraction <span class="math inline">\(e^{-\xi}\)</span> of its energy per collision, where <span class="math inline">\(\xi \approx 0.158\)</span> for carbon and <span class="math inline">\(\xi \approx 1.0\)</span> for hydrogen. Estimate the number of collisions needed in graphite and in water.</p>
+</div>
+<div class="prob" id="p6-14"><span class="pnum">P6.14</span>
+<p>A rocket of initial mass 50 000 kg, including 40 000 kg of fuel, burns its fuel at a constant rate over 100 s. The exhaust speed is 2500 m/s. It is launched vertically from rest. Neglect air resistance and the variation of <span class="math inline">\(g\)</span> with height. (a) Find the thrust, and the rocket’s acceleration at lift-off. (b) Find the speed at burnout. Show that in a uniform gravitational field, <span class="math inline">\(\Delta v = u\ln(m_0/m_f) - gt_b\)</span>. (c) Find the acceleration just before burnout.</p>
+</div>
+<div class="prob" id="p6-15"><span class="pnum">P6.15</span>
+<p>Sand falls vertically from a hopper onto a horizontal conveyor belt at a rate of 20 kg/s. The belt moves at a constant 2.0 m/s. (a) What horizontal force must the motor apply to keep the belt moving at constant speed? (b) What power does the motor deliver? (c) At what rate does the sand gain kinetic energy? Account for the difference.</p>
+</div>
+<div class="prob" id="p6-16"><span class="pnum">P6.16</span>
+<p>Two blocks of mass 1.0 kg and 3.0 kg sit on a frictionless surface with a light, compressed spring between them, held by a thread. The spring stores 24 J. The thread is burnt. Find the speed of each block after it leaves the spring. What fraction of the energy does each block receive?</p>
+</div>
+<div class="prob" id="p6-17"><span class="pnum">P6.17</span>
+<p>A ball is dropped from height <span class="math inline">\(h\)</span> onto a hard floor. Its coefficient of restitution with the floor is <span class="math inline">\(e\)</span>. (a) Show that after each bounce it rises to <span class="math inline">\(e^2\)</span> times its previous height. (b) Show that the total distance it travels before coming to rest is <span class="math inline">\(h(1 + e^2)/(1 - e^2)\)</span>, and the total time is <span class="math inline">\(\sqrt{2h/g}\,(1 + e)/(1 - e)\)</span>. (c) Evaluate both for <span class="math inline">\(h = 10\)</span> m and <span class="math inline">\(e = 0.80\)</span>.</p>
+</div>
+<div class="prob" id="p6-18"><span class="pnum">P6.18</span>
+<p>A stationary bomb explodes into three fragments. A 1.0 kg fragment flies north at 30 m/s, and a 2.0 kg fragment flies east at 20 m/s. The third fragment has a mass of 3.0 kg. Find its velocity (magnitude and direction), and the total kinetic energy released by the explosion.</p>
+</div>
+
+<div class="downloads noprint"><a href="ch06-momentum_notes.pdf" download>Download notes (PDF)</a><a href="ch06-momentum_solutions.pdf" download>Download solutions (PDF)</a></div>
+</article>
+<nav class="pager"><a href="ch05-work-energy.html">← 5. Work, Energy and Power</a><a href="ch07-rotation.html">7. Rotational Motion →</a></nav></main>
+<footer>All worked examples and practice problems in these notes are original. Textbooks for further reading and practice, with a chapter-by-chapter map, are listed in the References.<p class="copyright">© 2026 Pratik Bhanuse. All rights reserved. · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p></footer>
+</div>
+</body>
+</html>

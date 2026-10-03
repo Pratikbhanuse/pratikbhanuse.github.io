@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="The language of physics: how we measure, how we check our equations, and how we describe direction.">
+<title>1. Measurement, Units, Dimensions and Vectors · Physics, step by step</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* House style shared with "Linear algebra, translated" */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D; --p:#7C3AED;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --def-bg:#F3EEFF; --def-ink:#5B21B6;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --def-bg:#1E1733; --def-ink:#C4B5FD;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --def-bg:#1E1733; --def-ink:#C4B5FD;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+a{color:var(--u)}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5.6vw,60px); line-height:1.04; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .hl{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+.byline{font-family:var(--display); font-size:15px; color:var(--muted); margin:14px 0 0}
+.byline strong{color:var(--ink)} .byline a, .copyright a{color:inherit}
+.copyright{font-family:var(--display); font-size:13px; color:var(--muted); margin:10px 0 0}
+
+/* side navigation */
+nav.toc{position:sticky; top:24px; align-self:start; padding-top:8px; font-family:var(--display); font-size:14px; max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc a[aria-current="page"]{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); font-weight:700}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px}
+nav.toc .sub{padding-left:28px; font-size:13px; color:var(--muted)}
+nav.toc .sub a{color:var(--muted); padding:3px 8px}
+
+main{min-width:0}
+.chapter{max-width:72ch}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+h4{font-family:var(--display); font-weight:700; font-size:18px; margin:24px 0 6px}
+h5{font-family:var(--display); font-weight:700; font-size:16px; margin:18px 0 4px}
+.topic-num{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--u); border-top:1px solid var(--line); padding-top:18px; margin-top:34px; scroll-margin-top:24px}
+h3.topic-title{font-size:24px; margin:4px 0 8px}
+h3.part-title{font-size:24px; margin:40px 0 4px; border-top:2px solid var(--ink); padding-top:16px}
+h4.level{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--v); margin:26px 0 10px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px}
+.note{color:var(--muted); font-size:15px}
+
+/* boxes */
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.def{background:var(--def-bg)} .box.def .label{color:var(--def-ink)}
+.box.work,.box.goals,.box.sum{background:var(--surface); border:1px solid var(--line)}
+.box.work .label,.box.goals .label,.box.sum .label{color:var(--muted)}
+.box.sum{border-top:3px solid var(--ink)}
+.box.work .label{color:var(--v)}
+.box .ex-title{margin:0 0 8px; font-size:18px}
+.sol-inline{margin:10px 0 12px; border-left:3px solid var(--w); padding-left:14px}
+.sol-label{display:block; font-family:var(--display); font-weight:700; font-size:13px; color:var(--w); margin-bottom:4px}
+details.ans{margin:4px 0 12px} details.ans summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:14px; color:var(--w)}
+details.ans > div{padding-top:6px}
+
+/* practice problems */
+.prob{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px 2px; margin:0 0 12px; min-width:0}
+.prob .pnum{font-family:var(--mono); font-weight:600; font-size:12px; color:var(--v); display:block; margin-bottom:2px}
+.prob p{margin:0 0 10px}
+
+/* solutions pages */
+h3.sol-head{margin:30px 0 8px; border-top:1px solid var(--line); padding-top:16px}
+h3.sol-head .pnum{font-family:var(--mono); font-size:14px; letter-spacing:.06em; color:var(--v)}
+.solutions .chapter > p:first-of-type{margin-top:0}
+
+/* tables, figures, math */
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2; fill:none}
+svg .obj{fill:var(--surface); stroke:var(--ink); stroke-width:1.6}
+svg .solid{fill:var(--code-bg); stroke:var(--ink); stroke-width:1.4}
+svg .ground{stroke:var(--ink); stroke-width:1.6}
+svg .hatch{stroke:var(--muted); stroke-width:1}
+svg .dash{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:5 4; fill:none}
+svg .u{stroke:var(--u); stroke-width:2.6; fill:none}
+svg .v{stroke:var(--v); stroke-width:2.6; fill:none}
+svg .w{stroke:var(--w); stroke-width:2.6; fill:none}
+svg .p{stroke:var(--p); stroke-width:2.6; fill:none}
+svg .curve{stroke:var(--u); stroke-width:2.4; fill:none}
+svg .hu,svg .tu{fill:var(--u)} svg .hv,svg .tv{fill:var(--v)} svg .hw,svg .tw{fill:var(--w)} svg .hp,svg .tp{fill:var(--p)}
+svg .muted{fill:var(--muted)} svg .ink{fill:var(--ink)}
+svg .dot{fill:var(--ink)}
+svg .fillu{fill:var(--u); fill-opacity:.12; stroke:none}
+mjx-container{color:inherit}
+mjx-container[display="true"]{display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; margin:.7em 0 !important; padding-block:2px}
+.box mjx-container[display="true"]{margin:.5em 0 !important}
+
+/* pager + footer */
+.pager{display:flex; justify-content:space-between; gap:12px; margin:56px 0 0; padding-top:16px; border-top:1px solid var(--line); font-family:var(--display); font-size:15px; max-width:72ch}
+.pager a{text-decoration:none; color:var(--u)}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+
+/* index page */
+.unit{border-top:2px solid var(--ink); padding-top:12px; margin:36px 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.chlist{list-style:none; padding:0; margin:0}
+.chlist li{display:grid; grid-template-columns:2.4em minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); margin:0}
+.chlist .n{font-family:var(--mono); font-size:13px; color:var(--muted)}
+.chlist .t{font-family:var(--display); font-weight:600; font-size:17px; text-decoration:none; color:var(--ink)}
+.chlist .t:hover{color:var(--u)}
+.chlist .s{font-family:var(--mono); font-size:12px; text-decoration:none}
+.downloads{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+.downloads a{font-family:var(--display); font-weight:600; font-size:15px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 14px}
+.downloads a:hover{border-color:var(--u); color:var(--u)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static; max-height:none}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  nav.toc .grp{grid-column:1/-1}
+  nav.toc .sub{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ---------- print (PDF) ---------- */
+@page{
+  size:Letter; margin:17mm 15mm 18mm;
+  @top-right{content:"Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-left{content:"© 2026 Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-right{content:counter(page) " / " counter(pages); font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+}
+@page :first{ @top-right{content:none} }
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff; padding:0; font-size:11.5pt}
+  .wrap{display:block; max-width:none}
+  nav.toc,.pager,.noprint{display:none !important}
+  header.top{padding-block:0 8px}
+  .chapter{max-width:none; break-before:page}
+  .book-toc{break-before:page}
+  .box,.prob,figure{break-inside:avoid}
+  .box.work{break-inside:auto}
+  .topic-num,h3,h4{break-after:avoid}
+  a{color:inherit; text-decoration:none}
+  details.ans > summary{display:none}
+}
+/* printed table of contents */
+.book-toc ol{list-style:none; padding:0}
+.book-toc li{display:flex; gap:12px; padding:5px 0; border-bottom:1px dotted var(--line); font-family:var(--display); margin:0}
+.book-toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:2em; padding-top:2px}
+h3.page-h{border-top:1px solid var(--line); padding-top:18px; margin-top:34px}
+svg .hk{fill:var(--ink)} svg .k{stroke:var(--ink); stroke-width:2.2; fill:none}
+:root{ --apply-bg:#F1EEFB; --apply-ink:#4C2A9E; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --apply-bg:#1D1830; --apply-ink:#C9B8FF; } }
+:root[data-theme="dark"]{ --apply-bg:#1D1830; --apply-ink:#C9B8FF; }
+.box.apply{background:var(--apply-bg); border-left:4px solid var(--apply-ink)} .box.apply .label{color:var(--apply-ink)}
+svg path.ground,svg polyline.ground{fill:none}
+
+.chlist .s a{text-decoration:none}
+.single{max-width:none}
+
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+         macros: { vect: ['\\vec{\\boldsymbol{#1}}', 1], uvec: ['\\hat{\\boldsymbol{#1}}', 1],
+                   ihat: '\\hat{\\boldsymbol{\\imath}}', jhat: '\\hat{\\boldsymbol{\\jmath}}',
+                   khat: '\\hat{\\boldsymbol{k}}', unit: ['\\,\\mathrm{#1}', 1] } },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker><marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker><marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hp"/></marker><marker id="ak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hk"/></marker></defs></svg>
+<div class="wrap">
+<header class="top"><div class="kicker">Chapter 1 · Semester 1 · Mechanics, Waves and Thermal Physics</div><h1>Measurement, Units, Dimensions and Vectors</h1><p class="lede">The language of physics: how we measure, how we check our equations, and how we describe direction.</p><p class="byline">By <strong>Pratik Bhanuse</strong>, PhD Physics candidate, Western University · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p><div class="downloads noprint"><a href="ch01-units-vectors_notes.pdf" download>Download notes (PDF)</a><a href="ch01-units-vectors_solutions.pdf" download>Download solutions (PDF)</a></div></header>
+<aside class="side"><nav class="toc" aria-label="Contents"><ol>
+<li><a href="index.html"><span class="n">⌂</span>Contents</a></li>
+<li><a href="syllabus.html"><span class="n">→</span>Syllabus and how to study</a></li>
+<li class="grp">Semester 1 · Mechanics, Waves and Thermal Physics</li>
+<li><a href="ch01-units-vectors.html" aria-current="page"><span class="n">1</span>Measurement, Units, Dimensions and Vectors</a></li>
+<li class="sub"><a href="#physics-models-and-measurement">§1.1 Physics, models and measurement</a></li>
+<li class="sub"><a href="#the-si-system-of-units">§1.2 The SI system of units</a></li>
+<li class="sub"><a href="#dimensions-and-dimensional-analysis">§1.3 Dimensions and dimensional analysis</a></li>
+<li class="sub"><a href="#order-of-magnitude-estimates">§1.4 Order-of-magnitude estimates</a></li>
+<li class="sub"><a href="#significant-figures-and-errors">§1.5 Significant figures and errors</a></li>
+<li class="sub"><a href="#scalars-and-vectors">§1.6 Scalars and vectors</a></li>
+<li class="sub"><a href="#multiplying-vectors">§1.7 Multiplying vectors</a></li>
+<li class="sub"><a href="#calculus-tools-for-physics">§1.8 Calculus tools for physics</a></li>
+<li class="sub"><a href="#practice">Practice problems</a></li>
+<li><a href="ch02-kinematics.html"><span class="n">2</span>Kinematics in One and Two Dimensions</a></li>
+<li><a href="ch03-newtons-laws.html"><span class="n">3</span>Newton&#x27;s Laws of Motion</a></li>
+<li><a href="ch04-friction-circular.html"><span class="n">4</span>Friction and Circular Motion</a></li>
+<li><a href="ch05-work-energy.html"><span class="n">5</span>Work, Energy and Power</a></li>
+<li><a href="ch06-momentum.html"><span class="n">6</span>Centre of Mass, Linear Momentum and Collisions</a></li>
+<li><a href="ch07-rotation.html"><span class="n">7</span>Rotational Motion</a></li>
+<li><a href="ch08-gravitation.html"><span class="n">8</span>Gravitation</a></li>
+<li><a href="ch09-oscillations.html"><span class="n">9</span>Simple Harmonic Motion</a></li>
+<li><a href="ch10-fluids-elasticity.html"><span class="n">10</span>Elasticity and Fluid Mechanics</a></li>
+<li><a href="ch11-waves-sound.html"><span class="n">11</span>Mechanical Waves and Sound</a></li>
+<li><a href="ch12-thermal.html"><span class="n">12</span>Heat, Kinetic Theory and Thermodynamics</a></li>
+<li class="grp">Semester 2 · Electricity, Magnetism, Optics and Modern Physics</li>
+<li><a href="ch13-electric-field.html"><span class="n">13</span>Electric Charge and Electric Field</a></li>
+<li><a href="ch14-gauss.html"><span class="n">14</span>Gauss&#x27;s Law</a></li>
+<li><a href="ch15-potential.html"><span class="n">15</span>Electric Potential</a></li>
+<li><a href="ch16-capacitance.html"><span class="n">16</span>Capacitance and Dielectrics</a></li>
+<li><a href="ch17-dc-circuits.html"><span class="n">17</span>Electric Current and DC Circuits</a></li>
+<li><a href="ch18-magnetic-force.html"><span class="n">18</span>Magnetic Field and Magnetic Forces</a></li>
+<li><a href="ch19-magnetic-sources.html"><span class="n">19</span>Sources of the Magnetic Field</a></li>
+<li><a href="ch20-induction.html"><span class="n">20</span>Electromagnetic Induction</a></li>
+<li><a href="ch21-ac-emwaves.html"><span class="n">21</span>Alternating Current and Electromagnetic Waves</a></li>
+<li><a href="ch22-geometric-optics.html"><span class="n">22</span>Geometrical Optics</a></li>
+<li><a href="ch23-wave-optics.html"><span class="n">23</span>Wave Optics</a></li>
+<li><a href="ch24-modern.html"><span class="n">24</span>Photons, Atoms and Nuclei</a></li>
+<li class="grp">Appendix</li>
+<li><a href="references.html"><span class="n">R</span>References and further practice</a></li>
+</ol></nav></aside>
+<main><article class="chapter notes">
+<p>Physics tries to describe nature with numbers and equations. Before we can write a single law of motion, we need three tools. The first is a reliable system of <strong>units</strong>, so that “5 metres” means the same thing everywhere. The second is <strong>dimensional analysis</strong>, a quick way to catch wrong equations and even to guess correct ones. The third is <strong>vectors</strong>, so we can describe quantities that point somewhere. This chapter builds all three, and finishes with the small amount of calculus the rest of the course relies on.</p>
+<div class="box goals"><div class="label">You will be able to</div>
+<ul>
+<li>Use SI base units and prefixes, and convert between unit systems.</li>
+<li>Find the dimensions of any physical quantity and use the principle of homogeneity to check equations.</li>
+<li>Derive the form of a physical relation using dimensional analysis, and state the method’s limitations.</li>
+<li>Make order-of-magnitude estimates.</li>
+<li>Apply significant-figure rules and propagate measurement errors.</li>
+<li>Resolve vectors into components and add vectors both graphically and by components.</li>
+<li>Compute dot and cross products and interpret them geometrically.</li>
+<li>Use derivatives and integrals to move between position, velocity and acceleration.</li>
+</ul>
+</div>
+<div class="box ask"><div class="label">Think first</div>
+<p>A friend tells you that the time <span class="math inline">\(t\)</span> it takes a stone to fall a height <span class="math inline">\(h\)</span> is <span class="math inline">\(t = \sqrt{2h\,g}\)</span>, where <span class="math inline">\(g\)</span> is the acceleration due to gravity. Without doing any physics, can you tell whether the formula is right?</p>
+<details class="ans"><summary>Show answer</summary><div>
+<p>Check the units. <span class="math inline">\(h\)</span> is in metres and <span class="math inline">\(g\)</span> in m/s², so <span class="math inline">\(h\,g\)</span> is in m²/s², and <span class="math inline">\(\sqrt{h\,g}\)</span> is in m/s. That is a speed, not a time, so the formula <strong>must</strong> be wrong. The correct result is <span class="math inline">\(t = \sqrt{2h/g}\)</span>, which has units <span class="math inline">\(\sqrt{\mathrm{m}/(\mathrm{m/s^2})} = \mathrm{s}\)</span>. Checking units like this is called <em>dimensional analysis</em>. It is the first tool in this chapter.</p>
+</div></details>
+</div>
+<div class="topic-num" id="physics-models-and-measurement">§1.1</div><h3 class="topic-title">Physics, models and measurement</h3>
+<p>Physics looks for a small number of general laws that explain a huge range of phenomena. The same law of gravitation describes a falling apple and the orbit of the Moon. The same laws of electromagnetism describe a fridge magnet and a radio wave.</p>
+<p>To do this, physicists build <strong>models</strong>: simplified pictures that keep the features that matter and throw away the rest. When we treat a car as a “particle”, we ignore its size, shape and spinning wheels, because for the question “how long does it take to reach the next town?” none of those matter. A good model is as simple as possible while still giving accurate predictions. A large part of learning physics is learning <em>which</em> simplifications are safe.</p>
+<p>Every model is tested against <strong>measurement</strong>. A measurement is a comparison with an agreed standard, the <strong>unit</strong>. So every measured quantity has two parts: <span class="math display">\[\text{physical quantity} = \text{(number)} \times \text{(unit)}.\]</span> “The rod is 3” means nothing. “The rod is 3 m long” is a measurement. In this course we keep units attached to numbers at every step. They catch mistakes for free.</p>
+<div class="topic-num" id="the-si-system-of-units">§1.2</div><h3 class="topic-title">The SI system of units</h3>
+<p>The <em>Système International d’Unités</em> (SI) is built on seven <strong>base quantities</strong>. All other quantities are <strong>derived quantities</strong>, defined as products and quotients of the base ones.</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Base quantity</th>
+<th>SI unit</th>
+<th>Symbol</th>
+<th>Dimension symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Length</td>
+<td>metre</td>
+<td>m</td>
+<td><span class="math inline">\(L\)</span></td>
+</tr>
+<tr>
+<td>Mass</td>
+<td>kilogram</td>
+<td>kg</td>
+<td><span class="math inline">\(M\)</span></td>
+</tr>
+<tr>
+<td>Time</td>
+<td>second</td>
+<td>s</td>
+<td><span class="math inline">\(T\)</span></td>
+</tr>
+<tr>
+<td>Electric current</td>
+<td>ampere</td>
+<td>A</td>
+<td><span class="math inline">\(I\)</span></td>
+</tr>
+<tr>
+<td>Thermodynamic temperature</td>
+<td>kelvin</td>
+<td>K</td>
+<td><span class="math inline">\(\Theta\)</span></td>
+</tr>
+<tr>
+<td>Amount of substance</td>
+<td>mole</td>
+<td>mol</td>
+<td><span class="math inline">\(N\)</span></td>
+</tr>
+<tr>
+<td>Luminous intensity</td>
+<td>candela</td>
+<td>cd</td>
+<td><span class="math inline">\(J\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Since 2019, every SI unit has been defined by fixing the exact numerical value of a constant of nature. For example:</p>
+<ul>
+<li>The <strong>second</strong> is fixed by the frequency of a transition in the caesium-133 atom: exactly <span class="math inline">\(9\,192\,631\,770\)</span> oscillations.</li>
+<li>The <strong>metre</strong> is fixed by the speed of light, <span class="math inline">\(c = 299\,792\,458\ \mathrm{m/s}\)</span> <em>exactly</em>. So one metre is the distance light travels in <span class="math inline">\(1/299\,792\,458\)</span> of a second.</li>
+<li>The <strong>kilogram</strong> is fixed by Planck’s constant, <span class="math inline">\(h = 6.626\,070\,15\times10^{-34}\ \mathrm{J\,s}\)</span> exactly.</li>
+</ul>
+<p>This means any well-equipped laboratory anywhere in the universe could rebuild our units from scratch.</p>
+<h4>Prefixes</h4>
+<p>Prefixes scale a unit by powers of ten:</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Prefix</th>
+<th>Symbol</th>
+<th>Factor</th>
+<th>Prefix</th>
+<th>Symbol</th>
+<th>Factor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pico</td>
+<td>p</td>
+<td><span class="math inline">\(10^{-12}\)</span></td>
+<td>kilo</td>
+<td>k</td>
+<td><span class="math inline">\(10^{3}\)</span></td>
+</tr>
+<tr>
+<td>nano</td>
+<td>n</td>
+<td><span class="math inline">\(10^{-9}\)</span></td>
+<td>mega</td>
+<td>M</td>
+<td><span class="math inline">\(10^{6}\)</span></td>
+</tr>
+<tr>
+<td>micro</td>
+<td><span class="math inline">\(\mu\)</span></td>
+<td><span class="math inline">\(10^{-6}\)</span></td>
+<td>giga</td>
+<td>G</td>
+<td><span class="math inline">\(10^{9}\)</span></td>
+</tr>
+<tr>
+<td>milli</td>
+<td>m</td>
+<td><span class="math inline">\(10^{-3}\)</span></td>
+<td>tera</td>
+<td>T</td>
+<td><span class="math inline">\(10^{12}\)</span></td>
+</tr>
+<tr>
+<td>centi</td>
+<td>c</td>
+<td><span class="math inline">\(10^{-2}\)</span></td>
+<td>peta</td>
+<td>P</td>
+<td><span class="math inline">\(10^{15}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4>Converting units</h4>
+<p>Treat units as algebraic quantities that multiply and cancel. Multiply by <strong>conversion factors</strong>: fractions equal to 1, such as <span class="math inline">\(\dfrac{1000\ \mathrm{m}}{1\ \mathrm{km}}\)</span>.</p>
+<div class="box work example"><div class="label">Worked example 1.1</div><h4 class="ex-title">A chain of conversions</h4>
+<p>(a) A car travels at 72 km/h. Express this speed in m/s. (b) The density of aluminium is <span class="math inline">\(2.70\ \mathrm{g/cm^3}\)</span>. Express it in <span class="math inline">\(\mathrm{kg/m^3}\)</span>.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) Multiply by conversion factors chosen so the unwanted units cancel: <span class="math display">\[72\ \frac{\mathrm{km}}{\mathrm{h}} \times \frac{1000\ \mathrm{m}}{1\ \mathrm{km}} \times \frac{1\ \mathrm{h}}{3600\ \mathrm{s}} = \frac{72\,000}{3600}\ \mathrm{m/s} = 20\ \mathrm{m/s}.\]</span> Useful shortcut: <span class="math inline">\(1\ \mathrm{km/h} = \tfrac{1000}{3600}\ \mathrm{m/s} = \tfrac{5}{18}\ \mathrm{m/s}\)</span>, and <span class="math inline">\(72\times\tfrac{5}{18} = 20\)</span>. ✓</p>
+<p>(b) Both the mass unit and the length unit change. Remember that the length conversion must be <strong>cubed</strong>: <span class="math display">\[2.70\ \frac{\mathrm{g}}{\mathrm{cm^3}} \times \frac{1\ \mathrm{kg}}{1000\ \mathrm{g}} \times \left(\frac{100\ \mathrm{cm}}{1\ \mathrm{m}}\right)^3 = 2.70 \times \frac{10^6}{10^3}\ \mathrm{kg/m^3} = 2.70\times10^3\ \mathrm{kg/m^3}.\]</span> <strong>Check.</strong> Water has density <span class="math inline">\(1\ \mathrm{g/cm^3} = 1000\ \mathrm{kg/m^3}\)</span>, and aluminium is a little under three times as dense as water. ✓</p>
+</div>
+</div>
+<div class="box trap"><div class="label">Common mistake</div>
+<p>When converting areas or volumes, square or cube the <em>whole</em> conversion factor: <span class="math inline">\(1\ \mathrm{m^2} = (100\ \mathrm{cm})^2 = 10^4\ \mathrm{cm^2}\)</span>, <strong>not</strong> <span class="math inline">\(100\ \mathrm{cm^2}\)</span>.</p>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Unit errors are expensive.</strong> In 1999 NASA lost the $125-million <em>Mars Climate Orbiter</em>. One team’s software reported thruster impulse in pound-force seconds, and the navigation software expected newton seconds, a factor of 4.45. In 1983 an Air Canada Boeing 767, the “Gimli Glider”, ran out of fuel in flight because fuel had been loaded in pounds instead of kilograms. In hospitals, confusing mg with μg (a factor of 1000) or mL/h with mL/min (a factor of 60) is a recognised cause of serious dosing errors. Writing units at every step of every calculation is professional practice, not pedantry.</p>
+</div>
+<div class="topic-num" id="dimensions-and-dimensional-analysis">§1.3</div><h3 class="topic-title">Dimensions and dimensional analysis</h3>
+<p>The <strong>dimensions</strong> of a quantity tell us how it is built from the base quantities, regardless of the units used. We write <span class="math inline">\([Q]\)</span> for “the dimensions of <span class="math inline">\(Q\)</span>”. For example, speed is a length divided by a time, whether it is measured in m/s, km/h or furlongs per fortnight, so <span class="math display">\[[v] = \frac{[L]}{[T]} = [LT^{-1}].\]</span></p>
+<p>To find the dimensions of any quantity, start from an equation that defines it and work back to base quantities.</p>
+<div class="tablewrap">
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Defining relation</th>
+<th>Dimensions</th>
+<th>SI unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Area, volume</td>
+<td><span class="math inline">\(\ell^2\)</span>, <span class="math inline">\(\ell^3\)</span></td>
+<td><span class="math inline">\([L^2]\)</span>, <span class="math inline">\([L^3]\)</span></td>
+<td>m², m³</td>
+</tr>
+<tr>
+<td>Velocity</td>
+<td><span class="math inline">\(\Delta x/\Delta t\)</span></td>
+<td><span class="math inline">\([LT^{-1}]\)</span></td>
+<td>m/s</td>
+</tr>
+<tr>
+<td>Acceleration</td>
+<td><span class="math inline">\(\Delta v/\Delta t\)</span></td>
+<td><span class="math inline">\([LT^{-2}]\)</span></td>
+<td>m/s²</td>
+</tr>
+<tr>
+<td>Force</td>
+<td><span class="math inline">\(ma\)</span></td>
+<td><span class="math inline">\([MLT^{-2}]\)</span></td>
+<td>newton, N</td>
+</tr>
+<tr>
+<td>Work, energy</td>
+<td><span class="math inline">\(Fd\)</span></td>
+<td><span class="math inline">\([ML^2T^{-2}]\)</span></td>
+<td>joule, J</td>
+</tr>
+<tr>
+<td>Power</td>
+<td><span class="math inline">\(W/t\)</span></td>
+<td><span class="math inline">\([ML^2T^{-3}]\)</span></td>
+<td>watt, W</td>
+</tr>
+<tr>
+<td>Momentum, impulse</td>
+<td><span class="math inline">\(mv\)</span>, <span class="math inline">\(F\Delta t\)</span></td>
+<td><span class="math inline">\([MLT^{-1}]\)</span></td>
+<td>kg m/s</td>
+</tr>
+<tr>
+<td>Pressure, stress</td>
+<td><span class="math inline">\(F/A\)</span></td>
+<td><span class="math inline">\([ML^{-1}T^{-2}]\)</span></td>
+<td>pascal, Pa</td>
+</tr>
+<tr>
+<td>Frequency</td>
+<td><span class="math inline">\(1/T\)</span></td>
+<td><span class="math inline">\([T^{-1}]\)</span></td>
+<td>hertz, Hz</td>
+</tr>
+<tr>
+<td>Angle</td>
+<td>arc/radius</td>
+<td>dimensionless</td>
+<td>rad</td>
+</tr>
+<tr>
+<td>Gravitational constant <span class="math inline">\(G\)</span></td>
+<td><span class="math inline">\(Fr^2/(m_1m_2)\)</span></td>
+<td><span class="math inline">\([M^{-1}L^3T^{-2}]\)</span></td>
+<td>N m²/kg²</td>
+</tr>
+<tr>
+<td>Planck’s constant <span class="math inline">\(h\)</span></td>
+<td><span class="math inline">\(E/\nu\)</span></td>
+<td><span class="math inline">\([ML^2T^{-1}]\)</span></td>
+<td>J s</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Principle of homogeneity.</strong> In a physically correct equation, every term has the same dimensions. You can only add, subtract or equate quantities with identical dimensions. The arguments of <span class="math inline">\(\sin\)</span>, <span class="math inline">\(\cos\)</span>, <span class="math inline">\(\exp\)</span> and <span class="math inline">\(\ln\)</span> must be dimensionless. So in <span class="math inline">\(x = A\sin(\omega t)\)</span>, the product <span class="math inline">\(\omega t\)</span> is dimensionless, which forces <span class="math inline">\([\omega] = [T^{-1}]\)</span>.</p>
+</div>
+<p>Dimensional analysis has three main uses.</p>
+<h4>Use 1: checking equations</h4>
+<p>If the terms of an equation do not all have the same dimensions, the equation is wrong. If they do, it <em>might</em> be right. Dimensional analysis cannot detect a wrong numerical factor such as <span class="math inline">\(\tfrac12\)</span> or <span class="math inline">\(2\pi\)</span>.</p>
+<div class="box work example"><div class="label">Worked example 1.2</div><h4 class="ex-title">Is this equation possible?</h4>
+<p>A student writes the distance travelled under constant acceleration as <span class="math inline">\(s = ut + \tfrac{1}{2}a t^3\)</span>, where <span class="math inline">\(u\)</span> is the initial speed. Check the equation dimensionally.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>Check each term separately:</p>
+<ul>
+<li><span class="math inline">\([s] = [L]\)</span></li>
+<li><span class="math inline">\([ut] = [LT^{-1}][T] = [L]\)</span> ✓</li>
+<li><span class="math inline">\([\tfrac12 a t^3] = [LT^{-2}][T^3] = [LT]\)</span> ✗</li>
+</ul>
+<p>The last term has dimensions <span class="math inline">\([LT]\)</span>, not <span class="math inline">\([L]\)</span>, so the equation is <strong>wrong</strong>. Changing <span class="math inline">\(t^3\)</span> to <span class="math inline">\(t^2\)</span> fixes the dimensions: <span class="math inline">\([a t^2] = [L]\)</span>. The factor <span class="math inline">\(\tfrac12\)</span> is a pure number, so dimensional analysis can neither confirm nor rule it out.</p>
+</div>
+</div>
+<h4>Use 2: converting units between systems</h4>
+<p>If a quantity has dimensions <span class="math inline">\([M^aL^bT^c]\)</span>, then its numerical value changes between unit systems as <span class="math display">\[n_2 = n_1\left(\frac{M_1}{M_2}\right)^{a}\left(\frac{L_1}{L_2}\right)^{b}\left(\frac{T_1}{T_2}\right)^{c},\]</span> where <span class="math inline">\(M_1, L_1, T_1\)</span> are the old units and <span class="math inline">\(M_2, L_2, T_2\)</span> the new ones. This works because the <em>physical</em> quantity stays the same: <span class="math inline">\(n_1 u_1 = n_2 u_2\)</span>.</p>
+<div class="box work example"><div class="label">Worked example 1.3</div><h4 class="ex-title">The gravitational constant in CGS units</h4>
+<p>In SI units, <span class="math inline">\(G = 6.67\times10^{-11}\ \mathrm{N\,m^2/kg^2}\)</span>. Find its value in CGS units (gram, centimetre, second).</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>From the table, <span class="math inline">\([G] = [M^{-1}L^3T^{-2}]\)</span>, so <span class="math inline">\(a = -1\)</span>, <span class="math inline">\(b = 3\)</span>, <span class="math inline">\(c = -2\)</span>. The unit ratios are <span class="math display">\[\frac{M_1}{M_2} = \frac{1\ \mathrm{kg}}{1\ \mathrm{g}} = 10^3,\qquad \frac{L_1}{L_2} = \frac{1\ \mathrm{m}}{1\ \mathrm{cm}} = 10^2,\qquad \frac{T_1}{T_2} = 1.\]</span> Then <span class="math display">\[n_2 = 6.67\times10^{-11}\,(10^3)^{-1}(10^2)^{3}(1)^{-2} = 6.67\times10^{-11}\times10^{-3}\times10^{6} = 6.67\times10^{-8}.\]</span> So <span class="math inline">\(G = 6.67\times10^{-8}\ \mathrm{cm^3\,g^{-1}\,s^{-2}}\)</span> (equivalently, dyn cm²/g²).</p>
+</div>
+</div>
+<h4>Use 3: deriving relations</h4>
+<p>If we can guess which quantities a result depends on, dimensional analysis often fixes the form of the relation, up to a dimensionless constant.</p>
+<div class="box work example"><div class="label">Worked example 1.4</div><h4 class="ex-title">The period of a pendulum</h4>
+<p>The period <span class="math inline">\(T\)</span> of a simple pendulum might depend on the mass <span class="math inline">\(m\)</span> of the bob, the length <span class="math inline">\(\ell\)</span> of the string and the gravitational acceleration <span class="math inline">\(g\)</span>. Find the form of the relation.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Set up.</strong> Assume <span class="math inline">\(T = k\,m^a\,\ell^b\,g^c\)</span>, where <span class="math inline">\(k\)</span> is a dimensionless constant.</p>
+<p><strong>Execute.</strong> Equate dimensions on both sides: <span class="math display">\[[M^0L^0T^1] = [M]^a\,[L]^b\,[LT^{-2}]^c = [M^{a}\,L^{b+c}\,T^{-2c}].\]</span> Matching the powers of each base dimension: <span class="math display">\[\begin{aligned}
+M:&amp;\quad a = 0,\\
+T:&amp;\quad -2c = 1 \;\Rightarrow\; c = -\tfrac12,\\
+L:&amp;\quad b + c = 0 \;\Rightarrow\; b = \tfrac12.
+\end{aligned}\]</span> Therefore <span class="math display">\[T = k\sqrt{\frac{\ell}{g}}.\]</span></p>
+<p><strong>Evaluate.</strong> The period does <strong>not</strong> depend on the mass. This is a genuine physical prediction, and it is true. A full analysis (Chapter 9) gives <span class="math inline">\(k = 2\pi\)</span> for small swings.</p>
+</div>
+</div>
+<div class="box tip"><div class="label">Note</div>
+<p><strong>Limitations of dimensional analysis.</strong></p>
+<ol>
+<li>It cannot find dimensionless constants such as <span class="math inline">\(2\pi\)</span> or <span class="math inline">\(\tfrac12\)</span>.</li>
+<li>It fails if the result depends on a dimensionless quantity, such as an angle. The exact pendulum period depends on the amplitude <span class="math inline">\(\theta_0\)</span>, and dimensional analysis cannot tell us how.</li>
+<li>It cannot handle sums of terms such as <span class="math inline">\(s = ut + \tfrac12at^2\)</span> in a single step.</li>
+<li>With three base dimensions we get only three equations, so we can solve for at most three unknown exponents.</li>
+<li>It cannot distinguish quantities that share dimensions, such as work and torque.</li>
+</ol>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Dimensionless numbers run engineering.</strong> Engineers group variables into dimensionless combinations and design with those. The most famous is the <strong>Reynolds number</strong> <span class="math display">\[Re = \frac{\rho v D}{\eta},\]</span> where <span class="math inline">\(\rho\)</span> is the fluid’s density, <span class="math inline">\(v\)</span> its speed, <span class="math inline">\(D\)</span> the pipe diameter and <span class="math inline">\(\eta\)</span> the viscosity. It decides whether flow is smooth (laminar, <span class="math inline">\(Re \lesssim 2000\)</span>) or turbulent (<span class="math inline">\(Re \gtrsim 4000\)</span>), in an oil pipeline and in an artery alike (Problem P1.17). Because only dimensionless groups matter, a 1:20 scale model of a car or bridge in a wind tunnel behaves like the full-size structure, <em>provided</em> the dimensionless numbers match. In physiology, scaling arguments explain why a mouse’s heart beats about 600 times a minute and an elephant’s about 30. They also underlie dosing drugs by body-surface area rather than by mass.</p>
+</div>
+<div class="topic-num" id="order-of-magnitude-estimates">§1.4</div><h3 class="topic-title">Order-of-magnitude estimates</h3>
+<p>Physicists often need a rough answer quickly: is the effect <span class="math inline">\(10^{-3}\)</span> or <span class="math inline">\(10^{3}\)</span>? An <strong>order-of-magnitude estimate</strong> keeps only the nearest power of ten. Make reasonable round-number assumptions, combine them, and keep one significant figure. These are often called <em>Fermi problems</em>, after Enrico Fermi, who was famous for them.</p>
+<div class="box work example"><div class="label">Worked example 1.5</div><h4 class="ex-title">How many heartbeats in a lifetime?</h4>
+<p>Estimate the number of times a human heart beats in a lifetime.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>Assumptions: about 70 beats per minute and a lifetime of about 80 years. <span class="math display">\[\text{minutes in a lifetime} \approx 80\ \text{yr} \times 365\ \tfrac{\text{d}}{\text{yr}} \times 24\ \tfrac{\text{h}}{\text{d}} \times 60\ \tfrac{\text{min}}{\text{h}} \approx 4.2\times10^{7}\ \text{min}.\]</span> <span class="math display">\[\text{beats} \approx 70 \times 4.2\times10^{7} \approx 3\times10^{9}.\]</span> A lifetime is about <strong>three billion heartbeats</strong>, so the order of magnitude is <span class="math inline">\(10^9\)</span>. Changing the assumptions slightly (60 or 80 beats per minute, 70 or 90 years) does not change the power of ten.</p>
+</div>
+</div>
+<div class="topic-num" id="significant-figures-and-errors">§1.5</div><h3 class="topic-title">Significant figures and errors</h3>
+<h4>Significant figures</h4>
+<p>No measurement is exact. The <strong>significant figures</strong> of a number are all the reliably known digits plus the first uncertain one. A ruler with millimetre markings might give <span class="math inline">\(12.3\)</span> cm. Here the 3 is the uncertain digit, and writing <span class="math inline">\(12.300\)</span> cm would claim a precision we do not have.</p>
+<p>Rules for counting significant figures:</p>
+<ul>
+<li>All non-zero digits are significant: <span class="math inline">\(4.37\)</span> has 3.</li>
+<li>Zeros <em>between</em> non-zero digits are significant: <span class="math inline">\(2.05\)</span> has 3.</li>
+<li>Leading zeros are not significant. They only locate the decimal point: <span class="math inline">\(0.0042\)</span> has 2.</li>
+<li>Trailing zeros after a decimal point are significant: <span class="math inline">\(3.50\)</span> has 3.</li>
+<li>Trailing zeros in a whole number are ambiguous. Use scientific notation: <span class="math inline">\(1.5\times10^3\)</span> (2 s.f.) or <span class="math inline">\(1.500\times10^3\)</span> (4 s.f.).</li>
+</ul>
+<p>Rules for calculations:</p>
+<ul>
+<li><strong>Multiplying or dividing:</strong> keep as many significant figures as the <em>least</em> precise factor. For example, <span class="math inline">\(3.2 \times 1.234 = 3.9\)</span> (2 s.f.).</li>
+<li><strong>Adding or subtracting:</strong> keep as many <em>decimal places</em> as the term with the fewest. For example, <span class="math inline">\(12.1 + 0.035 = 12.1\)</span>.</li>
+</ul>
+<h4>Absolute and relative error</h4>
+<p>If a quantity is measured as <span class="math inline">\(A \pm \Delta A\)</span>, then <span class="math inline">\(\Delta A\)</span> is the <strong>absolute error</strong>, <span class="math inline">\(\Delta A/A\)</span> the <strong>relative (fractional) error</strong>, and <span class="math inline">\(100\,\Delta A/A\)</span> the <strong>percentage error</strong>.</p>
+<p>The maximum error in a calculated result follows from two rules:</p>
+<ul>
+<li><strong>Sum or difference:</strong> for <span class="math inline">\(Z = A \pm B\)</span>, absolute errors add: <span class="math inline">\(\Delta Z = \Delta A + \Delta B\)</span>.</li>
+<li><strong>Product, quotient or power:</strong> for <span class="math inline">\(Z = A^p B^q / C^r\)</span>, <em>relative</em> errors add, each weighted by the size of its power: <span class="math display">\[\frac{\Delta Z}{Z} = |p|\,\frac{\Delta A}{A} + |q|\,\frac{\Delta B}{B} + |r|\,\frac{\Delta C}{C}.\]</span></li>
+</ul>
+<p>These rules give the worst case. When errors are random and independent, a better estimate combines them in quadrature, <span class="math inline">\(\Delta Z/Z = \sqrt{(p\,\Delta A/A)^2 + \cdots}\)</span>. You will meet this in the laboratory course.</p>
+<div class="box work example"><div class="label">Worked example 1.6</div><h4 class="ex-title">Measuring g with a pendulum</h4>
+<p>A student measures the length of a pendulum as <span class="math inline">\(\ell = 1.00 \pm 0.01\)</span> m and its period as <span class="math inline">\(T = 2.00 \pm 0.02\)</span> s. Using <span class="math inline">\(g = 4\pi^2\ell/T^2\)</span>, find <span class="math inline">\(g\)</span> and its uncertainty. Which measurement should the student improve?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Central value:</strong> <span class="math display">\[g = \frac{4\pi^2(1.00\ \mathrm{m})}{(2.00\ \mathrm{s})^2} = \frac{39.48}{4.00}\ \mathrm{m/s^2} = 9.87\ \mathrm{m/s^2}.\]</span></p>
+<p><strong>Relative error.</strong> Here <span class="math inline">\(g \propto \ell^{1}T^{-2}\)</span>: <span class="math display">\[\frac{\Delta g}{g} = 1\cdot\frac{\Delta \ell}{\ell} + 2\cdot\frac{\Delta T}{T} = \frac{0.01}{1.00} + 2\times\frac{0.02}{2.00} = 0.01 + 0.02 = 0.03\ (3\%).\]</span></p>
+<p><strong>Absolute error:</strong> <span class="math inline">\(\Delta g = 0.03\times9.87 \approx 0.3\ \mathrm{m/s^2}\)</span>. So <span class="math display">\[g = (9.9 \pm 0.3)\ \mathrm{m/s^2}.\]</span></p>
+<p><strong>Improvement.</strong> The period contributes 2% of the 3%, because it is squared. The student should time many oscillations, say 20, and divide by 20. The reaction-time error is then spread over the whole run, reducing <span class="math inline">\(\Delta T/T\)</span> by a factor of about 20.</p>
+</div>
+</div>
+<div class="topic-num" id="scalars-and-vectors">§1.6</div><h3 class="topic-title">Scalars and vectors</h3>
+<p>A <strong>scalar</strong> is a quantity fully described by a single number with a unit: mass, time, temperature, energy, charge. A <strong>vector</strong> has both <strong>magnitude</strong> and <strong>direction</strong>, <em>and</em> combines with other vectors by the triangle law of addition: displacement, velocity, acceleration, force, momentum.</p>
+<div class="box trap"><div class="label">Common mistake</div>
+<p>Having a direction is not enough to make something a vector. Electric current has a direction along a wire, yet two currents of 3 A and 4 A flowing into a junction give 7 A whatever the angle between the wires. Current adds like a scalar, so it <em>is</em> a scalar. A quantity is a vector only if it <strong>adds like a displacement</strong>.</p>
+</div>
+<p>We write vectors in bold italic with an arrow, <span class="math inline">\(\vect{A}\)</span>, and the magnitude as <span class="math inline">\(A\)</span> or <span class="math inline">\(|\vect{A}|\)</span>. A magnitude is never negative.</p>
+<h4>Adding vectors geometrically</h4>
+<p>To add <span class="math inline">\(\vect{A}\)</span> and <span class="math inline">\(\vect{B}\)</span>, place the tail of <span class="math inline">\(\vect{B}\)</span> at the head of <span class="math inline">\(\vect{A}\)</span>. The <strong>resultant</strong> <span class="math inline">\(\vect{R} = \vect{A} + \vect{B}\)</span> runs from the tail of <span class="math inline">\(\vect{A}\)</span> to the head of <span class="math inline">\(\vect{B}\)</span>. This is the <strong>triangle law</strong>. Equivalently, draw both vectors from the same point and complete the parallelogram. The diagonal is the resultant (the <strong>parallelogram law</strong>).</p>
+<figure>
+<svg viewBox="0 0 340 210" width="340" role="img" aria-label="Vector A drawn from the origin to the right, vector B drawn from the head of A going up and to the right, and the resultant R from the tail of A to the head of B. Angle theta between A and B is marked at the head of A.">
+<line class="u" x1="30" y1="180" x2="196" y2="180" marker-end="url(#au)"/>
+<line class="v" x1="200" y1="180" x2="286" y2="56" marker-end="url(#av)"/>
+<line class="w" x1="30" y1="180" x2="283" y2="58" marker-end="url(#aw)"/>
+<line class="dash" x1="200" y1="180" x2="300" y2="180"/>
+<path class="dash" d="M 236 180 A 36 36 0 0 0 220 151"/>
+<text x="232" y="168" class="muted">θ</text>
+<text x="105" y="200" class="tu">A</text>
+<text x="252" y="128" class="tv">B</text>
+<text x="128" y="110" class="tw">R = A + B</text>
+<path class="dash" d="M 66 180 A 36 36 0 0 0 63 165"/>
+<text x="72" y="172" class="muted">α</text>
+</svg>
+<figcaption>Triangle law: put B's tail at A's head. The resultant R runs from A's tail to B's head. θ is the angle between A and B.</figcaption>
+</figure>
+<p>Applying the law of cosines to this triangle, where the interior angle at the head of <span class="math inline">\(\vect{A}\)</span> is <span class="math inline">\(180^\circ - \theta\)</span>, gives the magnitude of the resultant: <span class="math display">\[R = \sqrt{A^2 + B^2 + 2AB\cos\theta}.\]</span> Its angle <span class="math inline">\(\alpha\)</span> from <span class="math inline">\(\vect{A}\)</span> satisfies <span class="math display">\[\tan\alpha = \frac{B\sin\theta}{A + B\cos\theta}.\]</span></p>
+<p>Special cases worth remembering:</p>
+<ul>
+<li><span class="math inline">\(\theta = 0\)</span> (parallel): <span class="math inline">\(R = A + B\)</span>, the maximum.</li>
+<li><span class="math inline">\(\theta = 180^\circ\)</span> (antiparallel): <span class="math inline">\(R = |A - B|\)</span>, the minimum.</li>
+<li><span class="math inline">\(\theta = 90^\circ\)</span>: <span class="math inline">\(R = \sqrt{A^2+B^2}\)</span>.</li>
+</ul>
+<p>In general <span class="math inline">\(|A - B| \le R \le A + B\)</span>.</p>
+<p><strong>Subtraction</strong> is addition of the negative: <span class="math inline">\(\vect{A} - \vect{B} = \vect{A} + (-\vect{B})\)</span>, where <span class="math inline">\(-\vect{B}\)</span> has the same magnitude as <span class="math inline">\(\vect{B}\)</span> and points the opposite way. Its magnitude is <span class="math inline">\(|\vect{A}-\vect{B}| = \sqrt{A^2 + B^2 - 2AB\cos\theta}\)</span>.</p>
+<h4>Components and unit vectors</h4>
+<p>Geometric addition is clumsy for more than two vectors. Components are far more powerful.</p>
+<p>A <strong>unit vector</strong> has magnitude 1 and only indicates direction. The Cartesian unit vectors <span class="math inline">\(\ihat\)</span>, <span class="math inline">\(\jhat\)</span>, <span class="math inline">\(\khat\)</span> point along <span class="math inline">\(+x\)</span>, <span class="math inline">\(+y\)</span>, <span class="math inline">\(+z\)</span>. Any vector can be written as <span class="math display">\[\vect{A} = A_x\,\ihat + A_y\,\jhat + A_z\,\khat,\]</span> where the <strong>components</strong> <span class="math inline">\(A_x, A_y, A_z\)</span> are scalars and can be negative. In two dimensions, a vector of magnitude <span class="math inline">\(A\)</span> at angle <span class="math inline">\(\theta\)</span> measured counter-clockwise from the <span class="math inline">\(+x\)</span> axis has <span class="math display">\[A_x = A\cos\theta,\qquad A_y = A\sin\theta,\]</span> and conversely <span class="math display">\[A = \sqrt{A_x^2 + A_y^2},\qquad \tan\theta = \frac{A_y}{A_x}.\]</span></p>
+<figure>
+<svg viewBox="0 0 320 220" width="320" role="img" aria-label="A vector A drawn from the origin at angle theta above the x axis, with dashed lines dropping to the axes to show its x component A cos theta and its y component A sin theta.">
+<line class="ax" x1="30" y1="190" x2="300" y2="190" marker-end="url(#ak)"/>
+<line class="ax" x1="40" y1="200" x2="40" y2="15" marker-end="url(#ak)"/>
+<text x="292" y="208" class="muted">x</text><text x="24" y="22" class="muted">y</text>
+<line class="dash" x1="240" y1="58" x2="240" y2="190"/>
+<line class="dash" x1="240" y1="58" x2="40" y2="58"/>
+<line class="u" x1="40" y1="190" x2="237" y2="60" marker-end="url(#au)"/>
+<line class="v" x1="40" y1="190" x2="236" y2="190" marker-end="url(#av)" style="stroke-width:3.4"/>
+<line class="w" x1="40" y1="190" x2="40" y2="62" marker-end="url(#aw)" style="stroke-width:3.4"/>
+<path class="dash" d="M 90 190 A 50 50 0 0 0 82 163"/>
+<text x="96" y="178" class="muted">θ</text>
+<text x="150" y="104" class="tu">A</text>
+<text x="112" y="208" class="tv">A<tspan dy="3" font-size="10">x</tspan><tspan dy="-3"> = A cos θ</tspan></text>
+<text x="46" y="150" class="tw">A<tspan dy="3" font-size="10">y</tspan><tspan dy="-3"> = A sin θ</tspan></text>
+</svg>
+<figcaption>Resolving a vector: the x component is A cos θ and the y component is A sin θ, with θ measured from the +x axis.</figcaption>
+</figure>
+<div class="box trap"><div class="label">Common mistake</div>
+<p>The formula <span class="math inline">\(\tan\theta = A_y/A_x\)</span> alone cannot tell apart angles that differ by <span class="math inline">\(180^\circ\)</span>. For example, <span class="math inline">\((-3,-4)\)</span> and <span class="math inline">\((3,4)\)</span> give the same ratio. Always check the <strong>signs</strong> of the components to find the correct quadrant.</p>
+</div>
+<p><strong>Adding by components.</strong> To add vectors, add their components: <span class="math display">\[\vect{R} = \vect{A} + \vect{B} + \cdots \quad\Longrightarrow\quad R_x = A_x + B_x + \cdots,\quad R_y = A_y + B_y + \cdots\]</span></p>
+<div class="box work example"><div class="label">Worked example 1.7</div><h4 class="ex-title">Adding two forces</h4>
+<p>Two forces of 3.0 N and 4.0 N act on a particle, with <span class="math inline">\(60^\circ\)</span> between them. Find the magnitude of the resultant and its direction relative to the 3.0 N force.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>Use the resultant formula with <span class="math inline">\(A = 3.0\)</span> N, <span class="math inline">\(B = 4.0\)</span> N and <span class="math inline">\(\theta = 60^\circ\)</span>: <span class="math display">\[R = \sqrt{3.0^2 + 4.0^2 + 2(3.0)(4.0)\cos60^\circ} = \sqrt{9 + 16 + 12} = \sqrt{37} = 6.1\ \mathrm{N}.\]</span> Direction relative to the 3.0 N force: <span class="math display">\[\tan\alpha = \frac{4.0\sin60^\circ}{3.0 + 4.0\cos60^\circ} = \frac{3.464}{5.0} = 0.693 \;\Rightarrow\; \alpha = 34.7^\circ.\]</span> <strong>Check.</strong> <span class="math inline">\(R\)</span> lies between <span class="math inline">\(|A-B| = 1\)</span> N and <span class="math inline">\(A+B = 7\)</span> N. ✓ The resultant leans towards the larger force: <span class="math inline">\(34.7^\circ\)</span> from the 3 N force, so <span class="math inline">\(25.3^\circ\)</span> from the 4 N force. ✓</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 1.8</div><h4 class="ex-title">Three displacements by components</h4>
+<p>A hiker makes three straight-line walks: <span class="math inline">\(A = 10.0\)</span> km at <span class="math inline">\(30^\circ\)</span>, then <span class="math inline">\(B = 15.0\)</span> km at <span class="math inline">\(135^\circ\)</span>, then <span class="math inline">\(C = 8.0\)</span> km at <span class="math inline">\(270^\circ\)</span>. All angles are measured counter-clockwise from east. Find the hiker’s net displacement.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Set up.</strong> Take <span class="math inline">\(+x\)</span> as east and <span class="math inline">\(+y\)</span> as north, and tabulate the components.</p>
+<div class="tablewrap">
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Vector</th>
+<th><span class="math inline">\(x\)</span> component (km)</th>
+<th><span class="math inline">\(y\)</span> component (km)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(\vect{A}\)</span></td>
+<td><span class="math inline">\(10.0\cos30^\circ = 8.660\)</span></td>
+<td><span class="math inline">\(10.0\sin30^\circ = 5.000\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\vect{B}\)</span></td>
+<td><span class="math inline">\(15.0\cos135^\circ = -10.607\)</span></td>
+<td><span class="math inline">\(15.0\sin135^\circ = 10.607\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\vect{C}\)</span></td>
+<td><span class="math inline">\(8.0\cos270^\circ = 0\)</span></td>
+<td><span class="math inline">\(8.0\sin270^\circ = -8.000\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\vect{R}\)</span></td>
+<td><span class="math inline">\(-1.947\)</span></td>
+<td><span class="math inline">\(7.607\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Execute.</strong> <span class="math display">\[R = \sqrt{(-1.947)^2 + (7.607)^2} = \sqrt{3.79 + 57.87} = 7.85\ \mathrm{km}.\]</span> <span class="math inline">\(\tan^{-1}(7.607/1.947) = 75.6^\circ\)</span>. Since <span class="math inline">\(R_x &lt; 0\)</span> and <span class="math inline">\(R_y &gt; 0\)</span>, the vector lies in the <strong>second quadrant</strong>, so <span class="math display">\[\theta = 180^\circ - 75.6^\circ = 104.4^\circ \text{ from east},\]</span> which is <span class="math inline">\(14.4^\circ\)</span> west of north.</p>
+<p><strong>Evaluate.</strong> A calculator returns <span class="math inline">\(\tan^{-1}(7.607/(-1.947)) = -75.6^\circ\)</span>, which is in the wrong quadrant. This is exactly the warning above.</p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Resolving forces is how structures are designed.</strong> The members of a roof truss, the cables of a suspension bridge and the tendons around your knee all carry forces along fixed directions. Engineers resolve every load into components along and across each member, then require the components at each joint to sum to zero. In biomechanics, the same method shows why the patellar tendon can carry several times body weight when you climb stairs. Vectors also underlie navigation. A GPS receiver finds your position vector from its distances to four or more satellites, and an aircraft’s velocity over the ground is the vector sum of its airspeed and the wind velocity.</p>
+</div>
+<div class="topic-num" id="multiplying-vectors">§1.7</div><h3 class="topic-title">Multiplying vectors</h3>
+<p>There are two useful ways to multiply two vectors. One gives a scalar, the other a vector.</p>
+<h4>The scalar (dot) product</h4>
+<p><span class="math display">\[\vect{A}\cdot\vect{B} = AB\cos\theta = A_xB_x + A_yB_y + A_zB_z.\]</span></p>
+<p>Geometrically, <span class="math inline">\(\vect{A}\cdot\vect{B}\)</span> is <span class="math inline">\(A\)</span> times the <strong>projection</strong> of <span class="math inline">\(\vect{B}\)</span> onto the direction of <span class="math inline">\(\vect{A}\)</span>, which is <span class="math inline">\(B\cos\theta\)</span>. Properties:</p>
+<ul>
+<li>It is commutative: <span class="math inline">\(\vect{A}\cdot\vect{B} = \vect{B}\cdot\vect{A}\)</span>.</li>
+<li>It is distributive: <span class="math inline">\(\vect{A}\cdot(\vect{B}+\vect{C}) = \vect{A}\cdot\vect{B} + \vect{A}\cdot\vect{C}\)</span>.</li>
+<li><span class="math inline">\(\vect{A}\cdot\vect{A} = A^2\)</span>.</li>
+<li><span class="math inline">\(\vect{A}\cdot\vect{B} = 0\)</span> for non-zero vectors means <span class="math inline">\(\vect{A}\perp\vect{B}\)</span>.</li>
+<li><span class="math inline">\(\ihat\cdot\ihat = \jhat\cdot\jhat = \khat\cdot\khat = 1\)</span> and <span class="math inline">\(\ihat\cdot\jhat = \jhat\cdot\khat = \khat\cdot\ihat = 0\)</span>. The component formula follows from these.</li>
+</ul>
+<p>The component of <span class="math inline">\(\vect{B}\)</span> along <span class="math inline">\(\vect{A}\)</span> is <span class="math inline">\(\vect{B}\cdot\uvec{A} = \dfrac{\vect{A}\cdot\vect{B}}{A}\)</span>. Physical example: the work done by a force, <span class="math inline">\(W = \vect{F}\cdot\vect{d}\)</span>.</p>
+<h4>The vector (cross) product</h4>
+<p><span class="math inline">\(\vect{C} = \vect{A}\times\vect{B}\)</span> is a vector with:</p>
+<ul>
+<li><strong>magnitude</strong> <span class="math inline">\(C = AB\sin\theta\)</span>, where <span class="math inline">\(0 \le \theta \le 180^\circ\)</span>;</li>
+<li><strong>direction</strong> perpendicular to the plane containing <span class="math inline">\(\vect{A}\)</span> and <span class="math inline">\(\vect{B}\)</span>, given by the <strong>right-hand rule</strong>: point the fingers of your right hand along <span class="math inline">\(\vect{A}\)</span> and curl them towards <span class="math inline">\(\vect{B}\)</span> through the smaller angle. Your thumb points along <span class="math inline">\(\vect{C}\)</span>.</li>
+</ul>
+<p>In components, the cross product is the “determinant”: <span class="math display">\[\vect{A}\times\vect{B} = \begin{vmatrix}\ihat &amp; \jhat &amp; \khat\\ A_x &amp; A_y &amp; A_z \\ B_x &amp; B_y &amp; B_z\end{vmatrix}
+= (A_yB_z - A_zB_y)\,\ihat - (A_xB_z - A_zB_x)\,\jhat + (A_xB_y - A_yB_x)\,\khat.\]</span></p>
+<p>Properties:</p>
+<ul>
+<li>It is <strong>anti-commutative</strong>: <span class="math inline">\(\vect{A}\times\vect{B} = -\vect{B}\times\vect{A}\)</span>.</li>
+<li>It is distributive over addition.</li>
+<li><span class="math inline">\(\vect{A}\times\vect{A} = \vect{0}\)</span>, and parallel vectors have zero cross product.</li>
+<li><span class="math inline">\(\ihat\times\jhat = \khat\)</span>, <span class="math inline">\(\jhat\times\khat = \ihat\)</span>, <span class="math inline">\(\khat\times\ihat = \jhat\)</span> (cyclic order). Reversing the order flips the sign.</li>
+<li><span class="math inline">\(|\vect{A}\times\vect{B}|\)</span> equals the <strong>area of the parallelogram</strong> with sides <span class="math inline">\(\vect{A}\)</span> and <span class="math inline">\(\vect{B}\)</span>.</li>
+</ul>
+<p>Physical examples: torque <span class="math inline">\(\vect{\tau} = \vect{r}\times\vect{F}\)</span>, angular momentum <span class="math inline">\(\vect{L} = \vect{r}\times\vect{p}\)</span>, and the magnetic force <span class="math inline">\(\vect{F} = q\,\vect{v}\times\vect{B}\)</span>.</p>
+<div class="box work example"><div class="label">Worked example 1.9</div><h4 class="ex-title">Dot and cross products</h4>
+<p>Given <span class="math inline">\(\vect{A} = 2\ihat + 3\jhat - \khat\)</span> and <span class="math inline">\(\vect{B} = \ihat - \jhat + 2\khat\)</span>, find (a) the angle between them, (b) <span class="math inline">\(\vect{A}\times\vect{B}\)</span>, (c) a unit vector perpendicular to both, and (d) the area of the parallelogram they span.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) The dot product and the magnitudes: <span class="math display">\[\vect{A}\cdot\vect{B} = (2)(1) + (3)(-1) + (-1)(2) = -3,\]</span> <span class="math display">\[A = \sqrt{4 + 9 + 1} = \sqrt{14},\qquad B = \sqrt{1 + 1 + 4} = \sqrt{6}.\]</span> <span class="math display">\[\cos\theta = \frac{-3}{\sqrt{14}\,\sqrt{6}} = \frac{-3}{\sqrt{84}} = -0.327 \;\Rightarrow\; \theta = 109.1^\circ.\]</span> A negative dot product always means an obtuse angle.</p>
+<p>(b) Expand the determinant term by term: <span class="math display">\[\begin{aligned}
+\vect{A}\times\vect{B} &amp;= \big[(3)(2) - (-1)(-1)\big]\ihat - \big[(2)(2) - (-1)(1)\big]\jhat + \big[(2)(-1) - (3)(1)\big]\khat\\
+&amp;= 5\,\ihat - 5\,\jhat - 5\,\khat.
+\end{aligned}\]</span> <strong>Check:</strong> the cross product must be perpendicular to both vectors. <span class="math inline">\((5,-5,-5)\cdot(2,3,-1) = 10 - 15 + 5 = 0\)</span> ✓ and <span class="math inline">\((5,-5,-5)\cdot(1,-1,2) = 5 + 5 - 10 = 0\)</span> ✓.</p>
+<p>(c) The magnitude is <span class="math inline">\(|\vect{A}\times\vect{B}| = 5\sqrt3\)</span>, so <span class="math display">\[\uvec{n} = \frac{\vect{A}\times\vect{B}}{|\vect{A}\times\vect{B}|} = \frac{1}{\sqrt3}\left(\ihat - \jhat - \khat\right).\]</span> The opposite vector <span class="math inline">\(-\uvec{n}\)</span> is also perpendicular to both.</p>
+<p>(d) Area <span class="math inline">\(= |\vect{A}\times\vect{B}| = 5\sqrt3 \approx 8.66\)</span> square units.</p>
+<p><strong>Cross-check using (a):</strong> <span class="math inline">\(AB\sin\theta = \sqrt{84}\,\sin109.1^\circ = 9.165\times0.945 = 8.66\)</span>. ✓</p>
+</div>
+</div>
+<div class="topic-num" id="calculus-tools-for-physics">§1.8</div><h3 class="topic-title">Calculus tools for physics</h3>
+<p>Motion is change, and calculus is the mathematics of change. This course uses only a few ideas, collected here.</p>
+<h4>The derivative: instantaneous rate of change</h4>
+<p>The derivative <span class="math inline">\(\dfrac{dy}{dx}\)</span> is the slope of the graph of <span class="math inline">\(y(x)\)</span>: the limit of <span class="math inline">\(\Delta y/\Delta x\)</span> as <span class="math inline">\(\Delta x\to0\)</span>. In mechanics, <strong>velocity</strong> is the rate of change of position and <strong>acceleration</strong> is the rate of change of velocity: <span class="math display">\[v = \frac{dx}{dt},\qquad a = \frac{dv}{dt} = \frac{d^2x}{dt^2}.\]</span></p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Derivative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(t^n\)</span></td>
+<td><span class="math inline">\(n\,t^{n-1}\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\sin\omega t\)</span></td>
+<td><span class="math inline">\(\omega\cos\omega t\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\cos\omega t\)</span></td>
+<td><span class="math inline">\(-\omega\sin\omega t\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(e^{kt}\)</span></td>
+<td><span class="math inline">\(k\,e^{kt}\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\ln t\)</span></td>
+<td><span class="math inline">\(1/t\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The <strong>chain rule</strong>, <span class="math inline">\(\dfrac{dy}{dt} = \dfrac{dy}{dx}\dfrac{dx}{dt}\)</span>, gives an extremely useful form of the acceleration: <span class="math display">\[a = \frac{dv}{dt} = \frac{dv}{dx}\frac{dx}{dt} = v\,\frac{dv}{dx}.\]</span> Use this whenever acceleration is given as a function of <strong>position</strong>.</p>
+<h4>Maxima and minima</h4>
+<p>A smooth function <span class="math inline">\(y(x)\)</span> has a local maximum or minimum where <span class="math inline">\(dy/dx = 0\)</span>. It is a maximum if <span class="math inline">\(d^2y/dx^2 &lt; 0\)</span> and a minimum if <span class="math inline">\(d^2y/dx^2 &gt; 0\)</span>.</p>
+<h4>The integral: accumulated change</h4>
+<p>Integration reverses differentiation and adds up infinitesimal contributions. Geometrically, the definite integral is the <strong>area under a curve</strong>: <span class="math display">\[x(t) = x_0 + \int_0^t v(t&#39;)\,dt&#39;,\qquad v(t) = v_0 + \int_0^t a(t&#39;)\,dt&#39;.\]</span> Useful results: <span class="math inline">\(\displaystyle\int t^n\,dt = \frac{t^{n+1}}{n+1} + C\)</span> for <span class="math inline">\(n\neq-1\)</span>, and <span class="math inline">\(\displaystyle\int\frac{dt}{t} = \ln t + C\)</span>.</p>
+<p><strong>Separation of variables.</strong> If <span class="math inline">\(\dfrac{dv}{dt} = f(v)\)</span>, rearrange to <span class="math inline">\(\dfrac{dv}{f(v)} = dt\)</span> and integrate both sides. We use this repeatedly, for example for motion with air resistance and for charging capacitors.</p>
+<div class="box work example"><div class="label">Worked example 1.10</div><h4 class="ex-title">From position to velocity and acceleration</h4>
+<p>A particle moves along the <span class="math inline">\(x\)</span>-axis with <span class="math inline">\(x(t) = 2t^3 - 9t^2 + 12t\)</span>, where <span class="math inline">\(x\)</span> is in metres and <span class="math inline">\(t\)</span> in seconds. Find (a) <span class="math inline">\(v(t)\)</span> and <span class="math inline">\(a(t)\)</span>, (b) when the particle is momentarily at rest and where it is then, and (c) the total distance travelled from <span class="math inline">\(t=0\)</span> to <span class="math inline">\(t=3\)</span> s.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) Differentiate once for velocity and again for acceleration: <span class="math display">\[v = \frac{dx}{dt} = 6t^2 - 18t + 12\ \mathrm{m/s},\qquad a = \frac{dv}{dt} = 12t - 18\ \mathrm{m/s^2}.\]</span></p>
+<p>(b) The particle is at rest when <span class="math inline">\(v = 0\)</span>: <span class="math display">\[6(t^2 - 3t + 2) = 6(t-1)(t-2) = 0 \;\Rightarrow\; t = 1\ \mathrm{s} \text{ or } t = 2\ \mathrm{s}.\]</span> The positions are <span class="math inline">\(x(1) = 2 - 9 + 12 = 5\)</span> m and <span class="math inline">\(x(2) = 16 - 36 + 24 = 4\)</span> m. At <span class="math inline">\(t = 1\)</span> s, <span class="math inline">\(a = -6\ \mathrm{m/s^2} &lt; 0\)</span>, so <span class="math inline">\(x\)</span> has a local maximum: the particle turns back. At <span class="math inline">\(t = 2\)</span> s, <span class="math inline">\(a = +6\ \mathrm{m/s^2}\)</span>, so it turns forward again.</p>
+<p>(c) Distance is <strong>not</strong> <span class="math inline">\(|x(3) - x(0)|\)</span> when the particle reverses. Add up each leg separately. With <span class="math inline">\(x(0) = 0\)</span> and <span class="math inline">\(x(3) = 54 - 81 + 36 = 9\)</span> m:</p>
+<ul>
+<li><span class="math inline">\(0 \to 1\)</span> s: from <span class="math inline">\(0\)</span> to <span class="math inline">\(5\)</span> m, a distance of 5 m.</li>
+<li><span class="math inline">\(1 \to 2\)</span> s: from <span class="math inline">\(5\)</span> to <span class="math inline">\(4\)</span> m, a distance of 1 m.</li>
+<li><span class="math inline">\(2 \to 3\)</span> s: from <span class="math inline">\(4\)</span> to <span class="math inline">\(9\)</span> m, a distance of 5 m.</li>
+</ul>
+<p>Total distance <span class="math inline">\(= 5 + 1 + 5 = 11\)</span> m. The displacement is only <span class="math inline">\(9\)</span> m.</p>
+</div>
+</div>
+<div class="box sum"><div class="label">Chapter summary</div>
+<ul>
+<li>Every measurement is a number times a unit. SI has seven base units, each now defined through a fixed constant of nature.</li>
+<li>Dimensions express a quantity in terms of <span class="math inline">\(M, L, T, \ldots\)</span> <strong>Homogeneity:</strong> every term in a valid equation has the same dimensions, and the arguments of <span class="math inline">\(\sin\)</span>, <span class="math inline">\(\exp\)</span> and <span class="math inline">\(\ln\)</span> are dimensionless.</li>
+<li>Dimensional analysis checks equations, converts units (<span class="math inline">\(n_2 = n_1 (M_1/M_2)^a (L_1/L_2)^b (T_1/T_2)^c\)</span>) and derives relations up to a dimensionless constant.</li>
+<li>Errors: absolute errors add for sums and differences. Relative errors, weighted by powers, add for products, quotients and powers.</li>
+<li>Vectors add by the triangle law: <span class="math inline">\(R = \sqrt{A^2 + B^2 + 2AB\cos\theta}\)</span>. Adding by components is usually easier: <span class="math inline">\(R_x = \sum A_x\)</span>, <span class="math inline">\(R_y = \sum A_y\)</span>. Check the quadrant.</li>
+<li><span class="math inline">\(\vect{A}\cdot\vect{B} = AB\cos\theta = \sum A_iB_i\)</span> is a scalar. <span class="math inline">\(\vect{A}\times\vect{B}\)</span> has magnitude <span class="math inline">\(AB\sin\theta\)</span>, is perpendicular to both by the right-hand rule, and is anti-commutative.</li>
+<li><span class="math inline">\(v = dx/dt\)</span> and <span class="math inline">\(a = dv/dt = v\,dv/dx\)</span>. Integrals reverse derivatives and represent areas under curves.</li>
+</ul>
+</div>
+<h3 class="part-title" id="practice">Practice problems</h3><p class="note">Full step-by-step solutions are in the separate solutions PDF.</p>
+<h4 class="level">Level A — Concept check</h4>
+<div class="prob" id="p1-1"><span class="pnum">P1.1</span>
+<p>Which of the following pairs have the same dimensions? (a) work and torque, (b) impulse and momentum, (c) pressure and energy density, (d) angular momentum and Planck’s constant. Justify each answer.</p>
+</div>
+<div class="prob" id="p1-2"><span class="pnum">P1.2</span>
+<p>Can the sum of two vectors of unequal magnitude ever be zero? Can the sum of three vectors of unequal magnitude be zero? Explain.</p>
+</div>
+<div class="prob" id="p1-3"><span class="pnum">P1.3</span>
+<p>Round each number to three significant figures, and state how many significant figures it originally had: (a) <span class="math inline">\(0.004\,5670\)</span>, (b) <span class="math inline">\(2.0063\)</span>, (c) <span class="math inline">\(6.0225\times10^{23}\)</span>.</p>
+</div>
+<div class="prob" id="p1-4"><span class="pnum">P1.4</span>
+<p>Two non-zero vectors have both <span class="math inline">\(\vect{A}\cdot\vect{B} = 0\)</span> and <span class="math inline">\(\vect{A}\times\vect{B} = \vect{0}\)</span>. Is this possible? Explain.</p>
+</div>
+<h4 class="level">Level B — Standard problems</h4>
+<div class="prob" id="p1-5"><span class="pnum">P1.5</span>
+<p>The van der Waals equation for a real gas is <span class="math inline">\(\left(P + \dfrac{a}{V^2}\right)(V - b) = RT\)</span>, where <span class="math inline">\(P\)</span> is pressure and <span class="math inline">\(V\)</span> is volume. Find the dimensions of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.</p>
+</div>
+<div class="prob" id="p1-6"><span class="pnum">P1.6</span>
+<p>The speed <span class="math inline">\(v\)</span> of a transverse wave on a stretched string depends on the tension <span class="math inline">\(F\)</span> in the string and its mass per unit length <span class="math inline">\(\mu\)</span>. Use dimensional analysis to find the form of <span class="math inline">\(v\)</span>.</p>
+</div>
+<div class="prob" id="p1-7"><span class="pnum">P1.7</span>
+<p>A man walks 30 m north, then 20 m east, then <span class="math inline">\(30\sqrt2\)</span> m south-west. Find his final displacement from the starting point, giving both magnitude and direction.</p>
+</div>
+<div class="prob" id="p1-8"><span class="pnum">P1.8</span>
+<p>Find the scalar component of <span class="math inline">\(\vect{A} = 3\ihat + 4\jhat\)</span> along the direction of <span class="math inline">\(\vect{B} = \ihat + \jhat\)</span>. Also find the vector component of <span class="math inline">\(\vect{A}\)</span> along <span class="math inline">\(\vect{B}\)</span>.</p>
+</div>
+<div class="prob" id="p1-9"><span class="pnum">P1.9</span>
+<p>The resistance of a wire is found from <span class="math inline">\(R = V/I\)</span>, with <span class="math inline">\(V = (100 \pm 5)\)</span> V and <span class="math inline">\(I = (10 \pm 0.2)\)</span> A. Find <span class="math inline">\(R\)</span>, its percentage error and its absolute error.</p>
+</div>
+<div class="prob" id="p1-10"><span class="pnum">P1.10</span>
+<p>Two vectors have magnitudes 5 units and 12 units, and their sum has magnitude 13 units. Find the angle between them and the magnitude of their difference.</p>
+</div>
+<div class="prob" id="p1-11"><span class="pnum">P1.11</span>
+<p>Estimate the mass of air in a classroom that measures 10 m × 8 m × 3 m. The density of air is about <span class="math inline">\(1.2\ \mathrm{kg/m^3}\)</span>. Compare your answer with the mass of a typical student.</p>
+</div>
+<div class="prob" id="p1-12"><span class="pnum">P1.12</span>
+<p>A patient of mass 70 kg is prescribed dopamine at <span class="math inline">\(5.0\ \mu\mathrm{g\,kg^{-1}\,min^{-1}}\)</span>. The infusion bag contains 400 mg of dopamine in 250 mL of saline. At what rate, in mL/h, must the infusion pump be set? If a nurse mistakenly enters the rate in mL/min instead of mL/h, by what factor is the patient overdosed?</p>
+</div>
+<h4 class="level">Level C — Challenge problems</h4>
+<div class="prob" id="p1-13"><span class="pnum">P1.13</span>
+<p>In a new system of units, the unit of mass is <span class="math inline">\(\alpha\)</span> kg, the unit of length is <span class="math inline">\(\beta\)</span> m and the unit of time is <span class="math inline">\(\gamma\)</span> s. What is the numerical value of 1 joule in this system?</p>
+</div>
+<div class="prob" id="p1-14"><span class="pnum">P1.14</span>
+<p>Find the area of the triangle with vertices <span class="math inline">\(P(1,0,0)\)</span>, <span class="math inline">\(Q(0,2,0)\)</span> and <span class="math inline">\(R(0,0,3)\)</span>, with coordinates in metres. Also find the unit vector normal to the plane of the triangle.</p>
+</div>
+<div class="prob" id="p1-15"><span class="pnum">P1.15</span>
+<p>A particle moves along the <span class="math inline">\(x\)</span>-axis with velocity <span class="math inline">\(v = \beta\sqrt{x}\)</span>, where <span class="math inline">\(\beta\)</span> is a positive constant. It starts from <span class="math inline">\(x = 0\)</span> at <span class="math inline">\(t = 0\)</span>. Find (a) <span class="math inline">\(x(t)\)</span>, (b) <span class="math inline">\(v(t)\)</span> and <span class="math inline">\(a(t)\)</span>, and (c) the average velocity over the first <span class="math inline">\(s\)</span> metres of motion.</p>
+</div>
+<div class="prob" id="p1-16"><span class="pnum">P1.16</span>
+<p>The frequency <span class="math inline">\(f\)</span> of oscillation of a small liquid drop is thought to depend on its radius <span class="math inline">\(r\)</span>, the density <span class="math inline">\(\rho\)</span> of the liquid and its surface tension <span class="math inline">\(S\)</span> (force per unit length). Use dimensional analysis to find how <span class="math inline">\(f\)</span> depends on these quantities. By what factor does the frequency change if the radius is doubled?</p>
+</div>
+<div class="prob" id="p1-17"><span class="pnum">P1.17</span>
+<p>(a) Show that the Reynolds number <span class="math inline">\(Re = \rho vD/\eta\)</span> is dimensionless, given that viscosity <span class="math inline">\(\eta\)</span> has SI unit Pa s. (b) Blood (<span class="math inline">\(\rho = 1060\ \mathrm{kg/m^3}\)</span>, <span class="math inline">\(\eta = 3.5\times10^{-3}\)</span> Pa s) flows through an aorta of diameter 2.5 cm. At rest the mean speed is 0.30 m/s. During heavy exercise it rises to 1.2 m/s. Find <span class="math inline">\(Re\)</span> in each case and comment on whether the flow is likely to be laminar or turbulent. (c) A water pipe in a building (<span class="math inline">\(\eta = 1.0\times10^{-3}\)</span> Pa s) has diameter 2.0 cm. Above what speed would you expect turbulence, taking <span class="math inline">\(Re \approx 2000\)</span> as the threshold?</p>
+</div>
+
+<div class="downloads noprint"><a href="ch01-units-vectors_notes.pdf" download>Download notes (PDF)</a><a href="ch01-units-vectors_solutions.pdf" download>Download solutions (PDF)</a></div>
+</article>
+<nav class="pager"><a href="index.html">← Contents</a><a href="ch02-kinematics.html">2. Kinematics in One and Two Dimensions →</a></nav></main>
+<footer>All worked examples and practice problems in these notes are original. Textbooks for further reading and practice, with a chapter-by-chapter map, are listed in the References.<p class="copyright">© 2026 Pratik Bhanuse. All rights reserved. · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p></footer>
+</div>
+</body>
+</html>
