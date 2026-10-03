@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Charges in motion: current, resistance, power, and the rules for analysing every circuit from a torch to a pacemaker.">
+<title>17. Electric Current and DC Circuits · Physics, step by step</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* House style shared with "Linear algebra, translated" */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D; --p:#7C3AED;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --def-bg:#F3EEFF; --def-ink:#5B21B6;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --def-bg:#1E1733; --def-ink:#C4B5FD;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --def-bg:#1E1733; --def-ink:#C4B5FD;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+a{color:var(--u)}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5.6vw,60px); line-height:1.04; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .hl{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+.byline{font-family:var(--display); font-size:15px; color:var(--muted); margin:14px 0 0}
+.byline strong{color:var(--ink)} .byline a, .copyright a{color:inherit}
+.copyright{font-family:var(--display); font-size:13px; color:var(--muted); margin:10px 0 0}
+
+/* side navigation */
+nav.toc{position:sticky; top:24px; align-self:start; padding-top:8px; font-family:var(--display); font-size:14px; max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc a[aria-current="page"]{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); font-weight:700}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px}
+nav.toc .sub{padding-left:28px; font-size:13px; color:var(--muted)}
+nav.toc .sub a{color:var(--muted); padding:3px 8px}
+
+main{min-width:0}
+.chapter{max-width:72ch}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+h4{font-family:var(--display); font-weight:700; font-size:18px; margin:24px 0 6px}
+h5{font-family:var(--display); font-weight:700; font-size:16px; margin:18px 0 4px}
+.topic-num{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--u); border-top:1px solid var(--line); padding-top:18px; margin-top:34px; scroll-margin-top:24px}
+h3.topic-title{font-size:24px; margin:4px 0 8px}
+h3.part-title{font-size:24px; margin:40px 0 4px; border-top:2px solid var(--ink); padding-top:16px}
+h4.level{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--v); margin:26px 0 10px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px}
+.note{color:var(--muted); font-size:15px}
+
+/* boxes */
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.def{background:var(--def-bg)} .box.def .label{color:var(--def-ink)}
+.box.work,.box.goals,.box.sum{background:var(--surface); border:1px solid var(--line)}
+.box.work .label,.box.goals .label,.box.sum .label{color:var(--muted)}
+.box.sum{border-top:3px solid var(--ink)}
+.box.work .label{color:var(--v)}
+.box .ex-title{margin:0 0 8px; font-size:18px}
+.sol-inline{margin:10px 0 12px; border-left:3px solid var(--w); padding-left:14px}
+.sol-label{display:block; font-family:var(--display); font-weight:700; font-size:13px; color:var(--w); margin-bottom:4px}
+details.ans{margin:4px 0 12px} details.ans summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:14px; color:var(--w)}
+details.ans > div{padding-top:6px}
+
+/* practice problems */
+.prob{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px 2px; margin:0 0 12px; min-width:0}
+.prob .pnum{font-family:var(--mono); font-weight:600; font-size:12px; color:var(--v); display:block; margin-bottom:2px}
+.prob p{margin:0 0 10px}
+
+/* solutions pages */
+h3.sol-head{margin:30px 0 8px; border-top:1px solid var(--line); padding-top:16px}
+h3.sol-head .pnum{font-family:var(--mono); font-size:14px; letter-spacing:.06em; color:var(--v)}
+.solutions .chapter > p:first-of-type{margin-top:0}
+
+/* tables, figures, math */
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2; fill:none}
+svg .obj{fill:var(--surface); stroke:var(--ink); stroke-width:1.6}
+svg .solid{fill:var(--code-bg); stroke:var(--ink); stroke-width:1.4}
+svg .ground{stroke:var(--ink); stroke-width:1.6}
+svg .hatch{stroke:var(--muted); stroke-width:1}
+svg .dash{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:5 4; fill:none}
+svg .u{stroke:var(--u); stroke-width:2.6; fill:none}
+svg .v{stroke:var(--v); stroke-width:2.6; fill:none}
+svg .w{stroke:var(--w); stroke-width:2.6; fill:none}
+svg .p{stroke:var(--p); stroke-width:2.6; fill:none}
+svg .curve{stroke:var(--u); stroke-width:2.4; fill:none}
+svg .hu,svg .tu{fill:var(--u)} svg .hv,svg .tv{fill:var(--v)} svg .hw,svg .tw{fill:var(--w)} svg .hp,svg .tp{fill:var(--p)}
+svg .muted{fill:var(--muted)} svg .ink{fill:var(--ink)}
+svg .dot{fill:var(--ink)}
+svg .fillu{fill:var(--u); fill-opacity:.12; stroke:none}
+mjx-container{color:inherit}
+mjx-container[display="true"]{display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; margin:.7em 0 !important; padding-block:2px}
+.box mjx-container[display="true"]{margin:.5em 0 !important}
+
+/* pager + footer */
+.pager{display:flex; justify-content:space-between; gap:12px; margin:56px 0 0; padding-top:16px; border-top:1px solid var(--line); font-family:var(--display); font-size:15px; max-width:72ch}
+.pager a{text-decoration:none; color:var(--u)}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+
+/* index page */
+.unit{border-top:2px solid var(--ink); padding-top:12px; margin:36px 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.chlist{list-style:none; padding:0; margin:0}
+.chlist li{display:grid; grid-template-columns:2.4em minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); margin:0}
+.chlist .n{font-family:var(--mono); font-size:13px; color:var(--muted)}
+.chlist .t{font-family:var(--display); font-weight:600; font-size:17px; text-decoration:none; color:var(--ink)}
+.chlist .t:hover{color:var(--u)}
+.chlist .s{font-family:var(--mono); font-size:12px; text-decoration:none}
+.downloads{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+.downloads a{font-family:var(--display); font-weight:600; font-size:15px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 14px}
+.downloads a:hover{border-color:var(--u); color:var(--u)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static; max-height:none}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  nav.toc .grp{grid-column:1/-1}
+  nav.toc .sub{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ---------- print (PDF) ---------- */
+@page{
+  size:Letter; margin:17mm 15mm 18mm;
+  @top-right{content:"Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-left{content:"© 2026 Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-right{content:counter(page) " / " counter(pages); font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+}
+@page :first{ @top-right{content:none} }
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff; padding:0; font-size:11.5pt}
+  .wrap{display:block; max-width:none}
+  nav.toc,.pager,.noprint{display:none !important}
+  header.top{padding-block:0 8px}
+  .chapter{max-width:none; break-before:page}
+  .book-toc{break-before:page}
+  .box,.prob,figure{break-inside:avoid}
+  .box.work{break-inside:auto}
+  .topic-num,h3,h4{break-after:avoid}
+  a{color:inherit; text-decoration:none}
+  details.ans > summary{display:none}
+}
+/* printed table of contents */
+.book-toc ol{list-style:none; padding:0}
+.book-toc li{display:flex; gap:12px; padding:5px 0; border-bottom:1px dotted var(--line); font-family:var(--display); margin:0}
+.book-toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:2em; padding-top:2px}
+h3.page-h{border-top:1px solid var(--line); padding-top:18px; margin-top:34px}
+svg .hk{fill:var(--ink)} svg .k{stroke:var(--ink); stroke-width:2.2; fill:none}
+:root{ --apply-bg:#F1EEFB; --apply-ink:#4C2A9E; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --apply-bg:#1D1830; --apply-ink:#C9B8FF; } }
+:root[data-theme="dark"]{ --apply-bg:#1D1830; --apply-ink:#C9B8FF; }
+.box.apply{background:var(--apply-bg); border-left:4px solid var(--apply-ink)} .box.apply .label{color:var(--apply-ink)}
+svg path.ground,svg polyline.ground{fill:none}
+
+.chlist .s a{text-decoration:none}
+.single{max-width:none}
+
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+         macros: { vect: ['\\vec{\\boldsymbol{#1}}', 1], uvec: ['\\hat{\\boldsymbol{#1}}', 1],
+                   ihat: '\\hat{\\boldsymbol{\\imath}}', jhat: '\\hat{\\boldsymbol{\\jmath}}',
+                   khat: '\\hat{\\boldsymbol{k}}', unit: ['\\,\\mathrm{#1}', 1] } },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker><marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker><marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hp"/></marker><marker id="ak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hk"/></marker></defs></svg>
+<div class="wrap">
+<header class="top"><div class="kicker">Chapter 17 · Semester 2 · Electricity, Magnetism, Optics and Modern Physics</div><h1>Electric Current and DC Circuits</h1><p class="lede">Charges in motion: current, resistance, power, and the rules for analysing every circuit from a torch to a pacemaker.</p><p class="byline">By <strong>Pratik Bhanuse</strong>, PhD Physics candidate, Western University · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p><div class="downloads noprint"><a href="ch17-dc-circuits_notes.pdf" download>Download notes (PDF)</a><a href="ch17-dc-circuits_solutions.pdf" download>Download solutions (PDF)</a></div></header>
+<aside class="side"><nav class="toc" aria-label="Contents"><ol>
+<li><a href="index.html"><span class="n">⌂</span>Contents</a></li>
+<li><a href="syllabus.html"><span class="n">→</span>Syllabus and how to study</a></li>
+<li class="grp">Semester 1 · Mechanics, Waves and Thermal Physics</li>
+<li><a href="ch01-units-vectors.html"><span class="n">1</span>Measurement, Units, Dimensions and Vectors</a></li>
+<li><a href="ch02-kinematics.html"><span class="n">2</span>Kinematics in One and Two Dimensions</a></li>
+<li><a href="ch03-newtons-laws.html"><span class="n">3</span>Newton&#x27;s Laws of Motion</a></li>
+<li><a href="ch04-friction-circular.html"><span class="n">4</span>Friction and Circular Motion</a></li>
+<li><a href="ch05-work-energy.html"><span class="n">5</span>Work, Energy and Power</a></li>
+<li><a href="ch06-momentum.html"><span class="n">6</span>Centre of Mass, Linear Momentum and Collisions</a></li>
+<li><a href="ch07-rotation.html"><span class="n">7</span>Rotational Motion</a></li>
+<li><a href="ch08-gravitation.html"><span class="n">8</span>Gravitation</a></li>
+<li><a href="ch09-oscillations.html"><span class="n">9</span>Simple Harmonic Motion</a></li>
+<li><a href="ch10-fluids-elasticity.html"><span class="n">10</span>Elasticity and Fluid Mechanics</a></li>
+<li><a href="ch11-waves-sound.html"><span class="n">11</span>Mechanical Waves and Sound</a></li>
+<li><a href="ch12-thermal.html"><span class="n">12</span>Heat, Kinetic Theory and Thermodynamics</a></li>
+<li class="grp">Semester 2 · Electricity, Magnetism, Optics and Modern Physics</li>
+<li><a href="ch13-electric-field.html"><span class="n">13</span>Electric Charge and Electric Field</a></li>
+<li><a href="ch14-gauss.html"><span class="n">14</span>Gauss&#x27;s Law</a></li>
+<li><a href="ch15-potential.html"><span class="n">15</span>Electric Potential</a></li>
+<li><a href="ch16-capacitance.html"><span class="n">16</span>Capacitance and Dielectrics</a></li>
+<li><a href="ch17-dc-circuits.html" aria-current="page"><span class="n">17</span>Electric Current and DC Circuits</a></li>
+<li class="sub"><a href="#electric-current">§17.1 Electric current</a></li>
+<li class="sub"><a href="#resistance-resistivity-and-ohms-law">§17.2 Resistance, resistivity and Ohm’s law</a></li>
+<li class="sub"><a href="#electrical-power">§17.3 Electrical power</a></li>
+<li class="sub"><a href="#emf-and-internal-resistance">§17.4 EMF and internal resistance</a></li>
+<li class="sub"><a href="#resistors-in-series-and-parallel">§17.5 Resistors in series and parallel</a></li>
+<li class="sub"><a href="#kirchhoffs-rules">§17.6 Kirchhoff’s rules</a></li>
+<li class="sub"><a href="#measuring-instruments">§17.7 Measuring instruments</a></li>
+<li class="sub"><a href="#rc-circuits">§17.8 RC circuits</a></li>
+<li class="sub"><a href="#current-and-the-human-body">§17.9 Current and the human body</a></li>
+<li class="sub"><a href="#practice">Practice problems</a></li>
+<li><a href="ch18-magnetic-force.html"><span class="n">18</span>Magnetic Field and Magnetic Forces</a></li>
+<li><a href="ch19-magnetic-sources.html"><span class="n">19</span>Sources of the Magnetic Field</a></li>
+<li><a href="ch20-induction.html"><span class="n">20</span>Electromagnetic Induction</a></li>
+<li><a href="ch21-ac-emwaves.html"><span class="n">21</span>Alternating Current and Electromagnetic Waves</a></li>
+<li><a href="ch22-geometric-optics.html"><span class="n">22</span>Geometrical Optics</a></li>
+<li><a href="ch23-wave-optics.html"><span class="n">23</span>Wave Optics</a></li>
+<li><a href="ch24-modern.html"><span class="n">24</span>Photons, Atoms and Nuclei</a></li>
+<li class="grp">Appendix</li>
+<li><a href="references.html"><span class="n">R</span>References and further practice</a></li>
+</ol></nav></aside>
+<main><article class="chapter notes">
+<p>So far our charges have been at rest. When a potential difference drives charges through a conductor, we get an <strong>electric current</strong>, the basis of all electrical technology. This chapter starts with a microscopic picture of current, using drift velocity and resistivity. It then builds up the circuit tools engineers use every day: Ohm’s law, power, EMF and internal resistance, series and parallel combinations, Kirchhoff’s rules, measuring instruments, and the charging and discharging of capacitors in RC circuits. We finish with the effects of current on the human body, the foundation of electrical safety in hospitals and homes.</p>
+<div class="box goals"><div class="label">You will be able to</div>
+<ul>
+<li>Relate current to drift velocity and charge carrier density, and use current density.</li>
+<li>Use resistance, resistivity and its temperature dependence, and Ohm’s law. Understand the microscopic (Drude) model of conduction.</li>
+<li>Calculate electrical power and energy, including Joule heating.</li>
+<li>Model real sources with an EMF and an internal resistance. Find terminal voltage and the condition for maximum power transfer.</li>
+<li>Reduce series–parallel networks, and solve multi-loop circuits with Kirchhoff’s rules.</li>
+<li>Analyse ammeters, voltmeters and the Wheatstone bridge.</li>
+<li>Solve RC charging and discharging problems using the time constant.</li>
+<li>Explain the physiological effects of current and the principles of electrical safety.</li>
+</ul>
+</div>
+<div class="box ask"><div class="label">Think first</div>
+<p>Electrons drift through a household wire at well under a millimetre per second. Yet when you flip a switch, a light several metres away comes on almost instantly. How?</p>
+<details class="ans"><summary>Show answer</summary><div>
+<p>The wire is already <em>full</em> of free electrons. Closing the switch sets up an electric field along the whole circuit almost instantly, at close to the speed of light. Every electron everywhere in the circuit starts drifting at essentially the same moment. It is like a water pipe that is already full: open the tap and water flows out immediately, even though any particular water molecule moves slowly. The <em>signal</em> travels fast, while the charge carriers creep (Example 17.1).</p>
+</div></details>
+</div>
+<div class="topic-num" id="electric-current">§17.1</div><h3 class="topic-title">Electric current</h3>
+<p><strong>Electric current</strong> is the rate at which charge flows through a cross-section: <span class="math display">\[I = \frac{dQ}{dt}.\]</span> The SI unit is the <strong>ampere</strong>: 1 A = 1 C/s. By convention, current flows in the direction positive charges would move. In metals the carriers are actually electrons, which move the opposite way.</p>
+<p><strong>Drift velocity.</strong> Free electrons in a metal move randomly at very high speeds, about <span class="math inline">\(10^6\)</span> m/s, colliding constantly with the vibrating ions. With no field, their average velocity is zero. A field gives them a small average <strong>drift velocity</strong> <span class="math inline">\(v_d\)</span> opposite to <span class="math inline">\(\vect{E}\)</span>. Suppose there are <span class="math inline">\(n\)</span> carriers per unit volume, each with charge <span class="math inline">\(q\)</span>, in a wire of cross-section <span class="math inline">\(A\)</span>. In a time <span class="math inline">\(dt\)</span>, all the carriers within a length <span class="math inline">\(v_d\,dt\)</span> pass through a cross-section, so <span class="math inline">\(dQ = nqAv_d\,dt\)</span> and <span class="math display">\[I = nqv_dA.\]</span> The <strong>current density</strong> is the current per unit area, <span class="math inline">\(J = I/A = nqv_d\)</span>, measured in A/m².</p>
+<div class="box work example"><div class="label">Worked example 17.1</div><h4 class="ex-title">How slowly do electrons drift?</h4>
+<p>A copper wire of diameter 2.0 mm carries 10 A. Copper has about <span class="math inline">\(8.5\times10^{28}\)</span> free electrons per m³. Find the drift velocity.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[A = \pi(1.0\times10^{-3})^2 = 3.14\times10^{-6}\ \mathrm{m^2}.\]</span> <span class="math display">\[v_d = \frac{I}{neA} = \frac{10}{(8.5\times10^{28})(1.602\times10^{-19})(3.14\times10^{-6})} = 2.3\times10^{-4}\ \mathrm{m/s}.\]</span> That is about 0.8 metres per hour.</p>
+<p><strong>Evaluate.</strong> The electrons in a car’s battery cable take hours to travel its length. The energy, however, travels in the electromagnetic field around the wires at nearly the speed of light.</p>
+</div>
+</div>
+<div class="topic-num" id="resistance-resistivity-and-ohms-law">§17.2</div><h3 class="topic-title">Resistance, resistivity and Ohm’s law</h3>
+<p>The <strong>resistance</strong> of a component is <span class="math display">\[R = \frac{V}{I},\]</span> measured in <strong>ohms</strong> (<span class="math inline">\(1\ \Omega = 1\)</span> V/A). A material obeys <strong>Ohm’s law</strong> if <span class="math inline">\(R\)</span> stays constant as <span class="math inline">\(V\)</span> varies. Metals and resistors are close to ohmic. Diodes, transistors, filament lamps (as they heat up) and nerve membranes are not.</p>
+<p>For a uniform wire of length <span class="math inline">\(L\)</span> and cross-section <span class="math inline">\(A\)</span>: <span class="math display">\[R = \rho\frac{L}{A},\]</span> where <span class="math inline">\(\rho\)</span> is the <strong>resistivity</strong> of the material, in Ω m. Its inverse, <span class="math inline">\(\sigma = 1/\rho\)</span>, is the <strong>conductivity</strong>. In microscopic form, Ohm’s law reads <span class="math inline">\(\vect{J} = \sigma\vect{E}\)</span>.</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Material</th>
+<th><span class="math inline">\(\rho\)</span> at 20 °C (Ω m)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Silver</td>
+<td><span class="math inline">\(1.6\times10^{-8}\)</span></td>
+</tr>
+<tr>
+<td>Copper</td>
+<td><span class="math inline">\(1.7\times10^{-8}\)</span></td>
+</tr>
+<tr>
+<td>Aluminium</td>
+<td><span class="math inline">\(2.8\times10^{-8}\)</span></td>
+</tr>
+<tr>
+<td>Nichrome (heating elements)</td>
+<td><span class="math inline">\(1.1\times10^{-6}\)</span></td>
+</tr>
+<tr>
+<td>Seawater</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>Blood</td>
+<td>about 1.5</td>
+</tr>
+<tr>
+<td>Muscle tissue</td>
+<td>2–5</td>
+</tr>
+<tr>
+<td>Fat</td>
+<td>20–30</td>
+</tr>
+<tr>
+<td>Pure silicon</td>
+<td>about <span class="math inline">\(10^3\)</span></td>
+</tr>
+<tr>
+<td>Glass</td>
+<td><span class="math inline">\(10^{10}\)</span>–<span class="math inline">\(10^{14}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Temperature dependence.</strong> For metals, the resistivity rises roughly linearly with temperature: <span class="math display">\[\rho(T) \approx \rho_0\left[1 + \alpha(T - T_0)\right],\]</span> with <span class="math inline">\(\alpha \approx 0.004\ \mathrm{K^{-1}}\)</span> for copper. Hotter ions vibrate more and scatter the electrons more often. Platinum resistance thermometers use this effect. Semiconductors behave the opposite way: their resistance <em>falls</em> as they warm, which thermistors exploit. Superconductors lose all resistance below a critical temperature, which lets MRI magnets carry hundreds of amperes with no heating.</p>
+<p><strong>The microscopic picture (Drude model).</strong> Between collisions, which happen on average every <span class="math inline">\(\tau\)</span> seconds, an electron accelerates at <span class="math inline">\(eE/m\)</span>. Its average drift velocity is therefore <span class="math inline">\(v_d = eE\tau/m\)</span>. Combining this with <span class="math inline">\(J = nev_d\)</span> gives <span class="math display">\[J = \frac{ne^2\tau}{m}E \quad\Longrightarrow\quad \rho = \frac{m}{ne^2\tau}.\]</span> For copper, <span class="math inline">\(\tau \approx 2.5\times10^{-14}\)</span> s (Problem P17.13).</p>
+<div class="topic-num" id="electrical-power">§17.3</div><h3 class="topic-title">Electrical power</h3>
+<p>When a current <span class="math inline">\(I\)</span> flows through a potential difference <span class="math inline">\(V\)</span>, charge <span class="math inline">\(dQ = I\,dt\)</span> loses potential energy <span class="math inline">\(V\,dQ\)</span>. So the power transferred is <span class="math display">\[P = IV.\]</span> For a resistor this energy becomes heat (<strong>Joule heating</strong>): <span class="math display">\[P = I^2R = \frac{V^2}{R}.\]</span> Electricity suppliers charge for energy in kilowatt-hours: <span class="math inline">\(1\ \mathrm{kWh} = 3.6\times10^6\)</span> J.</p>
+<div class="box work example"><div class="label">Worked example 17.2</div><h4 class="ex-title">An electric kettle</h4>
+<p>A 2.0 kW kettle runs on 230 V mains for 3.0 minutes. Find the current, the element’s resistance, and the energy used in kWh.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[I = \frac{P}{V} = \frac{2000}{230} = 8.7\ \mathrm{A},\qquad R = \frac{V^2}{P} = \frac{230^2}{2000} = 26\ \Omega.\]</span> <span class="math display">\[E = Pt = 2.0\ \mathrm{kW}\times0.050\ \mathrm{h} = 0.10\ \mathrm{kWh}\ \ (3.6\times10^5\ \mathrm{J}).\]</span></p>
+<p><strong>Evaluate.</strong> Power is transmitted over long distances at very high voltage (hundreds of kV) because, for a given power, a higher voltage means a smaller current. The losses in the line, <span class="math inline">\(I^2R_{\text{line}}\)</span>, then fall with the <em>square</em> of the current.</p>
+</div>
+</div>
+<div class="topic-num" id="emf-and-internal-resistance">§17.4</div><h3 class="topic-title">EMF and internal resistance</h3>
+<p>A battery or generator maintains a potential difference by doing non-electrostatic work on charges: chemical work in a battery, magnetic work in a generator. This work per unit charge is the <strong>electromotive force</strong> (EMF), <span class="math inline">\(\mathcal{E}\)</span>, measured in volts. A real source also has an <strong>internal resistance</strong> <span class="math inline">\(r\)</span>, so the voltage at its terminals when it delivers a current <span class="math inline">\(I\)</span> is <span class="math display">\[V_{\text{terminal}} = \mathcal{E} - Ir.\]</span> Connected to an external load <span class="math inline">\(R\)</span>: <span class="math display">\[I = \frac{\mathcal{E}}{R + r}.\]</span></p>
+<p><strong>Maximum power transfer.</strong> The power delivered to the load is <span class="math inline">\(P = I^2R = \mathcal{E}^2R/(R + r)^2\)</span>. It is greatest when <span class="math inline">\(R = r\)</span> (Problem P17.14), at which point <span class="math inline">\(P_{\max} = \mathcal{E}^2/4r\)</span> and only half of the source’s power reaches the load.</p>
+<div class="box work example"><div class="label">Worked example 17.3</div><h4 class="ex-title">A car battery under load</h4>
+<p>A 12.0 V battery with an internal resistance of 0.50 Ω powers a 5.5 Ω load. Find the current, the terminal voltage, the power delivered to the load, and the power wasted inside the battery. What load would receive the most power?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[I = \frac{12.0}{5.5 + 0.50} = 2.0\ \mathrm{A},\qquad V_{\text{terminal}} = 12.0 - 2.0(0.50) = 11.0\ \mathrm{V}.\]</span> <span class="math display">\[P_{\text{load}} = I^2R = 22\ \mathrm{W},\qquad P_{\text{internal}} = I^2r = 2.0\ \mathrm{W}.\]</span> Maximum power transfer needs <span class="math inline">\(R = r = 0.50\ \Omega\)</span>, giving <span class="math inline">\(P = 12^2/(4\times0.50) = 72\)</span> W.</p>
+<p><strong>Evaluate.</strong> When a car’s starter motor draws 200 A, the internal voltage drop is large, which is why the headlights dim while the engine is cranking. A battery with a higher internal resistance (an old battery, or a cold one) may not be able to start the engine at all.</p>
+</div>
+</div>
+<div class="topic-num" id="resistors-in-series-and-parallel">§17.5</div><h3 class="topic-title">Resistors in series and parallel</h3>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Series</strong> (the same current flows through each, and the voltages add): <span class="math display">\[R_{\text{eq}} = R_1 + R_2 + \cdots\]</span> <strong>Parallel</strong> (the same voltage is across each, and the currents add): <span class="math display">\[\frac{1}{R_{\text{eq}}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots\]</span> For two resistors in parallel, <span class="math inline">\(R_{\text{eq}} = \dfrac{R_1R_2}{R_1 + R_2}\)</span>. The equivalent resistance of a parallel combination is always smaller than the smallest resistor in it.</p>
+</div>
+<p>Household circuits are wired in <strong>parallel</strong>, so that every appliance receives the full mains voltage and can be switched on and off independently. Christmas lights wired in series all go out when one bulb fails, which is why modern sets use shunts or parallel wiring.</p>
+<div class="box work example"><div class="label">Worked example 17.4</div><h4 class="ex-title">A series–parallel circuit</h4>
+<p>A 4.0 Ω resistor is connected in series with a parallel pair of 6.0 Ω and 3.0 Ω resistors, across a 12 V battery with negligible internal resistance. Find the current in each resistor.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Equivalent resistance:</strong> <span class="math display">\[R_{\parallel} = \frac{6.0\times3.0}{9.0} = 2.0\ \Omega,\qquad R_{\text{eq}} = 4.0 + 2.0 = 6.0\ \Omega.\]</span></p>
+<p><strong>Currents:</strong></p>
+<ul>
+<li>Total current, through the 4.0 Ω resistor: <span class="math inline">\(I = 12/6.0 = 2.0\)</span> A.</li>
+<li>Voltage across the parallel pair: <span class="math inline">\(V_\parallel = 2.0\times2.0 = 4.0\)</span> V.</li>
+<li>So <span class="math inline">\(I_6 = 4.0/6.0 = 0.67\)</span> A and <span class="math inline">\(I_3 = 4.0/3.0 = 1.33\)</span> A. These add to 2.0 A. ✓</li>
+</ul>
+<p>The smaller resistor takes the larger share of the current.</p>
+</div>
+</div>
+<div class="topic-num" id="kirchhoffs-rules">§17.6</div><h3 class="topic-title">Kirchhoff’s rules</h3>
+<p>Many circuits cannot be reduced to series and parallel combinations. For these we use two rules that express conservation laws.</p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Junction rule</strong> (conservation of charge). The total current flowing into any junction equals the total current flowing out: <span class="math display">\[\sum I_{\text{in}} = \sum I_{\text{out}}.\]</span></p>
+<p><strong>Loop rule</strong> (conservation of energy). Around any closed loop, the potential differences add to zero: <span class="math display">\[\sum\Delta V = 0.\]</span></p>
+<p><strong>Sign conventions</strong> for going round a loop:</p>
+<ul>
+<li>Crossing a resistor in the direction of the assumed current, <span class="math inline">\(\Delta V = -IR\)</span>. Against the current, <span class="math inline">\(+IR\)</span>.</li>
+<li>Crossing a battery from <span class="math inline">\(-\)</span> to <span class="math inline">\(+\)</span>, <span class="math inline">\(\Delta V = +\mathcal{E}\)</span>. From <span class="math inline">\(+\)</span> to <span class="math inline">\(-\)</span>, <span class="math inline">\(-\mathcal{E}\)</span>.</li>
+</ul>
+</div>
+<p><strong>Method.</strong></p>
+<ol>
+<li>Label a current in every branch, guessing its direction.</li>
+<li>Write junction equations, one fewer than the number of junctions.</li>
+<li>Write loop equations until you have as many independent equations as unknown currents.</li>
+<li>Solve. A negative answer simply means that the current flows opposite to the direction you guessed.</li>
+</ol>
+<figure>
+<svg viewBox="0 0 360 230" width="340" role="img" aria-label="Two-loop circuit with three vertical branches joined by top and bottom wires. The left branch has a 12-volt battery and a 2-ohm resistor, the middle branch a 6-ohm resistor, and the right branch a 6-volt battery and a 4-ohm resistor. Assumed currents I1 up the left branch, I3 down the middle and I2 up the right.">
+<polyline class="ground" points="40,40 320,40"/><polyline class="ground" points="40,200 320,200"/>
+<polyline class="ground" points="40,40 40,70"/><line class="ground" x1="25" y1="70" x2="55" y2="70" style="stroke-width:2.5"/><line class="ground" x1="32" y1="80" x2="48" y2="80" style="stroke-width:4"/><polyline class="ground" points="40,80 40,110"/>
+<path class="ground" d="M40,110 l0,8 l8,4 l-16,8 l16,8 l-16,8 l16,8 l-8,4 l0,8 L40,200"/>
+<text x="2" y="78" class="ink">12 V</text><text x="52" y="146" class="ink">2 Ω</text>
+<text x="18" y="64" class="tv">+</text>
+<polyline class="ground" points="180,40 180,85"/>
+<path class="ground" d="M180,85 l0,8 l8,4 l-16,8 l16,8 l-16,8 l16,8 l-8,4 l0,8 L180,200"/>
+<text x="192" y="122" class="ink">6 Ω</text>
+<polyline class="ground" points="320,40 320,70"/><line class="ground" x1="305" y1="70" x2="335" y2="70" style="stroke-width:2.5"/><line class="ground" x1="312" y1="80" x2="328" y2="80" style="stroke-width:4"/><polyline class="ground" points="320,80 320,110"/>
+<path class="ground" d="M320,110 l0,8 l8,4 l-16,8 l16,8 l-16,8 l16,8 l-8,4 l0,8 L320,200"/>
+<text x="338" y="78" class="ink">6 V</text><text x="290" y="146" class="ink">4 Ω</text>
+<text x="300" y="64" class="tv">+</text>
+<line class="u" x1="62" y1="190" x2="62" y2="166" marker-end="url(#au)"/><text x="66" y="186" class="tu">I₁</text>
+<line class="u" x1="160" y1="150" x2="160" y2="174" marker-end="url(#au)"/><text x="140" y="186" class="tu">I₃</text>
+<line class="u" x1="298" y1="190" x2="298" y2="166" marker-end="url(#au)"/><text x="276" y="186" class="tu">I₂</text>
+<circle class="dot" cx="180" cy="40" r="3"/><circle class="dot" cx="180" cy="200" r="3"/>
+</svg>
+<figcaption>A two-loop circuit that cannot be reduced to series and parallel combinations. The arrows show the assumed current directions used in Example 17.5.</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 17.5</div><h4 class="ex-title">A two-loop circuit</h4>
+<p>For the circuit in the figure, find the three currents.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Junction rule</strong> (top junction): <span class="math inline">\(I_1 + I_2 = I_3\)</span>.</p>
+<p><strong>Left loop</strong> (clockwise from the bottom left: up through the 12 V battery, down through the 6 Ω resistor, and back through the 2 Ω resistor): <span class="math display">\[12 - 6I_3 - 2I_1 = 0.\]</span></p>
+<p><strong>Right loop</strong> (anticlockwise from the bottom right: up through the 6 V battery, down through the 6 Ω resistor, and back through the 4 Ω resistor): <span class="math display">\[6 - 6I_3 - 4I_2 = 0.\]</span></p>
+<p><strong>Solve.</strong> Substitute <span class="math inline">\(I_3 = I_1 + I_2\)</span>: <span class="math display">\[8I_1 + 6I_2 = 12,\qquad 6I_1 + 10I_2 = 6.\]</span> From the first equation, <span class="math inline">\(I_1 = 1.5 - 0.75I_2\)</span>. Substituting into the second: <span class="math inline">\(9 + 5.5I_2 = 6\)</span>, so <span class="math display">\[I_2 = -0.55\ \mathrm{A},\qquad I_1 = 1.91\ \mathrm{A},\qquad I_3 = 1.36\ \mathrm{A}.\]</span></p>
+<p><strong>Interpretation.</strong> <span class="math inline">\(I_2\)</span> is negative, so the current in the right branch actually flows <em>downward</em> through the 6 V battery, from its <span class="math inline">\(+\)</span> terminal to its <span class="math inline">\(-\)</span> terminal. The 12 V battery is <strong>charging</strong> the 6 V battery.</p>
+<p><strong>Check (left loop):</strong> <span class="math inline">\(12 - 6(1.36) - 2(1.91) = 12 - 8.18 - 3.82 = 0\)</span>. ✓</p>
+</div>
+</div>
+<div class="topic-num" id="measuring-instruments">§17.7</div><h3 class="topic-title">Measuring instruments</h3>
+<ul>
+<li>An <strong>ammeter</strong> is connected in <strong>series</strong> and must have a very <em>low</em> resistance, so that it does not disturb the current it measures.</li>
+<li>A <strong>voltmeter</strong> is connected in <strong>parallel</strong> and must have a very <em>high</em> resistance, so that it draws negligible current.</li>
+</ul>
+<p>A moving-coil galvanometer (resistance <span class="math inline">\(R_g\)</span>, full-scale current <span class="math inline">\(I_g\)</span>) can be converted into either instrument:</p>
+<ul>
+<li>an <strong>ammeter</strong>, by adding a small <strong>shunt</strong> resistance in parallel, <span class="math inline">\(R_{\text{sh}} = \dfrac{I_gR_g}{I - I_g}\)</span>;</li>
+<li>a <strong>voltmeter</strong>, by adding a large resistance in series, <span class="math inline">\(R_s = \dfrac{V}{I_g} - R_g\)</span>.</li>
+</ul>
+<p><strong>The Wheatstone bridge.</strong> Four resistors are arranged in a diamond, with a galvanometer across the middle. When the bridge is <em>balanced</em>, no current flows through the galvanometer, and <span class="math display">\[\frac{R_1}{R_2} = \frac{R_3}{R_4}.\]</span> Measuring at balance, where the current is zero, makes the result independent of the meter’s own characteristics. Bridges are used to read <strong>strain gauges</strong>, which measure tiny changes in resistance when a structure flexes (Problem P17.12), and in many sensor circuits.</p>
+<div class="box work example"><div class="label">Worked example 17.6</div><h4 class="ex-title">Building meters from a galvanometer</h4>
+<p>A galvanometer has a resistance of 50 Ω and a full-scale deflection at 1.0 mA. How would you convert it into (a) an ammeter reading up to 1.0 A and (b) a voltmeter reading up to 10 V?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) <strong>Ammeter:</strong> a shunt in parallel carrying the other 0.999 A: <span class="math display">\[R_{\text{sh}} = \frac{(1.0\times10^{-3})(50)}{0.999} = 0.050\ \Omega.\]</span> The ammeter’s total resistance is about 0.05 Ω.</p>
+<p>(b) <strong>Voltmeter:</strong> a resistance in series: <span class="math display">\[R_s = \frac{10}{1.0\times10^{-3}} - 50 = 9950\ \Omega.\]</span> The voltmeter’s total resistance is 10 kΩ, or “1000 Ω per volt”. Modern digital voltmeters have about 10 MΩ.</p>
+</div>
+</div>
+<div class="topic-num" id="rc-circuits">§17.8</div><h3 class="topic-title">RC circuits</h3>
+<p>When a capacitor charges or discharges through a resistor, the current is not steady: it decays exponentially.</p>
+<p><strong>Charging.</strong> At <span class="math inline">\(t = 0\)</span>, a switch connects an uncharged capacitor <span class="math inline">\(C\)</span> in series with a resistor <span class="math inline">\(R\)</span> to a battery of EMF <span class="math inline">\(\mathcal{E}\)</span>. Going round the loop: <span class="math display">\[\mathcal{E} - iR - \frac{q}{C} = 0,\qquad i = \frac{dq}{dt}.\]</span> Separating the variables and integrating, with <span class="math inline">\(q(0) = 0\)</span>: <span class="math display">\[q(t) = C\mathcal{E}\left(1 - e^{-t/RC}\right),\qquad i(t) = \frac{\mathcal{E}}{R}e^{-t/RC}.\]</span></p>
+<p><strong>Discharging.</strong> A capacitor initially charged to <span class="math inline">\(q_0\)</span> discharges through <span class="math inline">\(R\)</span>: <span class="math display">\[q(t) = q_0e^{-t/RC},\qquad i(t) = -\frac{q_0}{RC}e^{-t/RC}.\]</span></p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Time constant:</strong> <span class="math inline">\(\tau = RC\)</span> (ohms × farads = seconds).</p>
+<ul>
+<li>After one time constant, a charging capacitor reaches <span class="math inline">\(1 - e^{-1} = 63\%\)</span> of its final charge, and a discharging one falls to <span class="math inline">\(e^{-1} = 37\%\)</span>.</li>
+<li>After <span class="math inline">\(5\tau\)</span>, the process is more than 99% complete.</li>
+<li>The time to fall to half is <span class="math inline">\(\tau\ln2 = 0.693\tau\)</span>.</li>
+</ul>
+</div>
+<figure>
+<svg viewBox="0 0 360 210" width="340" role="img" aria-label="Charging and discharging curves of a capacitor against time. The charging curve rises from zero towards its maximum, reaching 63 percent at one time constant. The discharging curve falls from maximum, reaching 37 percent at one time constant.">
+<line class="ax" x1="40" y1="180" x2="345" y2="180" marker-end="url(#ak)"/>
+<line class="ax" x1="50" y1="190" x2="50" y2="20" marker-end="url(#ak)"/>
+<text x="330" y="198" class="muted">t</text>
+<line class="dash" x1="50" y1="40" x2="340" y2="40"/>
+<text x="10" y="44" class="muted">100%</text>
+<polyline class="u" points="50,180 80,124.9 110,91.5 140,71.2 170,58.9 200,51.5 230,47.0 260,44.2 290,42.6 320,41.6"/>
+<polyline class="v" points="50,40 80,95.1 110,128.5 140,148.8 170,161.1 200,168.5 230,173.0 260,175.8 290,177.4 320,178.4"/>
+<line class="dash" x1="110" y1="40" x2="110" y2="180"/>
+<text x="104" y="196" class="muted">τ</text>
+<line class="dash" x1="50" y1="91.5" x2="110" y2="91.5"/><text x="14" y="95" class="muted">63%</text>
+<line class="dash" x1="50" y1="128.5" x2="110" y2="128.5"/><text x="14" y="132" class="muted">37%</text>
+<text x="200" y="48" class="tu">charging: 1 − e^(−t/τ)</text>
+<text x="190" y="158" class="tv">discharging: e^(−t/τ)</text>
+</svg>
+<figcaption>Charging and discharging a capacitor. Each time constant τ = RC closes 63% of the remaining gap.</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 17.7</div><h4 class="ex-title">Charging a capacitor</h4>
+<p>A 10 μF capacitor charges through a 100 kΩ resistor from a 12 V battery. Find the time constant, the voltage across the capacitor after 2.0 s, the initial current, and the time to reach 99% of full charge.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math inline">\(\tau = RC = (1.0\times10^5)(1.0\times10^{-5}) = 1.0\)</span> s.</p>
+<ul>
+<li>After 2.0 s: <span class="math inline">\(V_C = 12(1 - e^{-2}) = 12(0.865) = 10.4\)</span> V.</li>
+<li>Initial current: <span class="math inline">\(i_0 = \mathcal{E}/R = 12/10^5 = 0.12\)</span> mA.</li>
+<li>99% charged when <span class="math inline">\(e^{-t/\tau} = 0.01\)</span>, that is, <span class="math inline">\(t = \tau\ln100 = 4.6\)</span> s.</li>
+</ul>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>RC timing in medicine and electronics.</strong> RC circuits set the timing of everything from windscreen-wiper delays and camera shutters to the oscillators in classic pacemaker designs. In those pacemakers, a capacitor charges through a resistor until it reaches a threshold, then fires a pulse to the heart and resets, so that <span class="math inline">\(RC\)</span> sets the heart rate. Cell membranes behave like RC circuits too: their resistance and capacitance give a <em>membrane time constant</em> of a few to tens of milliseconds (Problem P17.17). That time constant controls how a neuron adds up its many incoming signals.</p>
+</div>
+<div class="topic-num" id="current-and-the-human-body">§17.9</div><h3 class="topic-title">Current and the human body</h3>
+<p>Current, not voltage, causes injury. The voltage matters only because, with the body’s resistance, it determines the current. Typical effects of 50–60 Hz alternating current passing through the trunk for about a second are:</p>
+<div class="tablewrap">
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Current</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>about 1 mA</td>
+<td>threshold of perception (tingling)</td>
+</tr>
+<tr>
+<td>about 5 mA</td>
+<td>maximum “harmless” current</td>
+</tr>
+<tr>
+<td>10–20 mA</td>
+<td>muscles contract involuntarily: you <strong>cannot let go</strong></td>
+</tr>
+<tr>
+<td>50–100 mA</td>
+<td>pain, breathing difficulty, risk of <strong>ventricular fibrillation</strong></td>
+</tr>
+<tr>
+<td>&gt; 1 A</td>
+<td>severe burns, cardiac arrest, tissue damage</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The body’s resistance is dominated by the skin. Dry skin may give 100 kΩ or more from hand to hand, but wet or broken skin can drop the total to about 1 kΩ. Internally, the body is a salty conductor of only a few hundred ohms. In hospitals, the greatest danger is <strong>microshock</strong>: a catheter or pacing lead that reaches the heart bypasses the skin’s resistance completely. Then currents as small as 10–100 μA, far too small to feel, can trigger fibrillation. Medical equipment is therefore built and tested to strict leakage-current limits.</p>
+<div class="box work example"><div class="label">Worked example 17.8</div><h4 class="ex-title">Wet hands and mains voltage</h4>
+<p>A person touches a 230 V live conductor with one hand while the other hand rests on an earthed metal tap. Estimate the current if the total path resistance is (a) 100 kΩ (dry skin) and (b) 1.0 kΩ (wet skin). How does a residual-current device (RCD) protect them?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) <span class="math inline">\(I = 230/10^5 = 2.3\)</span> mA: an unpleasant tingle.</p>
+<p>(b) <span class="math inline">\(I = 230/10^3 = 230\)</span> mA: likely ventricular fibrillation, and potentially fatal.</p>
+<p><strong>Protection.</strong> An RCD (also called a GFCI) continuously compares the current in the live and neutral wires. Normally they are equal. If some current escapes to earth through a person, they differ, and the RCD cuts the supply when the difference exceeds about 30 mA, within roughly 30 ms. That is fast enough, in most cases, to prevent fibrillation. <strong>Earthing</strong> metal cases ensures that a fault produces a large current to earth, which blows the fuse rather than leaving the case “live” for someone to touch.</p>
+</div>
+</div>
+<div class="box sum"><div class="label">Chapter summary</div>
+<ul>
+<li><span class="math inline">\(I = dQ/dt = nqv_dA\)</span>. Drift speeds are of order mm/s, while signals travel at nearly <span class="math inline">\(c\)</span>.</li>
+<li><span class="math inline">\(R = V/I\)</span> and <span class="math inline">\(R = \rho L/A\)</span>. Metals: <span class="math inline">\(\rho\)</span> rises with <span class="math inline">\(T\)</span>. Drude model: <span class="math inline">\(\rho = m/(ne^2\tau)\)</span>.</li>
+<li><span class="math inline">\(P = IV = I^2R = V^2/R\)</span>. <span class="math inline">\(1\ \mathrm{kWh} = 3.6\ \mathrm{MJ}\)</span>.</li>
+<li>Real source: <span class="math inline">\(V = \mathcal{E} - Ir\)</span> and <span class="math inline">\(I = \mathcal{E}/(R + r)\)</span>. Maximum power transfer when <span class="math inline">\(R = r\)</span>.</li>
+<li>Series: <span class="math inline">\(R_{\text{eq}} = \sum R_i\)</span>. Parallel: <span class="math inline">\(1/R_{\text{eq}} = \sum1/R_i\)</span>.</li>
+<li>Kirchhoff: <span class="math inline">\(\sum I_{\text{in}} = \sum I_{\text{out}}\)</span> at a junction, and <span class="math inline">\(\sum\Delta V = 0\)</span> around a loop.</li>
+<li>Ammeter: in series, low resistance (shunt). Voltmeter: in parallel, high resistance. Balanced bridge: <span class="math inline">\(R_1/R_2 = R_3/R_4\)</span>.</li>
+<li>RC circuits: <span class="math inline">\(\tau = RC\)</span>. Charging: <span class="math inline">\(q = C\mathcal{E}(1 - e^{-t/\tau})\)</span>. Discharging: <span class="math inline">\(q = q_0e^{-t/\tau}\)</span>.</li>
+<li>Safety: about 10 mA means “can’t let go”, and about 100 mA risks fibrillation. Skin resistance dominates. RCDs trip at about 30 mA.</li>
+</ul>
+</div>
+<h3 class="part-title" id="practice">Practice problems</h3><p class="note">Full step-by-step solutions are in the separate solutions PDF.</p>
+<h4 class="level">Level A — Concept check</h4>
+<div class="prob" id="p17-1"><span class="pnum">P17.1</span>
+<p>If electrons drift at less than a millimetre per second, why does a lamp light up almost instantly when the switch is closed?</p>
+</div>
+<div class="prob" id="p17-2"><span class="pnum">P17.2</span>
+<p>A 60 W bulb and a 100 W bulb (both rated for 230 V) are connected in series across the 230 V mains. Which glows more brightly? Explain.</p>
+</div>
+<div class="prob" id="p17-3"><span class="pnum">P17.3</span>
+<p>Why are household appliances connected in parallel rather than in series?</p>
+</div>
+<div class="prob" id="p17-4"><span class="pnum">P17.4</span>
+<p>When a car’s starter motor runs, the headlights dim. Explain this using the idea of internal resistance.</p>
+</div>
+<h4 class="level">Level B — Standard problems</h4>
+<div class="prob" id="p17-5"><span class="pnum">P17.5</span>
+<p>Overhead power lines are made of aluminium rather than copper. Compare the cross-sectional areas and masses of aluminium and copper wires of the same length and resistance. (Resistivities: Al <span class="math inline">\(2.8\times10^{-8}\)</span> Ω m, Cu <span class="math inline">\(1.7\times10^{-8}\)</span> Ω m. Densities: Al 2700 kg/m³, Cu 8960 kg/m³.)</p>
+</div>
+<div class="prob" id="p17-6"><span class="pnum">P17.6</span>
+<p>A 1000 W, 230 V heater uses nichrome wire (<span class="math inline">\(\rho = 1.1\times10^{-6}\)</span> Ω m) of diameter 0.50 mm. Find the resistance of the element and the length of wire needed.</p>
+</div>
+<div class="prob" id="p17-7"><span class="pnum">P17.7</span>
+<p>A battery has an open-circuit voltage of 9.0 V. When it delivers 0.50 A to a 16 Ω resistor, its terminal voltage falls to 8.0 V. Find its EMF and internal resistance, and its short-circuit current.</p>
+</div>
+<div class="prob" id="p17-8"><span class="pnum">P17.8</span>
+<p>A 6.0 Ω and a 12 Ω resistor are connected in parallel. This pair is in series with an 8.0 Ω resistor, and that combination is in parallel with a 12 Ω resistor, all across an 18 V battery. Find the equivalent resistance, the total current, and the current in the 8.0 Ω resistor.</p>
+</div>
+<div class="prob" id="p17-9"><span class="pnum">P17.9</span>
+<p>A healthy car battery (EMF 12.6 V, internal resistance 0.020 Ω) is connected by jumper cables (total resistance 0.010 Ω) to a flat battery (EMF 10.0 V, internal resistance 0.050 Ω), positive to positive. Find the charging current, and the power dissipated in each resistance.</p>
+</div>
+<div class="prob" id="p17-10"><span class="pnum">P17.10</span>
+<p>A camera flash charges a 1000 μF capacitor through a 2.0 kΩ resistor. Find the time constant, and the time needed to reach 90% of full charge.</p>
+</div>
+<div class="prob" id="p17-11"><span class="pnum">P17.11</span>
+<p><em>Electric shock.</em> With the supply at 230 V, compare the current through a person whose hand-to-hand resistance is (a) 50 kΩ and (b) 1.0 kΩ. Use the table in the notes to describe the likely effects. Why is a hospital patient with a cardiac catheter at risk from currents of only tens of microamperes?</p>
+</div>
+<div class="prob" id="p17-12"><span class="pnum">P17.12</span>
+<p><em>Strain gauge.</em> A Wheatstone bridge has four arms of 350 Ω and is excited by 10 V. One arm is a strain gauge whose resistance increases by 0.20% when the structure it is bonded to is stretched. Show that the bridge output is approximately <span class="math inline">\(V\Delta R/(4R)\)</span>, and evaluate it.</p>
+</div>
+<h4 class="level">Level C — Challenge problems</h4>
+<div class="prob" id="p17-13"><span class="pnum">P17.13</span>
+<p><em>Drude model.</em> (a) Derive <span class="math inline">\(\rho = m/(ne^2\tau)\)</span> from the picture of electrons accelerating freely between collisions. (b) Find <span class="math inline">\(\tau\)</span> for copper. (c) Using the typical electron speed in copper of <span class="math inline">\(1.6\times10^6\)</span> m/s (the Fermi speed), find the mean free path between collisions, and compare it with the spacing between copper atoms (0.26 nm). What does this suggest about what the electrons are really colliding with?</p>
+</div>
+<div class="prob" id="p17-14"><span class="pnum">P17.14</span>
+<p>(a) Show that a source of EMF <span class="math inline">\(\mathcal{E}\)</span> and internal resistance <span class="math inline">\(r\)</span> delivers maximum power to a load when <span class="math inline">\(R = r\)</span>. (b) Show that the efficiency (load power ÷ total power) is then only 50%. (c) Explain why power stations and power grids are deliberately <em>not</em> operated at the maximum-power condition, while audio amplifiers and radio antennas often are matched.</p>
+</div>
+<div class="prob" id="p17-15"><span class="pnum">P17.15</span>
+<p>An infinite ladder network consists of identical resistors <span class="math inline">\(R\)</span> in each series link and in each shunt (rung). Show that the equivalent resistance between its input terminals is <span class="math inline">\(R(1 + \sqrt5)/2\)</span>.</p>
+</div>
+<div class="prob" id="p17-16"><span class="pnum">P17.16</span>
+<p>A capacitor <span class="math inline">\(C\)</span> is charged from zero to a voltage <span class="math inline">\(\mathcal{E}\)</span> through a resistor <span class="math inline">\(R\)</span>, using a battery of EMF <span class="math inline">\(\mathcal{E}\)</span>. (a) By integrating <span class="math inline">\(i^2R\)</span> over time, show that the energy dissipated in the resistor is <span class="math inline">\(\tfrac12C\mathcal{E}^2\)</span>, whatever the value of <span class="math inline">\(R\)</span>. (b) Show that the battery supplies <span class="math inline">\(C\mathcal{E}^2\)</span> in total. What fraction ends up stored in the capacitor?</p>
+</div>
+<div class="prob" id="p17-17"><span class="pnum">P17.17</span>
+<p><em>Membrane time constant.</em> A patch of nerve membrane has a specific resistance <span class="math inline">\(R_m = 1.0\)</span> Ω m² (that is, a 1 m² patch would have a resistance of 1.0 Ω across it) and a specific capacitance <span class="math inline">\(c_m = 0.010\)</span> F/m². (a) Show that the membrane time constant <span class="math inline">\(\tau = R_mc_m\)</span> does not depend on the area of the patch, and evaluate it. (b) A brief current pulse raises the membrane voltage by 10 mV above rest. How long does it take for this disturbance to decay to 1 mV? (c) Myelin wraps an axon in many layers of membrane, multiplying <span class="math inline">\(R_m\)</span> by about 100 and dividing <span class="math inline">\(c_m\)</span> by about 100. How does this change <span class="math inline">\(\tau\)</span>? Why does myelin nevertheless speed up conduction?</p>
+</div>
+<div class="prob" id="p17-18"><span class="pnum">P17.18</span>
+<p><em>Bioimpedance.</em> Body-composition analysers pass a tiny, safe alternating current through the body and measure its resistance <span class="math inline">\(R\)</span>. Model the conducting tissue as a uniform cylinder of length <span class="math inline">\(H\)</span> (the person’s height) and volume <span class="math inline">\(V\)</span>. (a) Show that <span class="math inline">\(V = \rho H^2/R\)</span>, where <span class="math inline">\(\rho\)</span> is the effective resistivity of the conducting tissue. (b) For a 70 kg person 1.75 m tall with <span class="math inline">\(R = 500\ \Omega\)</span>, taking <span class="math inline">\(\rho = 6.5\)</span> Ω m, estimate the volume of total body water. (c) Lean tissue is about 73% water, and fat contains very little. Estimate the fat-free mass and the body-fat percentage. Why does dehydration distort the measurement?</p>
+</div>
+
+<div class="downloads noprint"><a href="ch17-dc-circuits_notes.pdf" download>Download notes (PDF)</a><a href="ch17-dc-circuits_solutions.pdf" download>Download solutions (PDF)</a></div>
+</article>
+<nav class="pager"><a href="ch16-capacitance.html">← 16. Capacitance and Dielectrics</a><a href="ch18-magnetic-force.html">18. Magnetic Field and Magnetic Forces →</a></nav></main>
+<footer>All worked examples and practice problems in these notes are original. Textbooks for further reading and practice, with a chapter-by-chapter map, are listed in the References.<p class="copyright">© 2026 Pratik Bhanuse. All rights reserved. · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p></footer>
+</div>
+</body>
+</html>

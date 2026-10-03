@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Spinning, rolling and balancing: torque, moment of inertia and angular momentum, the rotational twins of force, mass and momentum.">
+<title>7. Rotational Motion · Physics, step by step</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* House style shared with "Linear algebra, translated" */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D; --p:#7C3AED;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --def-bg:#F3EEFF; --def-ink:#5B21B6;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --def-bg:#1E1733; --def-ink:#C4B5FD;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --def-bg:#1E1733; --def-ink:#C4B5FD;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+a{color:var(--u)}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5.6vw,60px); line-height:1.04; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .hl{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+.byline{font-family:var(--display); font-size:15px; color:var(--muted); margin:14px 0 0}
+.byline strong{color:var(--ink)} .byline a, .copyright a{color:inherit}
+.copyright{font-family:var(--display); font-size:13px; color:var(--muted); margin:10px 0 0}
+
+/* side navigation */
+nav.toc{position:sticky; top:24px; align-self:start; padding-top:8px; font-family:var(--display); font-size:14px; max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc a[aria-current="page"]{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); font-weight:700}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px}
+nav.toc .sub{padding-left:28px; font-size:13px; color:var(--muted)}
+nav.toc .sub a{color:var(--muted); padding:3px 8px}
+
+main{min-width:0}
+.chapter{max-width:72ch}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+h4{font-family:var(--display); font-weight:700; font-size:18px; margin:24px 0 6px}
+h5{font-family:var(--display); font-weight:700; font-size:16px; margin:18px 0 4px}
+.topic-num{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--u); border-top:1px solid var(--line); padding-top:18px; margin-top:34px; scroll-margin-top:24px}
+h3.topic-title{font-size:24px; margin:4px 0 8px}
+h3.part-title{font-size:24px; margin:40px 0 4px; border-top:2px solid var(--ink); padding-top:16px}
+h4.level{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--v); margin:26px 0 10px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px}
+.note{color:var(--muted); font-size:15px}
+
+/* boxes */
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.def{background:var(--def-bg)} .box.def .label{color:var(--def-ink)}
+.box.work,.box.goals,.box.sum{background:var(--surface); border:1px solid var(--line)}
+.box.work .label,.box.goals .label,.box.sum .label{color:var(--muted)}
+.box.sum{border-top:3px solid var(--ink)}
+.box.work .label{color:var(--v)}
+.box .ex-title{margin:0 0 8px; font-size:18px}
+.sol-inline{margin:10px 0 12px; border-left:3px solid var(--w); padding-left:14px}
+.sol-label{display:block; font-family:var(--display); font-weight:700; font-size:13px; color:var(--w); margin-bottom:4px}
+details.ans{margin:4px 0 12px} details.ans summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:14px; color:var(--w)}
+details.ans > div{padding-top:6px}
+
+/* practice problems */
+.prob{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px 2px; margin:0 0 12px; min-width:0}
+.prob .pnum{font-family:var(--mono); font-weight:600; font-size:12px; color:var(--v); display:block; margin-bottom:2px}
+.prob p{margin:0 0 10px}
+
+/* solutions pages */
+h3.sol-head{margin:30px 0 8px; border-top:1px solid var(--line); padding-top:16px}
+h3.sol-head .pnum{font-family:var(--mono); font-size:14px; letter-spacing:.06em; color:var(--v)}
+.solutions .chapter > p:first-of-type{margin-top:0}
+
+/* tables, figures, math */
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2; fill:none}
+svg .obj{fill:var(--surface); stroke:var(--ink); stroke-width:1.6}
+svg .solid{fill:var(--code-bg); stroke:var(--ink); stroke-width:1.4}
+svg .ground{stroke:var(--ink); stroke-width:1.6}
+svg .hatch{stroke:var(--muted); stroke-width:1}
+svg .dash{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:5 4; fill:none}
+svg .u{stroke:var(--u); stroke-width:2.6; fill:none}
+svg .v{stroke:var(--v); stroke-width:2.6; fill:none}
+svg .w{stroke:var(--w); stroke-width:2.6; fill:none}
+svg .p{stroke:var(--p); stroke-width:2.6; fill:none}
+svg .curve{stroke:var(--u); stroke-width:2.4; fill:none}
+svg .hu,svg .tu{fill:var(--u)} svg .hv,svg .tv{fill:var(--v)} svg .hw,svg .tw{fill:var(--w)} svg .hp,svg .tp{fill:var(--p)}
+svg .muted{fill:var(--muted)} svg .ink{fill:var(--ink)}
+svg .dot{fill:var(--ink)}
+svg .fillu{fill:var(--u); fill-opacity:.12; stroke:none}
+mjx-container{color:inherit}
+mjx-container[display="true"]{display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; margin:.7em 0 !important; padding-block:2px}
+.box mjx-container[display="true"]{margin:.5em 0 !important}
+
+/* pager + footer */
+.pager{display:flex; justify-content:space-between; gap:12px; margin:56px 0 0; padding-top:16px; border-top:1px solid var(--line); font-family:var(--display); font-size:15px; max-width:72ch}
+.pager a{text-decoration:none; color:var(--u)}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+
+/* index page */
+.unit{border-top:2px solid var(--ink); padding-top:12px; margin:36px 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.chlist{list-style:none; padding:0; margin:0}
+.chlist li{display:grid; grid-template-columns:2.4em minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); margin:0}
+.chlist .n{font-family:var(--mono); font-size:13px; color:var(--muted)}
+.chlist .t{font-family:var(--display); font-weight:600; font-size:17px; text-decoration:none; color:var(--ink)}
+.chlist .t:hover{color:var(--u)}
+.chlist .s{font-family:var(--mono); font-size:12px; text-decoration:none}
+.downloads{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+.downloads a{font-family:var(--display); font-weight:600; font-size:15px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 14px}
+.downloads a:hover{border-color:var(--u); color:var(--u)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static; max-height:none}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  nav.toc .grp{grid-column:1/-1}
+  nav.toc .sub{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ---------- print (PDF) ---------- */
+@page{
+  size:Letter; margin:17mm 15mm 18mm;
+  @top-right{content:"Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-left{content:"© 2026 Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-right{content:counter(page) " / " counter(pages); font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+}
+@page :first{ @top-right{content:none} }
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff; padding:0; font-size:11.5pt}
+  .wrap{display:block; max-width:none}
+  nav.toc,.pager,.noprint{display:none !important}
+  header.top{padding-block:0 8px}
+  .chapter{max-width:none; break-before:page}
+  .book-toc{break-before:page}
+  .box,.prob,figure{break-inside:avoid}
+  .box.work{break-inside:auto}
+  .topic-num,h3,h4{break-after:avoid}
+  a{color:inherit; text-decoration:none}
+  details.ans > summary{display:none}
+}
+/* printed table of contents */
+.book-toc ol{list-style:none; padding:0}
+.book-toc li{display:flex; gap:12px; padding:5px 0; border-bottom:1px dotted var(--line); font-family:var(--display); margin:0}
+.book-toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:2em; padding-top:2px}
+h3.page-h{border-top:1px solid var(--line); padding-top:18px; margin-top:34px}
+svg .hk{fill:var(--ink)} svg .k{stroke:var(--ink); stroke-width:2.2; fill:none}
+:root{ --apply-bg:#F1EEFB; --apply-ink:#4C2A9E; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --apply-bg:#1D1830; --apply-ink:#C9B8FF; } }
+:root[data-theme="dark"]{ --apply-bg:#1D1830; --apply-ink:#C9B8FF; }
+.box.apply{background:var(--apply-bg); border-left:4px solid var(--apply-ink)} .box.apply .label{color:var(--apply-ink)}
+svg path.ground,svg polyline.ground{fill:none}
+
+.chlist .s a{text-decoration:none}
+.single{max-width:none}
+
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+         macros: { vect: ['\\vec{\\boldsymbol{#1}}', 1], uvec: ['\\hat{\\boldsymbol{#1}}', 1],
+                   ihat: '\\hat{\\boldsymbol{\\imath}}', jhat: '\\hat{\\boldsymbol{\\jmath}}',
+                   khat: '\\hat{\\boldsymbol{k}}', unit: ['\\,\\mathrm{#1}', 1] } },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker><marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker><marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hp"/></marker><marker id="ak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hk"/></marker></defs></svg>
+<div class="wrap">
+<header class="top"><div class="kicker">Chapter 7 · Semester 1 · Mechanics, Waves and Thermal Physics</div><h1>Rotational Motion</h1><p class="lede">Spinning, rolling and balancing: torque, moment of inertia and angular momentum, the rotational twins of force, mass and momentum.</p><p class="byline">By <strong>Pratik Bhanuse</strong>, PhD Physics candidate, Western University · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p><div class="downloads noprint"><a href="ch07-rotation_notes.pdf" download>Download notes (PDF)</a><a href="ch07-rotation_solutions.pdf" download>Download solutions (PDF)</a></div></header>
+<aside class="side"><nav class="toc" aria-label="Contents"><ol>
+<li><a href="index.html"><span class="n">⌂</span>Contents</a></li>
+<li><a href="syllabus.html"><span class="n">→</span>Syllabus and how to study</a></li>
+<li class="grp">Semester 1 · Mechanics, Waves and Thermal Physics</li>
+<li><a href="ch01-units-vectors.html"><span class="n">1</span>Measurement, Units, Dimensions and Vectors</a></li>
+<li><a href="ch02-kinematics.html"><span class="n">2</span>Kinematics in One and Two Dimensions</a></li>
+<li><a href="ch03-newtons-laws.html"><span class="n">3</span>Newton&#x27;s Laws of Motion</a></li>
+<li><a href="ch04-friction-circular.html"><span class="n">4</span>Friction and Circular Motion</a></li>
+<li><a href="ch05-work-energy.html"><span class="n">5</span>Work, Energy and Power</a></li>
+<li><a href="ch06-momentum.html"><span class="n">6</span>Centre of Mass, Linear Momentum and Collisions</a></li>
+<li><a href="ch07-rotation.html" aria-current="page"><span class="n">7</span>Rotational Motion</a></li>
+<li class="sub"><a href="#rotational-kinematics">§7.1 Rotational kinematics</a></li>
+<li class="sub"><a href="#torque">§7.2 Torque</a></li>
+<li class="sub"><a href="#newtons-second-law-for-rotation-and-the-moment-of-inertia">§7.3 Newton’s second law for rotation and the moment of inertia</a></li>
+<li class="sub"><a href="#rotational-kinetic-energy-work-and-power">§7.4 Rotational kinetic energy, work and power</a></li>
+<li class="sub"><a href="#rolling-without-slipping">§7.5 Rolling without slipping</a></li>
+<li class="sub"><a href="#angular-momentum">§7.6 Angular momentum</a></li>
+<li class="sub"><a href="#static-equilibrium">§7.7 Static equilibrium</a></li>
+<li class="sub"><a href="#practice">Practice problems</a></li>
+<li><a href="ch08-gravitation.html"><span class="n">8</span>Gravitation</a></li>
+<li><a href="ch09-oscillations.html"><span class="n">9</span>Simple Harmonic Motion</a></li>
+<li><a href="ch10-fluids-elasticity.html"><span class="n">10</span>Elasticity and Fluid Mechanics</a></li>
+<li><a href="ch11-waves-sound.html"><span class="n">11</span>Mechanical Waves and Sound</a></li>
+<li><a href="ch12-thermal.html"><span class="n">12</span>Heat, Kinetic Theory and Thermodynamics</a></li>
+<li class="grp">Semester 2 · Electricity, Magnetism, Optics and Modern Physics</li>
+<li><a href="ch13-electric-field.html"><span class="n">13</span>Electric Charge and Electric Field</a></li>
+<li><a href="ch14-gauss.html"><span class="n">14</span>Gauss&#x27;s Law</a></li>
+<li><a href="ch15-potential.html"><span class="n">15</span>Electric Potential</a></li>
+<li><a href="ch16-capacitance.html"><span class="n">16</span>Capacitance and Dielectrics</a></li>
+<li><a href="ch17-dc-circuits.html"><span class="n">17</span>Electric Current and DC Circuits</a></li>
+<li><a href="ch18-magnetic-force.html"><span class="n">18</span>Magnetic Field and Magnetic Forces</a></li>
+<li><a href="ch19-magnetic-sources.html"><span class="n">19</span>Sources of the Magnetic Field</a></li>
+<li><a href="ch20-induction.html"><span class="n">20</span>Electromagnetic Induction</a></li>
+<li><a href="ch21-ac-emwaves.html"><span class="n">21</span>Alternating Current and Electromagnetic Waves</a></li>
+<li><a href="ch22-geometric-optics.html"><span class="n">22</span>Geometrical Optics</a></li>
+<li><a href="ch23-wave-optics.html"><span class="n">23</span>Wave Optics</a></li>
+<li><a href="ch24-modern.html"><span class="n">24</span>Photons, Atoms and Nuclei</a></li>
+<li class="grp">Appendix</li>
+<li><a href="references.html"><span class="n">R</span>References and further practice</a></li>
+</ol></nav></aside>
+<main><article class="chapter notes">
+<p>Wheels, turbines, hard drives, joints, wrenches, planets and figure skaters all rotate. A <strong>rigid body</strong> keeps its shape, so every point turns through the same angle in the same time. Its motion is completely described by the motion of its centre of mass plus a rotation about it. This chapter develops rotational dynamics by close analogy with linear dynamics: angle for position, torque for force, moment of inertia for mass, angular momentum for momentum. It then applies them to pulleys, rolling bodies, spinning skaters, and the static equilibrium of beams, ladders and the human skeleton.</p>
+<div class="box goals"><div class="label">You will be able to</div>
+<ul>
+<li>Use angular displacement, velocity and acceleration, and relate them to the linear motion of points on the body.</li>
+<li>Calculate torques as <span class="math inline">\(\vect{\tau} = \vect{r}\times\vect{F}\)</span> and use lever arms.</li>
+<li>Compute moments of inertia by integration, and with the parallel- and perpendicular-axis theorems.</li>
+<li>Apply <span class="math inline">\(\sum\tau = I\alpha\)</span> to pulleys with mass, wound strings and falling rods.</li>
+<li>Use rotational kinetic energy, work and power, including for rolling without slipping.</li>
+<li>Apply conservation of angular momentum.</li>
+<li>Solve static equilibrium problems, including biomechanical models of joints and the spine.</li>
+</ul>
+</div>
+<div class="box ask"><div class="label">Think first</div>
+<p>A solid ball and a hollow ball (a thin spherical shell) have the same mass and radius. They are released together at the top of a ramp and roll down without slipping. Which reaches the bottom first? Does it matter if one ball is heavier than the other?</p>
+<details class="ans"><summary>Show answer</summary><div>
+<p>The <strong>solid ball wins</strong>, and mass and radius do not matter at all. As a ball rolls, some of the gravitational energy goes into spinning it rather than moving it forward. The hollow ball has its mass farther from the axis, so it has a larger moment of inertia (<span class="math inline">\(\tfrac23MR^2\)</span> against <span class="math inline">\(\tfrac25MR^2\)</span>). It therefore puts a larger share of its energy into rotation and has less left for forward motion. Only the <em>shape</em> (how the mass is distributed) matters, as Example 7.4 shows.</p>
+</div></details>
+</div>
+<div class="topic-num" id="rotational-kinematics">§7.1</div><h3 class="topic-title">Rotational kinematics</h3>
+<p>Describe the orientation of a body rotating about a fixed axis by an angle <span class="math inline">\(\theta\)</span>, measured in <strong>radians</strong>. An arc of length <span class="math inline">\(s\)</span> on a circle of radius <span class="math inline">\(r\)</span> subtends <span class="math inline">\(\theta = s/r\)</span>. One revolution is <span class="math inline">\(2\pi\)</span> rad, so <span class="math inline">\(1\ \text{rev} = 360^\circ = 2\pi\)</span> rad.</p>
+<p><span class="math display">\[\omega = \frac{d\theta}{dt}\ \ (\mathrm{rad/s}),\qquad \alpha = \frac{d\omega}{dt}\ \ (\mathrm{rad/s^2}).\]</span></p>
+<p>Every point of a rigid body has the same <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\omega\)</span> and <span class="math inline">\(\alpha\)</span>. A point at distance <span class="math inline">\(r\)</span> from the axis has <span class="math display">\[v = r\omega,\qquad a_t = r\alpha,\qquad a_c = \frac{v^2}{r} = \omega^2r.\]</span></p>
+<p>Angular velocity is a vector along the axis, with direction given by the right-hand rule: curl your fingers in the direction of rotation and your thumb points along <span class="math inline">\(\vect{\omega}\)</span>.</p>
+<p>For <strong>constant</strong> <span class="math inline">\(\alpha\)</span>, the equations have exactly the same form as their linear counterparts: <span class="math display">\[\omega = \omega_0 + \alpha t,\qquad \theta = \omega_0t + \tfrac12\alpha t^2,\qquad \omega^2 = \omega_0^2 + 2\alpha\theta.\]</span></p>
+<div class="box work example"><div class="label">Worked example 7.1</div><h4 class="ex-title">Spinning up a grinder</h4>
+<p>An angle grinder’s disc goes from rest to 3000 rpm in 5.0 s with constant angular acceleration. The disc has a radius of 6.0 cm. Find (a) its angular acceleration, (b) the number of revolutions it makes while speeding up, and (c) the speed and the centripetal acceleration of a point on its rim at full speed.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>Convert the final speed: <span class="math inline">\(\omega = 3000\times\dfrac{2\pi}{60} = 314\)</span> rad/s.</p>
+<p>(a) <span class="math inline">\(\alpha = \omega/t = 314/5.0 = 62.8\ \mathrm{rad/s^2}\)</span>.</p>
+<p>(b) <span class="math inline">\(\theta = \tfrac12\alpha t^2 = \tfrac12(62.8)(25) = 785\)</span> rad, which is <span class="math inline">\(785/2\pi = 125\)</span> revolutions.</p>
+<p>(c) Rim speed: <span class="math inline">\(v = r\omega = 0.060(314) = 18.8\)</span> m/s. Centripetal acceleration: <span class="math display">\[a_c = \omega^2r = (314)^2(0.060) = 5.9\times10^3\ \mathrm{m/s^2},\]</span> about 600 g. That is why grinder discs carry a maximum-rpm rating: above it, the disc material cannot supply the centripetal force, and the disc bursts.</p>
+</div>
+</div>
+<div class="topic-num" id="torque">§7.2</div><h3 class="topic-title">Torque</h3>
+<p>A force’s ability to cause rotation depends on its size, its direction, and <em>where</em> it is applied. The <strong>torque</strong> about a point <span class="math inline">\(O\)</span> of a force <span class="math inline">\(\vect{F}\)</span> applied at position <span class="math inline">\(\vect{r}\)</span> (measured from <span class="math inline">\(O\)</span>) is <span class="math display">\[\vect{\tau} = \vect{r}\times\vect{F},\qquad \tau = rF\sin\phi = r_\perp F = rF_\perp,\]</span> where <span class="math inline">\(\phi\)</span> is the angle between <span class="math inline">\(\vect{r}\)</span> and <span class="math inline">\(\vect{F}\)</span>. Torque is measured in N m. (We do not call this unit the joule, because torque is not energy.)</p>
+<p>Two equivalent pictures:</p>
+<ul>
+<li><span class="math inline">\(r_\perp = r\sin\phi\)</span> is the <strong>lever arm</strong> (moment arm): the perpendicular distance from the axis to the force’s <em>line of action</em>.</li>
+<li><span class="math inline">\(F_\perp = F\sin\phi\)</span> is the component of the force perpendicular to <span class="math inline">\(\vect{r}\)</span>. Only this component turns the body.</li>
+</ul>
+<figure>
+<svg viewBox="0 0 340 240" width="330" role="img" aria-label="A wrench pivoting about a bolt at the left. A force F is applied at the end of the handle at angle phi to the handle. The line of action of F is extended as a dashed line, and the lever arm r-perpendicular is drawn from the pivot perpendicular to that line.">
+<circle class="solid" cx="60" cy="110" r="14"/>
+<circle class="dot" cx="60" cy="110" r="3"/>
+<line class="k" x1="60" y1="110" x2="250" y2="110" style="stroke-width:9; stroke-linecap:round; opacity:.25"/>
+<line class="u" x1="60" y1="110" x2="246" y2="110" marker-end="url(#au)"/>
+<text x="140" y="102" class="tu">r</text>
+<line class="v" x1="250" y1="110" x2="290" y2="40" marker-end="url(#av)"/>
+<text x="296" y="46" class="tv">F</text>
+<line class="dash" x1="250" y1="110" x2="200" y2="197"/>
+<line class="w" x1="60" y1="110" x2="203" y2="192"/>
+<text x="96" y="170" class="tw">r⊥ = r sin φ</text>
+<path class="dash" d="M 275 110 A 25 25 0 0 0 262 88"/>
+<text x="279" y="100" class="muted">φ</text>
+<text x="40" y="146" class="muted">axis O</text>
+<path class="ax" d="M 196 186 L 204 181 L 209 189"/>
+</svg>
+<figcaption>Torque = force × lever arm. The lever arm r⊥ is the perpendicular distance from the axis to the force's line of action.</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 7.2</div><h4 class="ex-title">Loosening a bolt</h4>
+<p>A mechanic pulls with 50 N on the end of a wrench 0.25 m long, at <span class="math inline">\(60^\circ\)</span> to the handle. (a) Find the torque on the bolt. (b) What force, applied perpendicular to the handle, would give the same torque? (c) The bolt needs 40 N m to loosen. Will a 50 N pull do it at any angle?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) <span class="math inline">\(\tau = rF\sin\phi = 0.25(50)\sin60^\circ = 10.8\)</span> N m.</p>
+<p>(b) <span class="math inline">\(F_\perp = \tau/r = 10.8/0.25 = 43\)</span> N.</p>
+<p>(c) The largest possible torque, with the pull perpendicular, is <span class="math inline">\(0.25(50) = 12.5\)</span> N m, well short of 40 N m. The mechanic needs a longer lever arm: a “cheater bar” of at least <span class="math inline">\(40/50 = 0.80\)</span> m.</p>
+</div>
+</div>
+<div class="topic-num" id="newtons-second-law-for-rotation-and-the-moment-of-inertia">§7.3</div><h3 class="topic-title">Newton’s second law for rotation and the moment of inertia</h3>
+<p>Consider a rigid body rotating about a fixed axis. A small piece of mass <span class="math inline">\(m_i\)</span> at distance <span class="math inline">\(r_i\)</span> from the axis has tangential acceleration <span class="math inline">\(a_{t,i} = r_i\alpha\)</span>. The tangential force on it is <span class="math inline">\(F_i = m_ir_i\alpha\)</span>, which gives a torque <span class="math inline">\(\tau_i = m_ir_i^2\alpha\)</span>. Add these up over all the pieces. The internal torques cancel in pairs, leaving <span class="math display">\[\sum\tau_{\text{ext}} = \Big(\sum m_ir_i^2\Big)\alpha = I\alpha.\]</span></p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Rotational second law:</strong> <span class="math inline">\(\sum\tau_{\text{ext}} = I\alpha\)</span>, about a fixed axis or about the centre of mass.</p>
+<p><strong>Moment of inertia:</strong> <span class="math inline">\(I = \sum m_ir_i^2 = \displaystyle\int r^2\,dm\)</span>, measured in kg m². It plays the role of mass in rotation, but it depends on <strong>how the mass is distributed about the chosen axis</strong>: mass far from the axis counts for much more.</p>
+</div>
+<h4>Calculating moments of inertia</h4>
+<p><strong>Thin uniform rod</strong> (mass <span class="math inline">\(M\)</span>, length <span class="math inline">\(L\)</span>) about a perpendicular axis through one end. With <span class="math inline">\(dm = (M/L)\,dx\)</span>: <span class="math display">\[I_{\text{end}} = \int_0^Lx^2\frac{M}{L}dx = \frac{ML^2}{3}.\]</span> About its centre, integrate from <span class="math inline">\(-L/2\)</span> to <span class="math inline">\(L/2\)</span> to get <span class="math inline">\(I_{\text{cm}} = \dfrac{ML^2}{12}\)</span>.</p>
+<p><strong>Uniform disc</strong> (mass <span class="math inline">\(M\)</span>, radius <span class="math inline">\(R\)</span>) about its axis. Split the disc into thin rings of radius <span class="math inline">\(r\)</span> and width <span class="math inline">\(dr\)</span>. Each ring has mass <span class="math inline">\(dm = \dfrac{M}{\pi R^2}\,2\pi r\,dr\)</span>, and all of it lies at distance <span class="math inline">\(r\)</span> from the axis: <span class="math display">\[I = \int_0^Rr^2\frac{2Mr}{R^2}dr = \frac{2M}{R^2}\cdot\frac{R^4}{4} = \frac12MR^2.\]</span></p>
+<div class="tablewrap">
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Body (uniform), axis</th>
+<th><span class="math inline">\(I\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thin ring or hollow cylinder, central axis</td>
+<td><span class="math inline">\(MR^2\)</span></td>
+</tr>
+<tr>
+<td>Solid disc or cylinder, central axis</td>
+<td><span class="math inline">\(\tfrac12MR^2\)</span></td>
+</tr>
+<tr>
+<td>Thick-walled cylinder, radii <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span></td>
+<td><span class="math inline">\(\tfrac12M(R_1^2 + R_2^2)\)</span></td>
+</tr>
+<tr>
+<td>Solid sphere, through centre</td>
+<td><span class="math inline">\(\tfrac25MR^2\)</span></td>
+</tr>
+<tr>
+<td>Thin spherical shell, through centre</td>
+<td><span class="math inline">\(\tfrac23MR^2\)</span></td>
+</tr>
+<tr>
+<td>Thin rod, perpendicular axis through centre</td>
+<td><span class="math inline">\(\tfrac{1}{12}ML^2\)</span></td>
+</tr>
+<tr>
+<td>Thin rod, perpendicular axis through end</td>
+<td><span class="math inline">\(\tfrac13ML^2\)</span></td>
+</tr>
+<tr>
+<td>Rectangular plate <span class="math inline">\(a\times b\)</span>, perpendicular axis through centre</td>
+<td><span class="math inline">\(\tfrac{1}{12}M(a^2 + b^2)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Parallel-axis theorem.</strong> If <span class="math inline">\(I_{\text{cm}}\)</span> is the moment of inertia about an axis through the centre of mass, then about any parallel axis a distance <span class="math inline">\(d\)</span> away, <span class="math display">\[I = I_{\text{cm}} + Md^2.\]</span> Example: a rod about its end has <span class="math inline">\(I = \tfrac{1}{12}ML^2 + M(L/2)^2 = \tfrac13ML^2\)</span>. ✓</p>
+<p><strong>Perpendicular-axis theorem</strong> (flat plates only). For a lamina in the <span class="math inline">\(xy\)</span>-plane, <span class="math inline">\(I_z = I_x + I_y\)</span>. Example: a thin ring about a diameter has <span class="math inline">\(I = \tfrac12MR^2\)</span>, half of its moment about the central axis.</p>
+</div>
+<p>The <strong>radius of gyration</strong> <span class="math inline">\(k\)</span> is defined by <span class="math inline">\(I = Mk^2\)</span>. It is the distance from the axis at which all the mass could be concentrated to give the same moment of inertia. Engineers use it to describe the shapes of beams and flywheels.</p>
+<h4>Pulleys with mass</h4>
+<div class="box work example"><div class="label">Worked example 7.3</div><h4 class="ex-title">An Atwood machine with a heavy pulley</h4>
+<p>Repeat the Atwood machine of Example 3.3 (<span class="math inline">\(m_1 = 5.0\)</span> kg, <span class="math inline">\(m_2 = 3.0\)</span> kg), but now the pulley is a uniform disc of mass <span class="math inline">\(M = 2.0\)</span> kg and radius 10 cm. The string does not slip on the pulley. Find the acceleration and both tensions.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Key change.</strong> The tensions on the two sides are now different. Their difference provides the torque that spins the pulley up.</p>
+<p><strong>Equations:</strong> <span class="math display">\[m_1:\ m_1g - T_1 = m_1a,\qquad m_2:\ T_2 - m_2g = m_2a,\qquad \text{pulley: } (T_1 - T_2)R = I\alpha = \tfrac12MR^2\cdot\frac{a}{R}.\]</span> The rolling condition <span class="math inline">\(a = R\alpha\)</span> links the string to the pulley. The pulley equation simplifies to <span class="math inline">\(T_1 - T_2 = \tfrac12Ma\)</span>. Adding all three equations: <span class="math display">\[a = \frac{(m_1 - m_2)\,g}{m_1 + m_2 + \tfrac12M} = \frac{2.0(9.8)}{5.0 + 3.0 + 1.0} = 2.18\ \mathrm{m/s^2}.\]</span> <span class="math display">\[T_1 = m_1(g - a) = 5.0(7.62) = 38.1\ \mathrm{N},\qquad T_2 = m_2(g + a) = 3.0(11.98) = 35.9\ \mathrm{N}.\]</span></p>
+<p><strong>Check:</strong> <span class="math inline">\(T_1 - T_2 = 2.2\)</span> N, and <span class="math inline">\(\tfrac12Ma = 2.18\)</span> N. ✓</p>
+<p><strong>Evaluate.</strong> The pulley’s mass enters as an extra “effective mass” of <span class="math inline">\(I/R^2 = \tfrac12M\)</span>. The acceleration drops from 2.45 to 2.18 m/s². The massless-pulley result is recovered when <span class="math inline">\(M \to 0\)</span>.</p>
+</div>
+</div>
+<div class="topic-num" id="rotational-kinetic-energy-work-and-power">§7.4</div><h3 class="topic-title">Rotational kinetic energy, work and power</h3>
+<p>Each piece of a rotating body has kinetic energy <span class="math inline">\(\tfrac12m_i(r_i\omega)^2\)</span>. Summing: <span class="math display">\[K_{\text{rot}} = \tfrac12I\omega^2.\]</span> A torque acting through an angle does work, and does it at a rate given by the power: <span class="math display">\[W = \int\tau\,d\theta,\qquad P = \tau\omega.\]</span> The rotational work–energy theorem is <span class="math inline">\(W_{\text{net}} = \Delta(\tfrac12I\omega^2)\)</span>.</p>
+<div class="tablewrap">
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Linear</th>
+<th>Rotational</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(x\)</span>, <span class="math inline">\(v\)</span>, <span class="math inline">\(a\)</span></td>
+<td><span class="math inline">\(\theta\)</span>, <span class="math inline">\(\omega\)</span>, <span class="math inline">\(\alpha\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(m\)</span></td>
+<td><span class="math inline">\(I = \int r^2\,dm\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(F = ma\)</span></td>
+<td><span class="math inline">\(\tau = I\alpha\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(K = \tfrac12mv^2\)</span></td>
+<td><span class="math inline">\(K = \tfrac12I\omega^2\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(W = \int F\,dx\)</span>, <span class="math inline">\(P = Fv\)</span></td>
+<td><span class="math inline">\(W = \int\tau\,d\theta\)</span>, <span class="math inline">\(P = \tau\omega\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\vect{p} = m\vect{v}\)</span></td>
+<td><span class="math inline">\(\vect{L} = I\vect{\omega}\)</span> (about a symmetry axis)</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\vect{F} = d\vect{p}/dt\)</span></td>
+<td><span class="math inline">\(\vect{\tau} = d\vect{L}/dt\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Flywheels, engines and gyroscopes.</strong> A flywheel stores energy as <span class="math inline">\(\tfrac12I\omega^2\)</span>. Engineers make <span class="math inline">\(I\)</span> large for a given mass by putting the mass in the rim, and make <span class="math inline">\(\omega\)</span> as large as the material’s strength allows, since the energy grows as <span class="math inline">\(\omega^2\)</span>. Carbon-fibre flywheels spinning at tens of thousands of rpm in vacuum are used for grid frequency regulation, for uninterruptible power supplies in hospitals and data centres, and for energy recovery in racing cars. In an engine, <span class="math inline">\(P = \tau\omega\)</span> links the torque curve to the power curve: an engine making 300 N m at 4000 rpm (419 rad/s) delivers 126 kW. Spinning gyroscopes resist changes in the direction of <span class="math inline">\(\vect{L}\)</span>, which is the principle behind gyrocompasses, spacecraft attitude control, and (in micro-machined form) the gyroscopes in phones and drones.</p>
+</div>
+<div class="topic-num" id="rolling-without-slipping">§7.5</div><h3 class="topic-title">Rolling without slipping</h3>
+<p>A wheel or ball that <strong>rolls without slipping</strong> has its contact point momentarily at rest on the ground. That gives the rolling condition <span class="math display">\[v_{\text{cm}} = R\omega,\qquad a_{\text{cm}} = R\alpha.\]</span> Rolling can be viewed as translation of the centre of mass plus rotation about it, so the kinetic energy is <span class="math display">\[K = \tfrac12Mv_{\text{cm}}^2 + \tfrac12I_{\text{cm}}\omega^2 = \tfrac12Mv_{\text{cm}}^2\left(1 + \frac{I_{\text{cm}}}{MR^2}\right).\]</span> Equivalently, the motion is pure rotation about the contact point, with <span class="math inline">\(I_P = I_{\text{cm}} + MR^2\)</span>.</p>
+<p>The friction at the contact point is <strong>static</strong>, and it does <strong>no work</strong> in pure rolling, because the contact point does not move. So mechanical energy is conserved even though friction acts.</p>
+<div class="box work example"><div class="label">Worked example 7.4</div><h4 class="ex-title">The rolling race</h4>
+<p>Bodies of mass <span class="math inline">\(M\)</span> and radius <span class="math inline">\(R\)</span> roll without slipping down an incline of angle <span class="math inline">\(\theta\)</span> and height <span class="math inline">\(h\)</span>. Write <span class="math inline">\(I_{\text{cm}} = \beta MR^2\)</span>. Find (a) the speed at the bottom, (b) the acceleration, and (c) the friction force needed. Then rank a solid sphere, a solid cylinder, a hollow sphere and a ring.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) <strong>Energy.</strong> <span class="math display">\[Mgh = \tfrac12Mv^2(1 + \beta) \;\Rightarrow\; v = \sqrt{\frac{2gh}{1 + \beta}}.\]</span></p>
+<p>(b) <strong>Forces and torques.</strong> Along the slope: <span class="math inline">\(Mg\sin\theta - f = Ma\)</span>. Torque about the CM: <span class="math inline">\(fR = I\alpha = \beta MR^2(a/R)\)</span>, so <span class="math inline">\(f = \beta Ma\)</span>. Substituting: <span class="math display">\[a = \frac{g\sin\theta}{1 + \beta}.\]</span></p>
+<p>(c) <span class="math inline">\(f = \beta Ma = \dfrac{\beta}{1 + \beta}Mg\sin\theta\)</span>. Rolling without slipping needs <span class="math inline">\(f \le \mu_sMg\cos\theta\)</span>, that is, <span class="math display">\[\tan\theta \le \frac{1 + \beta}{\beta}\,\mu_s.\]</span></p>
+<p><strong>Ranking</strong> (larger <span class="math inline">\(a\)</span> wins):</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Body</th>
+<th><span class="math inline">\(\beta\)</span></th>
+<th><span class="math inline">\(a/(g\sin\theta)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Solid sphere</td>
+<td>2/5</td>
+<td>5/7 = 0.714</td>
+</tr>
+<tr>
+<td>Solid cylinder</td>
+<td>1/2</td>
+<td>2/3 = 0.667</td>
+</tr>
+<tr>
+<td>Hollow sphere</td>
+<td>2/3</td>
+<td>3/5 = 0.600</td>
+</tr>
+<tr>
+<td>Ring or hoop</td>
+<td>1</td>
+<td>1/2 = 0.500</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Evaluate.</strong> Mass and radius cancel. Only the shape factor <span class="math inline">\(\beta\)</span> matters. Any rolling body is slower than a frictionless sliding block (<span class="math inline">\(\beta = 0\)</span>), because part of its energy is locked up in spin.</p>
+</div>
+</div>
+<div class="topic-num" id="angular-momentum">§7.6</div><h3 class="topic-title">Angular momentum</h3>
+<p>For a particle with momentum <span class="math inline">\(\vect{p}\)</span> at position <span class="math inline">\(\vect{r}\)</span> relative to a point <span class="math inline">\(O\)</span>, the <strong>angular momentum</strong> about <span class="math inline">\(O\)</span> is <span class="math display">\[\vect{L} = \vect{r}\times\vect{p}.\]</span> For a rigid body rotating about a fixed axis, the component along the axis is <span class="math inline">\(L = I\omega\)</span>. Differentiating <span class="math inline">\(\vect{L} = \vect{r}\times\vect{p}\)</span> gives the general rotational law: <span class="math display">\[\sum\vect{\tau}_{\text{ext}} = \frac{d\vect{L}}{dt}.\]</span></p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Conservation of angular momentum.</strong> If the net external torque on a system is zero, its total angular momentum is constant. For a body whose moment of inertia can change: <span class="math display">\[I_i\omega_i = I_f\omega_f.\]</span></p>
+</div>
+<div class="box work example"><div class="label">Worked example 7.5</div><h4 class="ex-title">A spinning skater</h4>
+<p>A figure skater spins at 2.0 rev/s with her arms out, with <span class="math inline">\(I = 3.0\ \mathrm{kg\,m^2}\)</span>. She pulls her arms in, reducing <span class="math inline">\(I\)</span> to <span class="math inline">\(1.0\ \mathrm{kg\,m^2}\)</span>. Find her new spin rate and the change in her kinetic energy.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>The ice exerts almost no torque about the vertical axis, so <span class="math inline">\(L\)</span> is conserved: <span class="math display">\[\omega_f = \frac{I_i}{I_f}\omega_i = 3.0 \times 2.0 = 6.0\ \text{rev/s}.\]</span></p>
+<p><strong>Kinetic energy.</strong> Since <span class="math inline">\(K = L^2/2I\)</span> and <span class="math inline">\(L\)</span> is fixed, <span class="math inline">\(K\)</span> is inversely proportional to <span class="math inline">\(I\)</span>. So <span class="math inline">\(K_f = 3K_i\)</span>. Numerically, with <span class="math inline">\(\omega_i = 4\pi\)</span> rad/s: <span class="math display">\[K_i = \tfrac12(3.0)(4\pi)^2 = 237\ \mathrm{J},\qquad K_f = 711\ \mathrm{J}.\]</span></p>
+<p><strong>Where does the extra 474 J come from?</strong> From her muscles. Pulling her arms inward against the centrifugal tendency (in her rotating frame) requires work. Angular momentum is conserved, but kinetic energy is not.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 7.6</div><h4 class="ex-title">The birth of a pulsar</h4>
+<p>The core of a massive star, with a radius of about <span class="math inline">\(7\times10^5\)</span> km (like the Sun) and a rotation period of 25 days, collapses to form a neutron star of radius 10 km. Treat both as uniform spheres of the same mass. Estimate the neutron star’s rotation period.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math inline">\(L = \tfrac25MR^2\omega\)</span> is conserved, so <span class="math inline">\(\omega \propto 1/R^2\)</span> and <span class="math inline">\(T \propto R^2\)</span>: <span class="math display">\[T_f = T_i\left(\frac{R_f}{R_i}\right)^2 = (25\times86\,400\ \mathrm{s})\left(\frac{10}{7\times10^5}\right)^2 = 2.16\times10^6\times2.0\times10^{-10} = 4.4\times10^{-4}\ \mathrm{s}.\]</span></p>
+<p><strong>Evaluate.</strong> The star spins about 2000 times a second, which is in the right range: observed pulsars rotate with periods from about 1.4 ms to several seconds. Real collapses shed angular momentum, so typical new pulsars are slower. This was a key clue in identifying pulsars, discovered in 1967 by Jocelyn Bell Burnell, as spinning neutron stars.</p>
+</div>
+</div>
+<div class="topic-num" id="static-equilibrium">§7.7</div><h3 class="topic-title">Static equilibrium</h3>
+<p>A rigid body is in <strong>static equilibrium</strong> when it is at rest and stays at rest. This requires both <span class="math display">\[\sum\vect{F} = 0\qquad\text{and}\qquad \sum\vect{\tau} = 0\ \text{about any point}.\]</span> Because the net torque must vanish about <em>every</em> point, you may choose the point that makes the algebra easiest. Choose the point where unknown forces act, so that they drop out of the torque equation.</p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Strategy for statics.</strong></p>
+<ol>
+<li>Draw the FBD of the body, showing <em>where</em> each force acts.</li>
+<li>Choose a pivot point where one or more unknown forces act.</li>
+<li>Write <span class="math inline">\(\sum\tau = 0\)</span> about that point, taking counter-clockwise as positive.</li>
+<li>Write <span class="math inline">\(\sum F_x = 0\)</span> and <span class="math inline">\(\sum F_y = 0\)</span>.</li>
+<li>Solve, and check with a torque equation about a different point.</li>
+</ol>
+</div>
+<div class="box work example"><div class="label">Worked example 7.7</div><h4 class="ex-title">The biceps and the elbow</h4>
+<p>A person holds a 5.0 kg dumbbell in the hand with the forearm horizontal. The forearm and hand have a mass of 1.5 kg, with their centre of mass 15 cm from the elbow joint. The dumbbell is 35 cm from the elbow. The biceps tendon attaches to the forearm 4.0 cm from the elbow and pulls vertically upward. Find the force in the biceps and the force at the elbow joint.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<figure>
+<svg viewBox="0 0 360 220" width="340" role="img" aria-label="Horizontal forearm hinged at the elbow on the left. The biceps force F_B acts upward 4 centimetres from the elbow. The forearm's weight acts downward 15 centimetres from the elbow, and the dumbbell's weight acts downward 35 centimetres from the elbow. The joint force E acts at the elbow.">
+<line class="k" x1="40" y1="30" x2="40" y2="110" style="stroke-width:12; stroke-linecap:round; opacity:.2"/>
+<rect class="solid" x="40" y="104" width="280" height="14" rx="7"/>
+<circle class="obj" cx="40" cy="111" r="9"/>
+<line class="u" x1="74" y1="104" x2="74" y2="34" marker-end="url(#au)"/>
+<text x="80" y="44" class="tu">F<tspan dy="3" font-size="9">B</tspan></text>
+<line class="v" x1="160" y1="118" x2="160" y2="160" marker-end="url(#av)"/>
+<text x="166" y="158" class="tv">14.7 N</text>
+<rect class="obj" x="300" y="122" width="26" height="22" rx="3"/>
+<line class="v" x1="313" y1="144" x2="313" y2="188" marker-end="url(#av)"/>
+<text x="240" y="186" class="tv">49 N</text>
+<line class="w" x1="40" y1="120" x2="40" y2="170" marker-end="url(#aw)"/>
+<text x="8" y="186" class="tw">E (joint)</text>
+<line class="dash" x1="40" y1="200" x2="313" y2="200"/>
+<text x="56" y="214" class="muted">4 cm</text><text x="130" y="214" class="muted">15 cm</text><text x="290" y="214" class="muted">35 cm</text>
+<line class="dash" x1="74" y1="196" x2="74" y2="204"/><line class="dash" x1="160" y1="196" x2="160" y2="204"/><line class="dash" x1="313" y1="196" x2="313" y2="204"/>
+</svg>
+<figcaption>Forearm as a lever. The biceps acts very close to the pivot at the elbow, so it must pull far harder than the load it holds.</figcaption>
+</figure>
+<p><strong>Torques about the elbow.</strong> This eliminates the unknown joint force <span class="math inline">\(E\)</span>. Counter-clockwise is positive: <span class="math display">\[F_B(0.040) - (1.5)(9.8)(0.15) - (5.0)(9.8)(0.35) = 0.\]</span> <span class="math display">\[F_B = \frac{2.21 + 17.15}{0.040} = \frac{19.36}{0.040} = 484\ \mathrm{N}.\]</span></p>
+<p><strong>Vertical forces</strong>, taking <span class="math inline">\(E\)</span> as positive upward: <span class="math display">\[F_B - 14.7 - 49 + E = 0 \;\Rightarrow\; E = -420\ \mathrm{N}.\]</span> The joint force is 420 N, pushing <strong>down</strong> on the forearm.</p>
+<p><strong>Evaluate.</strong> The biceps pulls with about 7.6 times the combined weight of the dumbbell and forearm, because its lever arm (4 cm) is so much shorter than the load’s (35 cm). The body trades force for speed and range of motion: a small contraction of the biceps moves the hand a long way, quickly. The price is very large muscle and joint forces. This is why tendon and joint injuries are so common, and why orthopaedic surgeons and the designers of prosthetic joints must plan for loads many times body weight.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 7.8</div><h4 class="ex-title">Will the ladder slip?</h4>
+<p>A uniform 5.0 m ladder of mass 20 kg leans against a frictionless wall at <span class="math inline">\(60^\circ\)</span> to the floor. Find the minimum coefficient of static friction at the floor for the ladder not to slip.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Forces:</strong> the weight <span class="math inline">\(mg\)</span> at the midpoint; the floor’s normal force <span class="math inline">\(N_f\)</span> and friction <span class="math inline">\(f\)</span> at the base; the wall’s normal force <span class="math inline">\(N_w\)</span> (horizontal) at the top.</p>
+<p><strong>Force balance:</strong> <span class="math inline">\(N_f = mg\)</span> and <span class="math inline">\(f = N_w\)</span>.</p>
+<p><strong>Torques about the base</strong> (eliminating <span class="math inline">\(N_f\)</span> and <span class="math inline">\(f\)</span>). With the ladder at angle <span class="math inline">\(\theta\)</span> to the floor, the lever arm of the weight is <span class="math inline">\((L/2)\cos\theta\)</span> and that of <span class="math inline">\(N_w\)</span> is <span class="math inline">\(L\sin\theta\)</span>: <span class="math display">\[N_wL\sin\theta = mg\frac{L}{2}\cos\theta \;\Rightarrow\; N_w = \frac{mg}{2\tan\theta}.\]</span></p>
+<p><strong>Friction needed:</strong> <span class="math display">\[f = N_w \le \mu_sN_f = \mu_smg \;\Rightarrow\; \mu_s \ge \frac{1}{2\tan\theta} = \frac{1}{2\tan60^\circ} = 0.29.\]</span></p>
+<p><strong>Evaluate.</strong> A shallower ladder (smaller <span class="math inline">\(\theta\)</span>) needs more friction. Safety guidance recommends a 4:1 ratio of height to base distance, about <span class="math inline">\(75^\circ\)</span>, for which <span class="math inline">\(\mu_s \ge 0.13\)</span>. A person climbing the ladder raises the required friction as they go higher (Problem P7.11), which is why ladders tend to slip when the climber is near the top.</p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Biomechanics: why “lift with your legs”.</strong> When you bend forward to lift a load, the spine acts as a lever pivoted at the lumbosacral joint (L5/S1). The back muscles (erector spinae) pull nearly parallel to the spine, with a lever arm of only a few centimetres, while the weight of the upper body and the load act with lever arms of tens of centimetres. The muscle force, and the resulting compression of the intervertebral disc, can reach several thousand newtons (Problem P7.17). Ergonomic guidelines limit disc compression to about 3.4 kN. Keeping the back upright and the load close to the body cuts the load’s lever arm, and with it the spinal force. This is the physics behind workplace manual-handling rules, and an everyday example of static equilibrium.</p>
+</div>
+<div class="box sum"><div class="label">Chapter summary</div>
+<ul>
+<li><span class="math inline">\(\omega = d\theta/dt\)</span> and <span class="math inline">\(\alpha = d\omega/dt\)</span>. A point at radius <span class="math inline">\(r\)</span> has <span class="math inline">\(v = r\omega\)</span>, <span class="math inline">\(a_t = r\alpha\)</span> and <span class="math inline">\(a_c = \omega^2r\)</span>. The constant-<span class="math inline">\(\alpha\)</span> equations mirror the linear ones.</li>
+<li>Torque: <span class="math inline">\(\vect{\tau} = \vect{r}\times\vect{F}\)</span>, with magnitude <span class="math inline">\(rF\sin\phi = r_\perp F\)</span>.</li>
+<li><span class="math inline">\(\sum\tau = I\alpha\)</span>, with <span class="math inline">\(I = \int r^2\,dm\)</span>. Parallel axis: <span class="math inline">\(I = I_{\text{cm}} + Md^2\)</span>. Perpendicular axis (laminas): <span class="math inline">\(I_z = I_x + I_y\)</span>.</li>
+<li><span class="math inline">\(K_{\text{rot}} = \tfrac12I\omega^2\)</span> and <span class="math inline">\(P = \tau\omega\)</span>.</li>
+<li>Rolling without slipping: <span class="math inline">\(v = R\omega\)</span>, <span class="math inline">\(K = \tfrac12Mv^2(1 + \beta)\)</span> and <span class="math inline">\(a = g\sin\theta/(1 + \beta)\)</span>, where <span class="math inline">\(\beta = I/MR^2\)</span>.</li>
+<li><span class="math inline">\(\vect{L} = \vect{r}\times\vect{p}\)</span>, or <span class="math inline">\(L = I\omega\)</span> for a rigid body. <span class="math inline">\(\vect{\tau} = d\vect{L}/dt\)</span>. With no external torque, <span class="math inline">\(L\)</span> is conserved.</li>
+<li>Static equilibrium: <span class="math inline">\(\sum\vect{F} = 0\)</span> and <span class="math inline">\(\sum\vect{\tau} = 0\)</span> about any point. Take torques about the point where the unknown forces act.</li>
+</ul>
+</div>
+<h3 class="part-title" id="practice">Practice problems</h3><p class="note">Full step-by-step solutions are in the separate solutions PDF.</p>
+<h4 class="level">Level A — Concept check</h4>
+<div class="prob" id="p7-1"><span class="pnum">P7.1</span>
+<p>(a) Can a body be rotating if no torque acts on it? (b) Can a body have zero net force on it but a non-zero net torque? Give an example of each, or explain why not.</p>
+</div>
+<div class="prob" id="p7-2"><span class="pnum">P7.2</span>
+<p>A solid cylinder and a hollow cylinder (a thin-walled pipe) of equal mass and radius roll without slipping down the same ramp. Which reaches the bottom first? Would the answer change if the hollow one were twice as heavy?</p>
+</div>
+<div class="prob" id="p7-3"><span class="pnum">P7.3</span>
+<p>Explain why a figure skater spins faster when she pulls her arms in. Is her kinetic energy conserved? If not, where does the change come from?</p>
+</div>
+<div class="prob" id="p7-4"><span class="pnum">P7.4</span>
+<p>Why are door handles placed on the side opposite the hinges? Estimate how much harder it is to open a door by pushing 10 cm from the hinges instead of at the handle, 80 cm from them.</p>
+</div>
+<h4 class="level">Level B — Standard problems</h4>
+<div class="prob" id="p7-5"><span class="pnum">P7.5</span>
+<p>A flywheel is a uniform disc of mass 50 kg and radius 0.40 m spinning at 3000 rpm. (a) Find its kinetic energy. (b) What constant braking torque would stop it in 20 s? (c) How many revolutions does it make while stopping?</p>
+</div>
+<div class="prob" id="p7-6"><span class="pnum">P7.6</span>
+<p>Four small 0.50 kg masses sit at the corners of a square of side 0.40 m, joined by light rods. Find the moment of inertia about (a) an axis through the centre of the square, perpendicular to its plane, (b) an axis along one side of the square, and (c) an axis along a diagonal.</p>
+</div>
+<div class="prob" id="p7-7"><span class="pnum">P7.7</span>
+<p>A 5.0 kg bucket hangs from a light rope wound around a windlass: a solid cylinder of mass 10 kg and radius 0.10 m, free to turn on a frictionless axle. The bucket is released from rest. Find (a) its acceleration, (b) the tension in the rope, and (c) its speed after falling 3.0 m.</p>
+</div>
+<div class="prob" id="p7-8"><span class="pnum">P7.8</span>
+<p>A solid ball rolls without slipping, starting from rest at the top of a ramp 1.5 m high. Find its speed at the bottom. Compare this with the speed of a block sliding down a frictionless ramp of the same height, and explain the difference.</p>
+</div>
+<div class="prob" id="p7-9"><span class="pnum">P7.9</span>
+<p>A 30 kg child sits 1.5 m from the pivot of a seesaw. Where must a 40 kg child sit to balance it? What force does the pivot exert if the plank has a mass of 10 kg and is balanced at its centre?</p>
+</div>
+<div class="prob" id="p7-10"><span class="pnum">P7.10</span>
+<p><em>Holding the arm out.</em> A person holds their 4.0 kg arm straight out horizontally. The arm’s centre of mass is 0.30 m from the shoulder joint. The deltoid muscle attaches 0.15 m from the joint and pulls at <span class="math inline">\(15^\circ\)</span> above the arm. Find the tension in the deltoid and the magnitude of the force at the shoulder joint.</p>
+</div>
+<div class="prob" id="p7-11"><span class="pnum">P7.11</span>
+<p>A painter of mass 70 kg climbs a uniform 5.0 m ladder of mass 20 kg, which leans at <span class="math inline">\(60^\circ\)</span> to the floor against a frictionless wall. The coefficient of static friction at the floor is 0.40. How far up the ladder can the painter climb before it slips?</p>
+</div>
+<div class="prob" id="p7-12"><span class="pnum">P7.12</span>
+<p>A playground merry-go-round is a uniform disc of mass 200 kg and radius 2.0 m, turning freely once every 4.0 s. A 50 kg child starts at the rim and walks to the centre. (a) Find the final rotation period. (b) Find the change in kinetic energy and explain where the energy comes from.</p>
+</div>
+<h4 class="level">Level C — Challenge problems</h4>
+<div class="prob" id="p7-13"><span class="pnum">P7.13</span>
+<p>Derive the moment of inertia of a uniform solid sphere about a diameter, <span class="math inline">\(I = \tfrac25MR^2\)</span>, by slicing it into thin discs perpendicular to the axis.</p>
+</div>
+<div class="prob" id="p7-14"><span class="pnum">P7.14</span>
+<p>A bowling ball of radius <span class="math inline">\(R\)</span> is launched along the lane with speed <span class="math inline">\(v_0\)</span> and no spin. The coefficient of kinetic friction between ball and lane is <span class="math inline">\(\mu_k\)</span>. (a) Show that the ball slides for a time <span class="math inline">\(t = 2v_0/(7\mu_kg)\)</span> before it starts to roll without slipping. (b) Show that its rolling speed is then <span class="math inline">\(\tfrac57v_0\)</span>. (c) Find the distance it slides, and evaluate everything for <span class="math inline">\(v_0 = 8.0\)</span> m/s and <span class="math inline">\(\mu_k = 0.20\)</span>. (d) What fraction of the initial kinetic energy is lost?</p>
+</div>
+<div class="prob" id="p7-15"><span class="pnum">P7.15</span>
+<p>A uniform rod of length <span class="math inline">\(L\)</span> stands vertically on the floor. Its lower end is held in place by a hinge, and it is allowed to fall over. (a) Find its angular speed when it hits the floor. (b) Show that the free end then moves faster than an object dropped from height <span class="math inline">\(L\)</span>. (c) Show that, when the rod is horizontal, the free end has an acceleration of <span class="math inline">\(\tfrac32g\)</span>, faster than free fall. Explain why tall falling chimneys often break in two partway up.</p>
+</div>
+<div class="prob" id="p7-16"><span class="pnum">P7.16</span>
+<p>A yo-yo is a uniform disc of mass <span class="math inline">\(M\)</span> and radius <span class="math inline">\(R\)</span>. A string is wound around it, and the free end is held fixed. The yo-yo is released and unwinds as it falls. Find its acceleration and the tension in the string.</p>
+</div>
+<div class="prob" id="p7-17"><span class="pnum">P7.17</span>
+<p><em>Lifting with a bent back.</em> A 75 kg person bends forward so that the back is at <span class="math inline">\(30^\circ\)</span> above the horizontal. Model the spine as a rigid rod of length <span class="math inline">\(L\)</span> pivoted at the base (L5/S1). The weight of the upper body (450 N) acts at the midpoint of the spine. A 200 N load held in the hands acts at the top of the spine. The erector spinae muscles attach two-thirds of the way up the spine and pull at <span class="math inline">\(12^\circ\)</span> to it. Find (a) the muscle tension and (b) the compressive force along the spine at L5/S1. Compare the compressive force with the person’s body weight and with the 3.4 kN guideline limit.</p>
+</div>
+<div class="prob" id="p7-18"><span class="pnum">P7.18</span>
+<p>A uniform rod of mass 2.0 kg and length 1.0 m hangs vertically from a frictionless pivot at its top end. A 10 g bullet travelling horizontally at 300 m/s hits the bottom of the rod and embeds itself. (a) Which quantity is conserved during the collision: linear momentum, angular momentum about the pivot, or kinetic energy? Explain. (b) Find the angular velocity just after the impact. (c) Find the maximum angle through which the rod swings.</p>
+</div>
+
+<div class="downloads noprint"><a href="ch07-rotation_notes.pdf" download>Download notes (PDF)</a><a href="ch07-rotation_solutions.pdf" download>Download solutions (PDF)</a></div>
+</article>
+<nav class="pager"><a href="ch06-momentum.html">← 6. Centre of Mass, Linear Momentum and Collisions</a><a href="ch08-gravitation.html">8. Gravitation →</a></nav></main>
+<footer>All worked examples and practice problems in these notes are original. Textbooks for further reading and practice, with a chapter-by-chapter map, are listed in the References.<p class="copyright">© 2026 Pratik Bhanuse. All rights reserved. · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p></footer>
+</div>
+</body>
+</html>

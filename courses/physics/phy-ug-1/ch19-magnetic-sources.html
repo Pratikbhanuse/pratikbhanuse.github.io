@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Currents make magnetic fields: the Biot–Savart law, Ampère&#x27;s law, solenoids, magnetic materials, and the giant magnets of MRI.">
+<title>19. Sources of the Magnetic Field · Physics, step by step</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* House style shared with "Linear algebra, translated" */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D; --p:#7C3AED;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --def-bg:#F3EEFF; --def-ink:#5B21B6;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --def-bg:#1E1733; --def-ink:#C4B5FD;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --def-bg:#1E1733; --def-ink:#C4B5FD;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+a{color:var(--u)}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5.6vw,60px); line-height:1.04; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .hl{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+.byline{font-family:var(--display); font-size:15px; color:var(--muted); margin:14px 0 0}
+.byline strong{color:var(--ink)} .byline a, .copyright a{color:inherit}
+.copyright{font-family:var(--display); font-size:13px; color:var(--muted); margin:10px 0 0}
+
+/* side navigation */
+nav.toc{position:sticky; top:24px; align-self:start; padding-top:8px; font-family:var(--display); font-size:14px; max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc a[aria-current="page"]{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); font-weight:700}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px}
+nav.toc .sub{padding-left:28px; font-size:13px; color:var(--muted)}
+nav.toc .sub a{color:var(--muted); padding:3px 8px}
+
+main{min-width:0}
+.chapter{max-width:72ch}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+h4{font-family:var(--display); font-weight:700; font-size:18px; margin:24px 0 6px}
+h5{font-family:var(--display); font-weight:700; font-size:16px; margin:18px 0 4px}
+.topic-num{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--u); border-top:1px solid var(--line); padding-top:18px; margin-top:34px; scroll-margin-top:24px}
+h3.topic-title{font-size:24px; margin:4px 0 8px}
+h3.part-title{font-size:24px; margin:40px 0 4px; border-top:2px solid var(--ink); padding-top:16px}
+h4.level{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--v); margin:26px 0 10px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px}
+.note{color:var(--muted); font-size:15px}
+
+/* boxes */
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.def{background:var(--def-bg)} .box.def .label{color:var(--def-ink)}
+.box.work,.box.goals,.box.sum{background:var(--surface); border:1px solid var(--line)}
+.box.work .label,.box.goals .label,.box.sum .label{color:var(--muted)}
+.box.sum{border-top:3px solid var(--ink)}
+.box.work .label{color:var(--v)}
+.box .ex-title{margin:0 0 8px; font-size:18px}
+.sol-inline{margin:10px 0 12px; border-left:3px solid var(--w); padding-left:14px}
+.sol-label{display:block; font-family:var(--display); font-weight:700; font-size:13px; color:var(--w); margin-bottom:4px}
+details.ans{margin:4px 0 12px} details.ans summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:14px; color:var(--w)}
+details.ans > div{padding-top:6px}
+
+/* practice problems */
+.prob{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px 2px; margin:0 0 12px; min-width:0}
+.prob .pnum{font-family:var(--mono); font-weight:600; font-size:12px; color:var(--v); display:block; margin-bottom:2px}
+.prob p{margin:0 0 10px}
+
+/* solutions pages */
+h3.sol-head{margin:30px 0 8px; border-top:1px solid var(--line); padding-top:16px}
+h3.sol-head .pnum{font-family:var(--mono); font-size:14px; letter-spacing:.06em; color:var(--v)}
+.solutions .chapter > p:first-of-type{margin-top:0}
+
+/* tables, figures, math */
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2; fill:none}
+svg .obj{fill:var(--surface); stroke:var(--ink); stroke-width:1.6}
+svg .solid{fill:var(--code-bg); stroke:var(--ink); stroke-width:1.4}
+svg .ground{stroke:var(--ink); stroke-width:1.6}
+svg .hatch{stroke:var(--muted); stroke-width:1}
+svg .dash{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:5 4; fill:none}
+svg .u{stroke:var(--u); stroke-width:2.6; fill:none}
+svg .v{stroke:var(--v); stroke-width:2.6; fill:none}
+svg .w{stroke:var(--w); stroke-width:2.6; fill:none}
+svg .p{stroke:var(--p); stroke-width:2.6; fill:none}
+svg .curve{stroke:var(--u); stroke-width:2.4; fill:none}
+svg .hu,svg .tu{fill:var(--u)} svg .hv,svg .tv{fill:var(--v)} svg .hw,svg .tw{fill:var(--w)} svg .hp,svg .tp{fill:var(--p)}
+svg .muted{fill:var(--muted)} svg .ink{fill:var(--ink)}
+svg .dot{fill:var(--ink)}
+svg .fillu{fill:var(--u); fill-opacity:.12; stroke:none}
+mjx-container{color:inherit}
+mjx-container[display="true"]{display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; margin:.7em 0 !important; padding-block:2px}
+.box mjx-container[display="true"]{margin:.5em 0 !important}
+
+/* pager + footer */
+.pager{display:flex; justify-content:space-between; gap:12px; margin:56px 0 0; padding-top:16px; border-top:1px solid var(--line); font-family:var(--display); font-size:15px; max-width:72ch}
+.pager a{text-decoration:none; color:var(--u)}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+
+/* index page */
+.unit{border-top:2px solid var(--ink); padding-top:12px; margin:36px 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.chlist{list-style:none; padding:0; margin:0}
+.chlist li{display:grid; grid-template-columns:2.4em minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); margin:0}
+.chlist .n{font-family:var(--mono); font-size:13px; color:var(--muted)}
+.chlist .t{font-family:var(--display); font-weight:600; font-size:17px; text-decoration:none; color:var(--ink)}
+.chlist .t:hover{color:var(--u)}
+.chlist .s{font-family:var(--mono); font-size:12px; text-decoration:none}
+.downloads{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+.downloads a{font-family:var(--display); font-weight:600; font-size:15px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 14px}
+.downloads a:hover{border-color:var(--u); color:var(--u)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static; max-height:none}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  nav.toc .grp{grid-column:1/-1}
+  nav.toc .sub{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ---------- print (PDF) ---------- */
+@page{
+  size:Letter; margin:17mm 15mm 18mm;
+  @top-right{content:"Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-left{content:"© 2026 Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-right{content:counter(page) " / " counter(pages); font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+}
+@page :first{ @top-right{content:none} }
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff; padding:0; font-size:11.5pt}
+  .wrap{display:block; max-width:none}
+  nav.toc,.pager,.noprint{display:none !important}
+  header.top{padding-block:0 8px}
+  .chapter{max-width:none; break-before:page}
+  .book-toc{break-before:page}
+  .box,.prob,figure{break-inside:avoid}
+  .box.work{break-inside:auto}
+  .topic-num,h3,h4{break-after:avoid}
+  a{color:inherit; text-decoration:none}
+  details.ans > summary{display:none}
+}
+/* printed table of contents */
+.book-toc ol{list-style:none; padding:0}
+.book-toc li{display:flex; gap:12px; padding:5px 0; border-bottom:1px dotted var(--line); font-family:var(--display); margin:0}
+.book-toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:2em; padding-top:2px}
+h3.page-h{border-top:1px solid var(--line); padding-top:18px; margin-top:34px}
+svg .hk{fill:var(--ink)} svg .k{stroke:var(--ink); stroke-width:2.2; fill:none}
+:root{ --apply-bg:#F1EEFB; --apply-ink:#4C2A9E; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --apply-bg:#1D1830; --apply-ink:#C9B8FF; } }
+:root[data-theme="dark"]{ --apply-bg:#1D1830; --apply-ink:#C9B8FF; }
+.box.apply{background:var(--apply-bg); border-left:4px solid var(--apply-ink)} .box.apply .label{color:var(--apply-ink)}
+svg path.ground,svg polyline.ground{fill:none}
+
+.chlist .s a{text-decoration:none}
+.single{max-width:none}
+
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+         macros: { vect: ['\\vec{\\boldsymbol{#1}}', 1], uvec: ['\\hat{\\boldsymbol{#1}}', 1],
+                   ihat: '\\hat{\\boldsymbol{\\imath}}', jhat: '\\hat{\\boldsymbol{\\jmath}}',
+                   khat: '\\hat{\\boldsymbol{k}}', unit: ['\\,\\mathrm{#1}', 1] } },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker><marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker><marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hp"/></marker><marker id="ak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hk"/></marker></defs></svg>
+<div class="wrap">
+<header class="top"><div class="kicker">Chapter 19 · Semester 2 · Electricity, Magnetism, Optics and Modern Physics</div><h1>Sources of the Magnetic Field</h1><p class="lede">Currents make magnetic fields: the Biot–Savart law, Ampère's law, solenoids, magnetic materials, and the giant magnets of MRI.</p><p class="byline">By <strong>Pratik Bhanuse</strong>, PhD Physics candidate, Western University · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p><div class="downloads noprint"><a href="ch19-magnetic-sources_notes.pdf" download>Download notes (PDF)</a><a href="ch19-magnetic-sources_solutions.pdf" download>Download solutions (PDF)</a></div></header>
+<aside class="side"><nav class="toc" aria-label="Contents"><ol>
+<li><a href="index.html"><span class="n">⌂</span>Contents</a></li>
+<li><a href="syllabus.html"><span class="n">→</span>Syllabus and how to study</a></li>
+<li class="grp">Semester 1 · Mechanics, Waves and Thermal Physics</li>
+<li><a href="ch01-units-vectors.html"><span class="n">1</span>Measurement, Units, Dimensions and Vectors</a></li>
+<li><a href="ch02-kinematics.html"><span class="n">2</span>Kinematics in One and Two Dimensions</a></li>
+<li><a href="ch03-newtons-laws.html"><span class="n">3</span>Newton&#x27;s Laws of Motion</a></li>
+<li><a href="ch04-friction-circular.html"><span class="n">4</span>Friction and Circular Motion</a></li>
+<li><a href="ch05-work-energy.html"><span class="n">5</span>Work, Energy and Power</a></li>
+<li><a href="ch06-momentum.html"><span class="n">6</span>Centre of Mass, Linear Momentum and Collisions</a></li>
+<li><a href="ch07-rotation.html"><span class="n">7</span>Rotational Motion</a></li>
+<li><a href="ch08-gravitation.html"><span class="n">8</span>Gravitation</a></li>
+<li><a href="ch09-oscillations.html"><span class="n">9</span>Simple Harmonic Motion</a></li>
+<li><a href="ch10-fluids-elasticity.html"><span class="n">10</span>Elasticity and Fluid Mechanics</a></li>
+<li><a href="ch11-waves-sound.html"><span class="n">11</span>Mechanical Waves and Sound</a></li>
+<li><a href="ch12-thermal.html"><span class="n">12</span>Heat, Kinetic Theory and Thermodynamics</a></li>
+<li class="grp">Semester 2 · Electricity, Magnetism, Optics and Modern Physics</li>
+<li><a href="ch13-electric-field.html"><span class="n">13</span>Electric Charge and Electric Field</a></li>
+<li><a href="ch14-gauss.html"><span class="n">14</span>Gauss&#x27;s Law</a></li>
+<li><a href="ch15-potential.html"><span class="n">15</span>Electric Potential</a></li>
+<li><a href="ch16-capacitance.html"><span class="n">16</span>Capacitance and Dielectrics</a></li>
+<li><a href="ch17-dc-circuits.html"><span class="n">17</span>Electric Current and DC Circuits</a></li>
+<li><a href="ch18-magnetic-force.html"><span class="n">18</span>Magnetic Field and Magnetic Forces</a></li>
+<li><a href="ch19-magnetic-sources.html" aria-current="page"><span class="n">19</span>Sources of the Magnetic Field</a></li>
+<li class="sub"><a href="#the-biotsavart-law">§19.1 The Biot–Savart law</a></li>
+<li class="sub"><a href="#force-between-parallel-currents">§19.2 Force between parallel currents</a></li>
+<li class="sub"><a href="#ampères-law">§19.3 Ampère’s law</a></li>
+<li class="sub"><a href="#magnetic-materials">§19.4 Magnetic materials</a></li>
+<li class="sub"><a href="#practice">Practice problems</a></li>
+<li><a href="ch20-induction.html"><span class="n">20</span>Electromagnetic Induction</a></li>
+<li><a href="ch21-ac-emwaves.html"><span class="n">21</span>Alternating Current and Electromagnetic Waves</a></li>
+<li><a href="ch22-geometric-optics.html"><span class="n">22</span>Geometrical Optics</a></li>
+<li><a href="ch23-wave-optics.html"><span class="n">23</span>Wave Optics</a></li>
+<li><a href="ch24-modern.html"><span class="n">24</span>Photons, Atoms and Nuclei</a></li>
+<li class="grp">Appendix</li>
+<li><a href="references.html"><span class="n">R</span>References and further practice</a></li>
+</ol></nav></aside>
+<main><article class="chapter notes">
+<p>In 1820 Hans Christian Ørsted noticed that a current in a wire deflected a nearby compass needle. Within weeks, Biot, Savart and Ampère had worked out the laws: <strong>moving charges create magnetic fields</strong>, just as charges create electric fields. This chapter finds the fields of wires, loops and coils, using the Biot–Savart law (the magnetic counterpart of Coulomb’s law) and Ampère’s law (the counterpart of Gauss’s law). It explains how solenoids produce the uniform fields used in MRI, why parallel currents attract (which once defined the ampere), and how magnetic materials such as iron multiply fields a thousandfold.</p>
+<div class="box goals"><div class="label">You will be able to</div>
+<ul>
+<li>Use the Biot–Savart law to find the fields of straight wires, arcs and circular loops.</li>
+<li>Calculate the force between parallel currents, and explain the definition of the ampere.</li>
+<li>State Ampère’s law and use it for long wires, coaxial cables, solenoids and toroids.</li>
+<li>Describe the field of a magnetic dipole and of Helmholtz coils.</li>
+<li>Explain diamagnetism, paramagnetism and ferromagnetism, hysteresis and magnetic circuits.</li>
+<li>Apply these ideas to MRI magnets, transcranial magnetic stimulation and magnetic shielding.</li>
+</ul>
+</div>
+<div class="box ask"><div class="label">Think first</div>
+<p>An MRI scanner’s 3 T field is produced by a coil of wire carrying a few hundred amperes. Once it is “ramped up”, the power supply is disconnected, yet the field stays on for years. How can a current flow for years with no battery?</p>
+<details class="ans"><summary>Show answer</summary><div>
+<p>The coil is made of a <strong>superconductor</strong>, cooled by liquid helium to about 4 K. Below its critical temperature it has exactly zero resistance, so once a current is established it flows round the closed loop with no energy loss. The magnet is “persistent”. The danger is a <strong>quench</strong>: if part of the coil warms above its critical temperature, it suddenly gains resistance, and the magnetic energy stored in the field, several megajoules, is converted to heat in seconds. That boils off the helium violently, which is why scanners have quench pipes to vent it outdoors.</p>
+</div></details>
+</div>
+<div class="topic-num" id="the-biotsavart-law">§19.1</div><h3 class="topic-title">The Biot–Savart law</h3>
+<p>A short segment of wire <span class="math inline">\(d\vect{l}\)</span> carrying current <span class="math inline">\(I\)</span> produces, at a point displaced by <span class="math inline">\(\vect{r}\)</span> from the segment, a magnetic field <span class="math display">\[d\vect{B} = \frac{\mu_0}{4\pi}\frac{I\,d\vect{l}\times\uvec{r}}{r^2},\qquad \mu_0 = 4\pi\times10^{-7}\ \mathrm{T\,m/A}.\]</span> The constant <span class="math inline">\(\mu_0\)</span> is the <strong>permeability of free space</strong>. Since the 2019 SI redefinition its value is measured rather than exact, but it agrees with <span class="math inline">\(4\pi\times10^{-7}\)</span> to about one part in <span class="math inline">\(10^{10}\)</span>.</p>
+<p>Features of the Biot–Savart law:</p>
+<ul>
+<li>The field falls off as <span class="math inline">\(1/r^2\)</span>, like Coulomb’s law.</li>
+<li><span class="math inline">\(d\vect{B}\)</span> is <strong>perpendicular</strong> to both <span class="math inline">\(d\vect{l}\)</span> and <span class="math inline">\(\uvec{r}\)</span>, so the field circles around the current.</li>
+<li>A segment produces no field along its own line, where <span class="math inline">\(d\vect{l}\times\uvec{r} = 0\)</span>.</li>
+</ul>
+<p>The total field is the vector sum of the contributions from every segment: <span class="math inline">\(\vect{B} = \int d\vect{B}\)</span>.</p>
+<h4>The long straight wire</h4>
+<p>For an infinitely long straight wire, the Biot–Savart integral (Problem P19.13, with both ends at infinity) gives <span class="math display">\[B = \frac{\mu_0I}{2\pi r}.\]</span> The field lines are <strong>circles</strong> centred on the wire. Their direction follows the <strong>right-hand grip rule</strong>: grip the wire with your right thumb along the current, and your fingers curl in the direction of <span class="math inline">\(\vect{B}\)</span>.</p>
+<figure>
+<svg viewBox="0 0 380 200" width="370" role="img" aria-label="Left: a wire carrying current out of the page, shown as a dot, surrounded by concentric circular field lines circulating anticlockwise, spaced farther apart with distance. Right: a solenoid in cross-section, with crosses and dots for the windings and nearly uniform, parallel field lines running along its inside, spreading out and looping back outside.">
+<circle cx="95" cy="100" r="22" class="u" style="fill:none"/><circle cx="95" cy="100" r="45" class="u" style="fill:none;opacity:.8"/><circle cx="95" cy="100" r="75" class="u" style="fill:none;opacity:.6"/>
+<circle cx="95" cy="100" r="8" class="obj"/><circle class="dot" cx="95" cy="100" r="2.5"/>
+<path class="u" d="M 140 100 A 45 45 0 0 0 128 69" marker-end="url(#au)"/>
+<path class="u" d="M 170 100 A 75 75 0 0 0 150 49" marker-end="url(#au)"/>
+<text x="62" y="194" class="muted">I out of page</text>
+<g style="font-family:var(--mono);font-size:12px">
+<text x="226" y="62" class="tv">⊙</text><text x="252" y="62" class="tv">⊙</text><text x="278" y="62" class="tv">⊙</text><text x="304" y="62" class="tv">⊙</text><text x="330" y="62" class="tv">⊙</text>
+<text x="226" y="146" class="tv">⊗</text><text x="252" y="146" class="tv">⊗</text><text x="278" y="146" class="tv">⊗</text><text x="304" y="146" class="tv">⊗</text><text x="330" y="146" class="tv">⊗</text>
+</g>
+<line class="u" x1="212" y1="85" x2="356" y2="85" marker-end="url(#au)"/><line class="u" x1="212" y1="100" x2="356" y2="100" marker-end="url(#au)"/><line class="u" x1="212" y1="115" x2="356" y2="115" marker-end="url(#au)"/>
+<path class="u" d="M356,85 C380,40 200,20 212,85" style="opacity:.5"/><path class="u" d="M356,115 C380,165 200,185 212,115" style="opacity:.5"/>
+<text x="250" y="194" class="muted">solenoid: B = μ₀nI inside</text>
+</svg>
+<figcaption>Left: the circular field lines of a long straight wire carrying current out of the page. The field weakens as 1/r. Right: a solenoid produces a strong, nearly uniform field inside, and a weak field outside.</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 19.1</div><h4 class="ex-title">A wire next to a compass</h4>
+<p>A long straight wire carries 10 A. Find the magnetic field 5.0 cm away, and compare it with the Earth’s field of about 50 μT.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[B = \frac{\mu_0I}{2\pi r} = \frac{(4\pi\times10^{-7})(10)}{2\pi(0.050)} = 4.0\times10^{-5}\ \mathrm{T} = 40\ \mu\mathrm{T}.\]</span> This is comparable with the Earth’s field, so a compass placed near such a wire would be strongly deflected. That is exactly what Ørsted saw. It is also why aircraft and ship compasses are kept away from current-carrying cables.</p>
+</div>
+</div>
+<h4>The circular loop</h4>
+<p>Every element of a loop of radius <span class="math inline">\(R\)</span> is the same distance from the centre, and its contribution there points along the axis. So at the <strong>centre</strong>: <span class="math display">\[B = \frac{\mu_0I}{2R},\qquad\text{or}\qquad B = \frac{\mu_0NI}{2R}\ \text{for a flat coil of } N \text{ turns}.\]</span></p>
+<p>On the <strong>axis</strong>, at a distance <span class="math inline">\(x\)</span> from the centre, the components perpendicular to the axis cancel by symmetry (just as for the ring of charge in Chapter 13), and <span class="math display">\[B = \frac{\mu_0IR^2}{2(x^2 + R^2)^{3/2}}.\]</span> Far away (<span class="math inline">\(x \gg R\)</span>), <span class="math inline">\(B \approx \dfrac{\mu_0}{2\pi}\dfrac{\mu}{x^3}\)</span>, where <span class="math inline">\(\mu = I\pi R^2\)</span> is the magnetic moment. This is a <strong>magnetic dipole</strong> field, falling off as <span class="math inline">\(1/r^3\)</span>, with the same pattern as the electric dipole field of Chapter 13. Bar magnets, the Earth, and individual atoms all produce dipole fields at large distances.</p>
+<p><strong>A circular arc</strong> that subtends an angle <span class="math inline">\(\phi\)</span> (in radians) at its centre contributes a field <span class="math inline">\(B = \dfrac{\mu_0I\phi}{4\pi R}\)</span> there. A full circle has <span class="math inline">\(\phi = 2\pi\)</span>, which gives <span class="math inline">\(\mu_0I/2R\)</span> again.</p>
+<div class="box work example"><div class="label">Worked example 19.2</div><h4 class="ex-title">A flat coil</h4>
+<p>A flat coil of 50 turns and radius 5.0 cm carries 2.0 A. Find the field at its centre, and on its axis 5.0 cm from the centre.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>At the centre: <span class="math display">\[B_0 = \frac{\mu_0NI}{2R} = \frac{(4\pi\times10^{-7})(50)(2.0)}{2(0.050)} = 1.3\times10^{-3}\ \mathrm{T}.\]</span> On the axis at <span class="math inline">\(x = R\)</span>: <span class="math display">\[B = B_0\frac{R^3}{(2R^2)^{3/2}} = \frac{B_0}{2\sqrt2} = 4.4\times10^{-4}\ \mathrm{T}.\]</span></p>
+</div>
+</div>
+<div class="topic-num" id="force-between-parallel-currents">§19.2</div><h3 class="topic-title">Force between parallel currents</h3>
+<p>A long wire carrying current <span class="math inline">\(I_1\)</span> produces a field <span class="math inline">\(B_1 = \mu_0I_1/(2\pi d)\)</span> at a parallel wire a distance <span class="math inline">\(d\)</span> away. The second wire, carrying <span class="math inline">\(I_2\)</span>, then feels a force per unit length <span class="math display">\[\frac{F}{L} = I_2B_1 = \frac{\mu_0I_1I_2}{2\pi d}.\]</span></p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Parallel currents attract. Antiparallel currents repel.</strong> This is the opposite of electric charges, where like charges repel.</p>
+<p>Until 2019, the ampere was <em>defined</em> by this force: two infinitely long, thin wires 1 m apart, each carrying 1 A, attract with exactly <span class="math inline">\(2\times10^{-7}\)</span> N per metre. (The ampere is now defined by fixing the elementary charge <span class="math inline">\(e\)</span>.)</p>
+</div>
+<div class="box work example"><div class="label">Worked example 19.3</div><h4 class="ex-title">Forces in a busbar during a fault</h4>
+<p>Two parallel busbars in a substation are 0.50 m apart. During a short-circuit fault, each carries 20 kA, in opposite directions. Find the force per metre on each bar.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[\frac{F}{L} = \frac{(4\pi\times10^{-7})(2.0\times10^4)^2}{2\pi(0.50)} = \frac{(2.0\times10^{-7})(4.0\times10^8)}{0.50} = 160\ \mathrm{N/m},\]</span> and the bars <strong>repel</strong>. Over a 5 m span, that is 800 N, applied suddenly. Busbar supports must be designed to withstand these short-circuit forces, which grow as the <em>square</em> of the current.</p>
+</div>
+</div>
+<div class="topic-num" id="ampères-law">§19.3</div><h3 class="topic-title">Ampère’s law</h3>
+<p>For any closed path (an “Amperian loop”), the line integral of <span class="math inline">\(\vect{B}\)</span> around the path equals <span class="math inline">\(\mu_0\)</span> times the current passing through it:</p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Ampère’s law:</strong> <span class="math display">\[\oint\vect{B}\cdot d\vect{l} = \mu_0I_{\text{enc}}.\]</span> Currents passing through the loop count positive if they follow the right-hand rule relative to the direction in which the loop is traversed, and negative otherwise. Currents outside the loop contribute nothing to the integral.</p>
+</div>
+<p>Ampère’s law plays the role for magnetism that Gauss’s law plays for electricity. It is always true for steady currents. It is <em>useful</em> only when symmetry makes <span class="math inline">\(B\)</span> constant along the path and either parallel or perpendicular to it. Chapter 21 shows how Maxwell extended it to changing fields.</p>
+<h4>Long straight wire, inside and outside</h4>
+<p>Use a circular Amperian loop of radius <span class="math inline">\(r\)</span>, centred on the wire. By symmetry, <span class="math inline">\(B\)</span> is tangent to the loop and the same everywhere on it, so <span class="math inline">\(\oint\vect{B}\cdot d\vect{l} = B(2\pi r)\)</span>.</p>
+<ul>
+<li><strong>Outside</strong> (<span class="math inline">\(r &gt; R\)</span>): <span class="math inline">\(I_{\text{enc}} = I\)</span>, so <span class="math inline">\(B = \dfrac{\mu_0I}{2\pi r}\)</span>. ✓ (This agrees with Biot–Savart.)</li>
+<li><strong>Inside</strong> a wire of radius <span class="math inline">\(R\)</span> with uniform current density: <span class="math inline">\(I_{\text{enc}} = I\dfrac{r^2}{R^2}\)</span>, so <span class="math inline">\(B = \dfrac{\mu_0Ir}{2\pi R^2}\)</span>.</li>
+</ul>
+<p>The field rises linearly inside the wire, peaks at its surface, then falls as <span class="math inline">\(1/r\)</span>, the same shape as the electric field of a uniformly charged cylinder.</p>
+<p><strong>Coaxial cable.</strong> The inner and outer conductors carry equal and opposite currents. A loop outside the cable encloses zero net current, so <span class="math inline">\(B = 0\)</span> outside. The cable neither radiates magnetic fields nor picks them up.</p>
+<h4>The solenoid</h4>
+<p>A <strong>solenoid</strong> is a long, tightly wound helical coil with <span class="math inline">\(n\)</span> turns per unit length. Inside, far from the ends, the field is uniform and parallel to the axis. Outside, it is nearly zero. Take a rectangular Amperian loop with one side of length <span class="math inline">\(\ell\)</span> inside the solenoid, parallel to the axis, and the opposite side outside:</p>
+<ul>
+<li>Only the inside side contributes to <span class="math inline">\(\oint\vect{B}\cdot d\vect{l}\)</span>, giving <span class="math inline">\(B\ell\)</span>. The outside side has <span class="math inline">\(B \approx 0\)</span>, and the two ends are perpendicular to <span class="math inline">\(\vect{B}\)</span>.</li>
+<li>The loop encloses <span class="math inline">\(n\ell\)</span> turns, so <span class="math inline">\(I_{\text{enc}} = n\ell I\)</span>.</li>
+</ul>
+<p><span class="math display">\[B\ell = \mu_0n\ell I \;\Rightarrow\; B = \mu_0nI.\]</span> The field does not depend on the solenoid’s radius, or on where you are inside it. At each end, the field falls to half of this value.</p>
+<h4>The toroid</h4>
+<p>A <strong>toroid</strong> is a solenoid bent round into a doughnut, with <span class="math inline">\(N\)</span> turns in total. Using a circular Amperian loop of radius <span class="math inline">\(r\)</span> inside the windings: <span class="math display">\[B = \frac{\mu_0NI}{2\pi r}.\]</span> Outside the toroid, <span class="math inline">\(B = 0\)</span>. The field is completely confined, which makes toroids ideal for transformers and inductors that must not interfere with nearby circuits.</p>
+<div class="box work example"><div class="label">Worked example 19.4</div><h4 class="ex-title">An MRI magnet</h4>
+<p>A whole-body MRI magnet is a superconducting solenoid 1.5 m long and 0.90 m in diameter, carrying 400 A, that produces 3.0 T. (a) How many turns per metre, and in total, does it need? (b) The energy density of a magnetic field is <span class="math inline">\(B^2/2\mu_0\)</span> (Chapter 20). Estimate the energy stored inside the bore.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) Turns: <span class="math display">\[n = \frac{B}{\mu_0I} = \frac{3.0}{(4\pi\times10^{-7})(400)} = 6.0\times10^3\ \text{turns/m},\qquad N = nL \approx 9\times10^3\ \text{turns}.\]</span></p>
+<p>(b) Energy: <span class="math display">\[u = \frac{B^2}{2\mu_0} = \frac{9.0}{2(4\pi\times10^{-7})} = 3.6\times10^6\ \mathrm{J/m^3}.\]</span> The bore’s volume is <span class="math inline">\(\pi(0.45)^2(1.5) = 0.95\ \mathrm{m^3}\)</span>, so <span class="math display">\[U \approx 3.4\ \mathrm{MJ}.\]</span> That is about the energy of a 1-tonne car at 300 km/h. In a quench, it is all released within seconds as heat.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 19.5</div><h4 class="ex-title">A toroidal coil</h4>
+<p>A toroid with 500 turns and a mean radius of 10 cm carries 2.0 A. Find the field inside it.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[B = \frac{\mu_0NI}{2\pi r} = \frac{(4\pi\times10^{-7})(500)(2.0)}{2\pi(0.10)} = 2.0\times10^{-3}\ \mathrm{T}.\]</span></p>
+</div>
+</div>
+<div class="topic-num" id="magnetic-materials">§19.4</div><h3 class="topic-title">Magnetic materials</h3>
+<p>Every atom contains moving electrons, with orbital motion and intrinsic <strong>spin</strong>, and so acts as a tiny magnetic dipole. The natural unit of atomic magnetic moment is the <strong>Bohr magneton</strong>, <span class="math inline">\(\mu_B = 9.27\times10^{-24}\ \mathrm{A\,m^2}\)</span> (Problem P19.18). How these atomic moments respond to an applied field divides materials into three classes. The response is measured by the <strong>relative permeability</strong> <span class="math inline">\(\mu_r\)</span>: inside a material that fills the region, the field becomes <span class="math inline">\(B = \mu_r\mu_0nI\)</span>.</p>
+<div class="tablewrap">
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Type</th>
+<th><span class="math inline">\(\mu_r\)</span></th>
+<th>Mechanism</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Diamagnetic</strong></td>
+<td>slightly &lt; 1 (by about <span class="math inline">\(10^{-5}\)</span>)</td>
+<td>Induced orbital currents oppose the applied field. Present in all matter.</td>
+<td>Water, tissue, copper, bismuth. Superconductors are perfect diamagnets (<span class="math inline">\(\mu_r = 0\)</span>).</td>
+</tr>
+<tr>
+<td><strong>Paramagnetic</strong></td>
+<td>slightly &gt; 1 (by <span class="math inline">\(10^{-5}\)</span>–<span class="math inline">\(10^{-3}\)</span>)</td>
+<td>Permanent atomic moments partly align with the field, against thermal disorder.</td>
+<td>Aluminium, oxygen, gadolinium MRI contrast agents, deoxyhaemoglobin</td>
+</tr>
+<tr>
+<td><strong>Ferromagnetic</strong></td>
+<td><span class="math inline">\(10^2\)</span>–<span class="math inline">\(10^5\)</span></td>
+<td>Strong quantum “exchange” coupling lines up neighbouring moments within <strong>domains</strong>. An applied field grows the favourably aligned domains.</td>
+<td>Iron, nickel, cobalt, many alloys</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Ferromagnets</strong> show <strong>hysteresis</strong>: their magnetisation depends on their history. They can retain magnetisation after the field is removed, which makes permanent magnets, and they <em>saturate</em> at high fields, typically around 1.5–2 T for iron. Above the <strong>Curie temperature</strong> (1043 K for iron), thermal agitation destroys the domain alignment, and the material becomes paramagnetic.</p>
+<ul>
+<li><em>Soft</em> magnetic materials, such as silicon steel, have narrow hysteresis loops and are easy to magnetise and demagnetise, so they are used in transformer cores.</li>
+<li><em>Hard</em> materials, such as NdFeB, have wide loops and are used for permanent magnets, in motors, headphones and wind turbines.</li>
+</ul>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Magnetic materials in medicine and engineering.</strong></p>
+<ul>
+<li><strong>MRI contrast agents</strong> contain paramagnetic gadolinium. Their large atomic moments speed up the relaxation of nearby protons, brightening blood vessels and tumours on the image.</li>
+<li><strong>Functional MRI (fMRI)</strong> exploits the fact that <em>deoxygenated</em> haemoglobin is paramagnetic while oxygenated haemoglobin is diamagnetic. Active brain regions receive more oxygenated blood, which subtly changes the local field and the signal: the BOLD effect.</li>
+<li><strong>Magnetic shielding.</strong> Rooms for magnetoencephalography (MEG) are lined with high-permeability “mu-metal”, which channels the Earth’s field and urban magnetic noise <em>around</em> the room, reducing it by a factor of <span class="math inline">\(10^3\)</span>–<span class="math inline">\(10^5\)</span>.</li>
+<li><strong>Transformers and motors</strong> use iron cores to multiply fields by <span class="math inline">\(\mu_r \sim 10^3\)</span>, so that strong fields can be produced with modest currents (Problem P19.17).</li>
+</ul>
+</div>
+<div class="box work example"><div class="label">Worked example 19.6</div><h4 class="ex-title">Transcranial magnetic stimulation</h4>
+<p>A TMS coil used to stimulate the brain has 15 turns of radius 3.5 cm and carries a peak current of 5.0 kA in a pulse lasting about 0.1 ms. Find the peak field at the centre of the coil.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[B = \frac{\mu_0NI}{2R} = \frac{(4\pi\times10^{-7})(15)(5.0\times10^3)}{2(0.035)} = 1.3\ \mathrm{T}.\]</span></p>
+<p><strong>Evaluate.</strong> The field itself does not stimulate neurons. What matters is its rapid <em>change</em>, from 0 to 1.3 T in about 0.1 ms. By Faraday’s law (Chapter 20), the changing field induces electric currents in the brain tissue beneath the coil, and these can trigger neurons to fire. TMS is approved for treating depression that does not respond to drugs, and it is used to map the motor cortex before brain surgery.</p>
+</div>
+</div>
+<div class="box sum"><div class="label">Chapter summary</div>
+<ul>
+<li>Biot–Savart: <span class="math inline">\(d\vect{B} = \dfrac{\mu_0}{4\pi}\dfrac{I\,d\vect{l}\times\uvec{r}}{r^2}\)</span>, with <span class="math inline">\(\mu_0 = 4\pi\times10^{-7}\)</span> T m/A.</li>
+<li>Long wire: <span class="math inline">\(B = \mu_0I/2\pi r\)</span>, with circular field lines (right-hand grip rule). Loop centre: <span class="math inline">\(\mu_0NI/2R\)</span>. Loop axis: <span class="math inline">\(\mu_0IR^2/[2(x^2 + R^2)^{3/2}]\)</span>. Arc: <span class="math inline">\(\mu_0I\phi/4\pi R\)</span>.</li>
+<li>Parallel wires: <span class="math inline">\(F/L = \mu_0I_1I_2/2\pi d\)</span>. Parallel currents attract, antiparallel currents repel.</li>
+<li>Ampère: <span class="math inline">\(\oint\vect{B}\cdot d\vect{l} = \mu_0I_{\text{enc}}\)</span>. Inside a wire: <span class="math inline">\(\mu_0Ir/2\pi R^2\)</span>. Solenoid: <span class="math inline">\(\mu_0nI\)</span>. Toroid: <span class="math inline">\(\mu_0NI/2\pi r\)</span>. Coaxial cable: 0 outside.</li>
+<li>A distant loop gives a dipole field <span class="math inline">\(\propto\mu/r^3\)</span>, with <span class="math inline">\(\mu = IA\)</span>.</li>
+<li>Materials: diamagnetic (<span class="math inline">\(\mu_r &lt; 1\)</span>), paramagnetic (<span class="math inline">\(\mu_r &gt; 1\)</span>, small effect), ferromagnetic (<span class="math inline">\(\mu_r \gg 1\)</span>, with domains, hysteresis, saturation and a Curie temperature).</li>
+</ul>
+</div>
+<h3 class="part-title" id="practice">Practice problems</h3><p class="note">Full step-by-step solutions are in the separate solutions PDF.</p>
+<h4 class="level">Level A — Concept check</h4>
+<div class="prob" id="p19-1"><span class="pnum">P19.1</span>
+<p>Explain why two parallel wires carrying currents in the same direction attract each other, using the field of one wire and the force on the other.</p>
+</div>
+<div class="prob" id="p19-2"><span class="pnum">P19.2</span>
+<p>Why is the field inside a long solenoid nearly uniform, and the field outside nearly zero?</p>
+</div>
+<div class="prob" id="p19-3"><span class="pnum">P19.3</span>
+<p>Ampère’s law is true for any closed loop. Why can’t it be used to find the field of a short, straight segment of wire?</p>
+</div>
+<div class="prob" id="p19-4"><span class="pnum">P19.4</span>
+<p>A permanent magnet is heated above its Curie temperature, then cooled again with no external field present. Is it still a magnet? Explain using the idea of domains.</p>
+</div>
+<h4 class="level">Level B — Standard problems</h4>
+<div class="prob" id="p19-5"><span class="pnum">P19.5</span>
+<p>Two long parallel wires 10 cm apart carry 5.0 A and 8.0 A in the same direction. Find the magnetic field midway between them, and the force per metre between the wires.</p>
+</div>
+<div class="prob" id="p19-6"><span class="pnum">P19.6</span>
+<p>For the wires in P19.5, find the point between them where the magnetic field is zero.</p>
+</div>
+<div class="prob" id="p19-7"><span class="pnum">P19.7</span>
+<p>An overhead power line 15 m above the ground carries 500 A. Find the magnetic field at ground level directly below it, and compare it with the Earth’s field. (International guidelines limit public exposure to about 200 μT at 50 Hz.)</p>
+</div>
+<div class="prob" id="p19-8"><span class="pnum">P19.8</span>
+<p>A circular coil of 100 turns and radius 10 cm carries 1.0 A. Find the field at its centre, and on its axis 10 cm from the centre.</p>
+</div>
+<div class="prob" id="p19-9"><span class="pnum">P19.9</span>
+<p>A solenoid 50 cm long has 1000 turns and carries 2.0 A. Find the field inside it, and the magnetic flux through a cross-section of area 4.0 cm².</p>
+</div>
+<div class="prob" id="p19-10"><span class="pnum">P19.10</span>
+<p>A coaxial cable carries 5.0 A in its inner conductor (radius 1.0 mm) and 5.0 A back in its outer conductor (inner radius 4.0 mm). Find the magnetic field at 0.50 mm, 2.0 mm and 10 mm from the axis.</p>
+</div>
+<div class="prob" id="p19-11"><span class="pnum">P19.11</span>
+<p>An electron travels at <span class="math inline">\(1.0\times10^6\)</span> m/s parallel to a long straight wire carrying 20 A, at a distance of 2.0 cm, moving in the same direction as the current. Find the magnitude and direction of the force on it.</p>
+</div>
+<div class="prob" id="p19-12"><span class="pnum">P19.12</span>
+<p><em>TMS coil.</em> For the coil of Example 19.6, the current rises from zero to 5.0 kA in 0.10 ms. (a) Find the average rate of change of the field at the centre. (b) What is the force per metre between two adjacent turns 4.0 mm apart, at peak current? Why must TMS coils be built so robustly?</p>
+</div>
+<h4 class="level">Level C — Challenge problems</h4>
+<div class="prob" id="p19-13"><span class="pnum">P19.13</span>
+<p>Use the Biot–Savart law to show that a straight wire segment carrying current <span class="math inline">\(I\)</span> produces a field <span class="math inline">\(B = \dfrac{\mu_0I}{4\pi d}(\sin\alpha_2 - \sin\alpha_1)\)</span> at a perpendicular distance <span class="math inline">\(d\)</span>. Here <span class="math inline">\(\alpha_1\)</span> and <span class="math inline">\(\alpha_2\)</span> are the angles, measured from the perpendicular, to the two ends of the segment. Use your result to (a) recover the infinite-wire result and (b) find the field at the centre of a square loop of side <span class="math inline">\(a\)</span> carrying current <span class="math inline">\(I\)</span>. Compare (b) with the field at the centre of a circular loop of the same perimeter.</p>
+</div>
+<div class="prob" id="p19-14"><span class="pnum">P19.14</span>
+<p>A long wire is bent into a hairpin: two long parallel straight sections joined by a semicircle of radius <span class="math inline">\(R\)</span>. Find the magnetic field at the centre of the semicircle.</p>
+</div>
+<div class="prob" id="p19-15"><span class="pnum">P19.15</span>
+<p><em>Helmholtz coils.</em> Two identical coaxial coils of radius <span class="math inline">\(R\)</span> and <span class="math inline">\(N\)</span> turns, carrying the same current <span class="math inline">\(I\)</span> in the same direction, are separated by a distance equal to <span class="math inline">\(R\)</span>. (a) Show that the field at the midpoint is <span class="math inline">\(B = (4/5)^{3/2}\mu_0NI/R\)</span>. (b) Show that <span class="math inline">\(dB/dx\)</span> and <span class="math inline">\(d^2B/dx^2\)</span> are both zero at the midpoint, so the field there is extremely uniform. (c) Evaluate <span class="math inline">\(B\)</span> for <span class="math inline">\(R = 0.30\)</span> m, <span class="math inline">\(N = 100\)</span> and <span class="math inline">\(I = 2.0\)</span> A. Give two uses of Helmholtz coils.</p>
+</div>
+<div class="prob" id="p19-16"><span class="pnum">P19.16</span>
+<p>A long cylindrical conductor of radius <span class="math inline">\(R\)</span> carries a current whose density increases with radius: <span class="math inline">\(J = J_0r/R\)</span>. (a) Find the total current. (b) Use Ampère’s law to find <span class="math inline">\(B(r)\)</span> inside and outside the conductor.</p>
+</div>
+<div class="prob" id="p19-17"><span class="pnum">P19.17</span>
+<p><em>Magnetic circuit with an air gap.</em> An iron toroid with a mean path length of 0.30 m and <span class="math inline">\(\mu_r = 2000\)</span> has a 2.0 mm air gap cut through it. It is wound with 500 turns carrying 2.0 A. (a) Using Ampère’s law around the core and the gap, together with the fact that <span class="math inline">\(B\)</span> is nearly the same in the iron and the gap, show that <span class="math inline">\(B = \mu_0NI/(g + L/\mu_r)\)</span>. (b) Evaluate <span class="math inline">\(B\)</span> in the gap. (c) Compare it with the field the same winding would produce with no gap. Comment on the result, given that iron saturates at about 2 T.</p>
+</div>
+<div class="prob" id="p19-18"><span class="pnum">P19.18</span>
+<p><em>The Bohr magneton.</em> In the Bohr model of hydrogen, the electron moves in a circle of radius <span class="math inline">\(5.29\times10^{-11}\)</span> m at <span class="math inline">\(2.19\times10^6\)</span> m/s. (a) Find the equivalent current. (b) Find the magnetic moment of the orbit, and show that it equals <span class="math inline">\(\mu_B = e\hbar/2m_e = 9.27\times10^{-24}\ \mathrm{A\,m^2}\)</span>. (c) Find the magnetic field the orbiting electron produces at the proton. Comment on its size.</p>
+</div>
+
+<div class="downloads noprint"><a href="ch19-magnetic-sources_notes.pdf" download>Download notes (PDF)</a><a href="ch19-magnetic-sources_solutions.pdf" download>Download solutions (PDF)</a></div>
+</article>
+<nav class="pager"><a href="ch18-magnetic-force.html">← 18. Magnetic Field and Magnetic Forces</a><a href="ch20-induction.html">20. Electromagnetic Induction →</a></nav></main>
+<footer>All worked examples and practice problems in these notes are original. Textbooks for further reading and practice, with a chapter-by-chapter map, are listed in the References.<p class="copyright">© 2026 Pratik Bhanuse. All rights reserved. · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p></footer>
+</div>
+</body>
+</html>

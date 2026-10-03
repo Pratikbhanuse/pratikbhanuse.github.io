@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="The forces that resist sliding and the forces that bend a path into a curve, from car tyres and blood cells to centrifuges.">
+<title>4. Friction and Circular Motion · Physics, step by step</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* House style shared with "Linear algebra, translated" */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D; --p:#7C3AED;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --def-bg:#F3EEFF; --def-ink:#5B21B6;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --def-bg:#1E1733; --def-ink:#C4B5FD;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --def-bg:#1E1733; --def-ink:#C4B5FD;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+a{color:var(--u)}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5.6vw,60px); line-height:1.04; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .hl{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+.byline{font-family:var(--display); font-size:15px; color:var(--muted); margin:14px 0 0}
+.byline strong{color:var(--ink)} .byline a, .copyright a{color:inherit}
+.copyright{font-family:var(--display); font-size:13px; color:var(--muted); margin:10px 0 0}
+
+/* side navigation */
+nav.toc{position:sticky; top:24px; align-self:start; padding-top:8px; font-family:var(--display); font-size:14px; max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc a[aria-current="page"]{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); font-weight:700}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px}
+nav.toc .sub{padding-left:28px; font-size:13px; color:var(--muted)}
+nav.toc .sub a{color:var(--muted); padding:3px 8px}
+
+main{min-width:0}
+.chapter{max-width:72ch}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+h4{font-family:var(--display); font-weight:700; font-size:18px; margin:24px 0 6px}
+h5{font-family:var(--display); font-weight:700; font-size:16px; margin:18px 0 4px}
+.topic-num{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--u); border-top:1px solid var(--line); padding-top:18px; margin-top:34px; scroll-margin-top:24px}
+h3.topic-title{font-size:24px; margin:4px 0 8px}
+h3.part-title{font-size:24px; margin:40px 0 4px; border-top:2px solid var(--ink); padding-top:16px}
+h4.level{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--v); margin:26px 0 10px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px}
+.note{color:var(--muted); font-size:15px}
+
+/* boxes */
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.def{background:var(--def-bg)} .box.def .label{color:var(--def-ink)}
+.box.work,.box.goals,.box.sum{background:var(--surface); border:1px solid var(--line)}
+.box.work .label,.box.goals .label,.box.sum .label{color:var(--muted)}
+.box.sum{border-top:3px solid var(--ink)}
+.box.work .label{color:var(--v)}
+.box .ex-title{margin:0 0 8px; font-size:18px}
+.sol-inline{margin:10px 0 12px; border-left:3px solid var(--w); padding-left:14px}
+.sol-label{display:block; font-family:var(--display); font-weight:700; font-size:13px; color:var(--w); margin-bottom:4px}
+details.ans{margin:4px 0 12px} details.ans summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:14px; color:var(--w)}
+details.ans > div{padding-top:6px}
+
+/* practice problems */
+.prob{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px 2px; margin:0 0 12px; min-width:0}
+.prob .pnum{font-family:var(--mono); font-weight:600; font-size:12px; color:var(--v); display:block; margin-bottom:2px}
+.prob p{margin:0 0 10px}
+
+/* solutions pages */
+h3.sol-head{margin:30px 0 8px; border-top:1px solid var(--line); padding-top:16px}
+h3.sol-head .pnum{font-family:var(--mono); font-size:14px; letter-spacing:.06em; color:var(--v)}
+.solutions .chapter > p:first-of-type{margin-top:0}
+
+/* tables, figures, math */
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2; fill:none}
+svg .obj{fill:var(--surface); stroke:var(--ink); stroke-width:1.6}
+svg .solid{fill:var(--code-bg); stroke:var(--ink); stroke-width:1.4}
+svg .ground{stroke:var(--ink); stroke-width:1.6}
+svg .hatch{stroke:var(--muted); stroke-width:1}
+svg .dash{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:5 4; fill:none}
+svg .u{stroke:var(--u); stroke-width:2.6; fill:none}
+svg .v{stroke:var(--v); stroke-width:2.6; fill:none}
+svg .w{stroke:var(--w); stroke-width:2.6; fill:none}
+svg .p{stroke:var(--p); stroke-width:2.6; fill:none}
+svg .curve{stroke:var(--u); stroke-width:2.4; fill:none}
+svg .hu,svg .tu{fill:var(--u)} svg .hv,svg .tv{fill:var(--v)} svg .hw,svg .tw{fill:var(--w)} svg .hp,svg .tp{fill:var(--p)}
+svg .muted{fill:var(--muted)} svg .ink{fill:var(--ink)}
+svg .dot{fill:var(--ink)}
+svg .fillu{fill:var(--u); fill-opacity:.12; stroke:none}
+mjx-container{color:inherit}
+mjx-container[display="true"]{display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; margin:.7em 0 !important; padding-block:2px}
+.box mjx-container[display="true"]{margin:.5em 0 !important}
+
+/* pager + footer */
+.pager{display:flex; justify-content:space-between; gap:12px; margin:56px 0 0; padding-top:16px; border-top:1px solid var(--line); font-family:var(--display); font-size:15px; max-width:72ch}
+.pager a{text-decoration:none; color:var(--u)}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+
+/* index page */
+.unit{border-top:2px solid var(--ink); padding-top:12px; margin:36px 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.chlist{list-style:none; padding:0; margin:0}
+.chlist li{display:grid; grid-template-columns:2.4em minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); margin:0}
+.chlist .n{font-family:var(--mono); font-size:13px; color:var(--muted)}
+.chlist .t{font-family:var(--display); font-weight:600; font-size:17px; text-decoration:none; color:var(--ink)}
+.chlist .t:hover{color:var(--u)}
+.chlist .s{font-family:var(--mono); font-size:12px; text-decoration:none}
+.downloads{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+.downloads a{font-family:var(--display); font-weight:600; font-size:15px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 14px}
+.downloads a:hover{border-color:var(--u); color:var(--u)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static; max-height:none}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  nav.toc .grp{grid-column:1/-1}
+  nav.toc .sub{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ---------- print (PDF) ---------- */
+@page{
+  size:Letter; margin:17mm 15mm 18mm;
+  @top-right{content:"Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-left{content:"© 2026 Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-right{content:counter(page) " / " counter(pages); font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+}
+@page :first{ @top-right{content:none} }
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff; padding:0; font-size:11.5pt}
+  .wrap{display:block; max-width:none}
+  nav.toc,.pager,.noprint{display:none !important}
+  header.top{padding-block:0 8px}
+  .chapter{max-width:none; break-before:page}
+  .book-toc{break-before:page}
+  .box,.prob,figure{break-inside:avoid}
+  .box.work{break-inside:auto}
+  .topic-num,h3,h4{break-after:avoid}
+  a{color:inherit; text-decoration:none}
+  details.ans > summary{display:none}
+}
+/* printed table of contents */
+.book-toc ol{list-style:none; padding:0}
+.book-toc li{display:flex; gap:12px; padding:5px 0; border-bottom:1px dotted var(--line); font-family:var(--display); margin:0}
+.book-toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:2em; padding-top:2px}
+h3.page-h{border-top:1px solid var(--line); padding-top:18px; margin-top:34px}
+svg .hk{fill:var(--ink)} svg .k{stroke:var(--ink); stroke-width:2.2; fill:none}
+:root{ --apply-bg:#F1EEFB; --apply-ink:#4C2A9E; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --apply-bg:#1D1830; --apply-ink:#C9B8FF; } }
+:root[data-theme="dark"]{ --apply-bg:#1D1830; --apply-ink:#C9B8FF; }
+.box.apply{background:var(--apply-bg); border-left:4px solid var(--apply-ink)} .box.apply .label{color:var(--apply-ink)}
+svg path.ground,svg polyline.ground{fill:none}
+
+.chlist .s a{text-decoration:none}
+.single{max-width:none}
+
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+         macros: { vect: ['\\vec{\\boldsymbol{#1}}', 1], uvec: ['\\hat{\\boldsymbol{#1}}', 1],
+                   ihat: '\\hat{\\boldsymbol{\\imath}}', jhat: '\\hat{\\boldsymbol{\\jmath}}',
+                   khat: '\\hat{\\boldsymbol{k}}', unit: ['\\,\\mathrm{#1}', 1] } },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker><marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker><marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hp"/></marker><marker id="ak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hk"/></marker></defs></svg>
+<div class="wrap">
+<header class="top"><div class="kicker">Chapter 4 · Semester 1 · Mechanics, Waves and Thermal Physics</div><h1>Friction and Circular Motion</h1><p class="lede">The forces that resist sliding and the forces that bend a path into a curve, from car tyres and blood cells to centrifuges.</p><p class="byline">By <strong>Pratik Bhanuse</strong>, PhD Physics candidate, Western University · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p><div class="downloads noprint"><a href="ch04-friction-circular_notes.pdf" download>Download notes (PDF)</a><a href="ch04-friction-circular_solutions.pdf" download>Download solutions (PDF)</a></div></header>
+<aside class="side"><nav class="toc" aria-label="Contents"><ol>
+<li><a href="index.html"><span class="n">⌂</span>Contents</a></li>
+<li><a href="syllabus.html"><span class="n">→</span>Syllabus and how to study</a></li>
+<li class="grp">Semester 1 · Mechanics, Waves and Thermal Physics</li>
+<li><a href="ch01-units-vectors.html"><span class="n">1</span>Measurement, Units, Dimensions and Vectors</a></li>
+<li><a href="ch02-kinematics.html"><span class="n">2</span>Kinematics in One and Two Dimensions</a></li>
+<li><a href="ch03-newtons-laws.html"><span class="n">3</span>Newton&#x27;s Laws of Motion</a></li>
+<li><a href="ch04-friction-circular.html" aria-current="page"><span class="n">4</span>Friction and Circular Motion</a></li>
+<li class="sub"><a href="#static-and-kinetic-friction">§4.1 Static and kinetic friction</a></li>
+<li class="sub"><a href="#drag-forces-and-terminal-velocity">§4.2 Drag forces and terminal velocity</a></li>
+<li class="sub"><a href="#uniform-circular-motion">§4.3 Uniform circular motion</a></li>
+<li class="sub"><a href="#dynamics-of-circular-motion">§4.4 Dynamics of circular motion</a></li>
+<li class="sub"><a href="#non-uniform-circular-motion">§4.5 Non-uniform circular motion</a></li>
+<li class="sub"><a href="#rotating-frames-and-the-centrifugal-force">§4.6 Rotating frames and the centrifugal force</a></li>
+<li class="sub"><a href="#practice">Practice problems</a></li>
+<li><a href="ch05-work-energy.html"><span class="n">5</span>Work, Energy and Power</a></li>
+<li><a href="ch06-momentum.html"><span class="n">6</span>Centre of Mass, Linear Momentum and Collisions</a></li>
+<li><a href="ch07-rotation.html"><span class="n">7</span>Rotational Motion</a></li>
+<li><a href="ch08-gravitation.html"><span class="n">8</span>Gravitation</a></li>
+<li><a href="ch09-oscillations.html"><span class="n">9</span>Simple Harmonic Motion</a></li>
+<li><a href="ch10-fluids-elasticity.html"><span class="n">10</span>Elasticity and Fluid Mechanics</a></li>
+<li><a href="ch11-waves-sound.html"><span class="n">11</span>Mechanical Waves and Sound</a></li>
+<li><a href="ch12-thermal.html"><span class="n">12</span>Heat, Kinetic Theory and Thermodynamics</a></li>
+<li class="grp">Semester 2 · Electricity, Magnetism, Optics and Modern Physics</li>
+<li><a href="ch13-electric-field.html"><span class="n">13</span>Electric Charge and Electric Field</a></li>
+<li><a href="ch14-gauss.html"><span class="n">14</span>Gauss&#x27;s Law</a></li>
+<li><a href="ch15-potential.html"><span class="n">15</span>Electric Potential</a></li>
+<li><a href="ch16-capacitance.html"><span class="n">16</span>Capacitance and Dielectrics</a></li>
+<li><a href="ch17-dc-circuits.html"><span class="n">17</span>Electric Current and DC Circuits</a></li>
+<li><a href="ch18-magnetic-force.html"><span class="n">18</span>Magnetic Field and Magnetic Forces</a></li>
+<li><a href="ch19-magnetic-sources.html"><span class="n">19</span>Sources of the Magnetic Field</a></li>
+<li><a href="ch20-induction.html"><span class="n">20</span>Electromagnetic Induction</a></li>
+<li><a href="ch21-ac-emwaves.html"><span class="n">21</span>Alternating Current and Electromagnetic Waves</a></li>
+<li><a href="ch22-geometric-optics.html"><span class="n">22</span>Geometrical Optics</a></li>
+<li><a href="ch23-wave-optics.html"><span class="n">23</span>Wave Optics</a></li>
+<li><a href="ch24-modern.html"><span class="n">24</span>Photons, Atoms and Nuclei</a></li>
+<li class="grp">Appendix</li>
+<li><a href="references.html"><span class="n">R</span>References and further practice</a></li>
+</ol></nav></aside>
+<main><article class="chapter notes">
+<p>Chapter 3 mostly ignored friction and dealt with straight-line motion. Real engineering problems need both. Friction lets us walk, drive and grip, and it wastes energy in every machine. Air and fluid drag set the top speed of a skydiver and the settling rate of blood cells. Circular motion is everywhere: wheels, turbines, satellites, centrifuges, cars on curves. This chapter adds these two ingredients to Newton’s laws. Along the way you will see that “centripetal force” is not a new kind of force, but a <em>role</em> that real forces play.</p>
+<div class="box goals"><div class="label">You will be able to</div>
+<ul>
+<li>Distinguish static from kinetic friction, and use <span class="math inline">\(f_s \le \mu_sN\)</span> and <span class="math inline">\(f_k = \mu_kN\)</span> correctly.</li>
+<li>Solve friction problems on level surfaces and inclines, including stacked blocks.</li>
+<li>Model drag forces (linear and quadratic) and calculate terminal velocities.</li>
+<li>Derive the centripetal acceleration <span class="math inline">\(a_c = v^2/r = \omega^2r\)</span>.</li>
+<li>Identify which real forces provide the centripetal force in flat and banked curves, conical pendulums and vertical circles.</li>
+<li>Handle non-uniform circular motion (tangential plus radial acceleration).</li>
+<li>Use centrifugal pseudo-forces correctly in rotating frames.</li>
+</ul>
+</div>
+<div class="box ask"><div class="label">Think first</div>
+<p>To stop as quickly as possible on a dry road, should a driver lock the wheels so that the tyres skid, or brake just hard enough that the wheels keep turning?</p>
+<details class="ans"><summary>Show answer</summary><div>
+<p>Keep the wheels turning. A rolling tyre grips the road through <strong>static</strong> friction (the contact patch is momentarily at rest on the road), and the static coefficient is larger than the kinetic coefficient for sliding. A skidding tyre is limited by the smaller <strong>kinetic</strong> friction, and it also cannot steer. Anti-lock braking systems (ABS) pulse the brakes many times a second to keep each wheel just short of locking. This gives near-maximum static friction <em>and</em> keeps steering control.</p>
+</div></details>
+</div>
+<div class="topic-num" id="static-and-kinetic-friction">§4.1</div><h3 class="topic-title">Static and kinetic friction</h3>
+<p>When two surfaces are pressed together, a force parallel to the surfaces resists their sliding over each other. Microscopically, even polished surfaces are rough. They touch only at the tips of tiny peaks (asperities), where atoms bond temporarily. The true contact area is a tiny fraction of the apparent area, and it grows in proportion to how hard the surfaces are pressed together. That is why friction is proportional to the normal force, but nearly independent of the apparent contact area.</p>
+<p><strong>Static friction</strong> acts when there is no relative sliding. It adjusts its size and direction to prevent sliding, up to a maximum: <span class="math display">\[f_s \le \mu_s N.\]</span></p>
+<p><strong>Kinetic friction</strong> acts when the surfaces slide. It points opposite to the <em>relative</em> velocity, and it is approximately constant: <span class="math display">\[f_k = \mu_k N.\]</span></p>
+<p>Here <span class="math inline">\(N\)</span> is the normal force, and <span class="math inline">\(\mu_s\)</span> and <span class="math inline">\(\mu_k\)</span> are the dimensionless <strong>coefficients of friction</strong>. Usually <span class="math inline">\(\mu_k &lt; \mu_s\)</span>.</p>
+<figure>
+<svg viewBox="0 0 360 220" width="340" role="img" aria-label="Graph of friction force against applied force. Friction rises along a 45-degree line equal to the applied force until it reaches the maximum static value mu s N, then drops to a constant lower value mu k N once sliding begins.">
+<line class="ax" x1="40" y1="185" x2="345" y2="185" marker-end="url(#ak)"/>
+<line class="ax" x1="40" y1="195" x2="40" y2="20" marker-end="url(#ak)"/>
+<text x="250" y="206" class="muted">applied force F</text>
+<text x="46" y="24" class="muted">friction f</text>
+<polyline class="curve" points="40,185 170,55"/>
+<line class="curve" x1="170" y1="55" x2="180" y2="85" style="stroke-dasharray:3 3"/>
+<line class="curve" x1="180" y1="85" x2="335" y2="85"/>
+<line class="dash" x1="40" y1="55" x2="170" y2="55"/>
+<line class="dash" x1="40" y1="85" x2="180" y2="85"/>
+<text x="46" y="50" class="tu">μ<tspan dy="3" font-size="9">s</tspan><tspan dy="-3"> N</tspan></text>
+<text x="46" y="100" class="tu">μ<tspan dy="3" font-size="9">k</tspan><tspan dy="-3"> N</tspan></text>
+<text x="104" y="170" class="muted">static: f = F</text>
+<text x="210" y="78" class="muted">kinetic: f = μ<tspan dy="3" font-size="9">k</tspan><tspan dy="-3"> N</tspan></text>
+<line class="dash" x1="170" y1="55" x2="170" y2="185"/>
+<text x="146" y="200" class="muted">sliding starts</text>
+</svg>
+<figcaption>Friction while the push on a resting block increases. Static friction matches the push until it reaches its limit μs N. The block then slides, and friction drops to μk N.</figcaption>
+</figure>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Surfaces</th>
+<th><span class="math inline">\(\mu_s\)</span></th>
+<th><span class="math inline">\(\mu_k\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rubber on dry concrete</td>
+<td>1.0</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>Rubber on wet concrete</td>
+<td>0.7</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>Steel on steel (dry)</td>
+<td>0.74</td>
+<td>0.57</td>
+</tr>
+<tr>
+<td>Wood on wood</td>
+<td>0.5</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td>Ice on ice</td>
+<td>0.1</td>
+<td>0.03</td>
+</tr>
+<tr>
+<td>Teflon on steel</td>
+<td>0.04</td>
+<td>0.04</td>
+</tr>
+<tr>
+<td>Synovial joint (cartilage on cartilage)</td>
+<td>0.01</td>
+<td>0.003</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="box trap"><div class="label">Common mistake</div>
+<p><span class="math inline">\(f_s = \mu_sN\)</span> is <strong>not</strong> a formula for static friction. It gives only the <em>maximum</em>. Static friction takes whatever value, from zero up to <span class="math inline">\(\mu_sN\)</span>, keeps the surfaces from slipping. Find it from Newton’s laws, then check that it does not exceed <span class="math inline">\(\mu_sN\)</span>.</p>
+</div>
+<div class="box work example"><div class="label">Worked example 4.1</div><h4 class="ex-title">Will the box move?</h4>
+<p>A 20 kg box rests on a floor with <span class="math inline">\(\mu_s = 0.50\)</span> and <span class="math inline">\(\mu_k = 0.40\)</span>. A worker pushes it horizontally with (a) 80 N and (b) 120 N. Find the friction force and the acceleration in each case.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>The normal force is <span class="math inline">\(N = mg = 196\)</span> N. So the maximum static friction is <span class="math inline">\(\mu_sN = 98\)</span> N, and the kinetic friction is <span class="math inline">\(\mu_kN = 78.4\)</span> N.</p>
+<p>(a) <span class="math inline">\(80\ \mathrm{N} &lt; 98\ \mathrm{N}\)</span>, so static friction can hold the box. It adjusts to exactly <span class="math inline">\(f_s = 80\)</span> N, opposite to the push, and <span class="math inline">\(a = 0\)</span>.</p>
+<p>(b) <span class="math inline">\(120\ \mathrm{N} &gt; 98\ \mathrm{N}\)</span>, so the box slides. Kinetic friction acts: <span class="math display">\[a = \frac{F - \mu_kN}{m} = \frac{120 - 78.4}{20} = 2.08\ \mathrm{m/s^2}.\]</span></p>
+<p><strong>Evaluate.</strong> Once the box is moving, the worker could ease off to just over 78.4 N and keep it sliding at constant speed. Starting is harder than continuing because <span class="math inline">\(\mu_s &gt; \mu_k\)</span>.</p>
+</div>
+</div>
+<h4>Friction on an incline</h4>
+<p>A block on an incline at angle <span class="math inline">\(\theta\)</span> has <span class="math inline">\(N = mg\cos\theta\)</span>, provided nothing else pushes perpendicular to the surface. The component of gravity down the slope is <span class="math inline">\(mg\sin\theta\)</span>. The block stays at rest if <span class="math inline">\(mg\sin\theta \le \mu_smg\cos\theta\)</span>, that is, if <span class="math display">\[\tan\theta \le \mu_s.\]</span> The steepest angle at which it can rest is the <strong>angle of repose</strong>, <span class="math inline">\(\theta_r = \tan^{-1}\mu_s\)</span>. Tilting a surface until an object just slips is a standard way to measure <span class="math inline">\(\mu_s\)</span>.</p>
+<div class="box work example"><div class="label">Worked example 4.2</div><h4 class="ex-title">Up and down a rough ramp</h4>
+<p>A 5.0 kg block is on a <span class="math inline">\(30^\circ\)</span> incline with <span class="math inline">\(\mu_k = 0.20\)</span> and <span class="math inline">\(\mu_s = 0.30\)</span>. (a) Find its acceleration when it slides down. (b) It is instead given a push so that it starts <em>up</em> the slope at 6.0 m/s. How far up does it go? (c) Does it then slide back down?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>Use axes along the slope, with <span class="math inline">\(N = mg\cos30^\circ = 42.4\)</span> N.</p>
+<p>(a) <strong>Sliding down.</strong> Friction acts up the slope: <span class="math display">\[a = g(\sin30^\circ - \mu_k\cos30^\circ) = 9.8(0.500 - 0.173) = 3.20\ \mathrm{m/s^2}\ \text{down the slope}.\]</span></p>
+<p>(b) <strong>Sliding up.</strong> Now friction also acts <strong>down</strong> the slope, opposing the motion. Gravity and friction both slow the block: <span class="math display">\[a = -g(\sin30^\circ + \mu_k\cos30^\circ) = -9.8(0.673) = -6.60\ \mathrm{m/s^2}.\]</span> From <span class="math inline">\(v^2 = u^2 + 2as\)</span> with <span class="math inline">\(v = 0\)</span>: <span class="math display">\[s = \frac{u^2}{2|a|} = \frac{36}{13.2} = 2.73\ \mathrm{m}.\]</span></p>
+<p>(c) At rest at the top, the block slides back only if <span class="math inline">\(\tan30^\circ = 0.577\)</span> exceeds <span class="math inline">\(\mu_s = 0.30\)</span>. It does, so the block <strong>slides back down</strong>, now with <span class="math inline">\(a = 3.20\ \mathrm{m/s^2}\)</span> from part (a).</p>
+<p><strong>Evaluate.</strong> The deceleration going up (6.60) is larger than the acceleration coming down (3.20), because friction always opposes the motion. So the trip up is quicker than the trip down, and the block returns to its starting point slower than 6.0 m/s.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 4.3</div><h4 class="ex-title">The best angle to pull</h4>
+<p>You drag a 20 kg crate across a floor (<span class="math inline">\(\mu_k = 0.50\)</span>) with a rope at angle <span class="math inline">\(\theta\)</span> above the horizontal, at constant velocity. Find the tension needed as a function of <span class="math inline">\(\theta\)</span>, and the angle that minimises it.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>FBD.</strong> Four forces act: the tension <span class="math inline">\(T\)</span> at <span class="math inline">\(\theta\)</span>, the weight <span class="math inline">\(mg\)</span>, the normal force <span class="math inline">\(N\)</span>, and kinetic friction <span class="math inline">\(\mu_kN\)</span> backward. Lifting slightly reduces <span class="math inline">\(N\)</span>, and therefore the friction. <span class="math display">\[\text{Vertical: } N = mg - T\sin\theta,\qquad \text{Horizontal: } T\cos\theta = \mu_kN = \mu_k(mg - T\sin\theta).\]</span> Solving for <span class="math inline">\(T\)</span>: <span class="math display">\[T(\theta) = \frac{\mu_k\,mg}{\cos\theta + \mu_k\sin\theta}.\]</span></p>
+<p><strong>Minimise.</strong> <span class="math inline">\(T\)</span> is smallest when the denominator is largest. Set its derivative to zero: <span class="math inline">\(-\sin\theta + \mu_k\cos\theta = 0\)</span>, so <span class="math display">\[\tan\theta^* = \mu_k \;\Rightarrow\; \theta^* = \tan^{-1}0.50 = 26.6^\circ.\]</span> At this angle the denominator equals <span class="math inline">\(\sqrt{1 + \mu_k^2}\)</span>, so <span class="math display">\[T_{\min} = \frac{\mu_kmg}{\sqrt{1 + \mu_k^2}} = \frac{0.50(196)}{1.118} = 87.7\ \mathrm{N}.\]</span> Pulling horizontally would need <span class="math inline">\(\mu_kmg = 98\)</span> N.</p>
+<p><strong>Evaluate.</strong> Pulling slightly upward saves about 10% of the effort. Pulling too steeply wastes effort lifting rather than dragging.</p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Friction in engineering and in the body.</strong> Engineers sometimes need <em>more</em> friction (tyres, brake pads, belt drives, the soles of shoes) and sometimes much <em>less</em> (bearings, piston rings, artificial joints). Tyre treads channel water away so the rubber can grip the road. At high speed on a wet road, a film of water can lift the tyre completely, a dangerous loss of friction called aquaplaning. Human synovial joints are astonishingly slippery: cartilage lubricated by synovial fluid reaches <span class="math inline">\(\mu \approx 0.003\)</span>, better than most engineered bearings. Osteoarthritis degrades this surface, and part of the engineering challenge of hip and knee replacements is to find material pairs (polished cobalt–chromium or ceramic against ultra-high-molecular-weight polyethylene) that keep friction and wear low for decades.</p>
+</div>
+<div class="topic-num" id="drag-forces-and-terminal-velocity">§4.2</div><h3 class="topic-title">Drag forces and terminal velocity</h3>
+<p>A body moving through a fluid (air, water, blood) feels a <strong>drag force</strong> opposite to its velocity relative to the fluid. Unlike sliding friction, drag depends strongly on speed. Two limiting models cover most cases.</p>
+<ul>
+<li><strong>Linear (viscous) drag</strong>, for small, slow objects in viscous fluids (cells, dust, droplets): <span class="math display">\[D = bv.\]</span> For a sphere of radius <span class="math inline">\(r\)</span> in a fluid of viscosity <span class="math inline">\(\eta\)</span>, <strong>Stokes’ law</strong> gives <span class="math inline">\(b = 6\pi\eta r\)</span>.</li>
+<li><strong>Quadratic drag</strong>, for larger, faster objects (people, cars, balls): <span class="math display">\[D = \tfrac12C\rho Av^2.\]</span> Here <span class="math inline">\(\rho\)</span> is the fluid density, <span class="math inline">\(A\)</span> the cross-sectional area facing the flow, and <span class="math inline">\(C\)</span> the drag coefficient: about 0.5 for a sphere, about 1.0 for a skydiver spread flat, and about 0.3 for a modern car.</li>
+</ul>
+<p>The Reynolds number of Chapter 1 decides which model applies: linear drag when <span class="math inline">\(Re \ll 1\)</span>, quadratic drag when <span class="math inline">\(Re \gg 1000\)</span>.</p>
+<p>A falling body accelerates until drag balances gravity (and buoyancy, if it matters). It then falls at constant <strong>terminal velocity</strong> <span class="math inline">\(v_t\)</span>: <span class="math display">\[\text{quadratic: } mg = \tfrac12C\rho Av_t^2 \;\Rightarrow\; v_t = \sqrt{\frac{2mg}{C\rho A}};\qquad \text{linear: } mg_{\text{eff}} = bv_t \;\Rightarrow\; v_t = \frac{mg_{\text{eff}}}{b}.\]</span></p>
+<div class="box work example"><div class="label">Worked example 4.4</div><h4 class="ex-title">A skydiver’s terminal speed</h4>
+<p>An 80 kg skydiver falls spread-eagled, with <span class="math inline">\(A = 0.70\ \mathrm{m^2}\)</span> and <span class="math inline">\(C = 1.0\)</span>, through air of density <span class="math inline">\(1.2\ \mathrm{kg/m^3}\)</span>. Find the terminal speed. What does it become if she dives head-first with <span class="math inline">\(A = 0.18\ \mathrm{m^2}\)</span> and <span class="math inline">\(C = 0.7\)</span>?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>Spread-eagled: <span class="math display">\[v_t = \sqrt{\frac{2(80)(9.8)}{1.0(1.2)(0.70)}} = \sqrt{\frac{1568}{0.84}} = \sqrt{1867} = 43\ \mathrm{m/s}\ (155\ \mathrm{km/h}).\]</span> Head-first: <span class="math display">\[v_t = \sqrt{\frac{1568}{0.7(1.2)(0.18)}} = \sqrt{\frac{1568}{0.151}} = \sqrt{10\,370} = 102\ \mathrm{m/s}\ (\approx 370\ \mathrm{km/h}).\]</span></p>
+<p><strong>Evaluate.</strong> Because <span class="math inline">\(v_t \propto 1/\sqrt{CA}\)</span>, cutting <span class="math inline">\(CA\)</span> by a factor of 5.6 raises the terminal speed by <span class="math inline">\(\sqrt{5.6} = 2.4\)</span>. Speed skydivers exploit exactly this. A parachute increases <span class="math inline">\(CA\)</span> about 25-fold, cutting the terminal speed by a factor of 5, to about 5–9 m/s.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 4.5</div><h4 class="ex-title">Sedimentation of red blood cells</h4>
+<p>The erythrocyte sedimentation rate (ESR) is a routine blood test: whole blood stands in a vertical tube, and the drop of the boundary between red cells and plasma is measured in mm per hour. Model a red cell as a sphere of radius <span class="math inline">\(4.0\ \mu\)</span>m and density <span class="math inline">\(1100\ \mathrm{kg/m^3}\)</span>, settling in plasma of density <span class="math inline">\(1025\ \mathrm{kg/m^3}\)</span> and viscosity <span class="math inline">\(1.2\times10^{-3}\)</span> Pa s. Find its terminal speed in mm/h. How would a centrifuge producing <span class="math inline">\(1000\,g\)</span> change this?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Forces on a settling cell:</strong> weight <span class="math inline">\(\rho_cVg\)</span> down, buoyancy <span class="math inline">\(\rho_pVg\)</span> up (Archimedes, Chapter 10) and Stokes drag <span class="math inline">\(6\pi\eta rv\)</span> up, with <span class="math inline">\(V = \tfrac43\pi r^3\)</span>. At terminal velocity they balance: <span class="math display">\[(\rho_c - \rho_p)\,\tfrac43\pi r^3g = 6\pi\eta rv_t \;\Rightarrow\; v_t = \frac{2r^2(\rho_c - \rho_p)\,g}{9\eta}.\]</span> Substitute: <span class="math display">\[v_t = \frac{2(4.0\times10^{-6})^2(75)(9.8)}{9(1.2\times10^{-3})} = \frac{2.35\times10^{-8}}{1.08\times10^{-2}} = 2.2\times10^{-6}\ \mathrm{m/s}.\]</span> Converting: <span class="math inline">\(2.2\times10^{-6}\ \mathrm{m/s}\times3600\ \mathrm{s/h} = 7.8\times10^{-3}\)</span> m/h, about <strong>8 mm/h</strong>.</p>
+<p>With a centrifuge, <span class="math inline">\(g\)</span> is replaced by <span class="math inline">\(1000\,g\)</span>, so <span class="math inline">\(v_t \approx 2.2\)</span> mm/s and separation takes seconds to minutes instead of hours.</p>
+<p><strong>Evaluate.</strong> Normal ESR values are roughly 0–20 mm/h, so the simple model is the right order of magnitude. In inflammation, plasma proteins make red cells stack into columns called <em>rouleaux</em>. A stack behaves like a larger particle, and since <span class="math inline">\(v_t \propto r^2\)</span>, it settles much faster. That is why a raised ESR signals inflammation.</p>
+</div>
+</div>
+<div class="topic-num" id="uniform-circular-motion">§4.3</div><h3 class="topic-title">Uniform circular motion</h3>
+<p>A particle moving round a circle at <strong>constant speed</strong> is accelerating, because the direction of its velocity keeps changing.</p>
+<p><strong>Angular description.</strong> If the particle moves through an angle <span class="math inline">\(\theta\)</span> (in radians) on a circle of radius <span class="math inline">\(r\)</span>, the arc length is <span class="math inline">\(s = r\theta\)</span>. The <strong>angular velocity</strong> is <span class="math inline">\(\omega = d\theta/dt\)</span> (rad/s), and the speed is <span class="math display">\[v = r\omega.\]</span> The <strong>period</strong> is <span class="math inline">\(T = 2\pi r/v = 2\pi/\omega\)</span>, and the <strong>frequency</strong> is <span class="math inline">\(f = 1/T\)</span>, so <span class="math inline">\(\omega = 2\pi f\)</span>.</p>
+<p><strong>Deriving the centripetal acceleration.</strong> Put the circle at the origin, with <span class="math inline">\(\theta = \omega t\)</span>: <span class="math display">\[\vect{r} = r\cos\omega t\;\ihat + r\sin\omega t\;\jhat.\]</span> Differentiate twice: <span class="math display">\[\vect{v} = \frac{d\vect{r}}{dt} = -r\omega\sin\omega t\;\ihat + r\omega\cos\omega t\;\jhat,\qquad \vect{a} = \frac{d\vect{v}}{dt} = -\omega^2\left(r\cos\omega t\;\ihat + r\sin\omega t\;\jhat\right) = -\omega^2\vect{r}.\]</span> The velocity is perpendicular to <span class="math inline">\(\vect{r}\)</span> (tangent to the circle), with magnitude <span class="math inline">\(r\omega\)</span>. The acceleration points towards the centre, opposite to <span class="math inline">\(\vect{r}\)</span>, with magnitude <span class="math display">\[a_c = \omega^2r = \frac{v^2}{r}.\]</span></p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Centripetal acceleration.</strong> A body moving in a circle of radius <span class="math inline">\(r\)</span> at speed <span class="math inline">\(v\)</span> has an acceleration <span class="math inline">\(v^2/r = \omega^2r\)</span> directed <strong>towards the centre</strong>. By Newton’s second law, the net force towards the centre must be <span class="math display">\[\sum F_{\text{radial}} = \frac{mv^2}{r}.\]</span> “Centripetal force” is not a new kind of force. It is whatever combination of real forces (tension, gravity, normal force, friction) points towards the centre. Never add an extra “centripetal force” to a free-body diagram.</p>
+</div>
+<div class="topic-num" id="dynamics-of-circular-motion">§4.4</div><h3 class="topic-title">Dynamics of circular motion</h3>
+<p>The method is always the same. Draw the FBD, take one axis <strong>towards the centre</strong> of the circle, and set the net force along it equal to <span class="math inline">\(mv^2/r\)</span>.</p>
+<h4>A car on a flat curve</h4>
+<p>On a level road, only <strong>static friction</strong> between the tyres and the road can push the car towards the centre. (The contact patch does not slide sideways, so the friction is static.) The requirement is <span class="math inline">\(f_s = mv^2/r \le \mu_smg\)</span>, so the maximum safe speed is <span class="math display">\[v_{\max} = \sqrt{\mu_s\,g\,r}.\]</span> This is independent of the car’s mass.</p>
+<div class="box work example"><div class="label">Worked example 4.6</div><h4 class="ex-title">Cornering on a dry and a wet road</h4>
+<p>Find the maximum speed for a car rounding a flat curve of radius 50 m when the road is (a) dry (<span class="math inline">\(\mu_s = 0.80\)</span>) and (b) wet (<span class="math inline">\(\mu_s = 0.40\)</span>).</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) Dry: <span class="math display">\[v_{\max} = \sqrt{0.80(9.8)(50)} = \sqrt{392} = 19.8\ \mathrm{m/s}\ (71\ \mathrm{km/h}).\]</span></p>
+<p>(b) Wet: <span class="math display">\[v_{\max} = \sqrt{0.40(9.8)(50)} = \sqrt{196} = 14.0\ \mathrm{m/s}\ (50\ \mathrm{km/h}).\]</span></p>
+<p><strong>Evaluate.</strong> Halving the friction coefficient cuts the safe speed by a factor of <span class="math inline">\(\sqrt2\)</span>, not 2. A driver who takes this bend at 70 km/h in the rain will skid outward along the tangent: not “thrown outward”, but simply continuing in a straight line once friction can no longer bend the path.</p>
+</div>
+</div>
+<h4>Banked curves</h4>
+<p>Banking the road tilts the normal force towards the centre, so that part of it provides the centripetal force. With no friction at all, the forces on the car are <span class="math inline">\(N\)</span> (perpendicular to the road surface) and <span class="math inline">\(mg\)</span>: <span class="math display">\[\text{Vertical: } N\cos\theta = mg,\qquad \text{Radial: } N\sin\theta = \frac{mv^2}{r}.\]</span> Dividing the equations gives the <strong>design speed</strong> at which no friction is needed: <span class="math display">\[\tan\theta = \frac{v^2}{gr}.\]</span></p>
+<figure>
+<svg viewBox="0 0 360 220" width="340" role="img" aria-label="Cross-section of a road banked at angle theta. A car sits on the slope. The normal force N acts perpendicular to the road surface, tilted towards the centre of the curve on the left. Its vertical component N cos theta balances the weight mg, and its horizontal component N sin theta points towards the centre.">
+<polygon class="solid" points="30,190 330,190 330,80" style="fill-opacity:.5"/>
+<g transform="translate(205,122) rotate(-20.1)"><rect class="obj" x="-30" y="-18" width="60" height="22" rx="4"/></g>
+<circle class="dot" cx="208" cy="127" r="3"/>
+<line class="u" x1="208" y1="127" x2="178" y2="45" marker-end="url(#au)"/>
+<text x="166" y="40" class="tu">N</text>
+<line class="v" x1="208" y1="127" x2="208" y2="200" marker-end="url(#av)"/>
+<text x="214" y="200" class="tv">mg</text>
+<line class="dash" x1="208" y1="127" x2="208" y2="47"/>
+<line class="dash" x1="208" y1="47" x2="180" y2="47"/>
+<line class="w" x1="208" y1="127" x2="152" y2="127" marker-end="url(#aw)"/>
+<text x="96" y="132" class="tw">N sin θ</text>
+<text x="214" y="70" class="muted">N cos θ</text>
+<path class="dash" d="M 75 190 A 45 45 0 0 0 72 174"/>
+<text x="80" y="184" class="muted">θ</text>
+<text x="20" y="30" class="muted">← centre of curve</text>
+</svg>
+<figcaption>On a banked road, the horizontal component of the normal force, N sin θ, supplies the centripetal force. N cos θ balances the weight.</figcaption>
+</figure>
+<p>If the car goes faster than the design speed, friction acts <strong>down</strong> the slope to help hold it in. If it goes slower, friction acts <strong>up</strong> the slope to stop it sliding down. Including friction, the range of safe speeds is <span class="math display">\[v_{\max}^2 = gr\,\frac{\tan\theta + \mu_s}{1 - \mu_s\tan\theta},\qquad v_{\min}^2 = gr\,\frac{\tan\theta - \mu_s}{1 + \mu_s\tan\theta}.\]</span> If <span class="math inline">\(\mu_s \ge \tan\theta\)</span>, there is no minimum speed: a parked car will not slide down.</p>
+<div class="box work example"><div class="label">Worked example 4.7</div><h4 class="ex-title">Designing a banked curve</h4>
+<p>A highway curve of radius 100 m is to be banked so that cars at 20 m/s (72 km/h) need no friction. (a) Find the banking angle. (b) If <span class="math inline">\(\mu_s = 0.30\)</span>, find the range of speeds at which a car can take the curve without slipping.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) Design angle: <span class="math display">\[\tan\theta = \frac{v^2}{gr} = \frac{400}{980} = 0.408 \;\Rightarrow\; \theta = 22.2^\circ.\]</span></p>
+<p>(b) Maximum speed, with friction acting down the slope: <span class="math display">\[v_{\max}^2 = 980\cdot\frac{0.408 + 0.30}{1 - (0.30)(0.408)} = 980\cdot\frac{0.708}{0.878} = 790 \;\Rightarrow\; v_{\max} = 28.1\ \mathrm{m/s}\ (101\ \mathrm{km/h}).\]</span> Minimum speed, with friction acting up the slope: <span class="math display">\[v_{\min}^2 = 980\cdot\frac{0.408 - 0.30}{1 + (0.30)(0.408)} = 980\cdot\frac{0.108}{1.122} = 94.3 \;\Rightarrow\; v_{\min} = 9.7\ \mathrm{m/s}\ (35\ \mathrm{km/h}).\]</span></p>
+<p><strong>Evaluate.</strong> Banking widens the safe window a great deal. On a flat road with the same friction, the limit would be <span class="math inline">\(\sqrt{0.30(9.8)(100)} = 17\)</span> m/s. Real highways use smaller angles (typically <span class="math inline">\(4^\circ\)</span>–<span class="math inline">\(8^\circ\)</span>), because vehicles must be able to stop on an icy curve without sliding sideways. Racing tracks and velodromes bank much more steeply.</p>
+</div>
+</div>
+<h4>Vertical circles</h4>
+<p>In a vertical circle, gravity has a component along the radius that changes around the circle, so the speed changes. Even so, at the top and the bottom the radial equation is simple. For a ball on a string of length <span class="math inline">\(L\)</span>: <span class="math display">\[\text{Top: } T_{\text{top}} + mg = \frac{mv_{\text{top}}^2}{L},\qquad \text{Bottom: } T_{\text{bottom}} - mg = \frac{mv_{\text{bottom}}^2}{L}.\]</span> The string stays taut at the top only if <span class="math inline">\(T_{\text{top}} \ge 0\)</span>, which requires <span class="math display">\[v_{\text{top}} \ge \sqrt{gL}.\]</span> The same condition, <span class="math inline">\(v \ge \sqrt{gR}\)</span>, keeps a roller-coaster car on the track at the top of a loop. A car going over a hump of radius <span class="math inline">\(R\)</span> leaves the road if <span class="math inline">\(v &gt; \sqrt{gR}\)</span>.</p>
+<div class="box work example"><div class="label">Worked example 4.8</div><h4 class="ex-title">Whirling a ball in a vertical circle</h4>
+<p>A 0.20 kg ball on a 0.80 m string is whirled in a vertical circle. (a) Find the minimum speed at the top for the string to stay taut. (b) If the ball has this speed at the top, its speed at the bottom is <span class="math inline">\(v_b = \sqrt{v_t^2 + 4gL}\)</span> (we prove this with energy conservation in Chapter 5). Find <span class="math inline">\(v_b\)</span> and the tension at the bottom.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) Minimum speed at the top: <span class="math display">\[v_t = \sqrt{gL} = \sqrt{9.8(0.80)} = 2.80\ \mathrm{m/s}.\]</span></p>
+<p>(b) At the bottom: <span class="math display">\[v_b^2 = gL + 4gL = 5gL = 39.2\ \mathrm{m^2/s^2} \;\Rightarrow\; v_b = 6.26\ \mathrm{m/s}.\]</span> <span class="math display">\[T_b = mg + \frac{mv_b^2}{L} = mg + 5mg = 6mg = 6(0.20)(9.8) = 11.8\ \mathrm{N}.\]</span></p>
+<p><strong>Evaluate.</strong> The tension at the bottom is six times the ball’s weight. That makes the bottom of a vertical circle the place where strings snap, and where pilots pulling out of a dive feel the largest load.</p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>g-forces on pilots and patients.</strong> A fighter pilot pulling out of a dive at 250 m/s on a circle of radius 1000 m experiences <span class="math inline">\(v^2/r = 62.5\ \mathrm{m/s^2}\)</span> of centripetal acceleration, which, added to gravity, gives an apparent weight about <span class="math inline">\(7.4\)</span> times normal (“7.4 g”). Blood is driven towards the feet, and the heart may be unable to pump enough of it up to the brain. Vision greys out, and then the pilot loses consciousness (G-LOC). Anti-g suits squeeze the legs and abdomen to resist this pooling. The same physics, run in reverse, is used in human centrifuges to train pilots and astronauts and to study cardiovascular responses.</p>
+</div>
+<h4>The conical pendulum</h4>
+<p>A bob on a string of length <span class="math inline">\(L\)</span> moving in a horizontal circle, with the string at angle <span class="math inline">\(\theta\)</span> to the vertical, is a <strong>conical pendulum</strong>. The circle has radius <span class="math inline">\(r = L\sin\theta\)</span>. <span class="math display">\[\text{Vertical: } T\cos\theta = mg,\qquad \text{Radial: } T\sin\theta = m\omega^2L\sin\theta.\]</span> The second equation gives <span class="math inline">\(T = m\omega^2L\)</span>. Dividing the two equations gives <span class="math display">\[\omega^2 = \frac{g}{L\cos\theta},\qquad \text{period } P = 2\pi\sqrt{\frac{L\cos\theta}{g}}.\]</span></p>
+<div class="box work example"><div class="label">Worked example 4.9</div><h4 class="ex-title">A conical pendulum</h4>
+<p>A 0.30 kg bob on a 1.0 m string moves in a horizontal circle with the string at <span class="math inline">\(30^\circ\)</span> to the vertical. Find the period, the speed and the tension.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>Period: <span class="math display">\[P = 2\pi\sqrt{\frac{1.0\cos30^\circ}{9.8}} = 2\pi\sqrt{0.0884} = 1.87\ \mathrm{s}.\]</span> Speed: the radius is <span class="math inline">\(r = 1.0\sin30^\circ = 0.50\)</span> m, so <span class="math display">\[v = \frac{2\pi r}{P} = \frac{2\pi(0.50)}{1.87} = 1.68\ \mathrm{m/s}.\]</span> Tension: <span class="math display">\[T = \frac{mg}{\cos30^\circ} = \frac{0.30(9.8)}{0.866} = 3.39\ \mathrm{N}.\]</span> <strong>Check:</strong> <span class="math inline">\(T\sin30^\circ = 1.70\)</span> N, and <span class="math inline">\(mv^2/r = 0.30(1.68)^2/0.50 = 1.69\)</span> N. ✓</p>
+</div>
+</div>
+<div class="topic-num" id="non-uniform-circular-motion">§4.5</div><h3 class="topic-title">Non-uniform circular motion</h3>
+<p>If the speed changes along a circular path, the acceleration has two perpendicular components:</p>
+<ul>
+<li>a <strong>tangential</strong> component, <span class="math inline">\(a_t = dv/dt = r\alpha\)</span>, which changes the speed, where <span class="math inline">\(\alpha = d\omega/dt\)</span> is the angular acceleration;</li>
+<li>a <strong>radial</strong> (centripetal) component, <span class="math inline">\(a_c = v^2/r\)</span>, which changes the direction.</li>
+</ul>
+<p>The total acceleration has magnitude <span class="math display">\[a = \sqrt{a_t^2 + a_c^2}.\]</span> The same split applies to <em>any</em> curved path, with <span class="math inline">\(r\)</span> replaced by the local radius of curvature. This is how engineers analyse a car that brakes while cornering. The tyres must provide the vector sum of both accelerations, and that sum must stay inside the “friction circle” of radius <span class="math inline">\(\mu_sg\)</span>.</p>
+<div class="topic-num" id="rotating-frames-and-the-centrifugal-force">§4.6</div><h3 class="topic-title">Rotating frames and the centrifugal force</h3>
+<p>In a frame rotating with angular velocity <span class="math inline">\(\omega\)</span>, a body at rest at radius <span class="math inline">\(r\)</span> appears to be in equilibrium. Newton’s second law can still be used in this frame if we add an outward pseudo-force, the <strong>centrifugal force</strong>: <span class="math display">\[F_{\text{cf}} = m\omega^2r\quad\text{(directed away from the axis)}.\]</span> A body that <em>moves</em> in the rotating frame also feels a sideways pseudo-force, the <strong>Coriolis force</strong>, <span class="math inline">\(-2m\,\vect{\omega}\times\vect{v}_{\text{rel}}\)</span>. On the rotating Earth, the Coriolis force sets the spin of hurricanes and deflects long-range projectiles.</p>
+<div class="box trap"><div class="label">Common mistake</div>
+<p>Use the centrifugal force <strong>only</strong> when you deliberately work in the rotating frame. In the ground frame there is no outward force on a car going round a bend. There is only an inward net force, and the passengers’ sense of being “thrown outward” is their inertia carrying them straight on while the car turns beneath them.</p>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Centrifuges.</strong> A centrifuge’s strength is quoted as its <em>relative centrifugal force</em>, <span class="math inline">\(\mathrm{RCF} = \omega^2r/g\)</span>. At 10 000 rpm, <span class="math inline">\(\omega = 10\,000 \times 2\pi/60 = 1047\)</span> rad/s. At <span class="math inline">\(r = 10\)</span> cm, this gives <span class="math inline">\(\omega^2r = 1.1\times10^5\ \mathrm{m/s^2}\)</span>, about <strong>11 000 g</strong>. In the tube’s rotating frame, the sample feels an “effective gravity” that strong. By Example 4.5, red cells then settle about <span class="math inline">\(10^4\)</span> times faster than on the bench. Ultracentrifuges reach <span class="math inline">\(10^6\,g\)</span> and can separate proteins and viruses by mass. Uranium enrichment uses gas centrifuges on the same principle.</p>
+</div>
+<div class="box sum"><div class="label">Chapter summary</div>
+<ul>
+<li>Static friction: <span class="math inline">\(f_s \le \mu_sN\)</span>, adjusting to prevent slipping. Kinetic friction: <span class="math inline">\(f_k = \mu_kN\)</span>, opposite to the relative velocity. Usually <span class="math inline">\(\mu_k &lt; \mu_s\)</span>. Angle of repose: <span class="math inline">\(\tan\theta_r = \mu_s\)</span>.</li>
+<li>Drag: <span class="math inline">\(D = bv\)</span> (Stokes: <span class="math inline">\(b = 6\pi\eta r\)</span>) or <span class="math inline">\(D = \tfrac12C\rho Av^2\)</span>. Terminal velocity is reached when drag balances the effective weight.</li>
+<li>Uniform circular motion: <span class="math inline">\(v = r\omega\)</span>, <span class="math inline">\(T = 2\pi/\omega\)</span>, and <span class="math inline">\(a_c = v^2/r = \omega^2r\)</span> towards the centre.</li>
+<li>The net inward force must equal <span class="math inline">\(mv^2/r\)</span>. “Centripetal force” is a role played by real forces.</li>
+<li>Flat curve: <span class="math inline">\(v_{\max} = \sqrt{\mu_sgr}\)</span>. Banked curve with no friction: <span class="math inline">\(\tan\theta = v^2/gr\)</span>.</li>
+<li>Vertical circle: <span class="math inline">\(v_{\text{top}} \ge \sqrt{gR}\)</span> to stay in contact. Tension is greatest at the bottom.</li>
+<li>Conical pendulum: <span class="math inline">\(\omega^2 = g/(L\cos\theta)\)</span>.</li>
+<li>Non-uniform circular motion: <span class="math inline">\(a = \sqrt{a_t^2 + (v^2/r)^2}\)</span>.</li>
+<li>Rotating frame: add the centrifugal force <span class="math inline">\(m\omega^2r\)</span> outward (plus Coriolis for moving bodies).</li>
+</ul>
+</div>
+<h3 class="part-title" id="practice">Practice problems</h3><p class="note">Full step-by-step solutions are in the separate solutions PDF.</p>
+<h4 class="level">Level A — Concept check</h4>
+<div class="prob" id="p4-1"><span class="pnum">P4.1</span>
+<p>Why is it usually easier to keep a heavy box sliding than to start it moving? Explain in terms of the microscopic picture of friction.</p>
+</div>
+<div class="prob" id="p4-2"><span class="pnum">P4.2</span>
+<p>“Friction always opposes motion.” Give two examples where friction acts in the <em>same</em> direction as the motion of the body it acts on, and explain what friction really opposes.</p>
+</div>
+<div class="prob" id="p4-3"><span class="pnum">P4.3</span>
+<p>A car rounds a curve at a constant 60 km/h. Is it accelerating? Which force provides the centripetal force? In the ground frame, is there an outward “centrifugal force” on the car?</p>
+</div>
+<div class="prob" id="p4-4"><span class="pnum">P4.4</span>
+<p>A roller-coaster car goes over the top of a vertical loop of radius <span class="math inline">\(R\)</span>, upside down. At what speed does the rider feel weightless at the top? What does the rider feel if the car goes faster than this?</p>
+</div>
+<h4 class="level">Level B — Standard problems</h4>
+<div class="prob" id="p4-5"><span class="pnum">P4.5</span>
+<p>A 2.0 kg block sits on a plank, and one end of the plank is slowly raised. The block starts to slide when the plank is at <span class="math inline">\(35^\circ\)</span>. Once sliding at that angle, it accelerates at <span class="math inline">\(2.0\ \mathrm{m/s^2}\)</span>. Find <span class="math inline">\(\mu_s\)</span> and <span class="math inline">\(\mu_k\)</span>.</p>
+</div>
+<div class="prob" id="p4-6"><span class="pnum">P4.6</span>
+<p>A crate rests on the flat bed of a truck, with <span class="math inline">\(\mu_s = 0.40\)</span> between crate and bed. (a) What is the greatest acceleration the truck can have without the crate sliding? (b) The truck is moving at 20 m/s. What is its shortest stopping distance if the crate is not to slide?</p>
+</div>
+<div class="prob" id="p4-7"><span class="pnum">P4.7</span>
+<p>A 3.0 kg block on a horizontal table (<span class="math inline">\(\mu_k = 0.25\)</span>) is joined by a light string over an ideal pulley at the table’s edge to a hanging 2.0 kg mass. Find the acceleration and the tension.</p>
+</div>
+<div class="prob" id="p4-8"><span class="pnum">P4.8</span>
+<p>A curve of radius 200 m is banked at <span class="math inline">\(15^\circ\)</span>. At what speed can a car take the curve with no friction needed? Express your answer in km/h.</p>
+</div>
+<div class="prob" id="p4-9"><span class="pnum">P4.9</span>
+<p>A Ferris wheel of radius 15 m turns once every 30 s. Find the apparent weight of a 60 kg rider at the top and at the bottom.</p>
+</div>
+<div class="prob" id="p4-10"><span class="pnum">P4.10</span>
+<p>A 0.50 kg puck on a frictionless table is tied to a string through a hole at the centre, and moves in a circle of radius 1.2 m. The string breaks at a tension of 50 N. What is the maximum speed of the puck? Describe its path after the string breaks.</p>
+</div>
+<div class="prob" id="p4-11"><span class="pnum">P4.11</span>
+<p>A clinical centrifuge must produce 5000 g at a radius of 8.0 cm. At how many revolutions per minute must it spin?</p>
+</div>
+<div class="prob" id="p4-12"><span class="pnum">P4.12</span>
+<p>A 75 kg skydiver has a terminal speed of 60 m/s. (a) Find the drag constant <span class="math inline">\(k\)</span> in <span class="math inline">\(D = kv^2\)</span>. (b) The parachute increases <span class="math inline">\(k\)</span> by a factor of 25. Find the new terminal speed. (c) If the parachute opened instantly at 60 m/s, what would the skydiver’s deceleration be, in multiples of <span class="math inline">\(g\)</span>? Why are parachutes designed to open over a second or two?</p>
+</div>
+<h4 class="level">Level C — Challenge problems</h4>
+<div class="prob" id="p4-13"><span class="pnum">P4.13</span>
+<p>A 1.0 kg block sits on top of a 4.0 kg block, which rests on a frictionless floor. Between the blocks, <span class="math inline">\(\mu_s = 0.30\)</span> and <span class="math inline">\(\mu_k = 0.25\)</span>. A horizontal force <span class="math inline">\(F\)</span> is applied to the <strong>lower</strong> block. (a) What is the largest <span class="math inline">\(F\)</span> for which the blocks move together? (b) If <span class="math inline">\(F = 25\)</span> N, find the acceleration of each block.</p>
+</div>
+<div class="prob" id="p4-14"><span class="pnum">P4.14</span>
+<p>Derive the formula for the maximum safe speed on a banked curve with friction: <span class="math display">\[v_{\max}^2 = gr\,\frac{\tan\theta + \mu_s}{1 - \mu_s\tan\theta}.\]</span> Then find both <span class="math inline">\(v_{\max}\)</span> and <span class="math inline">\(v_{\min}\)</span> for <span class="math inline">\(r = 60\)</span> m, <span class="math inline">\(\theta = 20^\circ\)</span> and <span class="math inline">\(\mu_s = 0.25\)</span>.</p>
+</div>
+<div class="prob" id="p4-15"><span class="pnum">P4.15</span>
+<p><em>The “Rotor” ride.</em> Riders stand against the inside wall of a vertical cylinder of radius 2.5 m, which spins about its axis. When it reaches full speed, the floor drops away and the riders stay pinned to the wall. If <span class="math inline">\(\mu_s = 0.40\)</span> between clothing and wall, what is the minimum angular speed (in rad/s and in rpm)? Does the answer depend on the rider’s mass?</p>
+</div>
+<div class="prob" id="p4-16"><span class="pnum">P4.16</span>
+<p>A small particle of mass <span class="math inline">\(m\)</span> is released from rest in a fluid and falls under gravity with linear drag <span class="math inline">\(D = bv\)</span> (ignore buoyancy). (a) Show that <span class="math inline">\(v(t) = v_t(1 - e^{-t/\tau})\)</span>, and identify <span class="math inline">\(v_t\)</span> and <span class="math inline">\(\tau\)</span>. (b) How long does it take to reach 95% of terminal speed? (c) Evaluate <span class="math inline">\(\tau\)</span> for the red blood cell of Example 4.5, and comment on whether it is reasonable to assume the cell always moves at terminal speed.</p>
+</div>
+<div class="prob" id="p4-17"><span class="pnum">P4.17</span>
+<p>A small bead can slide without friction on a circular hoop of radius <span class="math inline">\(R\)</span> that stands in a vertical plane and rotates about its vertical diameter with angular speed <span class="math inline">\(\omega\)</span>. Show that, besides the bottom of the hoop, the bead can be in equilibrium (relative to the hoop) at an angle <span class="math inline">\(\theta\)</span> from the bottom given by <span class="math inline">\(\cos\theta = g/(\omega^2R)\)</span>, but only if <span class="math inline">\(\omega &gt; \sqrt{g/R}\)</span>. Evaluate <span class="math inline">\(\theta\)</span> for <span class="math inline">\(R = 0.20\)</span> m at 120 rpm.</p>
+</div>
+<div class="prob" id="p4-18"><span class="pnum">P4.18</span>
+<p>A coin sits 10 cm from the centre of a turntable, with <span class="math inline">\(\mu_s = 0.40\)</span>. The turntable starts from rest with a constant angular acceleration of <span class="math inline">\(2.0\ \mathrm{rad/s^2}\)</span>. (a) Explain why the friction on the coin is not directed towards the centre. (b) Find the angular speed and the time at which the coin starts to slip.</p>
+</div>
+
+<div class="downloads noprint"><a href="ch04-friction-circular_notes.pdf" download>Download notes (PDF)</a><a href="ch04-friction-circular_solutions.pdf" download>Download solutions (PDF)</a></div>
+</article>
+<nav class="pager"><a href="ch03-newtons-laws.html">← 3. Newton&#x27;s Laws of Motion</a><a href="ch05-work-energy.html">5. Work, Energy and Power →</a></nav></main>
+<footer>All worked examples and practice problems in these notes are original. Textbooks for further reading and practice, with a chapter-by-chapter map, are listed in the References.<p class="copyright">© 2026 Pratik Bhanuse. All rights reserved. · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p></footer>
+</div>
+</body>
+</html>

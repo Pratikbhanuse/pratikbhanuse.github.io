@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="How solids stretch and break, and how liquids and gases push, float and flow, from bones and cables to blood vessels and lungs.">
+<title>10. Elasticity and Fluid Mechanics · Physics, step by step</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* House style shared with "Linear algebra, translated" */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#17202B; --muted:#586473; --line:#D8DEE6;
+  --grid:rgba(47,91,211,.07);
+  --u:#2F5BD3; --v:#C2410C; --w:#15803D; --p:#7C3AED;
+  --tip-bg:#EAF0FF; --tip-ink:#1E3E99;
+  --trap-bg:#FFF2E6; --trap-ink:#8A3500;
+  --ask-bg:#E9F7EE; --ask-ink:#11613A;
+  --def-bg:#F3EEFF; --def-ink:#5B21B6;
+  --code-bg:#EEF1F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+    --grid:rgba(122,162,255,.07);
+    --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+    --tip-bg:#16223A; --tip-ink:#AFC6FF;
+    --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+    --ask-bg:#10261A; --ask-ink:#86EFAC;
+    --def-bg:#1E1733; --def-ink:#C4B5FD;
+    --code-bg:#1C2530;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131A; --surface:#151C25; --ink:#E5EAF0; --muted:#9AA6B4; --line:#2A3440;
+  --grid:rgba(122,162,255,.07);
+  --u:#7FA3FF; --v:#FB923C; --w:#4ADE80; --p:#C4B5FD;
+  --tip-bg:#16223A; --tip-ink:#AFC6FF;
+  --trap-bg:#2A1C0F; --trap-ink:#FDBA74;
+  --ask-bg:#10261A; --ask-ink:#86EFAC;
+  --def-bg:#1E1733; --def-ink:#C4B5FD;
+  --code-bg:#1C2530;
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+a{color:var(--u)}
+.wrap{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:48px}
+header.top{grid-column:1/-1; padding-block:56px 8px; max-width:72ch}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5.6vw,60px); line-height:1.04; letter-spacing:-.02em; margin:.25em 0 .3em; text-wrap:balance}
+h1 .hl{color:var(--u)}
+.lede{font-size:19px; color:var(--muted); margin:0; max-width:62ch}
+.byline{font-family:var(--display); font-size:15px; color:var(--muted); margin:14px 0 0}
+.byline strong{color:var(--ink)} .byline a, .copyright a{color:inherit}
+.copyright{font-family:var(--display); font-size:13px; color:var(--muted); margin:10px 0 0}
+
+/* side navigation */
+nav.toc{position:sticky; top:24px; align-self:start; padding-top:8px; font-family:var(--display); font-size:14px; max-height:calc(100vh - 48px); overflow-y:auto}
+nav.toc ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+nav.toc a{display:flex; gap:10px; padding:5px 8px; border-radius:6px; color:var(--ink); text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface); outline:none; box-shadow:inset 0 0 0 1px var(--line)}
+nav.toc a[aria-current="page"]{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); font-weight:700}
+nav.toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:1.6em; padding-top:2px}
+nav.toc .grp{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:14px 8px 2px}
+nav.toc .sub{padding-left:28px; font-size:13px; color:var(--muted)}
+nav.toc .sub a{color:var(--muted); padding:3px 8px}
+
+main{min-width:0}
+.chapter{max-width:72ch}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--u)}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,38px); line-height:1.1; letter-spacing:-.01em; margin:.2em 0 .15em; text-wrap:balance}
+.one{font-family:var(--display); font-size:20px; font-weight:500; color:var(--muted); margin:0 0 20px}
+h3{font-family:var(--display); font-weight:700; font-size:18px; margin:28px 0 6px}
+h4{font-family:var(--display); font-weight:700; font-size:18px; margin:24px 0 6px}
+h5{font-family:var(--display); font-weight:700; font-size:16px; margin:18px 0 4px}
+.topic-num{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--u); border-top:1px solid var(--line); padding-top:18px; margin-top:34px; scroll-margin-top:24px}
+h3.topic-title{font-size:24px; margin:4px 0 8px}
+h3.part-title{font-size:24px; margin:40px 0 4px; border-top:2px solid var(--ink); padding-top:16px}
+h4.level{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--v); margin:26px 0 10px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:1.3em}
+li{margin-bottom:6px}
+strong{font-weight:600}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px}
+.note{color:var(--muted); font-size:15px}
+
+/* boxes */
+.box{border-radius:10px; padding:14px 18px 4px; margin:18px 0}
+.box .label{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin-bottom:6px}
+.box.tip{background:var(--tip-bg)} .box.tip .label{color:var(--tip-ink)}
+.box.trap{background:var(--trap-bg)} .box.trap .label{color:var(--trap-ink)}
+.box.ask{background:var(--ask-bg)} .box.ask .label{color:var(--ask-ink)}
+.box.def{background:var(--def-bg)} .box.def .label{color:var(--def-ink)}
+.box.work,.box.goals,.box.sum{background:var(--surface); border:1px solid var(--line)}
+.box.work .label,.box.goals .label,.box.sum .label{color:var(--muted)}
+.box.sum{border-top:3px solid var(--ink)}
+.box.work .label{color:var(--v)}
+.box .ex-title{margin:0 0 8px; font-size:18px}
+.sol-inline{margin:10px 0 12px; border-left:3px solid var(--w); padding-left:14px}
+.sol-label{display:block; font-family:var(--display); font-weight:700; font-size:13px; color:var(--w); margin-bottom:4px}
+details.ans{margin:4px 0 12px} details.ans summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:14px; color:var(--w)}
+details.ans > div{padding-top:6px}
+
+/* practice problems */
+.prob{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px 2px; margin:0 0 12px; min-width:0}
+.prob .pnum{font-family:var(--mono); font-weight:600; font-size:12px; color:var(--v); display:block; margin-bottom:2px}
+.prob p{margin:0 0 10px}
+
+/* solutions pages */
+h3.sol-head{margin:30px 0 8px; border-top:1px solid var(--line); padding-top:16px}
+h3.sol-head .pnum{font-family:var(--mono); font-size:14px; letter-spacing:.06em; color:var(--v)}
+.solutions .chapter > p:first-of-type{margin-top:0}
+
+/* tables, figures, math */
+.tablewrap{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:15.5px}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+figure{margin:18px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; overflow-x:auto}
+figure svg{display:block; max-width:100%; height:auto; margin:0 auto}
+figcaption{font-size:14px; color:var(--muted); text-align:center; margin-top:8px}
+svg text{font-family:var(--mono); font-size:12px; fill:var(--ink)}
+svg .gl{stroke:var(--line); stroke-width:1}
+svg .ax{stroke:var(--muted); stroke-width:1.2; fill:none}
+svg .obj{fill:var(--surface); stroke:var(--ink); stroke-width:1.6}
+svg .solid{fill:var(--code-bg); stroke:var(--ink); stroke-width:1.4}
+svg .ground{stroke:var(--ink); stroke-width:1.6}
+svg .hatch{stroke:var(--muted); stroke-width:1}
+svg .dash{stroke:var(--muted); stroke-width:1.2; stroke-dasharray:5 4; fill:none}
+svg .u{stroke:var(--u); stroke-width:2.6; fill:none}
+svg .v{stroke:var(--v); stroke-width:2.6; fill:none}
+svg .w{stroke:var(--w); stroke-width:2.6; fill:none}
+svg .p{stroke:var(--p); stroke-width:2.6; fill:none}
+svg .curve{stroke:var(--u); stroke-width:2.4; fill:none}
+svg .hu,svg .tu{fill:var(--u)} svg .hv,svg .tv{fill:var(--v)} svg .hw,svg .tw{fill:var(--w)} svg .hp,svg .tp{fill:var(--p)}
+svg .muted{fill:var(--muted)} svg .ink{fill:var(--ink)}
+svg .dot{fill:var(--ink)}
+svg .fillu{fill:var(--u); fill-opacity:.12; stroke:none}
+mjx-container{color:inherit}
+mjx-container[display="true"]{display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; margin:.7em 0 !important; padding-block:2px}
+.box mjx-container[display="true"]{margin:.5em 0 !important}
+
+/* pager + footer */
+.pager{display:flex; justify-content:space-between; gap:12px; margin:56px 0 0; padding-top:16px; border-top:1px solid var(--line); font-family:var(--display); font-size:15px; max-width:72ch}
+.pager a{text-decoration:none; color:var(--u)}
+footer{grid-column:1/-1; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:16px; margin-top:24px; max-width:72ch}
+
+/* index page */
+.unit{border-top:2px solid var(--ink); padding-top:12px; margin:36px 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px}
+.unit .unit-n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--u); font-weight:600}
+.unit .unit-t{font-family:var(--display); font-size:22px; font-weight:800; letter-spacing:-.01em}
+.chlist{list-style:none; padding:0; margin:0}
+.chlist li{display:grid; grid-template-columns:2.4em minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); margin:0}
+.chlist .n{font-family:var(--mono); font-size:13px; color:var(--muted)}
+.chlist .t{font-family:var(--display); font-weight:600; font-size:17px; text-decoration:none; color:var(--ink)}
+.chlist .t:hover{color:var(--u)}
+.chlist .s{font-family:var(--mono); font-size:12px; text-decoration:none}
+.downloads{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+.downloads a{font-family:var(--display); font-weight:600; font-size:15px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 14px}
+.downloads a:hover{border-color:var(--u); color:var(--u)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  nav.toc{position:static; max-height:none}
+  nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  nav.toc .grp{grid-column:1/-1}
+  nav.toc .sub{display:none}
+  header.top{padding-block:36px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ---------- print (PDF) ---------- */
+@page{
+  size:Letter; margin:17mm 15mm 18mm;
+  @top-right{content:"Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-left{content:"© 2026 Pratik Bhanuse · pratikbhanuse.github.io"; font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+  @bottom-right{content:counter(page) " / " counter(pages); font:8pt "JetBrains Mono", monospace; color:#8A94A2}
+}
+@page :first{ @top-right{content:none} }
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff; padding:0; font-size:11.5pt}
+  .wrap{display:block; max-width:none}
+  nav.toc,.pager,.noprint{display:none !important}
+  header.top{padding-block:0 8px}
+  .chapter{max-width:none; break-before:page}
+  .book-toc{break-before:page}
+  .box,.prob,figure{break-inside:avoid}
+  .box.work{break-inside:auto}
+  .topic-num,h3,h4{break-after:avoid}
+  a{color:inherit; text-decoration:none}
+  details.ans > summary{display:none}
+}
+/* printed table of contents */
+.book-toc ol{list-style:none; padding:0}
+.book-toc li{display:flex; gap:12px; padding:5px 0; border-bottom:1px dotted var(--line); font-family:var(--display); margin:0}
+.book-toc .n{font-family:var(--mono); font-size:12px; color:var(--muted); min-width:2em; padding-top:2px}
+h3.page-h{border-top:1px solid var(--line); padding-top:18px; margin-top:34px}
+svg .hk{fill:var(--ink)} svg .k{stroke:var(--ink); stroke-width:2.2; fill:none}
+:root{ --apply-bg:#F1EEFB; --apply-ink:#4C2A9E; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --apply-bg:#1D1830; --apply-ink:#C9B8FF; } }
+:root[data-theme="dark"]{ --apply-bg:#1D1830; --apply-ink:#C9B8FF; }
+.box.apply{background:var(--apply-bg); border-left:4px solid var(--apply-ink)} .box.apply .label{color:var(--apply-ink)}
+svg path.ground,svg polyline.ground{fill:none}
+
+.chlist .s a{text-decoration:none}
+.single{max-width:none}
+
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+         macros: { vect: ['\\vec{\\boldsymbol{#1}}', 1], uvec: ['\\hat{\\boldsymbol{#1}}', 1],
+                   ihat: '\\hat{\\boldsymbol{\\imath}}', jhat: '\\hat{\\boldsymbol{\\jmath}}',
+                   khat: '\\hat{\\boldsymbol{k}}', unit: ['\\,\\mathrm{#1}', 1] } },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="au" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hu"/></marker><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hv"/></marker><marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hw"/></marker><marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hp"/></marker><marker id="ak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="hk"/></marker></defs></svg>
+<div class="wrap">
+<header class="top"><div class="kicker">Chapter 10 · Semester 1 · Mechanics, Waves and Thermal Physics</div><h1>Elasticity and Fluid Mechanics</h1><p class="lede">How solids stretch and break, and how liquids and gases push, float and flow, from bones and cables to blood vessels and lungs.</p><p class="byline">By <strong>Pratik Bhanuse</strong>, PhD Physics candidate, Western University · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p><div class="downloads noprint"><a href="ch10-fluids-elasticity_notes.pdf" download>Download notes (PDF)</a><a href="ch10-fluids-elasticity_solutions.pdf" download>Download solutions (PDF)</a></div></header>
+<aside class="side"><nav class="toc" aria-label="Contents"><ol>
+<li><a href="index.html"><span class="n">⌂</span>Contents</a></li>
+<li><a href="syllabus.html"><span class="n">→</span>Syllabus and how to study</a></li>
+<li class="grp">Semester 1 · Mechanics, Waves and Thermal Physics</li>
+<li><a href="ch01-units-vectors.html"><span class="n">1</span>Measurement, Units, Dimensions and Vectors</a></li>
+<li><a href="ch02-kinematics.html"><span class="n">2</span>Kinematics in One and Two Dimensions</a></li>
+<li><a href="ch03-newtons-laws.html"><span class="n">3</span>Newton&#x27;s Laws of Motion</a></li>
+<li><a href="ch04-friction-circular.html"><span class="n">4</span>Friction and Circular Motion</a></li>
+<li><a href="ch05-work-energy.html"><span class="n">5</span>Work, Energy and Power</a></li>
+<li><a href="ch06-momentum.html"><span class="n">6</span>Centre of Mass, Linear Momentum and Collisions</a></li>
+<li><a href="ch07-rotation.html"><span class="n">7</span>Rotational Motion</a></li>
+<li><a href="ch08-gravitation.html"><span class="n">8</span>Gravitation</a></li>
+<li><a href="ch09-oscillations.html"><span class="n">9</span>Simple Harmonic Motion</a></li>
+<li><a href="ch10-fluids-elasticity.html" aria-current="page"><span class="n">10</span>Elasticity and Fluid Mechanics</a></li>
+<li class="sub"><a href="#stress-strain-and-elastic-moduli">§10.1 Stress, strain and elastic moduli</a></li>
+<li class="sub"><a href="#pressure-in-fluids">§10.2 Pressure in fluids</a></li>
+<li class="sub"><a href="#pascals-principle-and-hydraulics">§10.3 Pascal’s principle and hydraulics</a></li>
+<li class="sub"><a href="#buoyancy-archimedes-principle">§10.4 Buoyancy: Archimedes’ principle</a></li>
+<li class="sub"><a href="#fluids-in-motion-continuity">§10.5 Fluids in motion: continuity</a></li>
+<li class="sub"><a href="#bernoullis-equation">§10.6 Bernoulli’s equation</a></li>
+<li class="sub"><a href="#viscous-flow-poiseuilles-law">§10.7 Viscous flow: Poiseuille’s law</a></li>
+<li class="sub"><a href="#surface-tension-and-the-law-of-laplace">§10.8 Surface tension and the law of Laplace</a></li>
+<li class="sub"><a href="#practice">Practice problems</a></li>
+<li><a href="ch11-waves-sound.html"><span class="n">11</span>Mechanical Waves and Sound</a></li>
+<li><a href="ch12-thermal.html"><span class="n">12</span>Heat, Kinetic Theory and Thermodynamics</a></li>
+<li class="grp">Semester 2 · Electricity, Magnetism, Optics and Modern Physics</li>
+<li><a href="ch13-electric-field.html"><span class="n">13</span>Electric Charge and Electric Field</a></li>
+<li><a href="ch14-gauss.html"><span class="n">14</span>Gauss&#x27;s Law</a></li>
+<li><a href="ch15-potential.html"><span class="n">15</span>Electric Potential</a></li>
+<li><a href="ch16-capacitance.html"><span class="n">16</span>Capacitance and Dielectrics</a></li>
+<li><a href="ch17-dc-circuits.html"><span class="n">17</span>Electric Current and DC Circuits</a></li>
+<li><a href="ch18-magnetic-force.html"><span class="n">18</span>Magnetic Field and Magnetic Forces</a></li>
+<li><a href="ch19-magnetic-sources.html"><span class="n">19</span>Sources of the Magnetic Field</a></li>
+<li><a href="ch20-induction.html"><span class="n">20</span>Electromagnetic Induction</a></li>
+<li><a href="ch21-ac-emwaves.html"><span class="n">21</span>Alternating Current and Electromagnetic Waves</a></li>
+<li><a href="ch22-geometric-optics.html"><span class="n">22</span>Geometrical Optics</a></li>
+<li><a href="ch23-wave-optics.html"><span class="n">23</span>Wave Optics</a></li>
+<li><a href="ch24-modern.html"><span class="n">24</span>Photons, Atoms and Nuclei</a></li>
+<li class="grp">Appendix</li>
+<li><a href="references.html"><span class="n">R</span>References and further practice</a></li>
+</ol></nav></aside>
+<main><article class="chapter notes">
+<p>Until now our bodies have been rigid and our surroundings empty. Real materials deform under load, and engineers must know how much they stretch and when they fail. Much of the world is also fluid: water, air, oil, and blood. This chapter covers the mechanics of deformable solids (stress, strain, elastic moduli) and of fluids: pressure, buoyancy, and flow, with and without viscosity. These ideas underpin structural and mechanical engineering, hydraulics, aerodynamics, and a remarkable amount of physiology: blood pressure, circulation, breathing and drug delivery are all fluid mechanics.</p>
+<div class="box goals"><div class="label">You will be able to</div>
+<ul>
+<li>Define stress and strain, and use Young’s, bulk and shear moduli. Interpret stress–strain curves and failure.</li>
+<li>Calculate hydrostatic pressure, and distinguish gauge from absolute pressure.</li>
+<li>Apply Pascal’s principle (hydraulics) and Archimedes’ principle (buoyancy).</li>
+<li>Use the continuity equation and Bernoulli’s equation for ideal flow.</li>
+<li>Apply Poiseuille’s law to viscous flow in tubes, and recognise when flow becomes turbulent.</li>
+<li>Use surface tension and the law of Laplace for bubbles, alveoli and vessels.</li>
+</ul>
+</div>
+<div class="box ask"><div class="label">Think first</div>
+<p>A doctor measures blood pressure on the upper arm, held at the level of the heart. Would the reading be higher, lower, or the same if it were taken at the ankle of a standing patient? Why?</p>
+<details class="ans"><summary>Show answer</summary><div>
+<p><strong>Much higher.</strong> The blood in the arteries forms a continuous column of fluid. A point about 1.3 m below the heart has an extra hydrostatic pressure of <span class="math inline">\(\rho gh \approx 1060\times9.8\times1.3 \approx 13.5\)</span> kPa, which is about 100 mmHg. A normal 120 mmHg systolic reading at the arm would read about 220 mmHg at the ankle. That is why blood pressure is always measured at heart level (Example 10.3).</p>
+</div></details>
+</div>
+<div class="topic-num" id="stress-strain-and-elastic-moduli">§10.1</div><h3 class="topic-title">Stress, strain and elastic moduli</h3>
+<p>When forces act on a solid, it deforms. We describe the cause by the <strong>stress</strong> (force per unit area) and the effect by the <strong>strain</strong> (fractional deformation).</p>
+<p><strong>Tension and compression.</strong> A rod of length <span class="math inline">\(L_0\)</span> and cross-sectional area <span class="math inline">\(A\)</span>, loaded along its axis by a force <span class="math inline">\(F\)</span>: <span class="math display">\[\text{stress } \sigma = \frac{F}{A}\ \ (\mathrm{Pa}),\qquad \text{strain } \varepsilon = \frac{\Delta L}{L_0}\ \ \text{(dimensionless)}.\]</span> For small strains, stress is proportional to strain (<strong>Hooke’s law</strong> for materials): <span class="math display">\[\sigma = Y\varepsilon \quad\Longrightarrow\quad \Delta L = \frac{FL_0}{YA}.\]</span> <span class="math inline">\(Y\)</span> (often written <span class="math inline">\(E\)</span>) is <strong>Young’s modulus</strong>, a property of the material, not of the particular object. Comparing with a spring, <span class="math inline">\(F = k\Delta L\)</span>, a rod behaves like a spring of stiffness <span class="math inline">\(k = YA/L_0\)</span>.</p>
+<p><strong>Volume change.</strong> A pressure change <span class="math inline">\(\Delta p\)</span> acting on all sides changes the volume by <span class="math inline">\(\Delta V\)</span>. The <strong>bulk modulus</strong> is <span class="math display">\[B = -\frac{\Delta p}{\Delta V/V}.\]</span> The minus sign makes <span class="math inline">\(B\)</span> positive, since an increase in pressure reduces the volume. Its inverse, <span class="math inline">\(1/B\)</span>, is the <strong>compressibility</strong>.</p>
+<p><strong>Shear.</strong> A tangential force <span class="math inline">\(F\)</span> applied across a face of area <span class="math inline">\(A\)</span> tilts the block by a small angle <span class="math inline">\(\phi\)</span>. The <strong>shear modulus</strong> is <span class="math display">\[S = \frac{F/A}{\phi}.\]</span> Fluids cannot sustain a static shear stress, so <span class="math inline">\(S = 0\)</span> for fluids. That is what makes them fluids.</p>
+<div class="tablewrap">
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Material</th>
+<th>Young’s modulus <span class="math inline">\(Y\)</span> (GPa)</th>
+<th>Ultimate tensile strength (MPa)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Steel (structural)</td>
+<td>200</td>
+<td>400–550</td>
+</tr>
+<tr>
+<td>Aluminium</td>
+<td>70</td>
+<td>90–600</td>
+</tr>
+<tr>
+<td>Concrete</td>
+<td>30</td>
+<td>2–5 (compressive: 20–40)</td>
+</tr>
+<tr>
+<td>Cortical bone</td>
+<td>15–20</td>
+<td>130 (compressive: 170–200)</td>
+</tr>
+<tr>
+<td>Tendon</td>
+<td>1–2</td>
+<td>50–100</td>
+</tr>
+<tr>
+<td>Rubber</td>
+<td>0.01–0.1</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Carbon fibre composite</td>
+<td>70–200</td>
+<td>600–3500</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Stress–strain behaviour and failure.</strong> Up to the <em>proportional limit</em>, stress is proportional to strain. Up to the <em>elastic limit</em>, the material returns to its original shape when unloaded. Beyond the <strong>yield point</strong>, ductile materials such as steel deform plastically and permanently. They then harden, reach the <strong>ultimate tensile strength</strong> (UTS), narrow (“neck”), and finally fracture. Brittle materials (glass, concrete, bone under fast loading) fail with little plastic deformation. Engineers design with a <strong>safety factor</strong>: the working stress is kept to a fraction (typically <span class="math inline">\(\tfrac13\)</span> to <span class="math inline">\(\tfrac15\)</span>) of the yield stress.</p>
+<figure>
+<svg viewBox="0 0 360 220" width="340" role="img" aria-label="Stress-strain curve for a ductile metal: a straight elastic line up to the proportional limit, a yield region, a rising strain-hardening curve up to the ultimate tensile strength, then a falling necking region ending at the fracture point.">
+<line class="ax" x1="40" y1="190" x2="345" y2="190" marker-end="url(#ak)"/>
+<line class="ax" x1="50" y1="200" x2="50" y2="20" marker-end="url(#ak)"/>
+<text x="320" y="208" class="muted">strain ε</text><text x="56" y="26" class="muted">stress σ</text>
+<path class="curve" d="M50,190 L110,90 C118,80 125,86 140,86 C170,86 200,60 250,52 C275,49 295,60 310,80"/>
+<text x="304" y="94" class="tv">✕ fracture</text>
+<circle class="dot" cx="110" cy="90" r="3"/>
+<text x="60" y="80" class="muted">elastic limit</text>
+<text x="128" y="104" class="muted">yield</text>
+<circle class="dot" cx="250" cy="52" r="3"/>
+<text x="220" y="42" class="muted">ultimate strength</text>
+<text x="76" y="150" class="tu">slope = Y</text>
+<text x="160" y="124" class="muted">plastic region</text>
+</svg>
+<figcaption>A typical stress–strain curve for a ductile metal. The initial slope is Young's modulus. Beyond the elastic limit the deformation is permanent.</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 10.1</div><h4 class="ex-title">Stretching a steel wire</h4>
+<p>A steel wire 2.0 m long and 1.0 mm in diameter supports a 100 N load. Find the stress, the strain and the extension. Is it safe, given a yield stress of 250 MPa and a required safety factor of 3?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math display">\[A = \pi(0.50\times10^{-3})^2 = 7.85\times10^{-7}\ \mathrm{m^2},\qquad \sigma = \frac{100}{7.85\times10^{-7}} = 1.27\times10^8\ \mathrm{Pa} = 127\ \mathrm{MPa}.\]</span> <span class="math display">\[\varepsilon = \frac{\sigma}{Y} = \frac{1.27\times10^8}{2.0\times10^{11}} = 6.4\times10^{-4},\qquad \Delta L = \varepsilon L_0 = 1.3\ \mathrm{mm}.\]</span></p>
+<p><strong>Safety.</strong> The allowed working stress is <span class="math inline">\(250/3 = 83\)</span> MPa, so at 127 MPa the wire is <strong>not</strong> acceptable. It would need a diameter of at least <span class="math inline">\(1.0\sqrt{127/83} = 1.24\)</span> mm.</p>
+</div>
+</div>
+<div class="box work example"><div class="label">Worked example 10.2</div><h4 class="ex-title">How strong is a thigh bone?</h4>
+<p>The shaft of an adult femur has about 4.0 cm² of cortical bone in cross-section and is about 0.45 m long. Take <span class="math inline">\(Y = 17\)</span> GPa and a compressive strength of 170 MPa. (a) How much does the femur shorten when a 700 N person stands on one leg? (b) What compressive force would fracture it?</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) Shortening under 700 N: <span class="math display">\[\Delta L = \frac{FL_0}{YA} = \frac{700(0.45)}{(1.7\times10^{10})(4.0\times10^{-4})} = 4.6\times10^{-5}\ \mathrm{m} = 0.046\ \mathrm{mm}.\]</span></p>
+<p>(b) Fracture force: <span class="math display">\[F_{\max} = \sigma_{\max}A = (1.7\times10^8)(4.0\times10^{-4}) = 6.8\times10^4\ \mathrm{N},\]</span> about 100 times body weight.</p>
+<p><strong>Evaluate.</strong> Bone has a large static safety margin, yet the stiff-legged landing of Example 6.6 produced forces of tens of kilonewtons, the same order as this fracture load. In reality, bending (not pure compression) and fast impacts make bone fail at lower loads. Osteoporosis reduces both the cortical area and the bone density, cutting the strength further.</p>
+</div>
+</div>
+<div class="topic-num" id="pressure-in-fluids">§10.2</div><h3 class="topic-title">Pressure in fluids</h3>
+<p><strong>Pressure</strong> is the normal force per unit area, <span class="math inline">\(p = F/A\)</span>, a scalar measured in pascals (<span class="math inline">\(1\ \mathrm{Pa} = 1\ \mathrm{N/m^2}\)</span>). Other units remain common:</p>
+<ul>
+<li><span class="math inline">\(1\ \text{atm} = 1.013\times10^5\ \mathrm{Pa} = 760\)</span> mmHg</li>
+<li><span class="math inline">\(1\ \text{mmHg} = 133.3\)</span> Pa (used for blood pressure)</li>
+<li><span class="math inline">\(1\)</span> bar <span class="math inline">\(= 10^5\)</span> Pa</li>
+<li><span class="math inline">\(1\)</span> psi <span class="math inline">\(= 6.89\)</span> kPa (used for tyre pressure)</li>
+</ul>
+<p>A fluid at rest pushes perpendicular to every surface it touches, and at any point the pressure is the same in all directions.</p>
+<h4>Variation of pressure with depth</h4>
+<p>Take a thin horizontal slab of fluid with area <span class="math inline">\(A\)</span> and thickness <span class="math inline">\(dy\)</span>, with <span class="math inline">\(y\)</span> measured upward. The pressure below the slab must support both the pressure above it and its weight: <span class="math display">\[p(y)A - p(y + dy)A = \rho gA\,dy \quad\Longrightarrow\quad \frac{dp}{dy} = -\rho g.\]</span> For an incompressible liquid, integrating gives the pressure at depth <span class="math inline">\(h\)</span> below a surface where the pressure is <span class="math inline">\(p_0\)</span>: <span class="math display">\[p = p_0 + \rho gh.\]</span> The pressure depends only on depth, not on the shape of the container (the <em>hydrostatic paradox</em>). Points at the same level in a connected body of fluid at rest are at the same pressure.</p>
+<p><strong>Gauge pressure</strong> is pressure above atmospheric, <span class="math inline">\(p - p_{\text{atm}}\)</span>. Tyre gauges and blood-pressure cuffs read gauge pressure. <strong>Absolute pressure</strong> includes the atmosphere.</p>
+<p><strong>Measuring pressure.</strong> In a <strong>barometer</strong>, the column of mercury is held up by atmospheric pressure: <span class="math inline">\(p_{\text{atm}} = \rho_{\text{Hg}}gh\)</span>, so <span class="math inline">\(h = 760\)</span> mm at standard pressure. A water barometer would need a column 10.3 m tall. An open-tube <strong>manometer</strong> measures gauge pressure as the difference in height between its two liquid columns.</p>
+<div class="box work example"><div class="label">Worked example 10.3</div><h4 class="ex-title">Blood pressure from head to toe</h4>
+<p>In a standing adult, the head is about 0.40 m above the heart and the feet are about 1.3 m below it. The mean arterial pressure at heart level is 100 mmHg (gauge). Find the mean arterial pressure in the head and in the feet. The density of blood is <span class="math inline">\(1060\ \mathrm{kg/m^3}\)</span>.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><span class="math inline">\(\rho g = 1060(9.8) = 1.04\times10^4\)</span> Pa/m <span class="math inline">\(= 78\)</span> mmHg per metre.</p>
+<ul>
+<li>Head: <span class="math inline">\(\Delta p = -78(0.40) = -31\)</span> mmHg, so <span class="math inline">\(p \approx 69\)</span> mmHg.</li>
+<li>Feet: <span class="math inline">\(\Delta p = +78(1.3) = +101\)</span> mmHg, so <span class="math inline">\(p \approx 200\)</span> mmHg.</li>
+</ul>
+<p><strong>Evaluate.</strong> Gravity redistributes pressure enormously. That is why ankles swell after long periods of standing, why you may feel faint when you stand up quickly (the pressure in the head drops before reflexes compensate), and why blood pressure is measured at heart level. A giraffe, whose head is about 2 m above its heart, needs a heart pressure of about 250 mmHg to supply its brain.</p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Clinical hydrostatics.</strong> An IV bag must hang high enough that the pressure at the needle exceeds the patient’s venous pressure (Problem P10.9). Raising the bag increases the flow rate. Central venous pressure is read in cm of water using a column referenced to the level of the heart. Divers gain about 1 atm of pressure for every 10 m of seawater, which compresses the air in their lungs and ears and dissolves extra nitrogen in their tissues. An ascent that is too fast lets that nitrogen form bubbles: decompression sickness, treated by re-pressurising the patient in a hyperbaric chamber.</p>
+</div>
+<div class="topic-num" id="pascals-principle-and-hydraulics">§10.3</div><h3 class="topic-title">Pascal’s principle and hydraulics</h3>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Pascal’s principle.</strong> A change in pressure applied to an enclosed incompressible fluid is transmitted undiminished to every part of the fluid and to the walls of its container.</p>
+</div>
+<p>In a <strong>hydraulic press</strong>, a small force <span class="math inline">\(F_1\)</span> on a small piston of area <span class="math inline">\(A_1\)</span> creates a pressure <span class="math inline">\(F_1/A_1\)</span>, which acts on a large piston of area <span class="math inline">\(A_2\)</span>: <span class="math display">\[F_2 = F_1\frac{A_2}{A_1}.\]</span> Energy is conserved: the volume pushed in equals the volume pushed out, so the small piston must move farther, <span class="math inline">\(d_1 = d_2A_2/A_1\)</span>, and <span class="math inline">\(F_1d_1 = F_2d_2\)</span>. Car brakes, excavators, aircraft control surfaces and hospital beds all use hydraulics.</p>
+<div class="topic-num" id="buoyancy-archimedes-principle">§10.4</div><h3 class="topic-title">Buoyancy: Archimedes’ principle</h3>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Archimedes’ principle.</strong> A body wholly or partly immersed in a fluid feels an upward <strong>buoyant force</strong> equal to the weight of the fluid it displaces: <span class="math display">\[F_B = \rho_{\text{fluid}}\,V_{\text{displaced}}\,g.\]</span></p>
+</div>
+<p>The buoyant force comes from the pressure difference: the fluid pushes harder on the bottom of the body, which is deeper, than on the top.</p>
+<ul>
+<li>A body <strong>sinks</strong> if its average density exceeds the fluid’s density.</li>
+<li>It <strong>floats</strong> if its average density is less. In equilibrium it displaces its own weight of fluid, so the fraction submerged is <span class="math inline">\(\rho_{\text{body}}/\rho_{\text{fluid}}\)</span>.</li>
+</ul>
+<div class="box work example"><div class="label">Worked example 10.4</div><h4 class="ex-title">Measuring body fat by underwater weighing</h4>
+<p>A person of mass 80.0 kg has an apparent mass of 3.6 kg when weighed fully submerged in water (<span class="math inline">\(\rho_w = 1000\ \mathrm{kg/m^3}\)</span>) after breathing out as far as possible. (a) Find the body’s volume and average density. (b) Estimate the percentage of body fat using the Siri equation, <span class="math inline">\(\%\text{fat} = \dfrac{495}{\rho\ (\mathrm{g/cm^3})} - 450\)</span>. Ignore the air left in the lungs for now.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) The apparent loss of weight equals the buoyant force: <span class="math display">\[\rho_wVg = (80.0 - 3.6)g \;\Rightarrow\; V = \frac{76.4}{1000} = 0.0764\ \mathrm{m^3}.\]</span> <span class="math display">\[\rho = \frac{80.0}{0.0764} = 1047\ \mathrm{kg/m^3} = 1.047\ \mathrm{g/cm^3}.\]</span></p>
+<p>(b) Siri equation: <span class="math display">\[\%\text{fat} = \frac{495}{1.047} - 450 = 472.8 - 450 = 23\%.\]</span></p>
+<p><strong>Evaluate.</strong> The method works because fat (0.90 g/cm³) is less dense than lean tissue (1.10 g/cm³). It is very sensitive to errors in volume, and in particular to the air that remains in the lungs. Problem P10.14 shows that ignoring about 1 L of residual air overestimates body fat by several percentage points.</p>
+</div>
+</div>
+<div class="topic-num" id="fluids-in-motion-continuity">§10.5</div><h3 class="topic-title">Fluids in motion: continuity</h3>
+<p>We first model an <strong>ideal fluid</strong>: incompressible, non-viscous, and in <strong>steady</strong> flow, so that the velocity at each point does not change with time. The path a fluid particle follows is a <strong>streamline</strong>. Streamlines never cross, and where they crowd together the fluid moves faster.</p>
+<p><strong>Volume flow rate</strong> is <span class="math inline">\(Q = Av\)</span>, measured in m³/s. In steady incompressible flow, no fluid piles up anywhere, so the same volume must pass every cross-section each second:</p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Continuity equation:</strong> <span class="math inline">\(A_1v_1 = A_2v_2\)</span>. Where the pipe narrows, the fluid speeds up. If a pipe branches into several, the <em>total</em> cross-sectional area is what counts: <span class="math inline">\(Q = \sum A_iv_i\)</span>.</p>
+</div>
+<div class="box work example"><div class="label">Worked example 10.5</div><h4 class="ex-title">From the aorta to the capillaries</h4>
+<p>Blood leaves the heart through the aorta (cross-sectional area 3.0 cm²) at an average speed of 30 cm/s. In the capillaries it moves at about 0.50 mm/s. (a) Find the total cross-sectional area of all the capillaries. (b) Each capillary has a radius of about 4 μm. Estimate how many capillaries are open at any time.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) By continuity, the total flow is the same everywhere: <span class="math display">\[A_{\text{cap}} = \frac{A_{\text{aorta}}v_{\text{aorta}}}{v_{\text{cap}}} = \frac{(3.0\times10^{-4})(0.30)}{5.0\times10^{-4}} = 0.18\ \mathrm{m^2}.\]</span></p>
+<p>(b) Each capillary has area <span class="math inline">\(\pi(4\times10^{-6})^2 = 5.0\times10^{-11}\ \mathrm{m^2}\)</span>, so <span class="math display">\[N \approx \frac{0.18}{5.0\times10^{-11}} \approx 4\times10^9.\]</span></p>
+<p><strong>Evaluate.</strong> Each capillary is tiny, but there are billions of them, with a total area some 600 times that of the aorta, so the blood slows right down. That slow flow gives oxygen and nutrients time to diffuse across the capillary walls, and it is no accident of design.</p>
+</div>
+</div>
+<div class="topic-num" id="bernoullis-equation">§10.6</div><h3 class="topic-title">Bernoulli’s equation</h3>
+<p>Apply the work–energy theorem to a parcel of ideal fluid moving along a streamline. The pressure forces from the surrounding fluid do work on it, gravity does work on it, and the result is a change in its kinetic energy. Per unit volume, this gives:</p>
+<div class="box tip"><div class="label">Key idea</div>
+<p><strong>Bernoulli’s equation.</strong> Along a streamline in steady, incompressible, non-viscous flow, <span class="math display">\[p + \tfrac12\rho v^2 + \rho gy = \text{constant}.\]</span> Each term is an energy per unit volume. Where the fluid moves faster, at the same height, its pressure is <strong>lower</strong>.</p>
+</div>
+<p><strong>Derivation sketch.</strong> In a time <span class="math inline">\(dt\)</span>, a volume <span class="math inline">\(dV\)</span> enters a section of pipe at height <span class="math inline">\(y_1\)</span> with pressure <span class="math inline">\(p_1\)</span> and speed <span class="math inline">\(v_1\)</span>, and the same volume leaves at height <span class="math inline">\(y_2\)</span> with <span class="math inline">\(p_2\)</span> and <span class="math inline">\(v_2\)</span>. The net work done by pressure is <span class="math inline">\((p_1 - p_2)dV\)</span>. The work done by gravity is <span class="math inline">\(-\rho\,dV\,g(y_2 - y_1)\)</span>. The change in kinetic energy is <span class="math inline">\(\tfrac12\rho\,dV(v_2^2 - v_1^2)\)</span>. Setting the total work equal to the change in kinetic energy and rearranging gives Bernoulli’s equation.</p>
+<p><strong>Special cases:</strong></p>
+<ul>
+<li><span class="math inline">\(v = 0\)</span> everywhere: <span class="math inline">\(p + \rho gy\)</span> is constant, which is hydrostatics again. ✓</li>
+<li><strong>Torricelli’s law.</strong> Fluid flows from a small hole at depth <span class="math inline">\(h\)</span> below the open surface of a large tank. Both points are at atmospheric pressure, so <span class="math inline">\(v = \sqrt{2gh}\)</span>, the same speed as a free fall through <span class="math inline">\(h\)</span>.</li>
+<li><strong>Venturi meter.</strong> In a constriction the fluid speeds up and its pressure drops. Measuring the pressure drop gives the flow rate.</li>
+</ul>
+<figure>
+<svg viewBox="0 0 360 206" width="340" role="img" aria-label="Venturi tube: a horizontal pipe narrows in the middle and widens again. Fluid speeds up in the narrow section. Two vertical pressure tubes show a tall liquid column above the wide section and a shorter column above the narrow section, indicating lower pressure where the flow is faster.">
+<path class="ground" d="M20,80 L130,80 L170,105 L230,105 L270,80 L345,80"/>
+<path class="ground" d="M20,160 L130,160 L170,135 L230,135 L270,160 L345,160"/>
+<line class="ground" x1="70" y1="80" x2="70" y2="20"/><line class="ground" x1="84" y1="80" x2="84" y2="20"/>
+<rect x="71" y="34" width="12" height="46" class="fillu" style="fill-opacity:.35"/>
+<line class="ground" x1="193" y1="105" x2="193" y2="20"/><line class="ground" x1="207" y1="105" x2="207" y2="20"/>
+<rect x="194" y="70" width="12" height="35" class="fillu" style="fill-opacity:.35"/>
+<line class="u" x1="30" y1="120" x2="70" y2="120" marker-end="url(#au)"/>
+<line class="u" x1="180" y1="120" x2="250" y2="120" marker-end="url(#au)"/>
+<line class="u" x1="290" y1="120" x2="330" y2="120" marker-end="url(#au)"/>
+<text x="30" y="182" class="muted">wide: slow, high p</text>
+<text x="150" y="198" class="tu">narrow: fast, low p</text>
+<line class="dash" x1="90" y1="34" x2="190" y2="34"/>
+<text x="110" y="30" class="muted">Δh ∝ Δp</text>
+</svg>
+<figcaption>A Venturi tube. Fluid speeds up through the constriction, so its pressure falls, shown by the lower liquid column. The pressure difference measures the flow rate.</figcaption>
+</figure>
+<div class="box work example"><div class="label">Worked example 10.6</div><h4 class="ex-title">A narrowed artery</h4>
+<p>An atherosclerotic plaque narrows an artery to one-third of its normal cross-sectional area. Upstream, blood flows at 0.50 m/s. Treating the blood as an ideal fluid, find the speed in the narrowed segment and the drop in pressure there.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p><strong>Continuity:</strong> <span class="math inline">\(v_2 = v_1(A_1/A_2) = 3(0.50) = 1.5\)</span> m/s.</p>
+<p><strong>Bernoulli</strong>, horizontal flow: <span class="math display">\[p_1 - p_2 = \tfrac12\rho(v_2^2 - v_1^2) = \tfrac12(1060)(2.25 - 0.25) = 1060\ \mathrm{Pa} \approx 8\ \mathrm{mmHg}.\]</span></p>
+<p><strong>Evaluate.</strong> The pressure inside the narrowing falls. If the pressure outside the vessel exceeds the reduced internal pressure, the artery can partly collapse, briefly stopping the flow. The pressure then builds, the vessel reopens, and the cycle repeats. This <em>flutter</em> can damage the plaque. The fast jet beyond the narrowing is also often turbulent, producing a <em>bruit</em>, a sound a doctor can hear with a stethoscope. Doppler ultrasound measures the jet speed, and the simplified Bernoulli relation <span class="math inline">\(\Delta p \approx 4v^2\)</span> (with <span class="math inline">\(\Delta p\)</span> in mmHg and <span class="math inline">\(v\)</span> in m/s) is used clinically to estimate pressure drops across narrowed heart valves.</p>
+</div>
+</div>
+<div class="box apply"><div class="label">In practice</div>
+<p><strong>Bernoulli in engineering and nature.</strong> Carburettors and atomisers draw fuel or liquid into a fast, low-pressure air stream. Pitot tubes on aircraft measure airspeed from the difference between the stagnation pressure (<span class="math inline">\(p + \tfrac12\rho v^2\)</span>) and the static pressure. Wind blowing across a burrow’s raised exit lowers the pressure there and ventilates the burrow, which prairie dogs exploit. Aircraft lift is often “explained” by Bernoulli alone, but the full explanation needs the wing to deflect air downward: Bernoulli’s equation and Newton’s third law describe the same flow from two viewpoints.</p>
+</div>
+<div class="topic-num" id="viscous-flow-poiseuilles-law">§10.7</div><h3 class="topic-title">Viscous flow: Poiseuille’s law</h3>
+<p>Real fluids are <strong>viscous</strong>: adjacent layers moving at different speeds exert a frictional shear force on each other. For a fluid between two plates, the shear stress is proportional to the velocity gradient: <span class="math display">\[\frac{F}{A} = \eta\frac{dv}{dy}.\]</span> The constant <span class="math inline">\(\eta\)</span> is the <strong>viscosity</strong>, measured in Pa s. For water at 20 °C, <span class="math inline">\(\eta = 1.0\times10^{-3}\)</span> Pa s. For blood it is about <span class="math inline">\(3\)</span>–<span class="math inline">\(4\times10^{-3}\)</span> Pa s. Honey reaches about 10 Pa s.</p>
+<p>In a long straight tube, viscosity makes the flow fastest at the centre and zero at the wall, with a parabolic velocity profile. Integrating that profile across the tube gives <strong>Poiseuille’s law</strong>, the flow rate through a tube of radius <span class="math inline">\(r\)</span> and length <span class="math inline">\(L\)</span> driven by a pressure difference <span class="math inline">\(\Delta p\)</span>: <span class="math display">\[Q = \frac{\pi r^4\,\Delta p}{8\eta L}.\]</span></p>
+<p>By analogy with Ohm’s law (<span class="math inline">\(I = V/R\)</span>, Chapter 17), we write <span class="math inline">\(Q = \Delta p/R_{\text{flow}}\)</span>, with a <strong>flow resistance</strong> <span class="math display">\[R_{\text{flow}} = \frac{8\eta L}{\pi r^4}.\]</span> The extraordinary <span class="math inline">\(r^4\)</span> dependence dominates everything. Halving the radius increases the resistance <strong>sixteen-fold</strong>.</p>
+<div class="box work example"><div class="label">Worked example 10.7</div><h4 class="ex-title">Vasoconstriction and an IV needle</h4>
+<p>(a) The body controls blood flow to organs mainly by contracting the smooth muscle around arterioles. By what factor does the flow drop, at fixed pressure, if an arteriole’s radius decreases by 20%? (b) Saline (<span class="math inline">\(\eta = 1.0\times10^{-3}\)</span> Pa s) flows through a needle of internal radius 0.20 mm and length 3.0 cm, driven by a pressure difference of 8.0 kPa. Find the flow rate in mL/h.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) <span class="math inline">\(Q \propto r^4\)</span>, so <span class="math inline">\(Q&#39;/Q = 0.80^4 = 0.41\)</span>. The flow drops to 41% of its original value. A small change in radius gives very powerful control of flow.</p>
+<p>(b) Poiseuille’s law: <span class="math display">\[Q = \frac{\pi(2.0\times10^{-4})^4(8.0\times10^3)}{8(1.0\times10^{-3})(0.030)} = \frac{\pi(1.6\times10^{-15})(8.0\times10^3)}{2.4\times10^{-4}} = 1.7\times10^{-7}\ \mathrm{m^3/s}.\]</span> Since <span class="math inline">\(1\ \mathrm{m^3} = 10^6\)</span> mL, this is <span class="math inline">\(0.17\ \mathrm{mL/s} \approx 600\)</span> mL/h.</p>
+<p><strong>Evaluate.</strong> For rapid transfusion, clinicians choose short, wide-bore cannulas. A cannula with twice the radius delivers 16 times the flow, while a longer one delivers proportionally less. In practice the tubing and the blood’s higher viscosity also matter, but the <span class="math inline">\(r^4\)</span> law is why cannula gauge is the critical choice in trauma care.</p>
+</div>
+</div>
+<p><strong>Turbulence.</strong> Poiseuille’s law assumes smooth, laminar flow. When the Reynolds number <span class="math inline">\(Re = \rho vD/\eta\)</span> exceeds about 2000 (Chapter 1), the flow becomes turbulent and the flow resistance rises sharply. Turbulence explains the sounds heard when measuring blood pressure. As the cuff is released, blood squirts through the partly compressed artery in turbulent jets, producing the <em>Korotkoff sounds</em>. The pressure at which they begin is the systolic pressure, and the pressure at which they stop is the diastolic pressure.</p>
+<div class="topic-num" id="surface-tension-and-the-law-of-laplace">§10.8</div><h3 class="topic-title">Surface tension and the law of Laplace</h3>
+<p>Molecules at a liquid’s surface have fewer neighbours to attract them, so the surface behaves like a stretched membrane. The <strong>surface tension</strong> <span class="math inline">\(\gamma\)</span> is the force per unit length along the surface, in N/m. For water at 20 °C, <span class="math inline">\(\gamma = 0.073\)</span> N/m.</p>
+<p>A curved surface therefore has a higher pressure on its concave side. This is the <strong>law of Laplace</strong>:</p>
+<ul>
+<li>spherical droplet or gas bubble in a liquid: <span class="math inline">\(\Delta p = \dfrac{2\gamma}{r}\)</span>;</li>
+<li>soap bubble, which has two surfaces: <span class="math inline">\(\Delta p = \dfrac{4\gamma}{r}\)</span>;</li>
+<li>cylindrical vessel, with wall tension <span class="math inline">\(T\)</span> per unit length: <span class="math inline">\(T = \Delta p\,r\)</span>.</li>
+</ul>
+<p>Surface tension also drives <strong>capillary rise</strong>: a liquid that wets a thin tube climbs to a height <span class="math inline">\(h = 2\gamma\cos\theta/(\rho gr)\)</span>. This is one of the ways water rises in soil.</p>
+<div class="box work example"><div class="label">Worked example 10.8</div><h4 class="ex-title">Why lungs need surfactant</h4>
+<p>Model an alveolus as a sphere of radius 0.10 mm lined with a thin film of fluid. (a) With the surface tension of water (0.070 N/m), what pressure difference would be needed to keep it inflated? (b) Pulmonary surfactant lowers the surface tension to about 0.005–0.025 N/m. Repeat the calculation.</p>
+<div class="sol-inline"><span class="sol-label">Solution</span>
+<p>(a) <span class="math inline">\(\Delta p = 2\gamma/r = 2(0.070)/(1.0\times10^{-4}) = 1400\)</span> Pa <span class="math inline">\(\approx 10.5\)</span> mmHg.</p>
+<p>(b) With <span class="math inline">\(\gamma = 0.005\)</span>–<span class="math inline">\(0.025\)</span> N/m: <span class="math inline">\(\Delta p = 100\)</span>–<span class="math inline">\(500\)</span> Pa, about 0.75–3.8 mmHg.</p>
+<p><strong>Evaluate.</strong> Without surfactant, breathing would require far more effort, and small alveoli, which by Laplace’s law need <em>higher</em> pressure, would empty into larger ones and collapse (Problem P10.18). Premature babies often lack surfactant and develop respiratory distress syndrome. Treatment with artificial surfactant, delivered into the lungs, was a major advance in neonatal care.</p>
+</div>
+</div>
+<div class="box sum"><div class="label">Chapter summary</div>
+<ul>
+<li>Stress <span class="math inline">\(\sigma = F/A\)</span> and strain <span class="math inline">\(\varepsilon = \Delta L/L_0\)</span>, with <span class="math inline">\(\sigma = Y\varepsilon\)</span>, so <span class="math inline">\(\Delta L = FL_0/YA\)</span>. Bulk modulus <span class="math inline">\(B = -\Delta p/(\Delta V/V)\)</span>. Shear modulus <span class="math inline">\(S = (F/A)/\phi\)</span>.</li>
+<li>Pressure <span class="math inline">\(p = F/A\)</span>. Hydrostatics: <span class="math inline">\(p = p_0 + \rho gh\)</span>. Gauge pressure = absolute − atmospheric.</li>
+<li>Pascal: pressure is transmitted undiminished, so hydraulic machines give <span class="math inline">\(F_2 = F_1A_2/A_1\)</span>.</li>
+<li>Archimedes: <span class="math inline">\(F_B = \rho_{\text{fluid}}V_{\text{disp}}g\)</span>. A floating body has fraction <span class="math inline">\(\rho_{\text{body}}/\rho_{\text{fluid}}\)</span> submerged.</li>
+<li>Continuity: <span class="math inline">\(A_1v_1 = A_2v_2\)</span>. Bernoulli: <span class="math inline">\(p + \tfrac12\rho v^2 + \rho gy\)</span> is constant along a streamline. Torricelli: <span class="math inline">\(v = \sqrt{2gh}\)</span>.</li>
+<li>Viscous flow (Poiseuille): <span class="math inline">\(Q = \pi r^4\Delta p/(8\eta L)\)</span>, so <span class="math inline">\(R_{\text{flow}} \propto r^{-4}\)</span>. Turbulence above <span class="math inline">\(Re \approx 2000\)</span>.</li>
+<li>Laplace: <span class="math inline">\(\Delta p = 2\gamma/r\)</span> for a droplet or alveolus, <span class="math inline">\(4\gamma/r\)</span> for a soap bubble, and <span class="math inline">\(T = \Delta p\,r\)</span> for a vessel wall.</li>
+</ul>
+</div>
+<h3 class="part-title" id="practice">Practice problems</h3><p class="note">Full step-by-step solutions are in the separate solutions PDF.</p>
+<h4 class="level">Level A — Concept check</h4>
+<div class="prob" id="p10-1"><span class="pnum">P10.1</span>
+<p>Even with a perfect vacuum pump at the top, water cannot be sucked up a vertical pipe higher than about 10 m. Why not? What limits the height?</p>
+</div>
+<div class="prob" id="p10-2"><span class="pnum">P10.2</span>
+<p>A rowing boat carrying a heavy iron anchor floats in a swimming pool. The anchor is thrown overboard and sinks to the bottom. Does the water level in the pool rise, fall or stay the same? Explain.</p>
+</div>
+<div class="prob" id="p10-3"><span class="pnum">P10.3</span>
+<p>Capillaries are far narrower than the aorta, yet blood flows much more slowly in them. Doesn’t the continuity equation say that narrower tubes give faster flow? Resolve the apparent paradox.</p>
+</div>
+<div class="prob" id="p10-4"><span class="pnum">P10.4</span>
+<p>Why must a blood-pressure cuff be at the level of the heart? What error results if the patient’s arm hangs down by their side with the cuff 30 cm below heart level?</p>
+</div>
+<h4 class="level">Level B — Standard problems</h4>
+<div class="prob" id="p10-5"><span class="pnum">P10.5</span>
+<p>A 1000 kg lift accelerates upward at up to <span class="math inline">\(1.5\ \mathrm{m/s^2}\)</span>. It hangs from a single steel cable with a yield stress of 250 MPa, and a safety factor of 5 is required. Find the minimum cable diameter.</p>
+</div>
+<div class="prob" id="p10-6"><span class="pnum">P10.6</span>
+<p>The tibia has about 3.0 cm² of cortical bone in cross-section, with a compressive strength of 170 MPa. (a) What force would fracture it in pure compression? (b) Compare this with the forces found in Example 6.6 for a stiff-legged landing from 1.0 m, shared between two legs, and comment on the risk.</p>
+</div>
+<div class="prob" id="p10-7"><span class="pnum">P10.7</span>
+<p>In a hydraulic car lift, the small piston has an area of 5.0 cm² and the large piston 500 cm². (a) What force on the small piston lifts a 1500 kg car? (b) How far must the small piston move in total to raise the car by 10 cm?</p>
+</div>
+<div class="prob" id="p10-8"><span class="pnum">P10.8</span>
+<p>A breath-hold diver fills her lungs to 6.0 L at the surface and dives to 30 m in seawater (<span class="math inline">\(\rho = 1025\ \mathrm{kg/m^3}\)</span>). (a) Find the absolute pressure at 30 m. (b) Assuming the air in her lungs stays at constant temperature (so <span class="math inline">\(pV\)</span> is constant), find her lung volume at that depth. (c) A scuba diver at 30 m breathes air at the surrounding pressure. Explain why holding the breath while ascending is dangerous.</p>
+</div>
+<div class="prob" id="p10-9"><span class="pnum">P10.9</span>
+<p>An IV bag delivers saline into a vein where the gauge pressure is 15 mmHg. (a) What is the minimum height of the fluid surface in the bag above the needle for any flow at all? (b) If the bag is hung 1.0 m above the needle, what pressure difference drives the flow (in mmHg)?</p>
+</div>
+<div class="prob" id="p10-10"><span class="pnum">P10.10</span>
+<p>A cube of wood 0.20 m on a side, with density <span class="math inline">\(600\ \mathrm{kg/m^3}\)</span>, floats in water. (a) What depth of the cube is submerged? (b) What mass placed on top of the cube will just submerge it completely?</p>
+</div>
+<div class="prob" id="p10-11"><span class="pnum">P10.11</span>
+<p>Water flows at 2.0 m/s through a horizontal main of diameter 10 cm, at a gauge pressure of 200 kPa. The pipe then narrows to 5.0 cm in diameter and rises by 5.0 m. Find the speed and the gauge pressure in the narrow, raised section.</p>
+</div>
+<div class="prob" id="p10-12"><span class="pnum">P10.12</span>
+<p>An arteriole constricts so that its radius decreases by 10%. (a) By what percentage does its flow resistance increase? (b) If the pressure difference across it stays the same, by what percentage does the flow fall? (c) What pressure difference would be needed to restore the original flow?</p>
+</div>
+<h4 class="level">Level C — Challenge problems</h4>
+<div class="prob" id="p10-13"><span class="pnum">P10.13</span>
+<p><em>Dam engineering.</em> A dam holds back water to a depth <span class="math inline">\(H\)</span> along a straight face of width <span class="math inline">\(W\)</span>. (a) By integrating the pressure over the face, show that the total horizontal force of the water is <span class="math inline">\(F = \tfrac12\rho gWH^2\)</span>. (b) Show that this force acts at a height <span class="math inline">\(H/3\)</span> above the base. (c) Evaluate <span class="math inline">\(F\)</span> for <span class="math inline">\(H = 50\)</span> m and <span class="math inline">\(W = 200\)</span> m. Explain why dams are much thicker at the bottom.</p>
+</div>
+<div class="prob" id="p10-14"><span class="pnum">P10.14</span>
+<p><em>Body fat, done properly.</em> A 75.0 kg subject’s apparent mass when fully submerged is 2.5 kg. The residual air left in the lungs after a full exhalation is measured as 1.2 L. Take the water’s density as <span class="math inline">\(1000\ \mathrm{kg/m^3}\)</span>. (a) Find the body’s true average density, correcting for the residual air (the air’s mass is negligible). (b) Use the Siri equation to find the body-fat percentage. (c) Repeat without the correction, and comment on the size of the error.</p>
+</div>
+<div class="prob" id="p10-15"><span class="pnum">P10.15</span>
+<p><em>Draining a tank.</em> A cylindrical tank with cross-sectional area <span class="math inline">\(A\)</span> is filled with water to height <span class="math inline">\(h_0\)</span>. It drains through a small hole of area <span class="math inline">\(a\)</span> in the bottom. (a) Use Torricelli’s law and continuity to show that <span class="math inline">\(dh/dt = -(a/A)\sqrt{2gh}\)</span>. (b) Show that the tank empties in a time <span class="math inline">\(t = (A/a)\sqrt{2h_0/g}\)</span>. (c) Evaluate this for <span class="math inline">\(A = 1.0\ \mathrm{m^2}\)</span>, a hole of radius 1.0 cm, and <span class="math inline">\(h_0 = 2.0\)</span> m. Why does the second half of the water take longer to drain than the first?</p>
+</div>
+<div class="prob" id="p10-16"><span class="pnum">P10.16</span>
+<p><em>Stenosis.</em> A plaque reduces an artery’s radius to half its normal value over a short length. Upstream, the artery has a diameter of 8.0 mm and the blood speed is 0.40 m/s. Take <span class="math inline">\(\rho = 1060\ \mathrm{kg/m^3}\)</span> and <span class="math inline">\(\eta = 3.5\times10^{-3}\)</span> Pa s. (a) Find the speed in the narrowed section and the Bernoulli pressure drop there. (b) By what factor does the viscous (Poiseuille) resistance of the narrowed segment exceed that of a normal segment of the same length? (c) By what factor does the Reynolds number change in the narrowed section? Comment on whether a bruit (turbulent sound) is likely.</p>
+</div>
+<div class="prob" id="p10-17"><span class="pnum">P10.17</span>
+<p><em>The atmosphere.</em> For an isothermal atmosphere, the air density is proportional to pressure: <span class="math inline">\(\rho = pM/(RT)\)</span>, with <span class="math inline">\(M = 0.029\)</span> kg/mol, <span class="math inline">\(R = 8.314\)</span> J/(mol K) and <span class="math inline">\(T = 273\)</span> K. (a) Using <span class="math inline">\(dp/dz = -\rho g\)</span>, show that <span class="math inline">\(p = p_0e^{-z/H}\)</span>, and find the scale height <span class="math inline">\(H\)</span>. (b) Estimate the air pressure at the summit of Everest (8849 m) as a fraction of sea-level pressure. (c) Oxygen makes up 21% of air at every altitude. What is the partial pressure of oxygen at the summit, in mmHg? Comment on why climbers usually carry supplementary oxygen.</p>
+</div>
+<div class="prob" id="p10-18"><span class="pnum">P10.18</span>
+<p><em>Laplace’s law and stability.</em> (a) Two alveoli, of radii 0.050 mm and 0.10 mm, are connected to the same airway, and both have surface tension 0.070 N/m. Find the pressure needed to keep each one inflated. Which way would air flow between them, and what happens to the smaller one? (b) Explain how surfactant, whose surface tension falls as the surface area shrinks, stabilises the alveoli. (c) For an artery, the wall tension is <span class="math inline">\(T = pr\)</span>. Use this to explain why an aneurysm, a local ballooning of the vessel wall, tends to keep growing once it starts.</p>
+</div>
+
+<div class="downloads noprint"><a href="ch10-fluids-elasticity_notes.pdf" download>Download notes (PDF)</a><a href="ch10-fluids-elasticity_solutions.pdf" download>Download solutions (PDF)</a></div>
+</article>
+<nav class="pager"><a href="ch09-oscillations.html">← 9. Simple Harmonic Motion</a><a href="ch11-waves-sound.html">11. Mechanical Waves and Sound →</a></nav></main>
+<footer>All worked examples and practice problems in these notes are original. Textbooks for further reading and practice, with a chapter-by-chapter map, are listed in the References.<p class="copyright">© 2026 Pratik Bhanuse. All rights reserved. · <a href="https://pratikbhanuse.github.io">pratikbhanuse.github.io</a></p></footer>
+</div>
+</body>
+</html>
