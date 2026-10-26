@@ -23,7 +23,7 @@ env:
 
 # TRIGGERS
 on:
-  page_build:
+  # page_build: # needs a LIGHTHOUSE_BADGER_TOKEN secret first; see FAQ.md
   # schedule: # Check your schedule here => https://crontab.guru/
   #   - cron: '55 23 * * 0' # e.g. every Sunday at 23:55
   #
