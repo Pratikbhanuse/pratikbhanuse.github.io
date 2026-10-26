@@ -32,30 +32,37 @@
           icon: fa-solid fa-file-circle-check
           download: true
 
-- id: physics
-  name: Physics
-  icon: fa-solid fa-atom
-  blurb: Step-by-step notes that explain each idea from the ground up, then work the examples in full.
-  courses:
-    - title: Physics I & II
-      level: First year
-      description: >
-        Twenty-four chapters over two semesters. Semester 1 covers mechanics, waves and
-        thermal physics; semester 2 covers electricity, magnetism, optics and modern physics.
-        Each chapter explains the ideas from the ground up, works examples in full and ends
-        with practice problems, with a full solutions set for every chapter.
-      topics: [Units & vectors, Kinematics, Newton's laws, Work & energy, Momentum, Rotation, Gravitation, Oscillations, Fluids, Waves & sound, Thermodynamics, Electric fields, Gauss's law, Potential & capacitance, DC circuits, Magnetism, Induction, AC & EM waves, Optics, Modern physics]
-      sections: 24
-      editions:
-        - label: Course notes
-          note: Read online, with per-chapter PDFs and solutions
-          url: /courses/physics/phy-ug-1/index.html
-          icon: fa-solid fa-book-open
-        - label: Syllabus
-          note: Course outline and how to study
-          url: /courses/physics/phy-ug-1/syllabus.html
-          icon: fa-solid fa-list-check
-        - label: References
-          note: Textbooks and further reading
-          url: /courses/physics/phy-ug-1/references.html
-          icon: fa-solid fa-bookmark
+# Physics is hidden until the subscription setup is ready. Uncomment the block below (and
+# remove "_courses/physics/" from exclude in _config.yml) to publish it.
+# - id: physics
+#   name: Physics
+#   icon: fa-solid fa-atom
+#   blurb: Step-by-step notes that explain each idea from the ground up, then work the examples in full.
+#   courses:
+#     - title: Physics I & II
+#       level: First year
+#       description: >
+#         Twenty-four chapters over two semesters. Semester 1 covers mechanics, waves and
+#         thermal physics; semester 2 covers electricity, magnetism, optics and modern physics.
+#         Each chapter explains the ideas from the ground up, works examples in full and ends
+#         with practice problems, with a full solutions set for every chapter.
+#         Chapter 1 is free; the rest are available with a subscription.
+#       topics: [Units & vectors, Kinematics, Newton's laws, Work & energy, Momentum, Rotation, Gravitation, Oscillations, Fluids, Waves & sound, Thermodynamics, Electric fields, Gauss's law, Potential & capacitance, DC circuits, Magnetism, Induction, AC & EM waves, Optics, Modern physics]
+#       sections: 24
+#       editions:
+#         - label: Course notes
+#           note: Chapter 1 free to read, with PDFs and solutions
+#           url: /courses/physics/phy-ug-1/index.html
+#           icon: fa-solid fa-book-open
+#         - label: Syllabus
+#           note: Course outline and how to study
+#           url: /courses/physics/phy-ug-1/syllabus.html
+#           icon: fa-solid fa-list-check
+#         - label: Subscribe
+#           note: Unlock all 24 chapters with notes and solutions
+#           url: /courses/physics/phy-ug-1/subscribe.html
+#           icon: fa-solid fa-lock
+#         - label: References
+#           note: Textbooks and further reading
+#           url: /courses/physics/phy-ug-1/references.html
+#           icon: fa-solid fa-bookmark

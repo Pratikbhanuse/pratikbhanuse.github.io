@@ -253,6 +253,7 @@ exclude:
   - readme_preview/
   - vendor
   - "**/.DS_Store"
+  - _courses/physics/ # hidden until the subscription setup is ready; see _data/courses.yml
 keep_files:
   - CNAME
   - .nojekyll
