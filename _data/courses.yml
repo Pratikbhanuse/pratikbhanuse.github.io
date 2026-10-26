@@ -59,7 +59,7 @@
         thermal physics; semester 2 covers electricity, magnetism, optics and modern physics.
         Each chapter explains the ideas from the ground up, works examples in full and ends
         with practice problems, with a full solutions set for every chapter.
-        Chapters 1 to 3 are free; the rest are available with a subscription.
+        Chapters 1 and 2 are free; the rest are available with a subscription.
       topics:
         [
           Units & vectors,
@@ -86,7 +86,7 @@
       sections: 24
       editions:
         - label: Course notes
-          note: Chapters 1 to 3 free to read online
+          note: Chapters 1 and 2 free to read online
           url: /courses/physics/phy-ug-1/index.html
           icon: fa-solid fa-book-open
         - label: Syllabus
