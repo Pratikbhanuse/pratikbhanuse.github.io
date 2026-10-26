@@ -11,13 +11,11 @@ category: poem
 
 #### This poem is in hindi (one of the languages in India). The poem is written by a famous poet, lyricist, actor in bolloywood (Indian film industry). The poem talks about the rememberance of an individuals' nostalgic old days.
 
-
 वो पुराने दिन \\
 वो सुहाने दिन \\
 आशिक़ाने दिन \\
 ओस की नमी में भीगे \\
 वो पुराने दिन
-
 
 दिन गुज़र गए \\
 हम किधर गए \\
@@ -26,8 +24,7 @@ category: poem
 अकेले हैं खड़े \\
 क़दम नहीं बढ़े \\
 चल पड़ेंगे जब भी कोई \\
-राह चल पड़े 
-
+राह चल पड़े
 
 जाएँगे कहाँ \\
 है कुछ पता नहीं \\
@@ -36,9 +33,7 @@ category: poem
 वो सुहाने दिन \\
 आशिक़ाने दिन \\
 ओस की नमी में भीगे \\
-वो पुराने दिन… 
-
-
+वो पुराने दिन…
 
 #### English translation:
 
@@ -47,7 +42,6 @@ Those wonderful days \\
 Those lovely days \\
 Days which were like touching fresh dew \\
 Those good old days
-
 
 Gone are those days now \\
 Where are we now? \\
@@ -58,16 +52,13 @@ Unable to move further \\
 I will again start walking again \\
 Once there is a road that I can walk on
 
-
 Where will I go? \\
 I dont know \\
 He/She had told me \\
 That it is not their mistake
-
 
 Those good old days \\
 Those wonderful days \\
 Those lovely days \\
 Days which were like touching fresh dew \\
 Those good old days
-

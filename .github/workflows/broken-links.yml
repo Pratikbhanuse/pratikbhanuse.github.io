@@ -48,5 +48,6 @@ jobs:
         uses: lycheeverse/lychee-action@v1.9.0
         with:
           fail: true
-          # removed md files that include liquid tags
-          args: --user-agent 'curl/7.54' --exclude-path README.md --exclude-path _pages/404.md --exclude-path _pages/blog.md --exclude-path _posts/2018-12-22-distill.md --verbose --no-progress './**/*.md' './**/*.html'
+          # removed md files that include liquid tags; excluded links are font preconnects, sites that block
+          # link checkers or are offline, and placeholders not filled in yet; 403 (bot blocked) and 429 (rate limited) count as OK
+          args: --user-agent 'curl/7.54' --exclude-path README.md --exclude-path _pages/404.md --exclude-path _pages/blog.md --exclude-path _posts/2018-12-22-distill.md --exclude '^https://fonts\.(googleapis|gstatic)\.com/$' --exclude 'investopedia\.com' --exclude 'streamlit\.app' --exclude 'dbie\.rbi\.org\.in' --exclude 'tzr\.io' --exclude 'replace-with-your' --accept 200,206,403,429 --verbose --no-progress './**/*.md' './**/*.html'

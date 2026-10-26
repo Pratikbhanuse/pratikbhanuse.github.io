@@ -3,7 +3,7 @@ layout: page
 permalink: /projects/lsmo
 title: Simulating La₁₋ₓSrₓMnO₃ Superconductor with LAMMPS
 description: Simulating Sr-doped La₁₋ₓSrₓMnO₃ (LSMO) using Python + LAMMPS with XRD, density, and composition analysis.
-img: assets/img/xrd.png
+img: assets/img/lsmo/xrd.png
 date: 2025-05-02
 importance: 1
 category: science
@@ -15,6 +15,7 @@ related_publications: false
 This project demonstrates a Python-based workflow to simulate the synthesis and analyze the structural properties of Sr-doped La₁₋ₓSrₓMnO₃ (LSMO), a complex perovskite material known for its rich magnetic and electronic behavior.
 
 Using **LAMMPS**, we:
+
 - Created doped crystal structures by replacing La with Sr
 - Performed atomistic relaxation
 - Analyzed the structure using **X-ray diffraction (XRD)**, **density**, and **elemental composition** plots

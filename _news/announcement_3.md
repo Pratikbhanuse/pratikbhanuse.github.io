@@ -2,7 +2,7 @@
 layout: post
 date: 2016-01-15 07:59:00-0400
 title: Shayari 1 - Jab tum tarrakki ke raah pe chalte ho
-inline: false 
+inline: false
 ---
 
 <p><h4>Jab tum tarrakki ke raah pe chalte ho,<br>

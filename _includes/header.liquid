@@ -91,7 +91,9 @@
                           {% for course in subject.courses %}
                             <a class="dropdown-item" href="{{ course.editions.first.url | relative_url }}">
                               {{- course.title -}}
-                              {% if course.level %}<small>{{ course.level }}</small>{% endif %}
+                              {% if course.level -%}
+                                <small>{{ course.level }}</small>
+                              {%- endif %}
                             </a>
                           {% else %}
                             <span class="dropdown-item disabled">Coming soon</span>

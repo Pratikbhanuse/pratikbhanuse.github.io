@@ -9,7 +9,6 @@ importance: 1
 category: finance
 ---
 
-
 # Understanding Relative Rotation Graphs: A Simple Guide
 
 Investing can be complex, especially when deciding which stocks or sectors to focus on. The Relative Rotation Graph (RRG), developed by Julius de Kempenaer, provides a powerful tool to visualize the performance of various securities relative to a benchmark.
@@ -50,11 +49,12 @@ Relative Rotation Graphs are not just charts; they provide insights into market 
 
 ---
 
-*This article is inspired by the work of Julius de Kempenaer and aims to make Relative Rotation Graphs accessible to everyday investors.*
+_This article is inspired by the work of Julius de Kempenaer and aims to make Relative Rotation Graphs accessible to everyday investors._
 
 ---
 
 **References:**
+
 - Julius de Kempenaer. [RRG Research](https://www.relativerotationgraphs.com/about/the-people/julius-de-kempenaer)
 - [Investopedia: Relative Rotation Graph](https://www.investopedia.com/relative-rotation-graph-8418457)
 - [RRG for US Sector ETFs](https://relative-rotation-graph.streamlit.app/)

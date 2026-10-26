@@ -17,18 +17,18 @@ profile:
 news: true # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
-
 ---
 
 **Hello World! Welcome to my website…**
 
-I'm Pratik, a physicist and quantitative researcher working where physics, machine learning, and finance meet.
+I'm Pratik, a theoretical physicist and quantitative researcher working where physics, machine learning, and finance meet.
 
 I'm currently pursuing a **Ph.D. in Theoretical and Computational Physics** at [The University of Western Ontario](https://www.physics.uwo.ca/){:target="_blank"} in London, Ontario, under the supervision of [Prof. Colin Denniston](https://www.physics.uwo.ca/people/faculty_web_pages/denniston.html){:target="_blank"}. My research combines molecular dynamics with machine learning to build predictive models for the properties of polymer networks.
 
+<!-- prettier-ignore -->
 Before starting my Ph.D., I spent three years as a **Quantitative Strategy Analyst at [BCA Research](https://www.bcaresearch.com/){:target="_blank"}**, building macro-driven asset-allocation models across equities, bonds, and cash, and contributing to research linking macro themes to equity factor models. Earlier, I built financial-crime detection models at AML RightSource and developed statistical arbitrage strategies as a quant analyst at QTS Capital Management.
 
-My path here runs through physics: a B.Sc. from the University of Mumbai, an M.Sc. in Theoretical Physics from the University of Nottingham (thesis: [*Coherent States in String Theory*](/assets/pdf/Coherent_states_in_string_theory.pdf){:target="_blank"}), and an M.Sc. in Materials Physics from Brock University, where I founded and led the **Phynance Association**, a student group bringing together physics, machine learning, and quantitative finance. Day to day I work in Python (PyTorch, pandas, scikit-learn), C++, SQL, and q/kdb+.
+My path here runs through physics: a B.Sc. from the University of Mumbai, an M.Sc. in Theoretical Physics from the University of Nottingham (thesis: [_Coherent States in String Theory_](/assets/pdf/Coherent_states_in_string_theory.pdf){:target="_blank"}), and an M.Sc. in Materials Physics from Brock University, where I founded and led the **Phynance Association**, a student group bringing together physics, machine learning, and quantitative finance. Day to day I work in Python (PyTorch, pandas, scikit-learn), C++, SQL, and q/kdb+.
 
 On this site you'll find my [projects](/projects/) in both science and finance, along with blog posts on markets and quantitative methods.
 

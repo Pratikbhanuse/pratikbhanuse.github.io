@@ -14,7 +14,22 @@
         lines and planes, row reduction and RREF, matrix algebra and inverses, span, bases and
         subspaces, linear transformations, determinants, eigenvalues and diagonalization,
         Gram–Schmidt, symmetric matrices and least squares, with midterm and final reviews.
-      topics: [Vectors, Dot & cross product, Lines & planes, RREF, Matrices & inverses, Span & bases, Subspaces & rank, Transformations, Determinants, Eigenvalues, Diagonalization, Gram–Schmidt, Least squares]
+      topics:
+        [
+          Vectors,
+          Dot & cross product,
+          Lines & planes,
+          RREF,
+          Matrices & inverses,
+          Span & bases,
+          Subspaces & rank,
+          Transformations,
+          Determinants,
+          Eigenvalues,
+          Diagonalization,
+          Gram–Schmidt,
+          Least squares,
+        ]
       sections: 16
       editions:
         - label: Study notes
@@ -31,7 +46,6 @@
           url: /courses/math/lin-algebra-1/practice-solutions.pdf
           icon: fa-solid fa-file-circle-check
           download: true
-
 # Physics is hidden until the subscription setup is ready. Uncomment the block below (and
 # remove "_courses/physics/" from exclude in _config.yml) to publish it.
 # - id: physics
@@ -51,7 +65,7 @@
 #       sections: 24
 #       editions:
 #         - label: Course notes
-#           note: Chapter 1 free to read, with PDFs and solutions
+#           note: Chapter 1 free to read online
 #           url: /courses/physics/phy-ug-1/index.html
 #           icon: fa-solid fa-book-open
 #         - label: Syllabus
@@ -59,7 +73,7 @@
 #           url: /courses/physics/phy-ug-1/syllabus.html
 #           icon: fa-solid fa-list-check
 #         - label: Subscribe
-#           note: Unlock all 24 chapters with notes and solutions
+#           note: Read all 24 chapters online
 #           url: /courses/physics/phy-ug-1/subscribe.html
 #           icon: fa-solid fa-lock
 #         - label: References

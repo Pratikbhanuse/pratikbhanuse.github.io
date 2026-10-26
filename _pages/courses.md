@@ -16,7 +16,7 @@ nav_dropdown_data: courses
     {% endfor %}
   </nav>
 
-  {% for subject in site.data.courses %}
+{% for subject in site.data.courses %}
     <section class="course-subject" id="{{ subject.id }}">
       <h2 class="category">{{ subject.name }}</h2>
       {% if subject.blurb %}<p class="course-subject-blurb">{{ subject.blurb }}</p>{% endif %}
@@ -55,5 +55,5 @@ nav_dropdown_data: courses
         <p class="course-empty">Coming soon.</p>
       {% endif %}
     </section>
-  {% endfor %}
+{% endfor %}
 </div>

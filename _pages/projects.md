@@ -5,7 +5,7 @@ permalink: /projects/
 description: A growing collection of some projects.
 nav: true
 nav_order: 3
-display_categories: [science, finance] #[finance, science] 
+display_categories: [science, finance] #[finance, science]
 horizontal: false
 ---
 

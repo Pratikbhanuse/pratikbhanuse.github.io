@@ -3,7 +3,7 @@ layout: post
 title: Random walk generator
 permalink: /projects/random_walk
 img: assets/video/random_walk.gif
-# date: 2022-01-18 
+# date: 2022-01-18
 description: Python code to generate random walk process
 importance: 3
 category: science
@@ -32,10 +32,10 @@ def animate(i):
     for _ in range(10):  # Increase steps per frame for faster simulation
         z = random_walk(z)
         rw_array.append(z)
-    
+
     # Update the data
     line.set_data(np.arange(len(rw_array)), np.array(rw_array))
-    
+
     # Dynamically adjust y-limits
     ymin, ymax = min(rw_array), max(rw_array)
     ax.set_ylim(ymin - 10, ymax + 10)  # Add padding for better visualization

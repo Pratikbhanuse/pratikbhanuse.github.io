@@ -16,7 +16,9 @@
       color: var(--global-text-color);
       font-size: 0.9rem;
       text-decoration: none;
-      transition: border-color 0.15s, color 0.15s;
+      transition:
+        border-color 0.15s,
+        color 0.15s;
 
       &:hover {
         border-color: var(--global-theme-color);
@@ -123,7 +125,9 @@
     border-radius: 0.5rem;
     color: var(--global-text-color);
     text-decoration: none;
-    transition: border-color 0.15s, transform 0.15s;
+    transition:
+      border-color 0.15s,
+      transform 0.15s;
 
     > i:first-child {
       font-size: 1.25rem;
@@ -142,7 +146,9 @@
 
     .course-edition-arrow {
       color: var(--global-text-color-light);
-      transition: transform 0.15s, color 0.15s;
+      transition:
+        transform 0.15s,
+        color 0.15s;
     }
 
     &:hover {

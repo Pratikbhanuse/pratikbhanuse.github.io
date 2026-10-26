@@ -9,6 +9,7 @@ cv: true
 output: html_document
 comments: true
 ---
+
 <p> Here I have created a platform to contribute various aspects of literature such as books, 
 articles, research papers, video links, etc. This literature could range from various topics in science, 
 economics, politics, etc. <br>
@@ -16,41 +17,46 @@ If anyone wants to contribute their link or something they found worth reading, 
 
 Books
 ------
-* [Quantitative Trading *by Dr. Ernest P. Chan*](https://www.amazon.ca/Quantitative-Trading-Build-Algorithmic-Business/dp/1119800064/ref=asc_df_1119800064/?tag=googleshopc0c-20&linkCode=df0&hvadid=459275984529&hvpos=&hvnetw=g&hvrand=5291606574041130647&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9000774&hvtargid=pla-1217099171961&psc=1)
-* [The Dhandho Investor: The Low-Risk Value Method to High Returns *by Mohnish Pabrai*](https://www.amazon.ca/Dhandho-Investor-Value-Method-Returns/dp/047004389X/ref=sr_1_1?gclid=CjwKCAiA6seQBhAfEiwAvPqu17A-TdNrv-ttKJw8TXDsHry4kJyuulqGddlSOgQaxjph51K40Zpj6xoCZUwQAvD_BwE&hvadid=208316818799&hvdev=c&hvlocphy=9000774&hvnetw=g&hvqmt=e&hvrand=5538979278267491924&hvtargid=kwd-301803045821&hydadcr=16930_9583662&keywords=dhandho+investor&qid=1645388465&sr=8-1)
-* [The Marshmallow Test *by Walter Mischel*](https://www.amazon.ca/Marshmallow-Test-Self-Control-Engine-Success/dp/0316230863/ref=asc_df_0316230863/?tag=googleshopc0c-20&linkCode=df0&hvadid=292914176058&hvpos=&hvnetw=g&hvrand=11829186909358592794&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9000774&hvtargid=pla-432407721726&psc=1)
-* [The changing world order *by Ray Dalio*](https://www.amazon.com/Changing-World-Order-Nations-Succeed/dp/1982160276/?maas=maas_adg_B0DF71C19F94DE6B0996A4872DB7D9DE_afap_abs&ref_=aa_maas&gclid=CjwKCAiA6seQBhAfEiwAvPqu1_05wkeYhgpopUao0y0Mebnni7cl1N9A_mZFlF5ht9lm32BM4TxEBhoC6oAQAvD_BwE)
-* [The Man Who Solved the Market: How Jim Simons Launched the Quant Revolution *by Gregory Zuckerman*](https://www.amazon.ca/Man-Who-Solved-Market-Revolution/dp/073521798X)
+
+- [Quantitative Trading _by Dr. Ernest P. Chan_](https://www.amazon.ca/Quantitative-Trading-Build-Algorithmic-Business/dp/1119800064/ref=asc_df_1119800064/?tag=googleshopc0c-20&linkCode=df0&hvadid=459275984529&hvpos=&hvnetw=g&hvrand=5291606574041130647&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9000774&hvtargid=pla-1217099171961&psc=1)
+- [The Dhandho Investor: The Low-Risk Value Method to High Returns _by Mohnish Pabrai_](https://www.amazon.ca/Dhandho-Investor-Value-Method-Returns/dp/047004389X/ref=sr_1_1?gclid=CjwKCAiA6seQBhAfEiwAvPqu17A-TdNrv-ttKJw8TXDsHry4kJyuulqGddlSOgQaxjph51K40Zpj6xoCZUwQAvD_BwE&hvadid=208316818799&hvdev=c&hvlocphy=9000774&hvnetw=g&hvqmt=e&hvrand=5538979278267491924&hvtargid=kwd-301803045821&hydadcr=16930_9583662&keywords=dhandho+investor&qid=1645388465&sr=8-1)
+- [The Marshmallow Test _by Walter Mischel_](https://www.amazon.ca/Marshmallow-Test-Self-Control-Engine-Success/dp/0316230863/ref=asc_df_0316230863/?tag=googleshopc0c-20&linkCode=df0&hvadid=292914176058&hvpos=&hvnetw=g&hvrand=11829186909358592794&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9000774&hvtargid=pla-432407721726&psc=1)
+- [The changing world order _by Ray Dalio_](https://www.amazon.com/Changing-World-Order-Nations-Succeed/dp/1982160276/?maas=maas_adg_B0DF71C19F94DE6B0996A4872DB7D9DE_afap_abs&ref_=aa_maas&gclid=CjwKCAiA6seQBhAfEiwAvPqu1_05wkeYhgpopUao0y0Mebnni7cl1N9A_mZFlF5ht9lm32BM4TxEBhoC6oAQAvD_BwE)
+- [The Man Who Solved the Market: How Jim Simons Launched the Quant Revolution _by Gregory Zuckerman_](https://www.amazon.ca/Man-Who-Solved-Market-Revolution/dp/073521798X)
 
 Research articles/ General articles
 ------
-* [Broken Symmetries and the Masses of Gauge Bosons: Higg's boson](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.13.508)
-* [Observation of Gravitational Waves from a Binary Black Hole Merger](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102)
-* [Black-Scholes option pricing model](https://www.jstor.org/stable/1831029?origin=JSTOR-pdf)
-* [The Theory Of Speculation](https://www.investmenttheory.org/uploads/3/4/8/2/34825752/emhbachelier.pdf)
+
+- [Broken Symmetries and the Masses of Gauge Bosons: Higg's boson](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.13.508)
+- [Observation of Gravitational Waves from a Binary Black Hole Merger](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102)
+- [Black-Scholes option pricing model](https://www.jstor.org/stable/1831029?origin=JSTOR-pdf)
+- [The Theory Of Speculation](https://www.investmenttheory.org/uploads/3/4/8/2/34825752/emhbachelier.pdf)
 
 Videos
 ------
-* [How the economic machine works *by Ray Dalio*](https://www.youtube.com/watch?v=PHe0bXAIuk0)
-* [Bloomberg Global Financial News LIVE channel on YouTube *Bloomberg Media*](https://www.youtube.com/watch?v=dp8PhLsUcFE)
-* [Quants: The Alchemists of Wall Street](https://www.youtube.com/watch?v=ed2FWNWwE3I)
-* [Einstein's Big Idea E=mc<sup>2</sup>](https://www.youtube.com/watch?v=k2db9IgBapo)
+
+- [How the economic machine works _by Ray Dalio_](https://www.youtube.com/watch?v=PHe0bXAIuk0)
+- [Bloomberg Global Financial News LIVE channel on YouTube _Bloomberg Media_](https://www.youtube.com/@markets/live)
+- [Quants: The Alchemists of Wall Street](https://www.youtube.com/watch?v=ed2FWNWwE3I)
+- [Einstein's Big Idea E=mc<sup>2</sup>](https://www.youtube.com/watch?v=k2db9IgBapo)
 
 Podcast
 ------
-* [Mission ISRO with Harsha Bhogle](https://open.spotify.com/show/2JXFCMLGVhTBtdz1WYxd4H)
-* [Flirting with Models](https://blog.thinknewfound.com/podcast/)
-* [Odd Lots](https://www.bloomberg.com/oddlots-podcast)
-* [Chai with Pabrai](http://www.chaiwithpabrai.com/podcasts.html)
+
+- [Mission ISRO with Harsha Bhogle](https://open.spotify.com/show/2JXFCMLGVhTBtdz1WYxd4H)
+- [Flirting with Models](https://blog.thinknewfound.com/)
+- [Odd Lots](https://www.bloomberg.com/oddlots-podcast)
+- [Chai with Pabrai](https://www.chaiwithpabrai.com/)
 
 Miscellaneous links
 ------
-* [Nerdle - the daily number game](https://nerdlegame.com/)
-* [Wordle - The New York Times](https://www.nytimes.com/games/wordle/index.html)
-* [Database for Indian Economy](https://dbie.rbi.org.in/)
-* [Federal Reserve Economic Data](https://fred.stlouisfed.org/)
-* [Statistics Canada](https://www.statcan.gc.ca/en/start)
-* [Online Board Games Free](https://lefun.fun/en)
+
+- [Nerdle - the daily number game](https://nerdlegame.com/)
+- [Wordle - The New York Times](https://www.nytimes.com/games/wordle/index.html)
+- [Database for Indian Economy](https://dbie.rbi.org.in/)
+- [Federal Reserve Economic Data](https://fred.stlouisfed.org/)
+- [Statistics Canada](https://www.statcan.gc.ca/en/start)
+- [Online Board Games Free](https://lefun.fun/en)
 
 <br>
 <br>
